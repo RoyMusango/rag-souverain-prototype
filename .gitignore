@@ -1,0 +1,52 @@
+﻿# --- Données : jamais versionnées ---
+data/
+tools/synthea/
+output/
+*.parquet
+*.arrow
+
+# --- Secrets : jamais versionnés ---
+.env
+.env.*
+
+# --- Caches HuggingFace ---
+.cache/
+hf_cache/
+
+# --- Python ---
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# --- Index ---
+qdrant_storage/
+*.faiss
+
+# --- Système ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# --- LaTeX (si le rapport rejoint ce dépôt) ---
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+*.synctex.gz
+
+# ajoute par pousser_journal.ps1
+*.npy
+*.pkl
+*.snapshot
+
+.venv/
+data/
+resultats/
+__pycache__/
+*.pyc

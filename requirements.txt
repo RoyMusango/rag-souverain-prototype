@@ -1,0 +1,10 @@
+﻿datasets>=2.19
+huggingface_hub>=0.23
+pandas>=2.2
+pyarrow>=16.0
+requests>=2.32
+tqdm>=4.66
+spacy>=3.7
+python-dotenv>=1.0
+
+pypdf>=4.0

@@ -1,0 +1,34 @@
+# Dependances du POC, en complement de requirements.txt (phase d'ingestion).
+# A epingler par `pip freeze` en fin de projet — section 4.1.5 du rapport.
+
+# --- recherche hybride -------------------------------------------------
+sentence-transformers>=3.0,<4.0
+rank-bm25>=0.2.2,<0.3
+qdrant-client>=1.9,<2.0
+
+# --- calcul ------------------------------------------------------------
+# torch : NE PAS installer depuis PyPI sur une machine a GPU. Utiliser
+# l'index officiel correspondant a la version de CUDA, voir le guide de
+# deploiement. Sur processeur seul, la roue PyPI convient.
+torch>=2.2
+
+numpy>=1.26,<3.0
+
+# --- masquage (question 13 : souverain ou Presidio) ---------------------
+spacy>=3.7,<4.0
+# presidio-analyzer>=2.2      # decommenter si Presidio est retenu
+
+# --- deja presents en phase d'ingestion, rappeles pour memoire ----------
+# datasets, pypdf, pandas
+
+# --- comparaison des detecteurs (E7) ------------------------------------
+# CamemBERT passe par transformers ; a n'installer que si le moteur
+# 'camembert' est retenu ou mesure.
+transformers>=4.40,<5.0
+# Jean-Baptiste/camembert-ner ne publie PAS de tokenizer.json : transformers
+# doit convertir le tokeniseur lent depuis sentencepiece.bpe.model, ce qui
+# exige le paquet sentencepiece. Sans lui, `vocab_file` vaut None et le
+# chargement echoue sur « 'NoneType' object has no attribute 'endswith' »,
+# une trace qui ne nomme ni le paquet ni le modele.
+sentencepiece>=0.2,<0.3
+presidio-analyzer>=2.2      # terme de COMPARAISON, pas choix de deploiement
