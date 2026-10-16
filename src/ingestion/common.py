@@ -1,7 +1,7 @@
 """
 Fonctions communes aux adaptateurs d'ingestion.
 
-Garantit les invariants A1-A5 :
+Elles garantissent les invariants A1 a A5 :
   A1 doc_id deterministe
   A2 pave numerote dans sa rubrique
   A3 aucune troncature silencieuse
@@ -25,7 +25,7 @@ CHAMPS = ["doc_id", "text", "source", "entities", "rubrique", "page", "pave"]
 # --------------------------------------------------------------------------
 
 def charger_ner(modele="en_core_web_lg"):
-    """Charge spaCy en ne conservant que le composant NER (3 a 5x plus rapide)."""
+    """Charge spaCy en ne gardant que le composant NER (3 a 5 fois plus rapide)."""
     import spacy
     nlp = spacy.load(modele, exclude=["parser", "lemmatizer", "attribute_ruler",
                                       "tagger", "textcat"])
@@ -34,9 +34,9 @@ def charger_ner(modele="en_core_web_lg"):
 
 def extraire_entites_lot(textes, nlp, batch_size=64, n_process=1):
     """
-    Extraction NER par lot via nlp.pipe.
-    Retourne (liste_d_entites, nb_troncatures) : la troncature est comptee,
-    jamais silencieuse (A3).
+    Extraction NER par lot avec nlp.pipe.
+    Renvoie (liste_d_entites, nb_troncatures) : chaque troncature est
+    comptee et signalee (A3).
     """
     troncatures = 0
     prepares = []
@@ -65,11 +65,11 @@ def extraire_entites_lot(textes, nlp, batch_size=64, n_process=1):
 
 def nettoyer_nom_synthea(nom):
     """
-    Synthea suffixe les noms d'un nombre pour garantir l'unicite
-    (ex. 'Wallace647 Effertz744'). Ces suffixes sont un artefact du generateur :
-    les conserver fausserait toute mesure de rappel NER, le modele n'ayant
-    jamais vu de telles chaines. Je les retire pour l'evaluation du masquage ;
-    l'unicite reste assuree par l'identifiant patient.
+    Synthea ajoute un nombre a la fin des noms pour les rendre uniques
+    (ex. 'Wallace647 Effertz744'). Ces nombres viennent du generateur. Les
+    garder fausserait le rappel NER, car le modele n'a jamais vu de tels
+    noms. Je les retire pour evaluer le masquage. L'identifiant patient
+    suffit a garder chaque patient unique.
     """
     return re.sub(r"\d+", "", nom).strip()
 
@@ -80,8 +80,8 @@ def nettoyer_nom_synthea(nom):
 
 def numeroter_paves(records):
     """
-    A2 : renumerote 'pave' de 1 a n au sein de chaque rubrique.
-    Modifie les enregistrements en place et les retourne.
+    A2 : renumerote 'pave' de 1 a n dans chaque rubrique.
+    Modifie les enregistrements sur place et les renvoie.
     """
     compteurs = defaultdict(int)
     for r in records:
@@ -92,7 +92,7 @@ def numeroter_paves(records):
 
 
 def dedupliquer(records, cle=lambda r: r["doc_id"]):
-    """A4 : deduplication explicite, avec compte rendu."""
+    """A4 : deduplication explicite, avec le nombre de doublons retires."""
     vus = {}
     doublons = 0
     for r in records:
@@ -106,8 +106,8 @@ def dedupliquer(records, cle=lambda r: r["doc_id"]):
 
 def ecrire(records, chemin, forcer_jsonl=None):
     """
-    A5 : JSON lisible en dessous du seuil, JSONL au-dessus.
-    Retourne le chemin reellement ecrit.
+    A5 : JSON lisible sous le seuil, JSONL au-dessus.
+    Renvoie le chemin du fichier ecrit.
     """
     chemin = Path(chemin)
     chemin.parent.mkdir(parents=True, exist_ok=True)
@@ -125,7 +125,7 @@ def ecrire(records, chemin, forcer_jsonl=None):
 
 
 def lire(chemin):
-    """Lecture indifferemment JSON ou JSONL."""
+    """Lit un fichier JSON ou JSONL."""
     chemin = Path(chemin)
     if chemin.suffix == ".jsonl":
         with open(chemin, encoding="utf-8") as f:
@@ -139,7 +139,7 @@ def lire(chemin):
 # --------------------------------------------------------------------------
 
 def rapport(nom, records, chemin, doublons=0, troncatures=0, filtres=0):
-    """Compte rendu uniforme, dont les chiffres vont au journal de bord."""
+    """Compte rendu au meme format pour tous les corpus, chiffres a reporter au journal."""
     total = len(records)
     if total == 0:
         print(f"[{nom}] AUCUN DOCUMENT PRODUIT")

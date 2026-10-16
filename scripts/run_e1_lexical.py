@@ -1,26 +1,25 @@
 r"""
-E1a : recuperation lexicale seule (BM25), premier terme de la cascade hybride.
+E1a : recherche lexicale seule (BM25), premier etage de la cascade hybride.
 
     python scripts\run_e1_lexical.py --corpus enronqa --questions 200
 
-Ce script ne depend d'aucun accelerateur, d'aucune API ni d'aucun modele de
-langue. Il mesure ce qu'atteint le versant lexical seul, avant toute fusion :
-c'est le plancher de la chaine de recuperation, et un passage qu'il manque ne
-sera pas rattrape par la generation.
+Ce script n'a besoin ni de GPU, ni d'API, ni de modele de langue. Il mesure
+ce que donne la recherche lexicale seule, avant toute fusion. C'est le
+niveau minimum de la chaine de recherche : un passage manque ici ne sera
+pas rattrape par la generation.
 
-Deux metriques, choisies conjointement :
+Deux metriques :
 
-  RAPPEL@k   le passage utile a-t-il ete atteint ?
+  RAPPEL@k   le bon passage a-t-il ete trouve ?
   nDCG@k     a-t-il ete bien classe ?
 
-Le rappel est insensible au rang et ne peut donc pas mesurer l'apport d'un
-re-ordonnancement ulterieur. Le nDCG pondere chaque document par sa position
-et rend cette amelioration observable. Les deux metriques sont donc
-complementaires.
+Le rappel ne tient pas compte du rang : il ne voit pas l'effet d'un
+re-classement. Le nDCG tient compte de la position de chaque document et
+montre cet effet. Il faut donc les deux.
 
-Verite terrain : une paire question-reponse designe un seul document par son
-doc_id. La pertinence est donc binaire et le nDCG ideal vaut 1, ce qui
-simplifie le calcul sans l'affaiblir.
+Verite terrain : chaque paire question-reponse designe un seul document par
+son doc_id. La pertinence vaut 0 ou 1 et le nDCG ideal vaut 1, ce qui
+simplifie le calcul sans le rendre moins juste.
 """
 
 import argparse
@@ -74,7 +73,7 @@ def lire(chemin):
 
 
 def ndcg_binaire(rang, k):
-    """Pertinence binaire, un seul document pertinent : IDCG = 1."""
+    """Pertinence 0 ou 1, un seul document pertinent : IDCG = 1."""
     if rang is None or rang > k:
         return 0.0
     return 1.0 / log2(rang + 1)
@@ -82,7 +81,7 @@ def ndcg_binaire(rang, k):
 
 def main():
     parseur = argparse.ArgumentParser(
-        description="E1a — recuperation lexicale BM25 seule")
+        description="E1a : recherche lexicale BM25 seule")
     parseur.add_argument("--corpus", default="enronqa",
                          choices=sorted(SCHEMAS))
     parseur.add_argument("--questions", type=int, default=200,
@@ -91,7 +90,7 @@ def main():
                          help="valeurs de k, separees par des virgules")
     parseur.add_argument("--graine", type=int, default=42)
     parseur.add_argument("--cle-texte", default="text",
-                         help="champ du schema portant le texte indexe")
+                         help="champ du schema qui contient le texte a indexer")
     parseur.add_argument("--sortie", default="resultats/e1_lexical")
     arguments = parseur.parse_args()
 
@@ -113,7 +112,7 @@ def main():
     documents = lire(chemin_schema)
     paires = lire(chemin_qa)
 
-    # --- controles prealables, avant tout calcul ---------------------------
+    # --- verifications, avant tout calcul ----------------------------------
     if not documents:
         raise SystemExit("schema vide")
     if arguments.cle_texte not in documents[0]:
@@ -208,8 +207,8 @@ def main():
         },
         "mesures": mesures,
         "rangs_bruts": rangs_trouves,
-        # Latences individuelles : une mediane masque la forme de la
-        # distribution, qui est precisement l'objet d'interet ici.
+        # Latences une par une : la mediane cache la forme de la
+        # distribution, et c'est elle qui nous interesse ici.
         "latences_ms": [round(valeur, 2) for valeur in latences],
     }
     chemin = dossier / f"e1_lexical_{arguments.corpus}.json"

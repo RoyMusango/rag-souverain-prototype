@@ -1,11 +1,9 @@
 r"""
-Exploration interactive de la recuperation, pour constituer des exemples
-issus de recuperations reelles.
+Exploration de la recherche, pour tirer des exemples de vraies recherches.
 
-Affiche, pour une ou plusieurs questions d'un corpus : la question, la
-reponse ou le document attendu, les documents effectivement recuperes par le
-systeme classes par rang, et la presence ou non du bon document dans le
-top-k pour chaque valeur de k demandee.
+Pour une ou plusieurs questions d'un corpus, affiche : la question, la
+reponse ou le document attendu, les documents trouves par le systeme dans
+l'ordre, et si le bon document est dans le top-k pour chaque k demande.
 
 USAGE
 
@@ -21,13 +19,12 @@ USAGE
 
 DETECTION DU FORMAT
 
-Le format du fichier de paires question -> document attendu differe d'un
-corpus a l'autre (EnronQA, FinQA, TAT-QA, banque). Le script essaie plusieurs
-conventions de nommage et de champs, et s'arrete avec un message explicite
-s'il ne trouve aucune correspondance fiable, plutot que d'inventer un
-appariement. En cas d'echec, l'option --diagnostiquer indique ce qui a ete
-cherche et ou ; la constante FICHIERS_REFERENCE ci-dessous permet alors de
-fixer le bon chemin.
+Le fichier de paires question -> document attendu n'a pas le meme format
+selon le corpus (EnronQA, FinQA, TAT-QA, banque). Le script essaie plusieurs
+noms de champs. S'il ne trouve rien de fiable, il s'arrete avec un message
+clair, sans deviner. En cas d'echec, --diagnostiquer montre quels fichiers
+ont ete cherches. On peut alors corriger le chemin dans
+CANDIDATS_REFERENCE, plus bas.
 """
 
 import argparse
@@ -39,8 +36,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 # ---------------------------------------------------------------------------
-# Chemins candidats. Ce sont des conventions, a confirmer avec --diagnostiquer
-# en cas de doute.
+# Chemins possibles. En cas de doute, verifier avec --diagnostiquer.
 # ---------------------------------------------------------------------------
 SCHEMAS = {
     "enronqa": "data/enronqa/enronqa_schema.jsonl",
@@ -51,9 +47,8 @@ SCHEMAS = {
     "banque": "data/banque/banque_schema.json",
 }
 
-# Candidats pour le fichier de paires (question, doc_id attendu), par corpus.
-# Chemins confirmes le 07/09 par inspection directe du disque. Le premier qui
-# existe est utilise.
+# Fichiers de paires (question, doc_id attendu) possibles, par corpus.
+# Chemins verifies sur le disque le 07/09. Le premier qui existe est utilise.
 CANDIDATS_REFERENCE = {
     "enronqa": [
         "data/enronqa/enronqa_qa.jsonl",
@@ -67,8 +62,8 @@ CANDIDATS_REFERENCE = {
     "banque": [
         "data/banque/banque_qa.jsonl",
         # banque_reference.json est un autre fichier : la verite terrain des
-        # entites sensibles pour E7b (masquage), et non des paires question ->
-        # document. Il ne doit pas etre utilise ici.
+        # entites sensibles pour E7b (masquage). Il ne contient pas de paires
+        # question -> document et ne doit pas servir ici.
     ],
 }
 
@@ -96,14 +91,14 @@ def trouver_reference(corpus, diagnostiquer=False):
 
 
 def normaliser_paires(donnees, corpus):
-    """Essaie plusieurs noms de champs usuels. Retourne une liste de dicts
+    """Essaie plusieurs noms de champs courants. Renvoie une liste de dicts
     {"question": str, "doc_id_attendu": str, "reponse": str|None}, ou None si
     la structure n'est pas reconnue."""
     if donnees is None:
         return None
 
-    # Cas de repli : e1_lexical_enronqa.json ne contient que des rangs, sans
-    # texte de question ni doc_id attendu ; il est inutilisable ici.
+    # Cas particulier : e1_lexical_enronqa.json ne contient que des rangs,
+    # sans texte de question ni doc_id attendu. Il ne sert a rien ici.
     if isinstance(donnees, dict) and "rangs_bruts" in donnees:
         return "RANGS_SEULS"
 
@@ -136,8 +131,8 @@ def charger_recuperateur_lexical(corpus):
         print(f"  index lexical introuvable : {chemin_index}")
         return None
 
-    # Le nom de la classe qui charge un .pkl BM25 a varie selon les versions
-    # de src/index/lexical.py : j'essaie successivement les noms possibles.
+    # Le nom de la classe qui charge un .pkl BM25 a change selon les versions
+    # de src/index/lexical.py : j'essaie les noms possibles un par un.
     try:
         from src.index import lexical as mod_lexical
     except ImportError as e:
@@ -159,7 +154,7 @@ def charger_recuperateur_lexical(corpus):
                     continue
     if index is None:
         print("  aucune classe d'index lexical reconnue dans src/index/lexical.py")
-        print("  envoyer ce fichier pour completer l'ancre")
+        print("  ajoutez son nom a la liste de charger_recuperateur_lexical()")
         return None
 
     return RecuperateurLexical(index, source=None)
@@ -222,24 +217,22 @@ def main():
               f"pour '{args.corpus}' :")
         for c in CANDIDATS_REFERENCE.get(args.corpus, []):
             print(f"  - {c}")
-        print("\nEnvoie le nom exact du fichier qui contient question + "
-              "doc_id attendu pour ce corpus, ou lance run_e1_lexical.py "
-              "--aide pour verifier son chemin de sortie.")
+        print("\nAjoutez a CANDIDATS_REFERENCE le chemin du fichier qui "
+              "contient les questions et les doc_id attendus pour ce corpus.")
         return 1
     print(f"  trouve : {chemin_ref}")
 
     paires = normaliser_paires(donnees, args.corpus)
     if paires == "RANGS_SEULS":
-        print(f"\n{chemin_ref} ne contient que des rangs agreges "
-              "(rangs_bruts), pas les questions ni les doc_id attendus en "
-              "clair. Ce fichier ne permet pas d'afficher des exemples "
-              "question/reponse. Il faut le fichier de paires source utilise "
-              "par run_e1_lexical.py pour produire ces rangs.")
+        print(f"\n{chemin_ref} ne contient que des rangs (rangs_bruts), sans "
+              "les questions ni les doc_id attendus. Il ne permet pas "
+              "d'afficher des exemples. Il faut le fichier de paires "
+              "utilise par run_e1_lexical.py.")
         return 1
     if paires is None:
-        print(f"\nStructure de {chemin_ref} non reconnue automatiquement. "
-              "Colle les 3 premieres lignes de ce fichier pour que "
-              "normaliser_paires() soit ajuste sur les vrais noms de champs.")
+        print(f"\nStructure de {chemin_ref} non reconnue. Regardez les "
+              "premieres lignes du fichier et ajoutez ses noms de champs "
+              "dans normaliser_paires().")
         return 1
     print(f"  {len(paires)} paires question/reponse chargees")
 

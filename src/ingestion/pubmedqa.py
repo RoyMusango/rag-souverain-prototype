@@ -1,25 +1,25 @@
 """
 Adaptateur PubMedQA -> schema commun.
 
-DECISIONS DE CONCEPTION
+CHOIX DE CONCEPTION
 
   Unite documentaire : un resume (concatenation des sections du contexte)
   rubrique           : configuration (pqa_labeled / unlabeled / artificial)
   page               : 1
   pave               : rang du resume dans la configuration
-  source             : externe (seul corpus dont l'etiquette differe de sa
-                       nature reelle)
+  source             : externe (seul corpus dont l'etiquette ne correspond
+                       pas a sa vraie nature)
 
-  PubMedQA sert de substitut controle du web biomedical ouvert : il est donc
-  etiquete 'externe' et traite comme contenu non fiable par la couche
-  d'isolation (I2), bien que son contenu soit fiable. Ce choix est
-  volontaire : le pipeline doit etre exerce sur du contenu externe, et un
-  corpus reproductible est preferable a un web changeant.
+  PubMedQA remplace le web biomedical, de facon controlee. Il est donc
+  etiquete 'externe' et traite comme non fiable par la couche d'isolation
+  (I2), meme si son contenu est fiable. C'est voulu : il faut tester le
+  pipeline sur du contenu externe, et un corpus fixe se reproduit mieux que
+  le web, qui change.
 
   pqa_artificial (211 269 resumes) est optionnel : --sans-artificial
-  l'exclut si le temps de traitement NER est prohibitif.
+  l'exclut si l'extraction NER prend trop de temps.
 
-Sortie : data/pubmedqa/pubmedqa_schema.jsonl  (volumetrie > seuil JSONL)
+Sortie : data/pubmedqa/pubmedqa_schema.jsonl  (plus de documents que le seuil JSONL)
 """
 
 import sys

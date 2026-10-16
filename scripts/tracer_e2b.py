@@ -5,35 +5,34 @@ Figure E2b, les deux bornes de l'effondrement de l'anonymat.
 
 UNE FIGURE, DEUX PANNEAUX
 
-Les figures E7b sont separees en trois parce qu'elles portent trois
-affirmations independantes. Ici, au contraire, la figure demontre la
-comparaison entre les deux bornes : les separer obligerait le lecteur a
-memoriser la premiere pour lire la seconde, et l'echelle commune, qui porte
-l'argument, ne serait plus visible d'un seul regard.
+Les figures E7b sont separees en trois, car elles montrent trois choses
+independantes. Ici, la figure sert a comparer les deux bornes. Les separer
+obligerait a retenir la premiere pour lire la seconde, et on ne verrait plus
+d'un coup d'oeil l'echelle commune, qui est le point important.
 
-Les deux panneaux sont de meme nature (memes axes, meme seuil) et restent
-lisibles cote a cote.
+Les deux panneaux ont les memes axes et le meme seuil, et se lisent cote a
+cote.
 
-    gauche   borne optimiste : vingt entites prelevees a pas regulier sur
-             toute la population. C'est le cas moyen, celui d'E2.
-    droite   borne pessimiste : vingt entites prelevees parmi les seules
-             entites uniques sur les quasi-identifiants bruts, soit les
-             46,2 % que la population ne protege pas.
+    gauche   borne optimiste : vingt entites prises a intervalle regulier
+             dans toute la population. C'est le cas moyen, celui d'E2.
+    droite   borne pessimiste : vingt entites prises parmi les entites deja
+             uniques sur les quasi-identifiants bruts (les 46,2 % que la
+             population ne protege pas).
 
-AUCUN TITRE GENERAL, AUCUNE NOTE DE BAS DE FIGURE
+PAS DE TITRE GENERAL NI DE NOTE
 
-Le titre est porte par le document qui integre la figure. Les etiquettes de
-panneau sont conservees, car elles indiquent quelle borne est representee.
-L'interpretation figure dans le texte qui accompagne la figure.
+Le titre est donne par le document qui contient la figure. Les titres des
+panneaux restent, car ils disent quelle borne est montree. L'explication est
+dans le texte qui accompagne la figure.
 
 LECTURE
 
 La population est la meme dans les deux panneaux (11 538 individus), donc N
-et le calcul de fuite log2(N/|S|) sont identiques. Seules les entites
-enquetees changent, et cette invariance rend les deux bornes comparables.
+et le calcul de fuite log2(N/|S|) sont les memes. Seules les entites
+enquetees changent, c'est ce qui permet de comparer les deux bornes.
 
-A droite, les deux configurations par session descendent jusqu'au seuil ;
-la configuration par entite plafonne au-dessus.
+A droite, les deux configurations par session descendent jusqu'au seuil. La
+configuration par entite reste au-dessus.
 """
 
 import argparse
@@ -50,10 +49,10 @@ STYLES = ["-", "--", ":"]
 MARQUEURS = ["o", "s", "^"]
 COULEURS = ["#a0aec0", "#dd6b20", "#2b6cb0"]
 
-# Les libelles stockes dans resume.json sont sans accent, comme le reste du
-# code. Les afficher tels quels a cote d'axes accentues serait incoherent ; je
-# les remplace donc a l'affichage. Corriger e2_anonymat.py obligerait a
-# rejouer les deux campagnes (quarante-cinq minutes chacune) pour un accent.
+# Les libelles de resume.json sont sans accent, comme le reste du code. A cote
+# d'axes accentues, cela ferait bizarre : je les remplace a l'affichage.
+# Corriger e2_anonymat.py obligerait a rejouer les deux campagnes
+# (quarante-cinq minutes chacune) pour un accent.
 LIBELLES = {
     "c1_session_session": "Gabarit et budget par session",
     "c2_session_entite": "Gabarit par session, budget par entité",
@@ -87,18 +86,18 @@ def lire(chemin):
 def tracer(axes, donnees, etiquette, k, montrer_legende):
     """Un panneau : les trois configurations, a effort constant."""
     resume = donnees["resume"]
-    # Mode a effort constant uniquement : c'est le seul ou les trois
-    # trajectoires ont la meme longueur, et donc ou elles sont comparables.
+    # Mode a effort constant seulement : c'est le seul ou les trois traces ont
+    # la meme longueur, donc le seul ou on peut les comparer.
     entrees = [(c, e) for c, e in sorted(resume.items())
                if e.get("mode", "reel") == "effort-constant"]
 
     for numero, (cle, entree) in enumerate(entrees):
         courbe = entree["courbe_mediane"]
         libelle = LIBELLES.get(cle.split("|")[0], entree["libelle"])
-        # La legende n'indique pas le taux de violation. Les courbes sont
+        # La legende ne donne pas le taux de violation. Les courbes sont
         # celles du mode a effort constant, ou C1 viole dans 85 % des cas,
         # alors que le rapport cite les 80 % du mode reel. Les deux valeurs
-        # sont exactes mais paraitraient contradictoires une fois juxtaposees.
+        # sont justes, mais cote a cote elles sembleraient se contredire.
         axes.plot(range(len(courbe)), courbe,
                   linestyle=STYLES[numero % 3], marker=MARQUEURS[numero % 3],
                   color=COULEURS[numero % 3], linewidth=2, markersize=5,

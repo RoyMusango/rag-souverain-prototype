@@ -3,34 +3,36 @@ Figures E6, justesse du routage reflexif.
 
     python scripts\tracer_e6.py
 
-DEUX FICHIERS DISTINCTS
+DEUX FICHIERS
 
-Une premiere version reunissait les deux panneaux dans une meme image. Ils
-portent deux affirmations distinctes, et le premier comporte six classes aux
-etiquettes longues : reunis, ils devenaient illisibles en projection.
+Une premiere version mettait les deux panneaux dans une seule image. Ils
+montrent deux choses differentes, et le premier a six classes aux noms
+longs : ensemble, ils etaient illisibles en projection.
 
-    e6_par_classe.png   justesse selon l'emplacement de la reponse
-    e6_erreurs.png      les deux erreurs, globales puis sur les cas difficiles
+    e6_par_classe.png   justesse selon l'endroit ou est la reponse
+    e6_erreurs.png      les deux erreurs, sur tout le jeu puis sur les cas
+                        difficiles
 
-La seconde figure porte le resultat, la premiere l'explique.
+La seconde figure donne le resultat, la premiere l'explique.
 
-AUCUN TITRE, AUCUNE NOTE DE BAS DE FIGURE
+PAS DE TITRE NI DE NOTE
 
-Le titre est porte par le document qui integre la figure. Les figures ne
-contiennent que le nom des axes, la legende et la valeur des barres ;
-l'interpretation figure dans le texte qui les accompagne.
+Le titre est donne par le document qui contient la figure. Les figures ne
+contiennent que le nom des axes, la legende et la valeur des barres.
+L'explication est dans le texte qui les accompagne.
 
-PRECAUTION DE LECTURE
+ATTENTION A LA LECTURE
 
-Le taux global de decisions correctes est de 96,5 %, et ce chiffre est
-trompeur. Il agrege des classes de difficulte tres inegale : une requete qui
-nomme la cle de son dossier est retrouvee mot pour mot par BM25, et le
-routage y est trivial. Le seul taux global laisserait croire que le routeur
-fonctionne sans reserve ; les deux figures montrent ou il echoue.
+Le taux global de bonnes decisions (96,5 % sur le premier jeu, 97,4 % sur
+le jeu etendu v2) est trompeur. Il melange des classes de difficulte tres
+differente : BM25 retrouve mot pour mot une requete qui cite la cle de son
+dossier, et le routage y est facile. Le taux global seul laisserait croire
+que le routeur marche sans probleme. Les deux figures montrent ou il se
+trompe.
 
-Les deux erreurs ne sont jamais additionnees : manquer une source externe
-degrade la reponse, sortir inutilement expose la requete. La seconde est
-determinante pour ce travail.
+Les deux erreurs ne sont jamais additionnees : rater une source externe
+donne une moins bonne reponse, sortir pour rien expose la requete. C'est la
+seconde qui compte le plus pour ce travail.
 """
 
 import argparse
@@ -44,7 +46,7 @@ import matplotlib.pyplot as plt   # noqa: E402
 SORTIE = Path("figures")
 
 # Ordre de lecture : facile puis difficile, interne puis externe. L'ordre
-# alphabetique melangerait les deux et effacerait la progression.
+# alphabetique melangerait tout.
 ORDRE = [
     ("interne", "interne\nnomme\nle dossier", False),
     ("externe", "externe\nnomme\nle règlement", False),
@@ -71,7 +73,7 @@ def enregistrer(figure, nom):
 # ------------------------------------------------------------------ figure 1
 
 def figure_par_classe(par_classe):
-    """Justesse selon l'emplacement reel de la reponse."""
+    """Justesse selon l'endroit ou se trouve vraiment la reponse."""
     presentes = [(c, e, d) for c, e, d in ORDRE if c in par_classe]
     etiquettes = [f"{e}\n{par_classe[c]['cas']} cas" for c, e, d in presentes]
     valeurs = [par_classe[c]["taux_correct"] for c, _, _ in presentes]
@@ -89,7 +91,7 @@ def figure_par_classe(par_classe):
                   fontweight="bold")
 
     # Le trait separe les requetes qui nomment leur cible de celles qui la
-    # decrivent : c'est la lecture principale de la figure.
+    # decrivent : c'est le message principal de la figure.
     frontiere = sum(1 for _, _, d in presentes if not d)
     if 0 < frontiere < len(presentes):
         axes.axvline(frontiere - 0.5, color="#4a5568", linestyle="--",
@@ -115,7 +117,7 @@ def figure_par_classe(par_classe):
 # ------------------------------------------------------------------ figure 2
 
 def figure_erreurs(mesures):
-    """Les deux erreurs asymetriques, globales puis sur les cas difficiles."""
+    """Les deux erreurs, sur tout le jeu puis sur les cas difficiles."""
     couples = [
         ("Franchissement\ninjustifié",
          mesures["taux_franchissement_injustifie"],
@@ -146,7 +148,7 @@ def figure_erreurs(mesures):
     axes.set_xticklabels([t for t, _, _ in couples], fontsize=9.5)
     # L'echelle suit la barre la plus haute. Fixee a 1,0, elle ecrasait les
     # quatre barres du jeu etendu contre l'axe : sur le corpus corrige, la
-    # pire valeur est de 24 % et non plus de 100 %.
+    # pire valeur est 24 % (elle etait de 100 % avant).
     haut = max(v or 0.0 for _, g, d in couples for v in (g, d))
     plafond = max(0.25, haut * 1.45)
     pas = 0.05 if plafond <= 0.45 else 0.2
@@ -159,8 +161,8 @@ def figure_erreurs(mesures):
     axes.set_ylabel("taux d'erreur", fontsize=10)
     axes.grid(alpha=0.3, axis="y")
     axes.set_axisbelow(True)
-    # Coin superieur droit : les barres de droite sont nulles et laissent cet
-    # emplacement libre. En haut a gauche, la legende recouvrait le 100 %.
+    # Coin superieur droit : les barres de droite sont basses et laissent ce
+    # coin libre. En haut a gauche, la legende cachait une valeur.
     axes.legend(fontsize=9, loc="upper right", frameon=False)
 
     figure.subplots_adjust(left=0.105, right=0.985, top=0.97, bottom=0.185)
@@ -170,8 +172,9 @@ def figure_erreurs(mesures):
 def main():
     parseur = argparse.ArgumentParser(description="Figures E6")
     # Jeu etendu v2, sur le corpus bancaire corrige : 195 cas, dont 17
-    # requetes descriptives au lieu de 6. Le dossier resultats/e6 correspond
-    # a une campagne de septembre, trop petite sur la classe determinante.
+    # requetes descriptives au lieu de 6. Le dossier resultats/e6 contient
+    # une campagne plus ancienne, avec trop peu de cas dans la classe qui
+    # compte le plus.
     parseur.add_argument("--json",
                          default="resultats/e6_etendu_v2/e6_routage.json")
     arguments = parseur.parse_args()

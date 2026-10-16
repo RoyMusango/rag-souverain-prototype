@@ -1,9 +1,12 @@
 # Prepare le paquet a transferer vers la machine de calcul.
 #
-# Ne transporte que ce dont le calcul a besoin : le code et les corpus au
-# schema commun. Les donnees brutes (CSV Synthea, parquet EnronQA, PDF
-# EUR-Lex) restent sur le poste local : l'ingestion est faite et ne sera pas
-# rejouee, et elles pesent plusieurs gigaoctets inutilement.
+# Ne copie que ce dont le calcul a besoin : le code et les corpus au schema
+# commun. Les donnees brutes (CSV Synthea, parquet EnronQA, PDF EUR-Lex)
+# restent sur le poste local : l'ingestion est deja faite, et elles pesent
+# plusieurs gigaoctets.
+#
+# Le nom du script vient du premier choix de machine (ShadowPC), abandonne
+# depuis. Le paquet sert pour n'importe quelle machine de calcul.
 #
 # Usage :
 #   .\scripts\preparer_shadow.ps1
@@ -42,7 +45,7 @@ foreach ($nom in $Corpus) {
     $chemin = $Schemas[$nom]
     if (-not $chemin) { Write-Warning "corpus inconnu : $nom"; continue }
     if (-not (Test-Path $chemin)) {
-        # Le validateur accepte indifferemment .json et .jsonl ; idem ici.
+        # Le validateur accepte .json comme .jsonl ; ici aussi.
         $alt = [IO.Path]::ChangeExtension($chemin, `
                $(if ($chemin.EndsWith(".json")) { "jsonl" } else { "json" }))
         if (Test-Path $alt) { $chemin = $alt } else {
@@ -57,8 +60,8 @@ foreach ($nom in $Corpus) {
     Write-Host ("  {0,-10} {1,8} Mo" -f $nom, $mo)
 }
 
-# 3. Empreintes : elles fondent la comparaison ulterieure, en permettant
-#    d'etablir que les deux machines ont vu les memes corpus.
+# 3. Empreintes : elles permettent de verifier plus tard que les deux
+#    machines ont utilise les memes corpus.
 Get-ChildItem -Recurse $Destination -File -Include *.json,*.jsonl |
     Get-FileHash -Algorithm SHA256 |
     Select-Object Hash, @{N="Fichier";E={Resolve-Path -Relative $_.Path}} |

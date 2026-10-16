@@ -3,21 +3,22 @@ Figures E1b et E5.
 
     python scripts\tracer_e1b_e5.py
 
-Deux fichiers, deux affirmations.
+Deux fichiers, un message chacun.
 
-    e1b_deux_corpus.png   la fusion ne depasse jamais le meilleur versant seul
-    e5_profondeur.png     la generalisation relegue la cible sans l'effacer
+    e1b_deux_corpus.png   la fusion ne bat jamais la meilleure voie seule
+    e5_profondeur.png     la generalisation fait descendre la cible dans le
+                          classement, sans la faire disparaitre
 
-Comme pour les autres figures, aucun titre dans les images : seuls le nom des
-axes, la legende et la valeur des barres y figurent.
+Comme pour les autres figures, pas de titre dans les images : seulement le
+nom des axes, la legende et la valeur des barres.
 
-ABSENCE DE FIGURE POUR E4
+PAS DE FIGURE POUR E4
 
 Son resultat tient en deux valeurs identiques sur les deux corpus : une
 integrite de 1,0000 et 100 % de fragments a quatre niveaux. La seule
-difference est binaire (la pagination est reelle ou non). Un tableau la
-presente mieux qu'un graphique, ou deux barres egales masqueraient le
-contraste pertinent.
+difference est de savoir si le corpus a de vraies pages ou non. Un tableau
+le montre mieux qu'un graphique, ou deux barres egales cacheraient cette
+difference.
 """
 
 import json
@@ -58,7 +59,7 @@ def lire(chemin):
 # ------------------------------------------------------------------ figure 1
 
 def figure_e1b():
-    """Les trois configurations, sur les deux corpus mesures."""
+    """Les trois configurations, sur les deux corpus mesures (E1b de septembre)."""
     corpus = [
         ("EnronQA\n73 772 courriels", "resultats/e1b/e1b_hybridation.json"),
         ("FinQA\n7 134 rapports", "resultats/e1b_finqa/e1b_hybridation.json"),
@@ -107,7 +108,7 @@ def figure_e1b():
 # ------------------------------------------------------------------ figure 2
 
 def figure_e5():
-    """Le meme jeu de questions, interroge a dix puis a cent resultats."""
+    """Les memes questions, avec dix puis cent resultats."""
     chemins = {10: "resultats/e5/e5_cout.json",
                100: "resultats/e5_profondeur/e5_cout.json"}
     mesures = {}

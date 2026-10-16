@@ -1,14 +1,13 @@
 """
-Recuperation lexicale BM25, versant exact de la recherche hybride.
+Recherche lexicale BM25, la partie "mots exacts" de la recherche hybride.
 
-BM25 demeure la reference : robuste, sans apprentissage, particulierement
-efficace sur les correspondances exactes et les termes rares. En contexte
-bancaire, il est indispensable : les textes reglementaires abondent en jetons
-exacts (numeros d'articles, termes definis) pour lesquels l'appariement
-lexical reste necessaire, tandis que la recuperation dense absorbe les
-reformulations des questions metier.
+BM25 reste la reference : fiable, sans apprentissage, tres bon sur les
+correspondances exactes et les termes rares. Dans une banque, il est
+indispensable : les textes reglementaires sont pleins de termes exacts
+(numeros d'articles, termes definis) qu'il faut retrouver mot pour mot. La
+recherche dense, elle, gere les reformulations des questions metier.
 
-Ce module ne depend d'aucun accelerateur et s'execute a l'identique sur
+Ce module n'a pas besoin de GPU et donne les memes resultats sur
 l'ultraportable et sur la machine de campagne.
 """
 
@@ -18,8 +17,8 @@ from pathlib import Path
 
 MOTIF_JETON = re.compile(r"\w+", re.UNICODE)
 
-# Mots vides minimaux. Volontairement courts : sur un corpus reglementaire,
-# une liste agressive supprimerait des termes definis.
+# Liste de mots vides volontairement courte : sur un corpus reglementaire,
+# une liste trop longue supprimerait des termes definis.
 VIDES_FR = {
     "le", "la", "les", "de", "des", "du", "un", "une", "et", "ou", "a", "au",
     "aux", "en", "dans", "sur", "pour", "par", "que", "qui", "est", "sont",
@@ -32,10 +31,10 @@ VIDES_EN = {
 
 
 def jetons(texte, langue="fr", garder_chiffres=True):
-    """Segmentation simple et reproductible.
+    """Decoupage en jetons, simple et reproductible.
 
-    Les chiffres sont conserves par defaut : un numero d'article ou un
-    montant est precisement ce que le versant lexical doit apparier.
+    Les chiffres sont gardes par defaut : un numero d'article ou un montant
+    est ce que la recherche lexicale doit retrouver.
     """
     vides = VIDES_FR if langue == "fr" else VIDES_EN
     bruts = MOTIF_JETON.findall(str(texte).lower())
@@ -49,28 +48,28 @@ MOTIF_RUBRIQUE = re.compile(r"^eurlex/([^/]+)/([^/]+)/art_0*(\d+)$")
 
 
 def enrichir_par_rubrique(documents, langues=None):
-    """Prefixe chaque passage par l'en-tete de l'article auquel il appartient.
+    """Ajoute en tete de chaque passage l'en-tete de son article.
 
-    MOTIVATION
+    POURQUOI
 
-    Le numero d'article figure dans la rubrique, alors que l'index BM25 ne
-    lit que le champ `text`. Mesure du 25/09 : sur les 5 208 documents dont la
-    rubrique porte un numero, 9 % seulement contiennent « Article <n> » dans
-    leur texte (en pratique le premier pave de l'article, jamais les
-    suivants). Une question nommant un article ne pouvait donc pas le
-    retrouver : l'ancrage etait de 0 sur 40 au rang 10.
+    Le numero d'article est dans la rubrique, mais l'index BM25 ne lit que le
+    champ `text`. Mesure du 25/09 : sur les 5 208 documents dont la rubrique
+    a un numero, seulement 9 % contiennent « Article <n> » dans leur texte
+    (en pratique le premier pave de l'article). Une question qui nommait un
+    article ne le retrouvait donc presque jamais : 8 sur 40 au rang 10 (voir
+    JOURNAL_DONNEES, section 11).
 
-    L'enrichissement n'invente rien : tout pave d'un article appartient a cet
-    article, et un lecteur en voit l'en-tete en haut de la page. Je replace
-    donc une information exacte la ou le moteur peut la lire.
+    On n'invente rien : chaque pave appartient bien a cet article, et un
+    lecteur voit l'en-tete en haut de la page. On met simplement cette
+    information la ou le moteur peut la lire.
 
-    `langues` restreint en outre le vivier, par exemple a ("FR",). Le corpus
-    EUR-Lex contient chaque texte en deux langues : une question francaise
-    affronte donc un vivier a moitie anglophone, et chaque doublon occupe une
-    place parmi les dix fragments retenus.
+    `langues` permet aussi de ne garder qu'une langue, par exemple ("FR",).
+    EUR-Lex contient chaque texte en deux langues. Sans ce filtre, une
+    question en francais cherche dans un corpus a moitie anglais, et chaque
+    doublon anglais prend une des dix places.
 
-    Rend une nouvelle liste : les documents d'origine ne sont jamais
-    modifies, faute de quoi une campagne alterait le corpus des suivantes.
+    Renvoie une nouvelle liste. Les documents d'origine ne sont jamais
+    modifies, sinon une campagne changerait le corpus des suivantes.
     """
     enrichis = []
     for doc in documents:
@@ -89,7 +88,7 @@ def enrichir_par_rubrique(documents, langues=None):
 
 
 class IndexLexical:
-    """Index BM25 persistable, aligne sur le schema commun."""
+    """Index BM25 sauvegardable, au format du schema commun."""
 
     def __init__(self, langue="fr"):
         self.langue = langue
@@ -105,7 +104,7 @@ class IndexLexical:
         return self
 
     def rechercher(self, requete, n=50, source=None):
-        """Retourne (document, score) tries par pertinence decroissante."""
+        """Renvoie des couples (document, score) tries par pertinence decroissante."""
         if self._bm25 is None:
             return []
         scores = self._bm25.get_scores(jetons(requete, self.langue))
@@ -117,7 +116,7 @@ class IndexLexical:
         return paires[:n]
 
     def enregistrer(self, chemin):
-        """Persiste l'index, qui accompagne l'index vectoriel."""
+        """Sauvegarde l'index sur disque, a cote de l'index vectoriel."""
         chemin = Path(chemin)
         chemin.parent.mkdir(parents=True, exist_ok=True)
         with open(chemin, "wb") as f:
@@ -138,14 +137,14 @@ class IndexLexical:
 
 
 class Reclasseur:
-    """Cross-encodeur applique au seul top-k.
+    """Cross-encodeur applique au top-k seulement.
 
-    Le cross-encodeur encode conjointement requete et passage : il ameliore
-    nettement la precision, au prix d'un cout eleve, d'ou son application a
-    une tete restreinte plutot qu'a l'ensemble des candidats.
+    Le cross-encodeur traite la requete et le passage ensemble. Il ameliore
+    beaucoup la precision mais coute cher, donc on ne l'applique qu'aux
+    premiers resultats.
 
-    C'est, avec les embeddings, le second poste qui beneficie reellement d'un
-    accelerateur graphique.
+    Avec les embeddings, c'est la seule etape qui gagne vraiment a tourner
+    sur GPU.
     """
 
     def __init__(self, modele="BAAI/bge-reranker-v2-m3", peripherique=None,
@@ -154,17 +153,16 @@ class Reclasseur:
         self.peripherique = peripherique
         # Longueur maximale
         #
-        # Sans ce parametre, sentence-transformers retient la longueur
-        # maximale du modele, soit 8192 jetons pour bge-reranker-v2-m3. Le
-        # cout de l'attention croit avec le carre de la longueur : mesure du
-        # 08/09, une campagne E1b a tourne plus de sept heures sur processeur
-        # sans depasser le quart de ses 200 questions, soit plus de trente
-        # heures projetees pour 4 000 paires.
+        # Sans ce parametre, sentence-transformers prend la longueur maximale
+        # du modele, soit 8192 jetons pour bge-reranker-v2-m3. Le cout de
+        # l'attention croit avec le carre de la longueur. Le 08/09, une
+        # campagne E1b a tourne plus de sept heures sur processeur sans
+        # finir le quart de ses 200 questions, soit plus de trente heures
+        # prevues pour 4 000 paires.
         #
-        # 512 est la valeur usuelle pour le re-classement. Elle tronque les
-        # passages les plus longs, limite que je declare, mais rend l'etage
-        # utilisable sur processeur, et donc effectivement present dans la
-        # chaine.
+        # 512 est la valeur habituelle pour le re-classement. Les passages les
+        # plus longs sont coupes (limite connue et signalee), mais l'etape
+        # devient utilisable sur processeur.
         self.longueur_max = longueur_max
         self._modele = None
 

@@ -1,17 +1,16 @@
 r"""
 Lance E5, le cout en precision de la protection.
 
-    python scripts\build_paires_banque.py     une seule fois, prealable
+    python scripts\build_paires_banque.py     une seule fois, avant
     python scripts\run_e5.py
     python scripts\run_e5.py --corpus enronqa --sans-generalisation
 
 Utiliser `python` et non `py -3.11`.
 
-OBJET DE LA CAMPAGNE
+BUT DE LA CAMPAGNE
 
-E2 etablit ce que la protection apporte ; E5 chiffre ce qu'elle coute. Une
-protection dont le cout n'est pas mesure ne peut pas etre evaluee, et seules
-les deux mesures reunies constituent un resultat.
+E2 mesure ce que la protection apporte, E5 mesure ce qu'elle coute. Il faut
+les deux pour juger la protection.
 
 QUATRE REGIMES, SUR LES MEMES QUESTIONS
 
@@ -20,36 +19,35 @@ QUATRE REGIMES, SUR LES MEMES QUESTIONS
     generalise-1    ville remplacee par sa region, identifiants retires
     generalise-2    ville remplacee par le pays, secteur egalement retire
 
-Les deux niveaux de generalisation donnent une courbe de cout plutot qu'un
-point unique, ce qui permet au chapitre 5 d'indiquer le prix de chaque cran
-de protection.
+Deux niveaux de generalisation donnent une courbe de cout, et pas un seul
+point. Le chapitre 5 peut ainsi donner le prix de chaque niveau de
+protection.
 
-CHOIX DU CORPUS BANCAIRE PLUTOT QU'ENRONQA
+POURQUOI LE CORPUS BANCAIRE ET PAS ENRONQA
 
-Une premiere version croisait les questions d'EnronQA avec la population
-Synthea. Le chiffre obtenu aurait ete sans signification : generaliser une
-entite medicale synthetique dans une question portant sur un courriel
-d'entreprise mesure l'ajout de bruit, et non le cout de la protection.
+Une premiere version melangeait les questions d'EnronQA et la population
+Synthea. Le resultat n'aurait rien voulu dire : generaliser un patient
+synthetique dans une question sur un courriel d'entreprise mesure l'effet
+du bruit ajoute, pas le cout de la protection.
 
-Le corpus bancaire est le seul a reunir des questions dont la reponse est
-connue et des entites dont les quasi-identifiants sont connus. Les deux
+Le corpus bancaire est le seul qui a a la fois des questions dont on connait
+la reponse et des entites dont on connait les quasi-identifiants. Les deux
 fichiers sont produits par `scripts/build_paires_banque.py`.
 
-LE GENERALISEUR REMPLACE, IL N'AJOUTE PAS
+LE GENERALISEUR REMPLACE LES TERMES
 
-Une requete generalisee n'est pas la requete d'origine augmentee de termes
-generaux : c'est la meme requete dont les termes precis ont ete remplaces par
-leur forme large. Ajouter des termes laisserait les termes precis dans la
-requete emise, sans aucune protection, et le cout mesure serait celui du
-bruit.
+La requete generalisee est la meme requete, dont les termes precis sont
+remplaces par des termes plus larges. Si on ajoutait des termes larges en
+gardant les termes precis, ceux-ci sortiraient quand meme, sans aucune
+protection, et on mesurerait le cout du bruit.
 
-    brut          Quel motif de vigilance pour Youssef Verhaegen,
-                  client du secteur negoce de matieres premieres a Bruxelles ?
-    generalise-1  Quel motif de vigilance pour un client,
-                  client du secteur negoce de matieres premieres
-                  a Bruxelles-Capitale ?
-    generalise-2  Quel motif de vigilance pour un client,
-                  client du secteur d'activite non precise en Belgique ?
+    brut          Quel motif de vigilance a été retenu pour Youssef Verhaegen,
+                  client du secteur négoce de matières premières à Bruxelles ?
+    generalise-1  Quel motif de vigilance a été retenu pour un client,
+                  client du secteur négoce de matières premières
+                  dans la région Bruxelles-Capitale ?
+    generalise-2  Quel motif de vigilance a été retenu pour un client,
+                  client d'un secteur non précisé en Belgique ?
 
 PREREQUIS. L'index dense doit exister (voir scripts\build_index.py).
 """
@@ -73,10 +71,10 @@ PAIRES = {
 }
 ENTITES = "data/banque/banque_entites.json"
 
-# Un index lexical par corpus, tel que produit par build_index.py. Il sert
-# aussi a restreindre la voie dense au meme vivier : l'index Qdrant contient
-# les sept corpus, celui-ci un seul. Sans cette symetrie, les deux voies ne
-# chercheraient pas dans le meme ensemble et leur comparaison serait vide.
+# Un index lexical par corpus, produit par build_index.py. Le corpus sert
+# aussi a limiter la voie dense aux memes documents : l'index Qdrant contient
+# les sept corpus, l'index lexical un seul. Sinon les deux voies ne
+# chercheraient pas dans le meme ensemble, et on ne pourrait pas les comparer.
 INDEX_LEXICAL = {
     "banque": "data/index_lexical/banque.pkl",
     "enronqa": "data/index_lexical/enronqa.pkl",
@@ -85,14 +83,13 @@ INDEX_LEXICAL = {
 GENERALISE_1 = "generalise-1"
 GENERALISE_2 = "generalise-2"
 
-# Le pays d'appartenance, un cran au-dessus de la region, avec la preposition
-# appropriee. La table des regions se trouve dans build_paires_banque.py ; je
-# n'ajoute ici que le dernier cran.
+# Le pays, un niveau au-dessus de la region, avec la bonne preposition. La
+# table des regions est dans build_paires_banque.py ; j'ajoute ici seulement
+# le dernier niveau.
 #
-# La preposition est fournie par la table plutot que deduite : « a Belgique »
-# serait un artefact de mesure et non une requete qu'ecrirait un analyste, et
-# une requete mal formee degraderait le rappel pour une raison etrangere a la
-# protection.
+# La preposition est dans la table au lieu d'etre deduite : un analyste
+# n'ecrirait jamais « a Belgique », et une requete mal ecrite ferait baisser
+# le rappel pour une raison qui n'a rien a voir avec la protection.
 PAYS = {
     "Hainaut": ("Belgique", "en"),
     "Namur": ("Belgique", "en"),
@@ -112,19 +109,18 @@ def charger_entites(chemin):
 
 
 def fabriquer_generaliseur(entites, niveau):
-    """Rend un transformateur (requete, paire) -> requete generalisee.
+    """Renvoie un transformateur (requete, paire) -> requete generalisee.
 
-    Il opere par remplacement dans le texte de la question. Chaque paire
-    porte les valeurs qu'elle cite et leur attribut, enregistres lors de la
-    construction du jeu : le remplacement est donc exact, sans analyse
-    approximative.
+    Il remplace des mots dans le texte de la question. Chaque paire contient
+    les valeurs qu'elle cite et leur attribut, enregistres a la construction
+    du jeu : le remplacement est donc exact.
 
     Niveau 1 : la ville devient sa region, les identifiants directs
-               disparaissent. C'est le cran que la politique retiendrait pour
-               une entite ordinaire.
-    Niveau 2 : la region devient le pays, et le secteur disparait a son tour.
-               C'est le cran d'une entite atypique, que sa region suffirait
-               deja a designer.
+               disparaissent. C'est le niveau que la politique choisirait
+               pour une entite ordinaire.
+    Niveau 2 : la region devient le pays, et le secteur disparait aussi.
+               C'est le niveau pour une entite atypique, que sa region
+               suffirait deja a reconnaitre.
     """
     def transformer(requete, paire):
         texte = requete
@@ -140,11 +136,11 @@ def fabriquer_generaliseur(entites, niveau):
             else:
                 large, avec_preposition = region, f"dans la région {region}"
 
-            # Je remplace « à Bruxelles » d'un bloc, preposition comprise,
-            # pour que la requete emise reste une phrase correcte. Le repli
-            # sur la ville seule n'a lieu que si cette forme est absente :
-            # enchainer les deux donnerait « Bruxelles-Capitale-Capitale », le
-            # second remplacement modifiant le resultat du premier.
+            # Je remplace « à Bruxelles » en entier, preposition comprise,
+            # pour que la requete reste une phrase correcte. Je ne remplace la
+            # ville seule que si cette forme est absente. Faire les deux
+            # donnerait « Bruxelles-Capitale-Capitale », car le second
+            # remplacement modifierait le resultat du premier.
             if f"à {ville}" in texte:
                 texte = texte.replace(f"à {ville}", avec_preposition)
             else:
@@ -156,13 +152,12 @@ def fabriquer_generaliseur(entites, niveau):
                                   "d'un secteur non précisé")
             texte = texte.replace(secteur, "activité non précisée")
 
-        # Les identifiants directs ne sont pas des quasi-identifiants : ils
-        # designent la personne a eux seuls. Aucun niveau de generalisation ne
-        # les conserve ; ils sont retires des le premier cran.
+        # Les identifiants directs designent la personne a eux seuls. Aucun
+        # niveau ne les garde : ils sont retires des le premier.
         #
-        # Je remplace le nom complet par « un client » plutot que de le
-        # supprimer : la suppression laisserait « retenu pour, client », une
-        # phrase cassee dont le rappel mesurerait la casse et non la
+        # Je remplace le nom complet par « un client » au lieu de le
+        # supprimer. Sinon il resterait « retenu pour, client », une phrase
+        # cassee : le rappel mesurerait la phrase cassee, pas la
         # generalisation.
         identifiants = paire.get("identifiants_cites", [])
         if identifiants:
@@ -175,9 +170,9 @@ def fabriquer_generaliseur(entites, niveau):
                         identifiant, "un client" if rang == 0 else "")
 
         texte = " ".join(texte.split()).replace(" ,", ",")
-        # Elision : « de un client » est incorrect. Sans effet sur BM25, qui
-        # traite « de » comme un mot vide, mais une requete emise doit rester
-        # lisible lorsqu'elle est citee dans le memoire.
+        # Elision : « de un client » est incorrect. Cela ne change rien pour
+        # BM25, pour qui « de » est un mot vide, mais la requete doit rester
+        # lisible quand elle est citee dans le memoire.
         return texte.replace("de un client", "d'un client")
 
     return transformer
@@ -268,8 +263,8 @@ def main():
                   f"quasi-identifiants "
                   f"{', '.join(meta.get('quasi_identifiants', []))}")
     elif arguments.corpus == "enronqa":
-        print("  EnronQA n'a pas de population d'entites enumerees : seuls")
-        print("  les regimes brut et masque sont mesurables sur ce corpus.")
+        print("  EnronQA n'a pas de liste d'entites : seuls les regimes brut")
+        print("  et masque sont mesurables sur ce corpus.")
     print()
 
     # --- campagne -----------------------------------------------------------
@@ -326,7 +321,7 @@ def main():
 
         print("\nLe cout des regimes generalises est le prix de la protection")
         print("de l'intention, celui de 'masque' le prix de la protection des")
-        print("donnees. En deploiement, les deux se cumulent.")
+        print("donnees. En production, les deux s'additionnent.")
 
         rapport = {
             "corpus": arguments.corpus,
@@ -335,11 +330,11 @@ def main():
             "cout_par_regime": couts,
             "lecture": (
                 "Les deux niveaux de generalisation donnent une courbe de "
-                "cout plutot qu'un point unique : le chapitre peut dire a "
-                "quel prix chaque cran de protection est achete. Le "
-                "generaliseur REMPLACE les termes precis par leur forme "
-                "large ; ajouter des termes a cote laisserait les precis "
-                "dans la requete emise et ne protegerait rien."
+                "cout, et pas un seul point : on voit le prix de chaque "
+                "niveau de protection. Le generaliseur REMPLACE les termes "
+                "precis par des termes plus larges ; s'il en ajoutait a "
+                "cote, les termes precis sortiraient quand meme et rien ne "
+                "serait protege."
             ),
         }
 

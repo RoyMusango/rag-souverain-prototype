@@ -1,19 +1,18 @@
 """
-Index vectoriel Qdrant, dont la charge utile porte la provenance.
+Index vectoriel Qdrant, avec la provenance dans la charge utile.
 
-L'interet de ce module ne reside pas dans la recherche vectorielle, qui est
-standard, mais dans la charge utile. Chaque fragment y transporte sa source,
-son palier, sa rubrique, sa page, son pave, son etiquette de confiance et son
-score de fiabilite. La provenance n'est pas reconstruite a l'affichage : elle
-accompagne le fragment depuis l'index, car elle serait irrecuperable apres
-l'indexation (section 3.5.1).
+La recherche vectorielle est standard. Ce qui compte ici, c'est la charge
+utile : chaque fragment y garde sa source, son palier, sa rubrique, sa page,
+son pave, son etiquette de confiance et son score de fiabilite. La
+provenance suit le fragment depuis l'index. On ne pourrait pas la
+reconstruire plus tard (section 3.5.1).
 
-C'est ce qui rend l'invariant I3 effectif plutot que declaratif, et qui
-fournit le substrat de la piste d'audit exigee en contexte bancaire.
+C'est ce qui permet de respecter l'invariant I3 et de construire la piste
+d'audit demandee dans une banque.
 
-Qdrant est deploye localement. Le principe directeur interdit d'envoyer des
-vecteurs au-dela de la Frontiere A ; un service vectoriel heberge est donc
-exclu, quelles que soient ses garanties contractuelles.
+Qdrant tourne en local. Le projet interdit d'envoyer des vecteurs au-dela
+de la Frontiere A, donc un service vectoriel heberge est exclu, quelles que
+soient ses garanties contractuelles.
 """
 
 import uuid
@@ -27,8 +26,8 @@ CHAMPS_PROVENANCE = (
 def charge_utile(document, corpus="", palier_origine="interne"):
     """Construit la charge utile d'un fragment, provenance comprise.
 
-    Aligne sur le schema commun d'ingestion : `doc_id`, `text`, `source`,
-    `entities`, `rubrique`, `page`, `pave`.
+    Reprend les champs du schema commun d'ingestion : `doc_id`, `text`,
+    `source`, `entities`, `rubrique`, `page`, `pave`.
     """
     return {
         "doc_id": str(document.get("doc_id", "")),
@@ -40,10 +39,9 @@ def charge_utile(document, corpus="", palier_origine="interne"):
         "origine": document.get("origine", ""),
         "corpus": corpus,
         "palier_origine": palier_origine,
-        # Teinte et fiabilite sont calculees a la fusion, non a l'ingestion :
-        # elles dependent du contexte de la requete (corroboration,
-        # collusion). Les champs sont reserves pour garder une structure
-        # stable.
+        # La teinte et la fiabilite sont calculees a la fusion, car elles
+        # dependent de la requete (corroboration, collusion). Les champs sont
+        # crees vides ici pour garder une structure stable.
         "confiance": "",
         "fiabilite": 0.0,
         "entities": document.get("entities", []) or [],
@@ -53,8 +51,8 @@ def charge_utile(document, corpus="", palier_origine="interne"):
 def identifiant_point(document, corpus=""):
     """Identifiant stable et reproductible d'un point.
 
-    Deterministe : reindexer le meme corpus produit les memes identifiants,
-    ce qui rend l'index rejouable a l'identique (section 4.1.5).
+    Reindexer le meme corpus donne les memes identifiants, donc le meme index
+    (section 4.1.5).
     """
     graine = f"{corpus}|{document.get('doc_id')}|{document.get('pave', 1)}"
     return str(uuid.uuid5(uuid.NAMESPACE_URL, graine))
@@ -63,8 +61,8 @@ def identifiant_point(document, corpus=""):
 class IndexQdrant:
     """Enveloppe minimale autour du client Qdrant.
 
-    Le client est injecte plutot qu'instancie : les tests et les ablations du
-    chapitre 5 doivent pouvoir lui substituer une implementation en memoire.
+    Le client peut etre passe en argument : les tests et les ablations du
+    chapitre 5 peuvent ainsi utiliser une version en memoire.
     """
 
     def __init__(self, collection="rag_souverain", dimension=1024,
@@ -74,13 +72,12 @@ class IndexQdrant:
         self.dimension = dimension
         self.hote = hote
         self.chemin_local = chemin_local
-        # Delai d'attente d'une reponse du serveur, en secondes. La valeur par
-        # defaut de la bibliotheque (cinq secondes) suffit tant que la
-        # collection est vide, mais plus des qu'elle indexe en tache de fond :
-        # une ecriture de 256 points expirait alors au troisieme corpus, sur
-        # un poste dont le disque est partage avec le moteur conteneurise. Ce
-        # delai n'est qu'un plafond et ne ralentit rien lorsque le serveur
-        # repond rapidement.
+        # Delai d'attente d'une reponse du serveur, en secondes. Les cinq
+        # secondes par defaut suffisent tant que la collection est vide, plus
+        # quand elle indexe en arriere-plan : une ecriture de 256 points
+        # expirait au troisieme corpus, sur un poste dont le disque est
+        # partage avec le conteneur. C'est un maximum, il ne ralentit rien
+        # quand le serveur repond vite.
         self.delai = delai
         self._client = client
 
@@ -89,8 +86,7 @@ class IndexQdrant:
         if self._client is None:
             from qdrant_client import QdrantClient
             # `chemin_local` permet un index sur fichier, sans serveur, par
-            # exemple pour transferer l'index d'une machine louee vers le
-            # portable.
+            # exemple pour copier l'index d'une machine louee vers le portable.
             self._client = (QdrantClient(path=self.chemin_local)
                             if self.chemin_local
                             else QdrantClient(url=self.hote,
@@ -110,8 +106,8 @@ class IndexQdrant:
                 size=self.dimension, distance=Distance.COSINE
             ),
         )
-        # Index de charge utile : le filtrage par source et par corpus est
-        # central pour le routage interne/externe et doit donc etre indexe.
+        # Index sur la charge utile : le routage interne/externe filtre
+        # beaucoup par source et par corpus.
         for champ, genre in (("source", "keyword"), ("corpus", "keyword"),
                              ("rubrique", "keyword")):
             try:
@@ -125,7 +121,7 @@ class IndexQdrant:
 
     def verser(self, documents, vecteurs, corpus="", lot=256,
                palier_origine="interne"):
-        """Verse documents et vecteurs, par lots."""
+        """Ecrit documents et vecteurs dans la collection, par lots."""
         from qdrant_client.models import PointStruct
         total = len(documents)
         for debut in range(0, total, lot):
@@ -142,11 +138,11 @@ class IndexQdrant:
         return self
 
     def rechercher(self, vecteur_requete, n=50, source=None, corpus=None):
-        """Recherche par voisinage, avec filtrage optionnel par provenance.
+        """Recherche des plus proches voisins, avec filtre optionnel.
 
-        Le filtre `source` est ce qui materialise la separation interne /
-        externe au niveau de l'index : le routeur peut interroger l'un ou
-        l'autre sans que les deux se melangent avant la fusion teintee.
+        Le filtre `source` separe l'interne et l'externe dans l'index : le
+        routeur peut interroger l'un ou l'autre sans les melanger avant la
+        fusion teintee.
         """
         from qdrant_client.models import Filter, FieldCondition, MatchValue
 
@@ -168,7 +164,7 @@ class IndexQdrant:
         return [(r.payload, float(r.score)) for r in resultats]
 
     def volumetrie(self):
-        """Grandeurs a reporter dans JOURNAL_DONNEES, section 9."""
+        """Chiffres a reporter dans JOURNAL_DONNEES, section 9."""
         info = self.client.get_collection(self.collection)
         return {
             "collection": self.collection,

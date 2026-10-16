@@ -1,7 +1,7 @@
 """
 Adaptateur TAT-QA -> schema commun.
 
-DECISIONS DE CONCEPTION
+CHOIX DE CONCEPTION
 
   Unite documentaire : un contexte hybride (table + paragraphes)
   rubrique           : identifiant de table (uid), qui identifie le rapport
@@ -9,12 +9,13 @@ DECISIONS DE CONCEPTION
   pave               : rang du paragraphe ; le tableau porte le pave 1
   source             : interne
 
-  Le split 'test' est exclu, ses reponses n'etant pas publiques (soumission
-  au classement officiel). L'evaluation porte sur 'dev' uniquement.
+  Le split 'test' n'est pas utilise : ses reponses ne sont pas publiques
+  (elles servent au classement officiel). L'evaluation se fait sur 'dev'.
 
-  Le tableau est rendu en texte separe par des barres verticales : la
-  composante lexicale BM25 doit pouvoir apparier exactement les intitules de
-  postes comptables, ce qu'un aplatissement en prose empecherait.
+  Le tableau est ecrit en texte, avec des barres verticales entre les
+  colonnes. BM25 peut ainsi retrouver exactement les intitules des postes
+  comptables, ce qui serait impossible si le tableau etait reecrit en
+  phrases.
 
 Sortie : data/tatqa/tatqa_schema.json
 """
@@ -45,7 +46,7 @@ for split, chemin in SPLITS.items():
         uid = table.get("uid") or f"{split}_{i}"
         rubrique = f"tatqa/{uid}"
 
-        # Le tableau : un document a part entiere, pave 1
+        # Le tableau : un document a part, pave 1
         grille = table.get("table", [])
         if grille:
             texte_table = "\n".join(

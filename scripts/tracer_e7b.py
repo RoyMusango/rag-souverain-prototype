@@ -4,36 +4,34 @@ Figures E7b, detecteurs sur le corpus bancaire.
     python scripts\tracer_e7b.py
 
 Sans argument, le script prend la derniere execution e7b-banque du dossier
-resultats. Pour en designer une precise :
+resultats. Pour en choisir une :
 
     python scripts\tracer_e7b.py --json resultats\e7b-banque-<horodatage>\e7b_banque.json
 
-TROIS FICHIERS DISTINCTS
+TROIS FICHIERS
 
-Une premiere version reunissait les trois panneaux dans une meme image, peu
-lisible en projection : trois messages se superposaient et les valeurs
-devenaient trop petites. Chaque figure porte desormais une seule
-affirmation.
+Une premiere version mettait les trois panneaux dans une seule image, peu
+lisible en projection : trois messages se melangeaient et les valeurs
+etaient trop petites. Chaque figure a maintenant un seul message.
 
     e7b_qualite.png      rappel, precision, F1 des trois detecteurs
     e7b_debit.png        cout du detecteur le plus precis
     e7b_categories.png   rappel par categorie d'entite
 
-AUCUN TITRE DANS LES FIGURES
+PAS DE TITRE DANS LES FIGURES
 
-Le titre est porte par le document qui integre la figure ; le repeter dans
-l'image le ferait apparaitre deux fois. Les figures ne contiennent donc que
-ce que les axes ne disent pas seuls : le nom des axes, la legende et la
-valeur de chaque barre. L'interpretation figure dans le texte qui les
-accompagne.
+Le titre est donne par le document qui contient la figure ; le mettre aussi
+dans l'image le ferait apparaitre deux fois. Les figures ne contiennent que
+le nom des axes, la legende et la valeur de chaque barre. L'explication est
+dans le texte qui les accompagne.
 
 ECHELLE DES ORDONNEES
 
-La qualite et le rappel sont traces de 0 a 1, sans troncature. Un axe
-commencant a 0,80 exagererait l'ecart de precision. L'ecart reel, 0,987
-contre 0,892, reste nettement visible sur une echelle pleine, et le fait que
-les rappels soient indiscernables constitue le resultat : le rappel ne
-departage pas les detecteurs, la precision si.
+La qualite et le rappel vont de 0 a 1, sans couper l'axe. Un axe qui
+commencerait a 0,80 grossirait l'ecart de precision. L'ecart reel, 0,987
+contre 0,892, se voit bien sur l'echelle complete. Que les rappels soient
+presque egaux est le resultat : c'est la precision qui separe
+les detecteurs, pas le rappel.
 """
 
 import argparse
@@ -46,16 +44,15 @@ import matplotlib.pyplot as plt   # noqa: E402
 
 SORTIE = Path("figures")
 
-# Memes couleurs que tracer_e7.py : les figures se lisent cote a cote dans le
-# chapitre 5, et un moteur doit y garder la meme couleur.
+# Memes couleurs que tracer_e7.py : les figures se lisent ensemble dans le
+# chapitre 5, et un moteur doit garder la meme couleur partout.
 COULEURS = {"spacy": "#2b6cb0", "camembert": "#2f855a", "presidio": "#a0aec0"}
 LIBELLES = {"spacy": "spaCy (souverain)", "camembert": "CamemBERT (souverain)",
             "presidio": "Presidio"}
 COURTS = {"spacy": "spaCy", "camembert": "CamemBERT", "presidio": "Presidio"}
 
 # Detecteurs statistiques d'abord, deterministes ensuite. L'ordre alphabetique
-# melangerait les deux familles et effacerait la separation que la figure
-# doit montrer.
+# melangerait les deux familles, que la figure doit separer.
 STATISTIQUES = ("PERSONNE", "LIEU", "ORGANISATION")
 DETERMINISTES = ("IBAN", "CARTE", "IDENTIFIANT")
 
@@ -154,7 +151,7 @@ def figure_debit(globales, moteurs):
 # ------------------------------------------------------------------ figure 3
 
 def figure_categories(par_categorie, moteurs):
-    """Rappel par categorie d'entite, appariement strict sur l'etiquette."""
+    """Rappel par categorie d'entite, avec l'etiquette exigee."""
     categories = ordonner(list(par_categorie))
 
     figure, axes = plt.subplots(figsize=(10.2, 4.8))
@@ -172,8 +169,8 @@ def figure_categories(par_categorie, moteurs):
             axes.text(barre.get_x() + barre.get_width() / 2, valeur + 0.014,
                       f"{valeur:.3f}", ha="center", fontsize=8)
 
-    # Trait de separation entre les deux familles de detection : il porte la
-    # lecture principale de la figure sans ajouter de texte.
+    # Trait de separation entre les deux familles de detection : c'est le
+    # message principal de la figure.
     frontiere = sum(1 for c in categories if c in STATISTIQUES)
     if 0 < frontiere < len(categories):
         axes.axvline(frontiere - 0.5, color="#4a5568", linestyle="--",
@@ -216,8 +213,8 @@ def main():
                and m.get("rappel") is not None]
     if not moteurs:
         raise SystemExit(
-            "aucun moteur exploitable dans ce fichier : tous ont echoue, "
-            "ou le format differe de celui attendu.")
+            "aucun moteur utilisable dans ce fichier : tous ont echoue, "
+            "ou le format n'est pas celui attendu.")
     print(f"moteurs : {', '.join(moteurs)}")
 
     figure_qualite(globales, moteurs)

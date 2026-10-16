@@ -1,24 +1,23 @@
 r"""
-Comparaison de deux executions : parite materielle ou degradation mesuree.
+Compare deux executions : parite materielle ou degradation mesuree.
 
-    py -3.11 scripts\comparer_materiel.py ^
-        --reference resultats\index-complet-20260813-... ^
-        --candidat  resultats\index-parite-20260813-... ^
+    python scripts\comparer_materiel.py `
+        --reference resultats\index-complet-20260813-... `
+        --candidat  resultats\index-parite-20260813-... `
         --nature parite
 
-Deux natures de comparaison :
+Deux types de comparaison :
 
-  --nature parite    meme modele, materiel different. La derive attendue est
-                     nulle, et c'est le resultat recherche : il autorise a
-                     transferer au deploiement souverain les mesures
-                     obtenues sur substrat accelere, ce que la section 4.1.1
-                     postule sans le verifier.
+  --nature parite    meme modele, autre materiel. On attend une derive
+                     nulle. Si c'est le cas, les mesures faites sur GPU
+                     valent aussi pour un deploiement souverain. La section
+                     4.1.1 le suppose sans le verifier.
 
-  --nature degrade   modele allege. Une derive est attendue, et c'est elle
-                     qui est chiffree : le cout en qualite de la
-                     souverainete materielle, annonce a la section 3.1.5.
+  --nature degrade   modele plus leger. On attend une derive, et c'est elle
+                     qu'on mesure : ce que coute en qualite un materiel
+                     modeste (section 3.1.5).
 
-Le script produit un tableau directement reportable au chapitre 5.
+Le script affiche un tableau que l'on peut reprendre tel quel au chapitre 5.
 """
 
 import argparse
@@ -40,7 +39,7 @@ def charger(dossier):
 
 
 def charger_vecteurs(dossier_embeddings):
-    """Relit les vecteurs persistes d'un profil, si numpy est disponible."""
+    """Relit les vecteurs sauvegardes d'un profil, si numpy est disponible."""
     try:
         import numpy as np
     except ImportError:
@@ -84,15 +83,15 @@ def main():
           f"({candidat['materiel']['role']})")
     print("=" * 72)
 
-    # Controle prealable : comparer deux executions n'ayant pas vu les memes
-    # donnees mesurerait le corpus et non le materiel.
+    # Verification prealable : si les deux executions n'ont pas lu les memes
+    # donnees, l'ecart viendrait aussi du corpus, pas seulement du materiel.
     if reference["manifeste_hash"] != candidat["manifeste_hash"]:
-        print("\n  ATTENTION — les manifestes de donnees different.")
-        print("  Les deux executions n'ont pas vu les memes corpus ; l'ecart")
-        print("  observe melange effet materiel et effet donnees.")
+        print("\n  ATTENTION : les manifestes de donnees sont differents.")
+        print("  Les deux executions n'ont pas lu les memes corpus : l'ecart")
+        print("  observe melange l'effet du materiel et celui des donnees.")
 
     if reference["commit"] != candidat["commit"]:
-        print(f"\n  ATTENTION — commits differents "
+        print(f"\n  ATTENTION : commits differents "
               f"({reference['commit']} contre {candidat['commit']}).")
 
     rapport = {"reference": reference["identifiant"],

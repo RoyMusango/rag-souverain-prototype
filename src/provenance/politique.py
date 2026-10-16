@@ -1,17 +1,15 @@
 """
 Provenance, attribution et politique de reponse (pilier 4, section 3.5).
 
-La provenance n'est pas reconstruite a posteriori : elle est transportee.
-Chaque fragment porte, dans ses metadonnees, sa source, son palier
-d'origine, son etiquette de confiance et son score de fiabilite, de l'index
-jusqu'a l'affichage. Cette continuite rend l'attribution effective plutot que
-declarative, car apres l'indexation la provenance serait irrecuperable.
+La provenance suit chaque fragment de l'index jusqu'a l'affichage : sa
+source, son palier d'origine, son etiquette de confiance et son score de
+fiabilite sont dans ses metadonnees. Elle n'est jamais reconstruite apres
+coup, car ce ne serait plus possible apres l'indexation.
 
-Ce meme substrat porte la piste d'audit attendue en contexte bancaire : la
-journalisation exigee par le reglement europeen sur l'IA et la resilience
-operationnelle visee par DORA reposent sur la capacite a retracer, pour
-chaque reponse, les sources mobilisees, les frontieres franchies et le
-palier employe.
+La piste d'audit demandee dans une banque repose aussi sur ces metadonnees.
+Le reglement europeen sur l'IA (journalisation) et DORA (resilience
+operationnelle) demandent de pouvoir retrouver, pour chaque reponse, les
+sources utilisees, les frontieres franchies et le palier employe.
 """
 
 import json
@@ -40,7 +38,7 @@ class Assertion:
 
 @dataclass
 class Reponse:
-    """Reponse attribuee, telle qu'elle est restituee a l'utilisateur."""
+    """Reponse avec ses sources, telle qu'elle est montree a l'utilisateur."""
     assertions: list = field(default_factory=list)
     abstention: bool = False
     motif: str = ""
@@ -48,7 +46,7 @@ class Reponse:
     frontieres: list = field(default_factory=list)
 
     def rendre(self):
-        """Rendu texte, chaque assertion suivie de son attribution."""
+        """Texte de la reponse, chaque assertion suivie de ses sources."""
         if self.abstention:
             return f"[{ABSTENTION}] {self.motif}"
         lignes = []
@@ -65,9 +63,9 @@ class Reponse:
 def appliquer(assertions, seuil_corroboration=2):
     """Applique la politique de reponse a une liste d'assertions.
 
-    Une assertion a enjeu non corroboree n'est pas emise comme un fait mais
-    signalee comme non verifiee. En l'absence de tout fragment soutenant la
-    reponse, le systeme s'abstient plutot que d'inventer.
+    Une assertion a enjeu sans corroboration est signalee comme non
+    verifiee. Si aucun fragment n'appuie la reponse, le systeme s'abstient
+    au lieu d'inventer.
     """
     if not assertions or all(not a.fragments for a in assertions):
         return Reponse(
@@ -88,11 +86,11 @@ def appliquer(assertions, seuil_corroboration=2):
 
 
 class PisteAudit:
-    """Journal des reponses, pour l'auditabilite prudentielle.
+    """Journal des reponses, pour l'audit prudentiel.
 
-    Une entree par reponse : sources mobilisees, frontieres franchies, palier
-    employe, escalades. Un fragment empoisonne ou une erreur heritee peut
-    ainsi etre remonte jusqu'a son origine.
+    Une entree par reponse : sources utilisees, frontieres franchies, palier
+    employe. On peut ainsi remonter un fragment empoisonne ou une erreur
+    jusqu'a son origine.
     """
 
     def __init__(self, chemin="data/piste_audit.jsonl"):

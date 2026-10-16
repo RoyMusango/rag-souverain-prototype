@@ -1,11 +1,11 @@
-﻿# --- Données : jamais versionnées ---
+﻿# --- Données : jamais dans le dépôt ---
 data/
 tools/synthea/
 output/
 *.parquet
 *.arrow
 
-# --- Secrets : jamais versionnés ---
+# --- Secrets : jamais dans le dépôt ---
 .env
 .env.*
 
@@ -40,7 +40,7 @@ Thumbs.db
 *.run.xml
 *.synctex.gz
 
-# ajoute par pousser_journal.ps1
+# ajouté par pousser_journal.ps1
 *.npy
 *.pkl
 *.snapshot

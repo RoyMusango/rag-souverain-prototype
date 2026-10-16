@@ -1,21 +1,21 @@
 """
 Politique de confidentialite de la requete sortante (pilier 2, section 3.3).
 
-Ce module orchestre les briques du pilier : gabarit fige sur l'entite, budget
-d'exposition, verrou de sortie. Il repond a la question posee par la
+Ce module assemble les elements du pilier : gabarit fige sur l'entite,
+budget d'exposition et verrou de sortie. Il repond a la question posee a la
 Frontiere A :
 
-    la requete peut-elle etre emise, et sous quelle forme ?
+    la requete peut-elle sortir, et sous quelle forme ?
 
-Quatre issues, alignees sur celles du routage (section 3.2) :
+Quatre issues possibles, les memes que pour le routage (section 3.2) :
     EMETTRE    la requete generalisee franchit A
-    PRIVEE     bascule vers la recuperation privee sur corpus fixe
-    ESCALADE   franchissement sous validation humaine tracee
-    ABSTENIR   aucune emission
+    PRIVEE     passage a la recuperation privee sur corpus fixe
+    ESCALADE   sortie validee par un humain et enregistree
+    ABSTENIR   rien ne sort
 
-Le principe directeur reste hors de ce module, car il est architectural et
-non decisionnel : aucun embedding ne franchit A. Le contenu externe est
-rapatrie en texte puis vectorise localement (voir src/index/).
+La regle "aucun embedding ne franchit A" n'est pas verifiee ici : elle
+decoule de l'architecture. Le contenu externe est rapatrie en texte puis
+vectorise en local (voir src/index/).
 """
 
 from dataclasses import dataclass, field
@@ -53,8 +53,8 @@ class PolitiqueConfidentialite:
         self.population = list(population)
         self.registre = registre or mod_budget.Registre()
         self.k = k if k is not None else self.registre.k
-        # Une source structuree a corpus fixe se prete a la recuperation
-        # privee ; une source ouverte non (section 3.3.3).
+        # La recuperation privee est possible sur une source structuree a
+        # corpus fixe, pas sur une source ouverte (section 3.3.3).
         self.source_structuree = source_structuree
 
     # ------------------------------------------------------------ gabarit
@@ -62,9 +62,9 @@ class PolitiqueConfidentialite:
     def gabarit_de(self, cle_entite, entite):
         """Recupere le gabarit fige de l'entite, ou le calcule et le fige.
 
-        Le calcul n'a lieu qu'une fois par entite et par deploiement ; toute
-        session ulterieure sur la meme entite reutilise ce gabarit. C'est
-        cette propriete qui rend la liaison de sessions inoffensive.
+        Le calcul n'a lieu qu'une fois par entite et par deploiement. Les
+        sessions suivantes sur la meme entite reutilisent ce gabarit. C'est
+        pour cela que croiser deux sessions n'apprend rien a l'adversaire.
         """
         existant = self.registre.entree(cle_entite)["gabarit"]
         if existant is not None:
@@ -80,8 +80,8 @@ class PolitiqueConfidentialite:
         """Decide du sort d'une requete revelant `attributs` sur `entite`.
 
         La fuite est calculee sur l'union des attributs deja reveles et de
-        ceux qu'ajoute la requete : c'est la composition, qui distingue une
-        protection par session d'une protection par entite.
+        ceux qu'ajoute la requete. C'est ce cumul qui fait la difference entre
+        une protection par session et une protection par entite.
         """
         gabarit = self.gabarit_de(cle_entite, entite)
         entree = self.registre.entree(cle_entite)
@@ -124,11 +124,10 @@ class PolitiqueConfidentialite:
                   session=None):
         """Force l'emission sous validation humaine tracee.
 
-        A n'appeler qu'apres autorisation explicite d'un operateur habilite.
-        L'appel est journalise dans le registre, ce qui le rend auditable.
-        Une defense depourvue de sortie legitime finit par etre contournee
-        hors du perimetre instrumente, ce qui constitue le cas le plus
-        defavorable.
+        A appeler seulement apres l'accord explicite d'un operateur habilite.
+        L'appel est enregistre dans le registre et peut donc etre audite.
+        Cette sortie autorisee est utile : sans elle, les utilisateurs
+        finiraient par contourner le systeme en dehors de tout controle.
         """
         decision = self.evaluer(cle_entite, entite, attributs, session)
         self.registre.journaliser_escalade(
@@ -151,10 +150,10 @@ class PolitiqueConfidentialite:
     # ------------------------------------------------------------ rendu
 
     def formuler(self, entite, decision):
-        """Rend la requete generalisee effectivement emise sur la Frontiere A.
+        """Construit la requete generalisee qui sort par la Frontiere A.
 
-        La valeur brute d'un quasi-identifiant n'est jamais emise : seule sa
-        forme generalisee sous le gabarit franchit la frontiere.
+        La valeur brute d'un quasi-identifiant ne sort jamais : seule sa
+        forme generalisee selon le gabarit franchit la frontiere.
         """
         if not decision.emise:
             return ""

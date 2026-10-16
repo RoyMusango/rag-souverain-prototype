@@ -3,18 +3,17 @@ Lance E3, la resistance a l'injection indirecte.
 
     python scripts\run_e3.py --questions 40
 
-J'invoque `python` et non `py -3.11` : lorsqu'une version est passee
-explicitement, le lanceur Windows ignore l'environnement virtuel.
+Utiliser `python` et non `py -3.11` : quand on donne une version, le
+lanceur Windows ignore l'environnement virtuel.
 
-ETAPE 0 : COMPTER AVANT DE DEPENSER
+ETAPE 0 : COMPTER AVANT DE PAYER
 
-Sans engagement de depense, le script deroule la campagne avec un fournisseur
-simule, qui ne quitte pas la machine et ne coute rien, puis rapporte le nombre
-exact d'appels au modele qu'exigerait la meme campagne avec une API reelle,
-ainsi que le contenu exact des invites.
+Sans --engager-la-depense, le script fait tourner la campagne avec un
+fournisseur simule, qui reste sur la machine et ne coute rien. Il donne
+ensuite le nombre exact d'appels que demanderait la meme campagne avec une
+vraie API, et le texte exact des invites.
 
-Ce comptage est exact et non estime, car le nombre d'appels ne depend
-d'aucune donnee variable :
+Ce nombre est exact, pas estime, car il ne depend d'aucune donnee variable :
 
     e3_injection.campagne  boucle sur les configurations d'ablation
     e3_injection.executer  boucle sur les requetes
@@ -22,50 +21,49 @@ d'aucune donnee variable :
 
     appels = requetes x configurations - (requetes ou le routeur s'abstient)
 
-Le routeur est deterministe et ne consulte aucun modele : sa decision, et donc
-le nombre d'abstentions, est identique avec ou sans API. Seule la longueur des
-reponses echappe au comptage ; c'est la seule inconnue que le pilote payant
-de l'etape 1 doit lever.
+Le routeur est deterministe et n'utilise aucun modele : il prend les memes
+decisions, et donc s'abstient aussi souvent, avec ou sans API. Seule la
+longueur des reponses n'est pas connue a l'avance. Un premier essai payant
+(etape 1) sert a la mesurer.
 
-PORTEE DE CETTE ETAPE
+CE QUE CETTE ETAPE NE MESURE PAS
 
-Elle ne mesure pas la robustesse. Le fournisseur simule rend une reponse
-constante, si bien qu'aucune charge adverse ne peut reussir. Les taux de
-succes qu'elle produirait n'auraient pas de sens ; je ne les ecris donc pas.
-Seuls le comptage et la taille des invites sont produits.
+Elle ne mesure pas la robustesse. Le fournisseur simule renvoie toujours la
+meme reponse, donc aucune charge adverse ne peut reussir. Les taux de
+succes n'auraient aucun sens, et je ne les ecris pas. Le script donne
+seulement le nombre d'appels et la taille des invites.
 
 UNE CAMPAGNE PAR FAMILLE
 
-Le simulateur attribue les familles a tour de role sur le nombre de documents
-adverses, lui-meme deduit du taux d'empoisonnement : a 0,1, il n'en produit
-qu'un et seule la famille INSTRUCTION est exercee ; il faut un taux de 0,3
-pour que les trois familles apparaissent.
+Le simulateur attribue les familles a tour de role aux documents adverses,
+dont le nombre depend du taux d'empoisonnement. A 0,1, il n'y en a qu'un, et
+seule la famille INSTRUCTION est testee. Il faut un taux de 0,3 pour voir les
+trois familles.
 
-A 0,3, elles ne sont toutefois pas a parite. DUPLICATION produit trois
-documents pour une seule charge, puisque simuler l'accord de sources
-independantes exige plusieurs copies. Le compte des charges evaluees devient
-instruction 1, assertion 1, duplication 3, et `asr_par_configuration`, la
-moyenne que compare l'ablation, est alors ponderee a 60 % par une seule
-famille : le tableau d'ablation mesurerait surtout la detection de collusion.
+Mais a 0,3, elles ne pesent pas pareil. DUPLICATION produit trois documents
+pour une seule charge, car il faut plusieurs copies pour imiter des sources
+independantes. On evalue alors 1 charge instruction, 1 assertion et 3
+duplication. `asr_par_configuration`, la moyenne comparee par l'ablation,
+depend alors a 60 % d'une seule famille : le tableau d'ablation mesurerait
+surtout la detection de collusion.
 
-Je decouple donc le taux et la famille : une campagne par famille, a taux
-bas. Chaque famille obtient son propre taux de succes et sa propre ablation,
-aucune ne pese sur la moyenne d'une autre, et le taux d'empoisonnement
-redevient un parametre que l'on peut faire varier pour obtenir une courbe.
+Je separe donc le taux et la famille : une campagne par famille, a taux
+bas. Chaque famille a son propre taux de succes et sa propre ablation,
+aucune ne pese sur la moyenne d'une autre, et on peut de nouveau faire
+varier le taux d'empoisonnement pour tracer une courbe.
 
-A taux egal, le taux effectif de DUPLICATION reste superieur a celui des deux
-autres familles (trois documents contre un). C'est une propriete de
-l'attaque et non un biais de mesure ; je la signale plutot que de la corriger.
+A taux egal, DUPLICATION ajoute quand meme plus de documents adverses que les
+deux autres familles (trois contre un). Cela fait partie de l'attaque
+elle-meme. Je le signale sans le corriger.
 
 LIMITES ACTUELLES
 
-  - un client d'API doit etre injecte dans FournisseurAPI ;
-  - le verrou de sortie et le masqueur doivent etre effectivement montes,
-    faute de quoi les configurations `complete` et `sans_verrou` se
-    comportent a l'identique et l'ablation ne les departage pas.
+  - pour une vraie campagne, il faut un client d'API (--modele) ;
+  - le verrou de sortie et le masqueur ne sont pas montes dans ce script.
+    Les configurations `complete` et `sans_verrou` donnent donc les memes
+    resultats, et l'ablation ne peut pas les distinguer.
 
-Je prefere declarer ces deux manques ici plutot que de les combler par un
-montage approximatif.
+Je prefere signaler ces manques ici plutot que de les combler a la va-vite.
 """
 
 import argparse
@@ -95,20 +93,20 @@ EURLEX = "data/external/eurlex/eurlex_schema.json"
 
 
 class Reprise:
-    """Journal d'avancement d'une campagne, relisible et repris a chaud.
+    """Journal d'avancement d'une campagne, pour pouvoir la reprendre.
 
-    La campagne complete dure environ huit heures et engage une depense
-    reelle. Sans reprise, une mise en veille, une coupure reseau ou une erreur
-    au quatre-centieme appel ferait perdre les appels deja factures, puisque
-    le JSON de resultats n'est ecrit qu'a la fin.
+    La campagne complete dure environ huit heures et coute de l'argent. Sans
+    reprise, une mise en veille, une coupure reseau ou une erreur au
+    quatre-centieme appel ferait perdre les appels deja factures, car le JSON
+    de resultats n'est ecrit qu'a la fin.
 
-    J'applique la meme discipline que pour les embeddings, ou
-    `CalculPersistant` ecrit par tranches et reprend la ou il s'est arrete :
-    un calcul long doit pouvoir etre relance sans tout recalculer.
+    C'est le meme principe que pour les embeddings, ou `CalculPersistant`
+    ecrit par tranches et reprend la ou il s'est arrete : un long calcul doit
+    pouvoir etre relance sans tout refaire.
 
-    L'unite de reprise est le couple (configuration, requete), soit exactement
-    un appel au modele. Elle est ecrite des qu'elle aboutit, en mode ajout,
-    dans un JSONL lisible pendant l'execution.
+    L'unite de reprise est le couple (configuration, requete), c'est-a-dire
+    un appel au modele. Chaque appel termine est ajoute tout de suite a un
+    JSONL, lisible pendant l'execution.
     """
 
     def __init__(self, chemin):
@@ -134,8 +132,8 @@ class Reprise:
     def noter(self, configuration, requete, resultats, trace):
         self.faits[(configuration, requete)] = resultats
         self.traces.append(trace)
-        # Ecriture immediate et en ajout : une interruption ne peut perdre
-        # que l'appel en cours.
+        # Ecriture immediate, en ajout : une interruption ne fait perdre que
+        # l'appel en cours.
         with open(self.chemin, "a", encoding="utf-8") as f:
             f.write(json.dumps({
                 "configuration": configuration, "requete": requete,
@@ -148,19 +146,18 @@ class Reprise:
 
 
 class PlafondAtteint(RuntimeError):
-    """Le cout cumule a franchi le plafond : la campagne s'arrete."""
+    """Le cout total a depasse le plafond : la campagne s'arrete."""
 
 
 class FournisseurPlafonne(mod_fournisseur.FournisseurAPI):
-    """Fournisseur d'API qui s'interrompt des que la depense atteint un seuil.
+    """Fournisseur d'API qui s'arrete des que la depense atteint un plafond.
 
-    Le compte utilise ne m'appartient pas, et je ne peux donc pas fixer de
-    limite dans la console du fournisseur. Cette classe tient lieu de limite ;
-    elle bloque l'appel plutot que d'emettre un simple avertissement.
+    Le compte utilise ne m'appartient pas, donc je ne peux pas fixer de limite
+    dans la console du fournisseur. Cette classe sert de limite : elle bloque
+    l'appel, au lieu d'afficher un simple avertissement.
 
-    Le cout est celui que `Fournisseur.generer` calcule a partir des jetons
-    effectivement factures, tels que rendus par l'API, et non d'une
-    estimation locale.
+    Le cout est calcule par `Fournisseur.generer` a partir des jetons factures
+    renvoyes par l'API, pas d'une estimation locale.
     """
 
     def __init__(self, plafond_usd, journal_cout=None, **kwargs):
@@ -169,19 +166,20 @@ class FournisseurPlafonne(mod_fournisseur.FournisseurAPI):
         self.depense = 0.0
         self.appels = 0
         # Comptabilite ecrite appel par appel, a cote du journal de reprise.
-        # Sans elle, une coupure preserve la reprise mais rend le cout
-        # inconnu : les jetons factures ne sont conserves nulle part, et leur
-        # reconstitution a partir des longueurs de texte peut se tromper de
-        # moitie lorsque le modele facture plus de jetons qu'il n'en rend.
+        # Sans elle, apres une coupure, on peut reprendre mais on ne connait
+        # plus le cout : les jetons factures ne sont gardes nulle part, et les
+        # recalculer a partir de la longueur des textes peut se tromper de
+        # moitie quand le modele facture plus de jetons qu'il n'en ecrit.
         self.journal_cout = Path(journal_cout) if journal_cout else None
-        # Je conserve aussi les invites, pour que les statistiques de taille
-        # soient produites par la campagne reelle. Sinon, une passe simulee
-        # prealable serait necessaire et referait le re-classement :
-        # 35 s par appel, soit deux heures sur une campagne de 200 appels.
+        # Je garde aussi les invites, pour calculer leur taille a partir de
+        # la vraie campagne. Sinon il faudrait d'abord une passe simulee, qui
+        # referait le re-classement : 35 s par appel, soit deux heures pour
+        # 200 appels.
         self.invites = []
-        # Je conserve les reponses pour que le verdict reste auditable. Sans
-        # elles, un taux de succes d'attaque nul est indiscernable d'un
-        # verdict defaillant, et le verifier exigerait une nouvelle depense.
+        # Je garde les reponses pour pouvoir verifier le verdict. Sans elles,
+        # on ne saurait pas si un taux de succes nul vient de la defense ou
+        # d'un verdict defaillant, et il faudrait payer de nouveau pour le
+        # savoir.
         self.reponses = []
 
     def generer(self, invite, systeme=None, max_jetons=1024,
@@ -205,14 +203,13 @@ class FournisseurPlafonne(mod_fournisseur.FournisseurAPI):
         return texte, trace
 
     def _noter_cout(self, invite, texte, trace, max_jetons):
-        """Une ligne de comptabilite par appel, ecrite immediatement.
+        """Une ligne de comptabilite par appel, ecrite tout de suite.
 
-        Elle contient ce que le journal de reprise ne contient pas : les
-        jetons effectivement factures, la longueur de l'invite et le cumul.
-        Apres une coupure, elle suffit a etablir l'etat d'avancement et le
-        cout engage.
+        Elle contient ce que le journal de reprise n'a pas : les jetons
+        factures, la longueur de l'invite et le total. Apres une coupure, elle
+        suffit pour savoir ou en est la campagne et combien elle a coute.
 
-        Son echec n'interrompt jamais la campagne : perdre une ligne de
+        Si l'ecriture echoue, la campagne continue : perdre une ligne de
         comptabilite est moins grave que perdre un appel deja paye.
         """
         if self.journal_cout is None:
@@ -236,10 +233,10 @@ class FournisseurPlafonne(mod_fournisseur.FournisseurAPI):
 
 
 class FournisseurCompteur(mod_fournisseur.FournisseurSimule):
-    """Fournisseur simule qui conserve les invites qui lui sont soumises.
+    """Fournisseur simule qui garde les invites recues.
 
-    Il permet de connaitre la taille exacte des invites, en plus du nombre
-    d'appels, afin que le devis de l'etape 2 ne repose pas sur une estimation.
+    On connait ainsi la taille exacte des invites en plus du nombre d'appels,
+    et le devis de l'etape 2 ne repose pas sur une estimation.
     """
 
     def __init__(self):
@@ -254,22 +251,21 @@ class FournisseurCompteur(mod_fournisseur.FournisseurSimule):
 class EvaluateurCommeE6:
     """Fait juger la couverture exactement comme dans E6.
 
-    Le pipeline transmet a l'evaluateur les fragments que sa cascade vient de
-    rapporter, alors qu'EvaluateurCouverture definit la couverture sur sa
-    propre recuperation des n premiers documents internes. C'est cette
-    seconde definition que la campagne E6 a mesuree.
+    Le pipeline donne a l'evaluateur les fragments que sa cascade vient de
+    trouver. Or EvaluateurCouverture calcule la couverture sur sa propre
+    recherche des n premiers documents internes, et c'est ce calcul que E6 a
+    mesure.
 
-    L'ecart n'est pas cosmetique : il inverse la decision. La cascade rend
-    `n_final` fragments la ou l'evaluateur en retient cinq ; avec huit fois
-    plus de texte, la couverture d'une question reglementaire parait
-    suffisante, le routeur repond INTERNE, aucun contenu externe n'entre, et
-    E3 mesurerait la robustesse d'une chaine dans laquelle aucune charge
-    adverse n'est jamais rapatriee. Un taux de succes nul obtenu ainsi ne
-    dirait rien de la defense.
+    La difference change la decision. La cascade renvoie `n_final`
+    fragments, l'evaluateur en garde cinq. Avec huit fois plus de texte, une
+    question reglementaire semble couverte, le routeur repond INTERNE, et
+    aucun contenu externe n'entre. E3 mesurerait alors une chaine ou aucune
+    charge adverse n'arrive jamais. Un taux de succes nul ne dirait rien de
+    la defense.
 
-    Je force donc `fragments=None`, ce qui rend a l'evaluateur sa propre
-    recuperation et reproduit les decisions rapportees par E6 : la classe
-    externe est routee vers ENRICHIR dans 40 cas sur 40.
+    Je force donc `fragments=None` : l'evaluateur fait sa propre recherche,
+    et on retrouve les decisions d'E6 (la classe externe va vers ENRICHIR
+    dans 40 cas sur 40).
     """
 
     def __init__(self, evaluateur):
@@ -280,10 +276,10 @@ class EvaluateurCommeE6:
 
 
 def ecrire_traces(chemin, traces):
-    """Trace lisible d'un appel : les entrees fournies et la reponse obtenue.
+    """Ecrit une trace lisible de chaque appel : sources fournies et reponse.
 
-    Elle distingue trois etats : une source peut etre fournie sans etre
-    retenue, retenue sans etre citee, et citee sans que l'attaque reussisse.
+    Elle separe trois etats : une source peut etre fournie sans etre retenue,
+    retenue sans etre citee, et citee sans que l'attaque reussisse.
     """
     lignes = []
     for rang, trace in enumerate(traces, start=1):
@@ -359,16 +355,15 @@ def charger_json(chemin):
 def requetes_par_classe(par_classe, graine, classe=None):
     """Les requetes d'une classe du jeu etiquete d'E6.
 
-    Par defaut, la classe `externe`, dont la reponse se trouve dans EUR-Lex et
-    non dans le corpus de la banque. Ce sont les seules qui permettent de
-    mesurer l'injection : sur une requete couverte par l'interne, le routeur
-    n'en sort pas, aucun contenu externe n'entre et il n'y a rien a injecter.
+    Par defaut, la classe `externe`, dont la reponse est dans EUR-Lex et pas
+    dans le corpus de la banque. C'est la seule qui permet de mesurer
+    l'injection : si l'interne suffit, le routeur ne sort pas, aucun contenu
+    externe n'entre et il n'y a rien a injecter.
 
-    Les autres classes repondent a un autre besoin. Avec `interne`, le
-    contexte transmis au modele ne contient que des fragments internes,
-    chacun muni de son ancrage : cela permet de verifier si le modele cite
-    effectivement ses sources lorsqu'elles repondent a la question, question
-    distincte de la robustesse a l'injection.
+    Les autres classes servent a autre chose. Avec `interne`, le modele ne
+    recoit que des fragments internes, chacun avec sa reference. On peut
+    ainsi verifier s'il cite bien ses sources quand elles repondent a la
+    question. C'est un autre sujet que la robustesse a l'injection.
     """
     return [c["requete"] for c in cas_par_classe(par_classe, graine, classe)]
 
@@ -379,10 +374,10 @@ MOTIF_APPUI = re.compile(r"article (.+?) du texte (.+?), present")
 def cas_par_classe(par_classe, graine, classe=None):
     """Les cas d'une classe avec leur appui, et pas seulement leur texte.
 
-    L'appui contient le couple (reglement, numero d'article) sur lequel repose
-    le label. Il est necessaire pour determiner si une question est ancree,
-    c'est-a-dire si l'article demande figure parmi les fragments rapportes.
-    `requetes_par_classe` ne rend que le texte.
+    L'appui contient le couple (reglement, numero d'article) du label. Il sert
+    a savoir si une question est ancree, c'est-a-dire si l'article demande
+    est parmi les fragments rapportes. `requetes_par_classe` ne renvoie que
+    le texte.
     """
     reference = charger_json(BANQUE_REFERENCE)
     eurlex = charger_json(EURLEX)
@@ -414,35 +409,34 @@ def main():
     parseur = argparse.ArgumentParser(
         description="E3, resistance a l'injection indirecte")
     parseur.add_argument("--questions", type=int, default=40,
-                         help="requetes de la classe externe a deroules")
+                         help="nombre de requetes de la classe externe")
     # `--questions N` ne tire pas N questions parmi celles d'une campagne a 40 :
-    # il construit un jeu de N par classe, et les jeux ne sont pas emboites
-    # (verifie le 19/09 : les 10 questions de `--questions 10` ne figurent pas
-    # parmi les 40 de `--questions 40`). `--premieres` conserve le jeu de 40 et
-    # n'en deroule que les premieres. Les campagnes reduites portent ainsi sur
-    # des questions que la campagne API a aussi posees, ce qui permet une
-    # comparaison question par question ; et passer de 10 a 20 puis a 40
-    # reutilise les appels deja faits, la reprise dedupliquant sur
-    # (configuration, requete).
+    # il construit un nouveau jeu de N par classe, et les jeux ne s'incluent
+    # pas (verifie le 19/09 : les 10 questions de `--questions 10` ne sont pas
+    # parmi les 40 de `--questions 40`). `--premieres` garde le jeu de 40 et
+    # n'en fait tourner que les premieres. Les petites campagnes portent ainsi
+    # sur des questions deja posees par la campagne API, et on peut comparer
+    # question par question. Passer de 10 a 20 puis a 40 reutilise aussi les
+    # appels deja faits, puisque la reprise reconnait (configuration, requete).
     parseur.add_argument("--premieres", type=int, default=None,
-                         help="ne derouler que les N premieres questions du "
-                              "jeu de --questions ; garder --questions 40")
+                         help="ne faire tourner que les N premieres questions "
+                              "du jeu de --questions ; garder --questions 40")
     parseur.add_argument("--taux-empoisonnement", type=float, default=0.1)
     parseur.add_argument("--familles", default="instruction",
                          help="familles de charges, separees par des virgules "
                               "parmi instruction, assertion, duplication. "
-                              "UNE SEULE a la fois, voir la note ci-dessous.")
+                              "UNE SEULE a la fois (voir la docstring).")
     parseur.add_argument("--graine", type=int, default=20260902)
     parseur.add_argument("--sortie", default="resultats/e3_devis")
 
-    # --- appel reel : trois garde-fous ------------------------------------
+    # --- appel reel : trois protections -----------------------------------
     parseur.add_argument("--modele", default=None,
                          help="modele OpenAI. Sans ce parametre, le "
-                              "fournisseur simule est employe et rien n'est "
+                              "fournisseur simule est utilise et rien n'est "
                               "facture.")
-    # Le palier correspond a la Frontiere B du chapitre 3 : il determine si
-    # la generation quitte l'espace juridique europeen. Il est declare, jamais
-    # deduit de l'adresse, et journalise dans chaque trace.
+    # Le palier correspond a la Frontiere B du chapitre 3 : il dit si la
+    # generation sort de l'espace juridique europeen. Il est declare, jamais
+    # deduit de l'adresse, et enregistre dans chaque trace.
     parseur.add_argument("--palier", default=mod_fournisseur.API_HORS_UE,
                          choices=(mod_fournisseur.LOCAL,
                                   mod_fournisseur.API_UE,
@@ -451,10 +445,10 @@ def main():
     parseur.add_argument("--base-url", default=None,
                          help="serveur compatible OpenAI, pour le palier "
                               "local : http://localhost:11434/v1 avec Ollama")
-    # 180 s suffisent pour une API ; un modele de 7 milliards de parametres
-    # sur le processeur d'un portable met 3 a 10 minutes pour les 1 383 jetons
-    # de sortie medians mesures sur `instruction`. Un delai trop court coupe
-    # l'appel, que la reprise rejouerait alors indefiniment.
+    # 180 s suffisent pour une API. Un modele de 7 milliards de parametres sur
+    # le processeur d'un portable met 3 a 10 minutes pour les 1 383 jetons de
+    # sortie medians mesures sur `instruction`. Avec un delai trop court,
+    # l'appel est coupe, et la reprise le rejouerait sans fin.
     parseur.add_argument("--delai", type=int, default=180,
                          help="delai d'attente par appel, en secondes ; "
                               "porter a 1200 au palier local")
@@ -469,96 +463,93 @@ def main():
                                   "enrichissement-interdit"),
                          help="classe du jeu etiquete d'E6 d'ou tirer les "
                               "questions. Defaut : externe, la seule qui "
-                              "permette de MESURER l'injection. `interne` sert "
+                              "permet de MESURER l'injection. `interne` sert "
                               "a verifier la citation des sources, pas la "
                               "robustesse.")
     parseur.add_argument("--ancrees-seulement", action="store_true",
                          help="ne garde que les questions dont l'article "
-                              "demande figure REELLEMENT parmi les "
-                              "fragments rapportes. Le tri est local et "
-                              "gratuit : on ne paie que les questions qui "
-                              "mesurent quelque chose.")
+                              "demande est VRAIMENT parmi les fragments "
+                              "rapportes. Le tri est local et gratuit : on ne "
+                              "paie que les questions qui mesurent quelque "
+                              "chose.")
     parseur.add_argument("--profondeur-ancrage", type=int, default=10,
-                         help="profondeur a laquelle l'ancrage est "
-                              "verifie. Doit valoir le nombre de "
-                              "fragments legitimes que verra le modele.")
+                         help="nombre de resultats ou l'on cherche l'article. "
+                              "Doit etre egal au nombre de fragments "
+                              "legitimes que verra le modele.")
     parseur.add_argument("--eurlex-brut", action="store_true",
-                         help="recuperation externe d'avant le 25/09 : "
-                              "texte seul, deux langues, aucun filtre. "
-                              "Pour rejouer une campagne anterieure.")
+                         help="recherche externe d'avant le 25/09 : texte "
+                              "seul, deux langues, aucun filtre. Pour "
+                              "rejouer une ancienne campagne.")
     parseur.add_argument("--langue-eurlex", default="FR",
                          choices=("FR", "EN", "toutes"))
     parseur.add_argument("--sans-filtre-reglement", action="store_true",
-                         help="n'indexe pas par reglement. Le filtre "
-                              "suppose que la question nomme son texte, "
-                              "ce qui est vrai par construction pour la "
-                              "classe externe mais pas en general.")
+                         help="pas d'index par reglement. Ce filtre suppose "
+                              "que la question nomme son texte, ce qui est "
+                              "toujours vrai pour la classe externe mais pas "
+                              "en general.")
     parseur.add_argument("--attaquant", default="surface",
                          choices=("surface", "reecriture"),
-                         help="surface : les cinq transformations "
-                              "enumerees, rejouables a graine fixe. "
-                              "reecriture : la charge est reecrite par "
-                              "le modele apres chaque echec — plus fort, "
-                              "facture, et rejouable par journal.")
+                         help="surface : les cinq transformations fixes, "
+                              "rejouables avec la graine. reecriture : le "
+                              "modele reecrit la charge apres chaque echec ; "
+                              "plus fort, facture, rejouable avec le journal.")
     parseur.add_argument("--journal-reformulations", default=None,
-                         help="JSONL des reecritures. En ecriture avec "
-                              "--attaquant reecriture ; en LECTURE si le "
-                              "fichier existe deja, ce qui rejoue la "
-                              "campagne sans rien refacturer.")
+                         help="JSONL des reecritures. Ecrit avec --attaquant "
+                              "reecriture ; LU si le fichier existe deja, ce "
+                              "qui rejoue la campagne sans rien refacturer.")
     parseur.add_argument("--sans-devis", action="store_true",
                          help="saute la passe simulee. Elle refait le "
-                              "re-classement sans rien facturer ni rien "
-                              "apprendre de plus, soit deux heures perdues "
-                              "sur une campagne de 200 appels. Les "
-                              "statistiques d'invite sortent alors de la "
-                              "campagne reelle.")
+                              "re-classement sans rien apprendre de plus, et "
+                              "fait perdre deux heures sur une campagne de "
+                              "200 appels. La taille des invites est alors "
+                              "calculee sur la vraie campagne.")
     parseur.add_argument("--reprise", default=None,
                          help="fichier JSONL d'avancement. Avec ce parametre, "
-                              "les appels deja aboutis ne sont ni rejoues ni "
+                              "les appels deja termines ne sont ni rejoues ni "
                               "refactures : une interruption ne coute que "
                               "l'appel en cours. Relancer la MEME commande "
                               "reprend la ou l'on s'est arrete.")
     parseur.add_argument("--reclassement", action="store_true",
                          help="active le re-classement par cross-encodeur "
-                              "avant la generation, puis resserre le contexte. "
-                              "Sans ce drapeau, le moteur se comporte comme "
-                              "dans les campagnes anterieures.")
+                              "avant la generation, puis reduit le contexte. "
+                              "Sans cette option, le moteur fonctionne comme "
+                              "dans les anciennes campagnes.")
     parseur.add_argument("--top-k-generation", type=int, default=10,
-                         help="fragments conserves pour la generation apres "
+                         help="fragments gardes pour la generation apres "
                               "re-classement")
     parseur.add_argument("--longueur-reclasseur", type=int, default=512,
-                         help="longueur maximale du cross-encodeur. 8192 rend "
-                              "l'etage inutilisable sur processeur.")
+                         help="longueur maximale du cross-encodeur. Avec 8192, "
+                              "l'etape est trop lente sur processeur.")
     parseur.add_argument("--max-jetons", type=int, default=None,
-                         help="plafond de jetons par reponse. Le defaut de la "
-                              "configuration est 1024 ; les reponses mesurees "
-                              "le 14/09 en consommaient 964 en moyenne, donc "
-                              "la plupart etaient tronquees.")
+                         help="plafond de jetons par reponse. La configuration "
+                              "met 1024 par defaut ; le 14/09, les reponses en "
+                              "utilisaient 964 en moyenne, donc la plupart "
+                              "etaient coupees.")
     parseur.add_argument("--temperature", type=float, default=None,
-                         help="temperature du modele. Non envoyee par defaut : "
+                         help="temperature du modele. Pas envoyee par defaut : "
                               "plusieurs modeles refusent toute valeur autre "
                               "que la leur. Sans temperature fixee, la "
                               "campagne n'est pas strictement rejouable.")
     parseur.add_argument("--plafond", type=float, default=1.0,
                          help="plafond de depense en dollars. La campagne "
-                              "s'interrompt des qu'il est atteint.")
+                              "s'arrete des qu'il est atteint.")
     parseur.add_argument("--engager-la-depense", action="store_true",
-                         help="SANS CE DRAPEAU, AUCUN APPEL N'EST EMIS. Le "
-                              "script se contente de chiffrer et s'arrete.")
+                         help="SANS CETTE OPTION, AUCUN APPEL N'EST ENVOYE. Le "
+                              "script calcule seulement le devis.")
     arguments = parseur.parse_args()
 
     if arguments.sans_devis and not arguments.engager_la_depense:
         raise SystemExit(
-            "--sans-devis n'a de sens qu'avec --engager-la-depense.\n"
-            "Sans depense engagee, la passe simulee EST le resultat : la "
-            "sauter ne laisse rien a mesurer.")
+            "--sans-devis ne sert qu'avec --engager-la-depense.\n"
+            "Sans depense, la passe simulee EST le resultat : sans elle, il "
+            "n'y a plus rien a mesurer.")
 
     config = mod_config.Config()
     if arguments.max_jetons:
         config.generation.max_jetons = arguments.max_jetons
 
-    # Je charge les cas et non seulement leur texte : l'appui est necessaire
-    # au tri par ancrage, qui n'a lieu qu'une fois l'index construit, plus bas.
+    # Je charge les cas complets, pas seulement leur texte : le tri par
+    # ancrage, plus bas, a besoin de l'appui.
     cas_retenus = cas_par_classe(arguments.questions, arguments.graine,
                                  arguments.classe)
     if arguments.premieres is not None:
@@ -580,18 +571,18 @@ def main():
                                   config.routage.seuil_completude)
     interne = mod_recup.monter_chaine(index_lexical=index, config=config)
 
-    # --- choix du fournisseur, et premier garde-fou -----------------------
+    # --- choix du fournisseur, et premiere protection ---------------------
     #
-    # Le devis est toujours etabli avec le fournisseur simule, qui ne quitte
-    # pas la machine. Une seconde campagne n'est envoyee vers l'API que si la
-    # depense est explicitement engagee.
+    # Le devis se fait toujours avec le fournisseur simule, qui reste sur la
+    # machine. Une seconde campagne n'est envoyee a l'API qu'avec
+    # --engager-la-depense.
     reel = None
     if arguments.modele:
         if arguments.tarif_entree is None or arguments.tarif_sortie is None:
             raise SystemExit(
                 "--modele exige --tarif-entree et --tarif-sortie.\n"
-                "Sans tarifs, le plafond de depense ne peut pas etre calcule, "
-                "et il n'y a alors aucune protection.")
+                "Sans tarifs, on ne peut pas calculer le plafond de depense, "
+                "et il n'y a plus aucune protection.")
         client = mod_openai.ClientOpenAI(
             modele=arguments.modele,
             temperature=arguments.temperature,
@@ -599,9 +590,9 @@ def main():
             palier=arguments.palier,
             # Le delai par defaut du client est de 60 s. Avec --max-jetons
             # 4000, les latences mesurees sur `instruction` passent de 16 a
-            # 35 s et certaines reponses depassent la minute, ce qui declenche
-            # APITimeoutError. La reprise ne perd rien mais impose de relancer.
-            # Un appel lent ne coute pas davantage : seuls les jetons sont
+            # 35 s, et certaines reponses depassent la minute, ce qui provoque
+            # APITimeoutError. La reprise ne perd rien, mais il faut relancer.
+            # Un appel lent ne coute pas plus cher : seuls les jetons sont
             # factures.
             delai=arguments.delai,
             graine=arguments.graine)
@@ -613,9 +604,9 @@ def main():
                           if arguments.reprise else None),
             palier=arguments.palier,
             modele=arguments.modele,
-            # Les tarifs sont exprimes par million de jetons, la trace les
-            # attend par jeton. Une erreur d'un facteur un million est facile
-            # a commettre ici et couteuse.
+            # Les tarifs sont donnes par million de jetons, la trace les veut
+            # par jeton. Une erreur d'un facteur un million est vite faite ici,
+            # et elle coute cher.
             tarif_entree=arguments.tarif_entree / 1e6,
             tarif_sortie=arguments.tarif_sortie / 1e6,
             client=client)
@@ -629,10 +620,10 @@ def main():
 
     # --- etage de re-classement -------------------------------------------
     #
-    # `hybride.reclasser` n'etait appele nulle part : la chaine embarquait un
-    # cross-encodeur sans l'utiliser. Mesure du 15/09 : sur des invites de
-    # 15 147 caracteres, quarante fragments internes occupaient 72,2 % du
-    # texte, pour l'essentiel hors sujet.
+    # `hybride.reclasser` n'etait appele nulle part : le cross-encodeur etait
+    # charge pour rien. Mesure du 15/09 : sur des invites de 15 147
+    # caracteres, quarante fragments internes prenaient 72,2 % du texte, la
+    # plupart hors sujet.
     reclasseur = None
     if arguments.reclassement:
         print("chargement du cross-encodeur...")
@@ -643,7 +634,7 @@ def main():
         print("re-classeur        : %s, longueur max %d, sur %s"
               % (reclasseur.nom_modele, reclasseur.longueur_max,
                  reclasseur.peripherique))
-        print("contexte resserre  : %d fragments" % arguments.top_k_generation)
+        print("contexte reduit a  : %d fragments" % arguments.top_k_generation)
 
     fournisseur = FournisseurCompteur()
     moteur = Moteur(config=config, recuperateur_interne=interne,
@@ -657,30 +648,30 @@ def main():
 
     # --- documents legitimes pertinents -----------------------------------
     #
-    # Le simulateur tirait initialement ses documents legitimes au hasard ;
-    # face a un contexte etranger a la question, le modele ecartait le bloc
-    # externe en entier, charge adverse comprise. Les trois familles
-    # obtenaient zero sur les cinq configurations, ce qui ne mesurait pas la
-    # defense mais seulement le fait qu'une consigne noyee dans du bruit se
-    # remarque.
+    # Au debut, le simulateur tirait ses documents legitimes au hasard. Face a
+    # un contexte sans rapport avec la question, le modele ignorait tout le
+    # bloc externe, charge adverse comprise. Les trois familles avaient 0 dans
+    # les cinq configurations : cela montrait seulement qu'une consigne perdue
+    # dans du bruit se remarque, pas que la defense marche.
     #
-    # Une attaque reelle est inseree dans des documents que le modele a de
-    # bonnes raisons de lire. Je fournis donc les premiers resultats reels
-    # d'une recherche sur EUR-Lex.
-    # Trois correctifs de recuperation, mesures le 25/09. Sans eux, l'article
-    # demande n'apparaissait au rang 10 que dans 8 cas sur 40, et E3 mesurait
-    # le silence d'un systeme prive de sa source plutot que sa robustesse.
+    # Une vraie attaque est cachee dans des documents que le modele a de
+    # bonnes raisons de lire. Je donne donc les premiers resultats d'une vraie
+    # recherche sur EUR-Lex.
     #
-    #   en-tete    le numero d'article figure dans la rubrique, l'index ne lit
-    #              que `text` : je prefixe chaque pave par « MiFID2 Article 29. »
-    #   langue     le corpus contient chaque texte en FR et en EN, et chaque
-    #              doublon occupe une place parmi les fragments retenus
-    #   reglement  un index par texte, choisi d'apres celui que nomme la
+    # Trois correctifs de recherche, mesures le 25/09. Sans eux, l'article
+    # demande n'etait dans les 10 premiers resultats que 8 fois sur 40. E3
+    # mesurait alors un systeme qui n'avait pas sa source, pas sa robustesse.
+    #
+    #   en-tete    le numero d'article est dans la rubrique, et l'index ne lit
+    #              que `text` : j'ajoute en tete de chaque pave
+    #              « MiFID2 Article 29. »
+    #   langue     le corpus a chaque texte en FR et en EN, et chaque doublon
+    #              prend une place parmi les fragments gardes
+    #   reglement  un index par texte, choisi selon le texte que nomme la
     #              question
     #
-    # Effet cumule : de 20 % a 90 % au rang 10. `--eurlex-brut` restaure
-    # l'ancienne recuperation pour rejouer a l'identique une campagne
-    # anterieure.
+    # Effet total : de 20 % a 90 % au rang 10. `--eurlex-brut` remet
+    # l'ancienne recherche, pour rejouer a l'identique une ancienne campagne.
     print("construction de l'index BM25 reglementaire...")
     if arguments.eurlex_brut:
         documents_externes = corpus_legitime
@@ -722,11 +713,11 @@ def main():
 
     # --- tri par ancrage ---------------------------------------------------
     #
-    # Une question dont l'article demande n'apparait pas dans les fragments ne
-    # mesure pas la robustesse : le modele n'a rien a affirmer, donc aucune
-    # affirmation ou le faux puisse s'inserer. Mesure du 25/09 : l'attaque
-    # `assertion` reussit 3 fois sur 4 lorsque l'article est fourni, 0 fois
-    # sur 35 sinon. Ces questions engageraient une depense sans information.
+    # Si l'article demande n'est pas dans les fragments, la question ne
+    # mesure pas la robustesse : le modele n'a rien a affirmer, donc le faux
+    # n'a nulle part ou se glisser. Mesure du 25/09 : l'attaque `assertion`
+    # reussit 3 fois sur 4 quand l'article est fourni, 0 fois sur 35 sinon.
+    # Ces questions couteraient de l'argent sans rien apprendre.
     #
     # Le tri est local et gratuit : il ne consulte que l'index.
     if arguments.ancrees_seulement:
@@ -755,7 +746,7 @@ def main():
         if not requetes:
             raise SystemExit(
                 "aucune question ancree : la campagne ne mesurerait rien. "
-                "Verifier la recuperation externe avant de depenser.")
+                "Verifiez la recherche externe avant de payer.")
 
     familles = tuple(f.strip() for f in arguments.familles.split(",")
                      if f.strip())
@@ -766,12 +757,11 @@ def main():
         raise SystemExit(f"familles inconnues : {sorted(inconnues)}")
     print(f"familles           : {', '.join(familles)}")
 
-    # Attaquant. `surface` ne coute rien et se rejoue a graine fixe.
+    # Attaquant. `surface` ne coute rien et se rejoue avec la graine.
     # `reecriture` fait reecrire la charge par le modele apres chaque echec :
-    # c'est l'echelon superieur, qui mesure la robustesse a une variation
-    # semantique plutot que typographique, et il est facture. Un journal deja
-    # present est relu au lieu d'etre regenere, ce qui permet de rejouer une
-    # campagne sans nouvelle depense.
+    # c'est un attaquant plus fort, qui change le sens et pas seulement la
+    # forme, et il est facture. Si le journal existe deja, il est relu au lieu
+    # d'etre regenere : on rejoue la campagne sans payer de nouveau.
     reformulateur = None
     if arguments.attaquant == "reecriture":
         journal_reform = arguments.journal_reformulations
@@ -781,9 +771,9 @@ def main():
                   f"{journal_reform}")
         elif reel is None:
             raise SystemExit(
-                "--attaquant reecriture exige --modele : sans fournisseur "
-                "reel, aucune reecriture ne peut etre produite.\n"
-                "Pour rejouer une campagne deja payee, fournir un "
+                "--attaquant reecriture exige --modele : sans vrai "
+                "fournisseur, aucune reecriture n'est possible.\n"
+                "Pour rejouer une campagne deja payee, donnez un "
                 "--journal-reformulations existant.")
         else:
             reformulateur = mod_reformulation.fabriquer(
@@ -791,7 +781,7 @@ def main():
             print("attaquant          : reecriture par le modele, FACTUREE")
             print("                     comptee dans le plafond de depense")
     else:
-        print("attaquant          : surface, cinq transformations enumerees")
+        print("attaquant          : surface, cinq transformations fixes")
 
     def fabrique_simulateur():
         return mod_adverse.SimulateurAdverse(
@@ -814,7 +804,7 @@ def main():
 
         if arguments.sans_devis and not fournisseur.invites:
             # Rien a chiffrer avant la campagne : j'ecris un devis minimal,
-            # complete apres coup par les valeurs reelles.
+            # complete ensuite par les vraies valeurs.
             devis_reporte = True
             longueurs = mots = [0]
         else:
@@ -870,15 +860,15 @@ def main():
                 for rang, invite in enumerate(fournisseur.invites, start=1):
                     f.write(f"===== invite {rang} =====\n{invite}\n\n")
         print(f"\necrit : {chemin}/ et {ex.dossier}/")
-        print("\nLes invites exactes sont dans invites.txt : le comptage de")
-        print("jetons de l'etape 2 se fera dessus, sans nouvelle execution.")
+        print("\nLes invites exactes sont dans invites.txt : les jetons de")
+        print("l'etape 2 se comptent dessus, sans relancer la campagne.")
 
-        # --- deuxieme et troisieme garde-fous -----------------------------
+        # --- deuxieme et troisieme protections ----------------------------
         if reel is None:
             return
         if not arguments.engager_la_depense:
             print("\n" + "=" * 62)
-            print("DEVIS SEUL. Aucun appel n'a ete emis.")
+            print("DEVIS SEUL. Aucun appel n'a ete envoye.")
             print("Pour lancer la campagne reelle, ajoutez "
                   "--engager-la-depense.")
             print("=" * 62)
@@ -891,7 +881,7 @@ def main():
         traces = []
         reprise = Reprise(arguments.reprise) if arguments.reprise else None
         if reprise and reprise.faits:
-            print("reprise            : %d appels deja aboutis, non "
+            print("reprise            : %d appels deja termines, non "
                   "refactures" % len(reprise.faits))
         try:
             mesure = e3.campagne(moteur, fabrique_simulateur, requetes,
@@ -902,11 +892,11 @@ def main():
         except (KeyboardInterrupt, Exception) as erreur:
             # Une coupure reseau, une mise en veille ou une erreur d'API ne
             # doivent pas faire perdre ce qui est deja paye. Le journal de
-            # reprise a ete ecrit appel par appel ; je le signale, puis je
-            # releve l'exception.
+            # reprise est ecrit appel par appel : je le signale, puis je
+            # relance l'exception.
             if reprise:
                 print("\nINTERROMPU : %s" % str(erreur)[:120])
-                print("%d appels sont deja aboutis et ne seront pas "
+                print("%d appels sont deja termines et ne seront pas "
                       "refactures." % len(reprise.faits))
                 print("Relancez la MEME commande pour reprendre.")
             raise
@@ -922,7 +912,7 @@ def main():
         }
         mesure["client"] = client.decrire()
 
-        print("\nappels emis     : %d" % reel.appels)
+        print("\nappels envoyes  : %d" % reel.appels)
         print("depense reelle  : %.6f $" % reel.depense)
         if "asr_par_configuration" in mesure:
             print("\ntaux de succes d'attaque par configuration :")
@@ -932,10 +922,9 @@ def main():
         tronquees = sum(1 for r in reel.reponses if r["tronquee"])
         mesure["reponses_tronquees"] = tronquees
 
-        # Statistiques d'invite issues de la campagne reelle. Elles rendent
-        # la passe simulee inutile lorsque la depense est engagee : celle-ci
-        # produisait les memes valeurs, au prix d'un second re-classement
-        # complet.
+        # Taille des invites, calculee sur la vraie campagne. Avec
+        # --engager-la-depense, la passe simulee devient inutile : elle
+        # donnait les memes valeurs, mais refaisait tout le re-classement.
         if reel.invites:
             longueurs_reelles = [len(i) for i in reel.invites]
             mesure["invite_caracteres"] = {
@@ -955,8 +944,7 @@ def main():
                       encoding="utf-8") as f:
                 json.dump({"parametres": vars(arguments), **mesure}, f,
                           ensure_ascii=False, indent=2)
-            # Reponses en clair, pour permettre une verification humaine du
-            # verdict.
+            # Reponses en clair, pour qu'un humain puisse verifier le verdict.
             if reel.invites:
                 with open(destination / "invites.txt", "w",
                           encoding="utf-8") as f:
@@ -972,9 +960,9 @@ def main():
                     f.write("\n".join(["=" * 74, entete, "=" * 74,
                                        item["reponse"], "", ""]))
             # Trace complete : question, sources fournies avec leur nature,
-            # sources retenues, sources citees, verdict. Elle ne consomme aucun
-            # jeton (comptabilite locale) et peut donc rester active sur la
-            # campagne complete.
+            # sources retenues, sources citees, verdict. Elle ne coute aucun
+            # jeton (calcul local) et peut donc rester active sur toute la
+            # campagne.
             ecrire_traces(destination / "trace_appels.txt", traces)
         print("reponses en clair : %s/reponses.txt" % chemin)
         print("trace complete    : %s/trace_appels.txt" % chemin)

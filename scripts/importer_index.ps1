@@ -1,6 +1,6 @@
 # Restaure sur le poste local l'index calcule sur la machine de calcul.
 #
-# A executer depuis la racine du projet, apres avoir rapatrie et decompresse
+# A lancer depuis la racine du projet, apres avoir recupere et decompresse
 # l'export produit par exporter_index.ps1.
 #
 # Usage :
@@ -18,8 +18,8 @@ if (-not (Test-Path $Source)) { throw "introuvable : $Source" }
 
 Write-Host "Import de l'index depuis $Source" -ForegroundColor Cyan
 
-# 1. Verification des empreintes AVANT toute installation. Un index altere en
-#    transit produirait des mesures fausses sans aucun signe visible.
+# 1. Verification des empreintes AVANT d'installer quoi que ce soit. Un index
+#    abime pendant la copie donnerait des mesures fausses, sans aucun signe.
 $manifeste = Join-Path $Source "empreintes.csv"
 if (Test-Path $manifeste) {
     $ecarts = 0
@@ -30,7 +30,7 @@ if (Test-Path $manifeste) {
             if ($h -ne $_.Hash) { Write-Warning "EMPREINTE DIFFERENTE : $f"; $ecarts++ }
         }
     }
-    if ($ecarts -gt 0) { throw "$ecarts fichier(s) altere(s) en transit." }
+    if ($ecarts -gt 0) { throw "$ecarts fichier(s) modifie(s) pendant la copie." }
     Write-Host "  empreintes verifiees" -ForegroundColor Green
 } else {
     Write-Warning "  pas de manifeste d'empreintes : integrite non verifiee"

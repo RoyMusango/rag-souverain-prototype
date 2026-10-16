@@ -1,28 +1,28 @@
 """
 E7 : comparaison des detecteurs d'entites nommees.
 
-Le rapport retient une chaine de masquage souveraine et annonce que l'ecart
-avec Presidio est mesure. Ce module produit cette mesure.
+Le rapport choisit une chaine de masquage souveraine et dit que l'ecart avec
+Presidio est mesure. Ce module fait cette mesure.
 
 VERITE TERRAIN
 
-Le champ `entities` du schema commun contient les entites extraites a
-l'ingestion par spaCy. L'utiliser comme reference reviendrait a mesurer
-spaCy contre lui-meme : il obtiendrait 100 % par construction, et Presidio
-serait penalise pour tout desaccord, y compris lorsqu'il a raison.
+Le champ `entities` du schema commun contient les entites trouvees par spaCy
+a l'ingestion. Le prendre comme reference reviendrait a comparer spaCy a
+lui-meme : il aurait 100 % d'office, et Presidio serait penalise a chaque
+desaccord, meme quand il a raison.
 
-Je construis donc la reference a partir des donnees structurees de Synthea :
-`patients.csv` fournit le nom, le prenom, la ville, le code postal et la date
-de naissance de chaque patient, et l'adaptateur `synthea.py` compose la
-rubrique `identite` a partir de ces memes champs. Les chaines sensibles de
-la rubrique et leur position sont donc connues exactement.
+Je construis donc la reference a partir des donnees structurees de Synthea.
+`patients.csv` donne le nom, le prenom, la ville, le code postal et la date
+de naissance de chaque patient, et l'adaptateur `synthea.py` ecrit la
+rubrique `identite` a partir de ces memes champs. On connait donc exactement
+les chaines sensibles de la rubrique et leur position.
 
-La logique est la meme que pour E2 : la mesure est exacte parce que la
-population est enumeree, et non estimee.
+C'est le meme principe que pour E2 : la mesure est exacte parce que toute la
+population est connue.
 
-Grandeurs rapportees : rappel (la fuite), precision (le sur-masquage), F1 et
-debit. Le rappel est la grandeur critique, car une entite non detectee
-franchit la Frontiere A en clair.
+Valeurs mesurees : rappel (la fuite), precision (le sur-masquage), F1 et
+debit. Le rappel compte le plus, car une entite non detectee franchit la
+Frontiere A en clair.
 """
 
 import csv
@@ -32,8 +32,8 @@ from pathlib import Path
 
 from ..confidentialite.verrou import CAMEMBERT, Masqueur, PRESIDIO, SPACY
 
-# Colonnes de patients.csv qui composent la rubrique identite, et categorie
-# normalisee attendue pour chacune. Voir src/ingestion/synthea.py.
+# Colonnes de patients.csv qui forment la rubrique identite, avec la
+# categorie attendue pour chacune. Voir src/ingestion/synthea.py.
 CHAMPS_SENSIBLES = {
     "FIRST": "PERSONNE",
     "LAST": "PERSONNE",
@@ -46,8 +46,8 @@ CHAMPS_SENSIBLES = {
 }
 
 # Suffixes numeriques retires a l'ingestion (common.nettoyer_nom_synthea).
-# La reference doit appliquer la meme transformation, sinon elle chercherait
-# « Wallace647 » dans un texte qui contient « Wallace ».
+# La reference fait la meme chose, sinon elle chercherait « Wallace647 » dans
+# un texte qui contient « Wallace ».
 MOTIF_CHIFFRES = re.compile(r"\d+")
 
 
@@ -57,9 +57,9 @@ def _nettoyer(nom):
 
 def construire_reference(chemin_patients="data/synthea/patients.csv",
                          limite=None):
-    """Verite terrain par patient : les chaines reellement sensibles.
+    """Verite terrain par patient : les chaines sensibles.
 
-    Retourne [{"patient": id, "attendus": [(chaine, categorie), ...]}].
+    Renvoie [{"patient": id, "attendus": [(chaine, categorie), ...]}].
     """
     reference = []
     with open(chemin_patients, encoding="utf-8") as f:
@@ -69,8 +69,8 @@ def construire_reference(chemin_patients="data/synthea/patients.csv",
                 valeur = (ligne.get(colonne) or "").strip()
                 if colonne in ("FIRST", "LAST"):
                     valeur = _nettoyer(valeur)
-                # Les chaines tres courtes produiraient des appariements
-                # fortuits : « MA » se retrouve dans n'importe quel mot.
+                # Les chaines tres courtes donneraient des correspondances
+                # par hasard : « MA » se retrouve dans beaucoup de mots.
                 if len(valeur) >= 4:
                     attendus.append((valeur, categorie))
             reference.append({"patient": ligne["Id"], "attendus": attendus})
@@ -94,11 +94,11 @@ def positions_attendues(texte, attendus):
 
 
 def _recouvre(span_a, span_b, seuil=0.5):
-    """Deux empans se recouvrent-ils suffisamment ?
+    """Indique si deux empans se chevauchent assez.
 
-    Un appariement strict serait trop severe : un detecteur qui reconnait
-    « Boston, MA » la ou la reference indique « Boston » a rempli sa
-    fonction. J'exige un recouvrement, et non une egalite.
+    Exiger une egalite exacte serait trop severe : un detecteur qui trouve
+    « Boston, MA » quand la reference indique « Boston » a fait son travail.
+    Je demande donc un chevauchement suffisant.
     """
     debut = max(span_a[0], span_b[0])
     fin = min(span_a[1], span_b[1])
@@ -120,10 +120,10 @@ def evaluer_texte(texte, attendus, masqueur, seuil=0.5,
     for span_ref in reference:
         for i, span_det in enumerate(detectees):
             # Une detection peut couvrir plusieurs entites de la reference :
-            # « Pieter Marchand » est un empan unique alors que la reference
-            # porte le prenom et le nom separement. Exiger l'exclusivite
-            # comptait le second comme faux negatif et divisait
-            # mecaniquement par deux le rappel sur les personnes.
+            # « Pieter Marchand » est un seul empan, alors que la reference a
+            # le prenom et le nom separes. Avant, une detection ne pouvait
+            # couvrir qu'une entite : le nom etait compte comme faux negatif,
+            # et le rappel sur les personnes etait divise par deux.
             if _recouvre(span_ref, span_det, seuil):
                 if categorie_stricte and span_ref[2] != span_det[2]:
                     continue
@@ -137,10 +137,10 @@ def evaluer_texte(texte, attendus, masqueur, seuil=0.5,
         "faux_positifs": len(detectees) - len(apparies),
         "reference": len(reference),
         "detectees": len(detectees),
-        # `vrais_positifs` compte des entites de reference appariees, et une
-        # detection peut en apparier plusieurs depuis le correctif du 31/08.
-        # Il ne peut donc pas servir de numerateur a une precision, qui est
-        # une propriete des detections : je recalcule le compte au bon niveau.
+        # `vrais_positifs` compte des entites de reference. Depuis le
+        # correctif du 31/08, une detection peut en couvrir plusieurs. Ce
+        # compte ne peut donc pas servir a calculer la precision, qui porte
+        # sur les detections : je compte ici les detections appariees.
         "detections_appariees": len(apparies),
     }
 
@@ -178,12 +178,12 @@ def evaluer_moteur(documents, reference, moteur=SPACY, langue="fr",
     vp, fn, fp = (totaux["vrais_positifs"], totaux["faux_negatifs"],
                   totaux["faux_positifs"])
     rappel = vp / (vp + fn) if (vp + fn) else None
-    # `vp / (vp + fp)` additionnait deux unites differentes : un numerateur
-    # au niveau des entites de reference et un denominateur melant references
-    # et detections. Sur E7, cette formule donnait 0,877 alors que la mesure
-    # au niveau des detections donne 0,835, soit exactement la valeur
-    # anterieure au correctif d'appariement ; la mention « le calcul des faux
-    # positifs est inchange » etait exacte mais trompeuse.
+    # `vp / (vp + fp)` melangeait deux unites : le numerateur compte des
+    # entites de reference, le denominateur des references et des
+    # detections. Sur E7, cette formule donnait 0,877, alors que la precision
+    # calculee sur les detections donne 0,835, la meme valeur qu'avant le
+    # correctif d'appariement. Je garde l'ancienne formule a cote, sous le
+    # nom `precision_par_reference`, pour la tracabilite.
     precision = (totaux["detections_appariees"] / totaux["detectees"]
                  if totaux["detectees"] else None)
     precision_par_reference = vp / (vp + fp) if (vp + fp) else None
@@ -208,15 +208,15 @@ def evaluer_moteur(documents, reference, moteur=SPACY, langue="fr",
 
 def campagne(documents, reference, moteurs=(SPACY, CAMEMBERT, PRESIDIO),
              langue="fr", seuil=0.5):
-    """Compare les detecteurs et chiffre l'ecart au choix souverain."""
+    """Compare les detecteurs et calcule leur ecart avec Presidio."""
     resultats = {}
     for moteur in moteurs:
         try:
             resultats[moteur] = evaluer_moteur(
                 documents, reference, moteur, langue, seuil)
         except Exception as erreur:
-            # Un moteur absent n'interrompt pas la campagne : je le consigne
-            # et poursuis, plutot que de perdre les mesures des autres.
+            # Si un moteur manque, la campagne continue : je note l'erreur et
+            # je garde les mesures des autres moteurs.
             resultats[moteur] = {"moteur": moteur, "erreur": str(erreur)}
 
     disponibles = {n: r for n, r in resultats.items()
@@ -236,13 +236,12 @@ def campagne(documents, reference, moteurs=(SPACY, CAMEMBERT, PRESIDIO),
         "resultats": resultats,
         "ecart_sur_presidio": ecarts,
         "lecture": (
-            "Le rappel est la grandeur critique : une entite non detectee "
-            "franchit la Frontiere A en clair. La precision mesure le "
-            "sur-masquage, qui degrade la recherche sans rien proteger — "
-            "son cout se lit dans E5. Un ecart de rappel defavorable au "
-            "choix souverain doit etre rapporte tel quel : c'est le prix de "
-            "la souverainete du composant, non un argument contre elle, "
-            "puisque le verrou de sortie deterministe borne la fuite par le "
-            "bas independamment du detecteur."
+            "Le rappel compte le plus : une entite non detectee franchit la "
+            "Frontiere A en clair. La precision mesure le sur-masquage, qui "
+            "rend la recherche moins bonne sans rien proteger (son cout se "
+            "voit dans E5). Si le moteur souverain a un rappel plus bas, "
+            "l'ecart est rapporte tel quel : c'est le prix de la "
+            "souverainete. Le verrou de sortie deterministe bloque de toute "
+            "facon les secrets connus, quel que soit le detecteur."
         ),
     }

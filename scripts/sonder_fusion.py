@@ -1,27 +1,26 @@
 r"""
-Sonde la fusion par rangs reciproques : existe-t-il un gain a obtenir ?
+Examine la fusion par rangs reciproques : y a-t-il quelque chose a gagner ?
 
     python scripts\sonder_fusion.py --corpus banque
 
 TROIS QUESTIONS, DANS L'ORDRE
 
     1. PLAFOND   combien de questions sont trouvees par au moins une des deux
-                 voies ? Aucune fusion ne peut depasser ce chiffre.
-    2. MARGE     ce plafond depasse-t-il la meilleure voie seule ? Sinon, la
-                 question de la ponderation est close : il n'y a rien a
-                 recuperer.
-    3. POIDS     s'il existe une marge, quel poids la capture, et ce poids
-                 vaut-il sur les deux corpus ?
+                 voies ? Aucune fusion ne peut faire mieux.
+    2. MARGE     ce plafond depasse-t-il la meilleure voie seule ? Sinon, inutile
+                 de chercher une ponderation : il n'y a rien a gagner.
+    3. POIDS     s'il y a une marge, quel poids la recupere, et ce poids
+                 marche-t-il sur les deux corpus ?
 
-CHOIX D'UNE SONDE PLUTOT QUE D'UN BALAYAGE DIRECT
+POURQUOI COMMENCER PAR LE PLAFOND
 
-Balayer le poids et retenir le meilleur reviendrait a calibrer sur les
-donnees qui servent a mesurer le gain. Le plafond, lui, ne se calibre pas :
-c'est une borne superieure, valable pour toute ponderation. S'il ne laisse
-aucune marge, aucun balayage n'est necessaire, et la reponse est definitive
-plutot qu'issue d'un ajustement.
+Tester plusieurs poids et garder le meilleur reviendrait a regler la fusion
+sur les donnees qui servent a mesurer le gain. Le plafond ne depend d'aucun
+reglage : c'est une borne haute, valable pour toute ponderation. S'il ne
+laisse aucune marge, pas besoin de tester des poids, et la reponse ne
+depend d'aucun ajustement.
 
-Aucun appel facture : les deux voies sont locales.
+Aucun appel facture : les deux voies tournent en local.
 """
 
 import argparse
@@ -49,7 +48,7 @@ K_RRF = 60
 
 
 def rang_de(resultats, attendu):
-    """Rang 1-base du document attendu, ou None s'il est absent."""
+    """Rang (a partir de 1) du document attendu, ou None s'il est absent."""
     for rang, fragment in enumerate(resultats, start=1):
         if fragment.doc_id == attendu:
             return rang
@@ -82,7 +81,7 @@ def main():
     paires = e1.charger_paires(chemin_paires)
     echantillon = e1.echantillonner(paires, nombre=a.questions,
                                     graine=a.graine)
-    print(f"corpus {a.corpus} — {len(echantillon)} questions, "
+    print(f"corpus {a.corpus} : {len(echantillon)} questions, "
           f"profondeur {a.profondeur}\n")
 
     config = mod_config.Config()
@@ -134,7 +133,7 @@ def main():
     print(f"  questions que SEUL le dense rapporte       : {den_sauve}")
 
     print("\n" + "=" * 68)
-    print("2. CE QU'UNE PONDERATION CAPTURE REELLEMENT")
+    print("2. CE QUE DONNE VRAIMENT UNE PONDERATION")
     print("=" * 68)
     print("  poids du dense | rappel@%d | ecart au meilleur seul" % a.k)
     lignes = []
@@ -147,10 +146,10 @@ def main():
               f"{(trouve - meilleur) / n:+.4f}")
 
     print(f"""
-  LECTURE. A poids nul la fusion EST le lexical seul : la ponderation
-  contient donc les deux voies comme cas limites, et ne peut jamais
-  faire pire que la meilleure — a condition de choisir le bon poids.
-  La seule question qui compte est celle du plafond ci-dessus : {union / n:.4f}.
+  LECTURE. Avec un poids nul, la fusion EST le lexical seul ; avec un poids
+  tres grand, elle revient au dense seul. Avec le bon poids, elle ne fait
+  donc jamais pire que la meilleure voie. Ce qui compte, c'est le plafond
+  ci-dessus : {union / n:.4f}.
 """)
 
     if a.sortie:

@@ -9,29 +9,28 @@ Deux fichiers en sortie :
     data/banque/banque_qa.jsonl        les paires, une par ligne
     data/banque/banque_entites.json    la population, avec ses quasi-identifiants
 
-MOTIVATION
+POURQUOI
 
-E5 mesure le cout de la protection de l'intention. Cela exige, sur un meme
-corpus, des questions dont la reponse est connue et des entites dont les
-quasi-identifiants sont connus. Aucun corpus du dispositif ne reunissait les
-deux.
+E5 mesure le cout de la protection de l'intention. Il faut pour cela, sur
+le meme corpus, des questions dont on connait la reponse et des entites dont
+on connait les quasi-identifiants. Aucun corpus du projet n'avait les deux.
 
-EnronQA fournit des questions mais pas d'entites enumerees ; Synthea fournit
-une population mais pas de questions. Les croiser reviendrait a generaliser
-une entite medicale synthetique dans une question portant sur un courriel
-d'entreprise : le chiffre obtenu mesurerait l'ajout de bruit, et non le cout
-de la protection.
+EnronQA a des questions mais pas de liste d'entites. Synthea a une
+population mais pas de questions. Melanger les deux reviendrait a
+generaliser un patient synthetique dans une question sur un courriel
+d'entreprise : on mesurerait l'effet du bruit ajoute, pas le cout de la
+protection.
 
-Le corpus bancaire contient les deux en germe : 300 dossiers clients dont
-chaque champ est connu par construction, puisque les notes sont composees a
-partir d'un enregistrement structure.
+Le corpus bancaire permet d'avoir les deux : 300 dossiers clients dont on
+connait chaque champ, puisque les notes sont ecrites a partir d'un
+enregistrement structure.
 
 UNE QUESTION, UNE SEULE NOTE
 
-Chaque question porte sur un fait qui n'apparait que dans une des cinq notes
-du dossier. C'est la condition pour que le rappel soit binaire et que
-Recall@k ait un sens : avec deux notes correctes, le rappel mesurerait
-laquelle le moteur prefere, et non s'il trouve la bonne.
+Chaque question porte sur un fait present dans une seule des cinq notes du
+dossier. Ainsi le rappel vaut 0 ou 1, et Recall@k a un sens. Avec deux notes
+correctes, on mesurerait laquelle le moteur prefere, au lieu de savoir s'il
+trouve la bonne.
 
 Les cinq faits retenus, un par nature de note :
 
@@ -43,23 +42,22 @@ Les cinq faits retenus, un par nature de note :
 
 QUASI-IDENTIFIANTS RETENUS
 
-Quatre attributs, tous presents dans les notes ou derivables de celles-ci :
+Quatre attributs, tous presents dans les notes ou deduits des notes :
 
     ville            la ville de domiciliation, telle qu'ecrite dans la note
     region           la province ou le pays, deduit de la ville
     secteur          le secteur d'activite declare
     tranche_encours  l'encours consolide, par paliers de 100 000 EUR
 
-La hierarchie de generalisation de `anonymat.generaliser` connait `ville` et
-la fait remonter a un niveau superieur. Elle ne connait pas de hierarchie
-pour les trois autres et les supprime des le premier niveau : c'est une
-generalisation grossiere mais correcte, et je la signale comme telle.
+`anonymat.generaliser` sait generaliser `ville` d'un niveau. Il n'a pas de
+hierarchie pour les trois autres attributs et les supprime des le premier
+niveau. C'est une generalisation grossiere mais correcte, et je le signale.
 
-PERIMETRE
+CE QUE LE SCRIPT NE FAIT PAS
 
-Le script ne regenere pas le corpus bancaire. Les notes existantes ne sont
-pas modifiees et E7b reste valide : le script les lit pour en deduire les
-questions et la population.
+Le script ne regenere pas le corpus bancaire. Il lit les notes existantes
+pour en tirer les questions et la population, sans les modifier : E7b reste
+donc valide.
 """
 
 import argparse
@@ -75,9 +73,8 @@ REFERENCE = "data/banque/banque_reference.json"
 SORTIE_QA = "data/banque/banque_qa.jsonl"
 SORTIE_ENTITES = "data/banque/banque_entites.json"
 
-# Province belge ou pays, deduit de la ville. Il s'agit de la geographie
-# reelle et non d'un regroupement arbitraire, ce qui rend la generalisation
-# defendable.
+# Province belge ou pays, deduit de la ville. C'est la vraie geographie, ce
+# qui rend la generalisation credible.
 REGIONS = {
     "Mons": "Hainaut",
     "Tournai": "Hainaut",
@@ -92,8 +89,8 @@ REGIONS = {
     "Differdange": "Grand-Duché",
 }
 
-# Un gabarit de question par nature de note. Le fait interroge n'apparait que
-# dans cette note-la, ce qui rend la reponse unique.
+# Un gabarit de question par type de note. Le fait demande n'apparait que dans
+# cette note, donc la reponse est unique.
 QUESTIONS = {
     "identite": "Quel numéro de carte de paiement est rattaché au dossier "
                 "de {prenom} {nom}, domicilié à {ville} ?",
@@ -135,9 +132,9 @@ def tranche(montant, pas=100000):
 def reconstruire_clients(documents, reference):
     """Reconstitue l'enregistrement de chaque client a partir de ses notes.
 
-    La reference fournit les chaines sensibles et leur champ ; les notes
-    fournissent le reste (secteur et montant), qui n'est pas sensible et n'y
-    figure donc pas. Je lis les deux plutot que de regenerer le corpus.
+    La reference donne les chaines sensibles et leur champ. Les notes donnent
+    le reste (secteur et montant), qui n'est pas sensible et n'est donc pas
+    dans la reference. Je lis les deux au lieu de regenerer le corpus.
     """
     clients = {}
 
@@ -173,12 +170,11 @@ def reconstruire_clients(documents, reference):
 
 
 def entite_depuis_client(fiche):
-    """Les quasi-identifiants d'un client, a l'exclusion de tout autre champ.
+    """Les quasi-identifiants d'un client, et rien d'autre.
 
-    Le nom, l'IBAN et la carte en sont exclus : ce sont des identifiants
-    directs et non des quasi-identifiants. Les inclure viderait de son sens
-    la mesure de l'ensemble d'anonymat, puisque chacun de ces champs designe
-    deja une personne a lui seul.
+    Le nom, l'IBAN et la carte sont exclus : ce sont des identifiants
+    directs. Chacun designe deja une personne a lui seul, donc les inclure
+    rendrait la mesure de l'ensemble d'anonymat inutile.
     """
     ville = fiche.get("ville")
     return {
@@ -221,9 +217,9 @@ def main():
             try:
                 question = gabarit.format(**fiche)
             except KeyError:
-                # Un champ requis par ce gabarit est absent (par exemple le
-                # secteur) : la question est ignoree plutot que posee
-                # incompletement.
+                # Un champ utile a ce gabarit manque (par exemple le
+                # secteur) : on saute la question au lieu de la poser
+                # incomplete.
                 continue
             paires.append({
                 "doc_id": f"banque/{cle}/{nature}",
@@ -275,10 +271,10 @@ def main():
                 "taux_uniques": round(uniques / len(entites), 4)
                 if entites else 0.0,
                 "note": ("le taux d'uniques est eleve parce que la "
-                         "population est petite, 300 clients, et que quatre "
-                         "quasi-identifiants suffisent a la partitionner "
+                         "population est petite (300 clients) et que quatre "
+                         "quasi-identifiants suffisent a la decouper "
                          "finement. C'est une propriete du corpus, a "
-                         "declarer, non un defaut de la mesure."),
+                         "signaler."),
             },
             "entities": entites,
         }, f, ensure_ascii=False, indent=2)
@@ -288,10 +284,10 @@ def main():
     print(f"taux d'uniques     : {uniques / len(entites):.4f}"
           if entites else "")
     print()
-    print("Le taux d'uniques est élevé : 300 clients répartis sur quatre")
-    print("quasi-identifiants se partitionnent finement. C'est une propriété")
-    print("du corpus, à déclarer telle quelle. E5 mesure un coût de")
-    print("généralisation, pas un anonymat, la mesure reste valide.")
+    print("Le taux d'uniques est élevé : avec 300 clients et quatre")
+    print("quasi-identifiants, la population se découpe finement. C'est une")
+    print("propriété du corpus, à signaler. E5 mesure ce que coûte la")
+    print("généralisation : ce taux ne fausse donc pas la mesure.")
 
 
 if __name__ == "__main__":

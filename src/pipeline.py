@@ -1,29 +1,28 @@
 """
 Enchainement de bout en bout (section 4.4 du rapport).
 
-L'architecture materialise la chaine concue au chapitre 3 sous la forme d'un
-pipeline ordonne, dans lequel chaque etape garantit un invariant et neutralise
-une ou plusieurs menaces. Le principe directeur reste la separation entre une
-zone de confiance interne, etiquetee « confidentiel », et un exterieur non
-fiable, sous controle de flux d'information.
+Ce module met en oeuvre la chaine du chapitre 3 sous forme de pipeline.
+Chaque etape garantit un invariant et bloque une ou plusieurs menaces. Le
+principe de base est la separation entre une zone interne de confiance,
+etiquetee « confidentiel », et un exterieur non fiable, avec un controle des
+flux d'information entre les deux.
 
 Parcours d'une requete :
 
-  1. ROUTAGE          l'interne suffit-il ? (I1 tenu sans effort si oui)
+  1. ROUTAGE          l'interne suffit-il ? (si oui, I1 est respecte d'office)
   2. CONFIDENTIALITE  en cas de sortie : gabarit fige sur l'entite, budget,
                       masquage, verrou de sortie                      (I1)
   3. FRANCHISSEMENT   requete texte seule ; aucun embedding ne franchit A
   4. EMBARQUEMENT     le contenu externe est rapatrie en texte puis
                       vectorise et indexe localement
-  5. ISOLATION        contenu externe balise, cantonne en donnee        (I2)
+  5. ISOLATION        contenu externe balise, traite comme une donnee   (I2)
   6. FUSION TEINTEE   corroboration, detection de collusion             (I2)
   7. GENERATION       via l'abstraction de fournisseur (Frontiere B ou non)
   8. RESTITUTION      attribution, non-verifie, abstention              (I3)
 
-L'etat de session (budget d'exposition et gabarit fige) persiste d'une
-requete a l'autre et au-dela des frontieres de session : c'est ce qui
-distingue une enquete protegee d'une suite de requetes independantes,
-vulnerables au recoupement (section 3.3.5).
+Le budget d'exposition et le gabarit fige sont conserves d'une requete a
+l'autre et d'une session a l'autre. Sans cela, l'enquete ne serait qu'une
+suite de requetes independantes, faciles a recouper (section 3.3.5).
 """
 
 import time
@@ -72,11 +71,11 @@ class Resultat:
 
 
 class Moteur:
-    """Le moteur de recherche hybride securise, assemble.
+    """Le moteur de recherche hybride securise, avec tous ses composants.
 
-    Toutes les dependances sont injectees et aucune n'est instanciee ici : le
-    pipeline ne connait que des interfaces, condition necessaire pour ecrire
-    les ablations du chapitre 5 (retirer une couche et mesurer l'ecart).
+    Tous les composants sont passes en argument, aucun n'est cree ici : le
+    pipeline ne connait que des interfaces. C'est ce qui permet les ablations
+    du chapitre 5 (retirer une couche et mesurer l'ecart).
     """
 
     def __init__(self, config=None, recuperateur_interne=None,
@@ -92,9 +91,9 @@ class Moteur:
         self.verrou = verrou_sortie
         self.masqueur = masqueur
         self.piste = piste_audit or mod_provenance.PisteAudit()
-        # A None, le moteur se comporte comme dans les versions precedentes :
-        # ni re-classement ni resserrement. Les campagnes anterieures restent
-        # ainsi rejouables a l'identique.
+        # A None, le moteur fait comme dans les versions precedentes : pas de
+        # re-classement ni de reduction du nombre de fragments. On peut donc
+        # rejouer les anciennes campagnes a l'identique.
         self.reclasseur = reclasseur
         self.top_k_generation = top_k_generation
 
@@ -103,9 +102,9 @@ class Moteur:
     def repondre(self, contexte, couches=None):
         """Traite une requete de bout en bout.
 
-        `couches` permet de desactiver selectivement une protection, pour les
-        ablations du chapitre 5 : {'verrou', 'isolation', 'corroboration',
-        'budget'}. Par defaut, toutes sont actives.
+        `couches` permet de desactiver une protection, pour les ablations du
+        chapitre 5 : {'verrou', 'isolation', 'corroboration', 'budget'}. Par
+        defaut, toutes sont actives.
         """
         couches = couches if couches is not None else {
             "verrou", "isolation", "corroboration", "budget"
@@ -130,18 +129,16 @@ class Moteur:
 
         # --- 1 bis. Correction, puis second routage ----------------------
         #
-        # CORRIGER n'est pas une issue terminale : routeur.py la definit comme
-        # une instruction de reprendre la recuperation interne avant de
-        # conclure. En l'absence de ce second passage, la decision restait
-        # bloquee sur CORRIGER, `_franchir` n'etait jamais appele et aucun
-        # contenu externe n'entrait dans le moteur ; sur le jeu d'E6, 132
-        # requetes sur 172 etaient concernees.
+        # CORRIGER ne termine pas le routage : dans routeur.py, cela veut dire
+        # refaire la recherche interne avant de conclure. Sans ce second
+        # passage, la decision restait sur CORRIGER, `_franchir` n'etait
+        # jamais appele et aucun contenu externe n'entrait dans le moteur.
+        # Sur le jeu d'E6, 132 requetes sur 172 etaient concernees.
         #
-        # La reprise reproduit celle que mesure E6 : elargir la tete
-        # rapportee, puis rejuger sous `deja_corrige`. Faute d'index dense a
-        # ce stade de la chaine, l'elargissement est la seule action possible
-        # pour une reprise de recuperation interne ; je ne simule pas de gain
-        # inexistant.
+        # La reprise est la meme que celle mesuree par E6 : rapporter plus de
+        # resultats, puis juger a nouveau avec `deja_corrige`. Sans index
+        # dense a cette etape, c'est la seule facon de refaire la recherche
+        # interne. Je ne simule pas de gain qui n'existe pas.
         if (decision.issue == mod_routeur.CORRIGER
                 and hasattr(self.routeur, "apres_correction")):
             resultat.passe_par_correction = True
@@ -169,9 +166,8 @@ class Moteur:
             return self._clore(resultat, contexte, debut)
 
         if decision.issue == mod_routeur.ESCALADER:
-            # Le systeme ne decide jamais lui-meme de l'escalade : il la
-            # propose, et la decision revient a un operateur habilite
-            # (section 3.2).
+            # Le systeme ne decide jamais seul d'une escalade : il la
+            # propose, et un operateur habilite decide (section 3.2).
             resultat.reponse = mod_provenance.Reponse(
                 abstention=True,
                 motif="escalade humaine requise : " + decision.motif,
@@ -186,11 +182,10 @@ class Moteur:
 
         # --- 5 et 6. Isolation, teinte, corroboration --------------------
         #
-        # Copie defensive. `teinte.teinter` ecrit l'etiquette de confiance
-        # dans le fragment ; sans copie, deux executions successives sur les
-        # memes objets se contamineraient. C'est precisement le cas des
-        # ablations du chapitre 5, qui rejouent les memes fragments sous
-        # plusieurs configurations.
+        # Copie de securite. `teinte.teinter` ecrit l'etiquette de confiance
+        # dans le fragment. Sans copie, une execution modifierait les
+        # fragments de la suivante. C'est le cas des ablations du chapitre 5,
+        # qui rejouent les memes fragments dans plusieurs configurations.
         fragments = [_copier(f) for f in list(internes) + list(externes)]
         if "isolation" in couches:
             fragments = teinte.teinter(
@@ -200,27 +195,25 @@ class Moteur:
 
         # --- 6 bis. Re-classement, puis resserrement ---------------------
         #
-        # L'etage de re-classement existait dans `hybride.reclasser` sans
-        # etre appele : la chaine embarquait un cross-encodeur inutilise.
-        # Mesure du 15/09 sur les invites reellement envoyees : quarante
-        # fragments internes occupaient 72,2 % du texte, pour l'essentiel hors
-        # sujet, alors que l'attribution n'en retenait que trois.
+        # `hybride.reclasser` existait mais n'etait jamais appele : le
+        # cross-encodeur etait charge pour rien. Mesure du 15/09 sur les
+        # invites envoyees : quarante fragments internes prenaient 72,2 % du
+        # texte, la plupart hors sujet, alors que l'attribution n'en gardait
+        # que trois.
         #
-        # L'ordre des etapes est un choix de conception. Le re-classement juge
-        # la pertinence, la ponderation par confiance juge la fiabilite, et la
-        # seconde doit avoir le dernier mot : sinon, un document externe tres
+        # L'ordre des etapes est voulu. Le re-classement juge la pertinence,
+        # la ponderation par confiance juge la fiabilite, et c'est la
+        # ponderation qui passe en dernier. Sinon un document externe tres
         # pertinent mais empoisonne passerait devant un fragment interne
-        # verifie, soit precisement l'asymetrie que le pilier 3 doit retablir.
-        # Le re-classement porte sur tous les candidats, et non sur une tete.
+        # verifie, ce que le pilier 3 doit eviter.
         #
-        # `hybride.reclasser` n'ordonne que ses `top_k` premiers elements et
-        # laisse le reste en place. Or a ce stade la liste vaut
-        # `internes + externes`, un ordre sans rapport avec la pertinence :
-        # re-classer les vingt premiers reviendrait a n'examiner que des
-        # fragments internes, sans jamais considerer les documents externes.
-        # Mesure du 15/09 : la charge adverse disparaissait alors de cinq
-        # invites sur cinq, non parce qu'elle avait ete jugee non pertinente,
-        # mais parce qu'elle n'avait jamais ete jugee.
+        # Le re-classement porte sur tous les candidats. `hybride.reclasser`
+        # ne trie que ses `top_k` premiers elements et laisse le reste en
+        # place. Or ici la liste vaut `internes + externes`, dans un ordre
+        # sans lien avec la pertinence : re-classer les vingt premiers
+        # reviendrait a ne regarder que des fragments internes. Mesure du
+        # 15/09 : la charge adverse disparaissait alors de cinq invites sur
+        # cinq, sans avoir jamais ete evaluee.
         t0 = time.perf_counter()
         if self.reclasseur is not None:
             fragments = hybride.reclasser(
@@ -244,9 +237,9 @@ class Moteur:
         seuil = (self.config.isolation.seuil_corroboration
                  if "corroboration" in couches else 1)
         reponse = mod_provenance.appliquer(assertions, seuil_corroboration=seuil)
-        # Le palier effectivement employe est celui du fournisseur, et non
-        # celui de la configuration. Les deux peuvent diverger, et c'est ce
-        # que mesure la ventilation par palier du chapitre 5.
+        # On enregistre le palier du fournisseur reellement utilise, qui peut
+        # differer de celui de la configuration. Le detail par palier du
+        # chapitre 5 en depend.
         reponse.palier = getattr(self.fournisseur, "palier",
                                  self.config.generation.palier)
         reponse.frontieres = resultat.frontieres
@@ -257,7 +250,7 @@ class Moteur:
     # ------------------------------------------------------------ etapes
 
     def _recuperer_interne(self, requete, n=None):
-        """Recuperation interne. `n` elargit la tete pour la correction."""
+        """Recherche interne. `n` augmente le nombre de resultats pour la correction."""
         if self.recuperateur_interne is None:
             return []
         return self.recuperateur_interne.rechercher(
@@ -265,15 +258,15 @@ class Moteur:
         )
 
     def _franchir(self, contexte, resultat, couches):
-        """Franchissement controle de la Frontiere A.
+        """Passage controle de la Frontiere A.
 
-        Trois verrous successifs, du plus permissif au plus strict :
-        generalisation sous gabarit fige, masquage des entites nommees,
-        puis verrou deterministe sur l'ensemble des secrets connus.
+        Trois controles a la suite, du plus souple au plus strict :
+        generalisation selon le gabarit fige, masquage des entites nommees,
+        puis verrou deterministe sur tous les secrets connus.
         """
         requete = contexte.requete
 
-        # 2a. Generalisation sous gabarit fige, si la requete est le secret.
+        # 2a. Generalisation selon le gabarit fige, si la requete porte sur une entite protegee.
         if self.politique and contexte.cle_entite and "budget" in couches:
             verdict = self.politique.evaluer(
                 contexte.cle_entite, contexte.entite,
@@ -289,7 +282,7 @@ class Moteur:
             if generalisee:
                 requete = generalisee
 
-        # 2b. Masquage des entites a caractere personnel.
+        # 2b. Masquage des donnees personnelles.
         if self.masqueur is not None:
             requete = self.masqueur.masquer(requete)
 
@@ -306,8 +299,8 @@ class Moteur:
         resultat.requete_emise = requete
         resultat.frontieres.append("A")
 
-        # 3 et 4. Seule une requete texte franchit A ; le contenu revient en
-        # texte et sera vectorise localement par le recuperateur externe.
+        # 3 et 4. Seule une requete texte franchit A. Le contenu revient en
+        # texte et sera vectorise en local par le recuperateur externe.
         t0 = time.perf_counter()
         externes = self.recuperateur_externe.rechercher(
             requete, n=self.config.recherche.n_final, avec_teinte=False
@@ -316,11 +309,10 @@ class Moteur:
         return externes
 
     def _generer(self, contexte, fragments, couches):
-        """Generation contrainte a rattacher chaque assertion a ses sources."""
+        """Generation qui doit rattacher chaque assertion a ses sources."""
         if self.fournisseur is None:
-            # Sans fournisseur, les fragments sont restitues tels quels, ce
-            # qui permet de mesurer la recuperation seule (E1) sans le bruit
-            # du modele.
+            # Sans fournisseur, les fragments sont renvoyes tels quels. On
+            # mesure ainsi la recherche seule (E1), sans l'effet du modele.
             return [
                 mod_provenance.Assertion(
                     texte=f.text[:200], fragments=[f], a_enjeu=contexte.a_enjeu
@@ -352,7 +344,7 @@ class Moteur:
         )]
 
     def _ajouter_frontiere_b(self, fragments):
-        pass  # la trace est portee par Resultat.frontieres, voir _clore
+        pass  # la trace est dans Resultat.frontieres, voir _clore
 
     # -------------------------------------------------------------- sortie
 

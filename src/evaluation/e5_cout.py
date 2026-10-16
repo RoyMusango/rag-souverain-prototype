@@ -1,23 +1,22 @@
 """
 E5 : cout en precision de la protection de l'intention.
 
-Une protection dont le cout n'est pas mesure ne peut pas etre evaluee. E2
-etablit ce que la protection apporte, E5 chiffre ce qu'elle coute ; seules
-les deux mesures reunies constituent un resultat.
+E2 mesure ce que la protection apporte, E5 mesure ce qu'elle coute. Il faut
+les deux pour juger la protection.
 
-Le mecanisme du cout est direct : pour masquer l'entite, la requete est
-generalisee, donc elargie. Le moteur renvoie alors des resultats plus larges,
-en partie hors sujet, qui doivent etre filtres localement a posteriori, ce
-qui coute a son tour du rappel. C'est la ligne « Precision » de la table des
-techniques d'obfuscation du chapitre 3.
+Le cout vient de la generalisation : pour cacher l'entite, la requete est
+generalisee, donc plus large. Le moteur renvoie des resultats plus larges,
+en partie hors sujet, qu'il faut ensuite filtrer en local, et on perd du
+rappel. C'est la ligne « Precision » du tableau des techniques
+d'obfuscation du chapitre 3.
 
-Trois regimes compares sur les memes questions :
+Trois regimes, compares sur les memes questions :
 
     brut          la requete part telle quelle (reference)
     masque        entites nommees masquees (protection des donnees)
     generalise    gabarit fige sur l'entite (protection de l'intention)
 
-L'ecart entre `brut` et `generalise` est le cout rapporte.
+Le cout rapporte est l'ecart entre `brut` et `generalise`.
 """
 
 import time
@@ -30,7 +29,7 @@ GENERALISE = "generalise"
 
 
 def evaluer(recuperateur, paires, transformer=None, k=10, regime=BRUT):
-    """Mesure la recherche apres transformation eventuelle de la requete."""
+    """Mesure la recherche, apres transformation de la requete si besoin."""
     rappels, ndcgs, latences, longueurs = [], [], [], []
 
     for paire in paires:
@@ -61,7 +60,7 @@ def evaluer(recuperateur, paires, transformer=None, k=10, regime=BRUT):
 
 
 def campagne(recuperateur, paires, masqueur=None, generaliseur=None, k=10):
-    """Compare les trois regimes et chiffre le cout de chaque protection."""
+    """Compare les trois regimes et calcule le cout de chaque protection."""
     resultats = {BRUT: evaluer(recuperateur, paires, None, k, BRUT)}
 
     if masqueur is not None:
@@ -93,16 +92,16 @@ def campagne(recuperateur, paires, masqueur=None, generaliseur=None, k=10):
         "cout_par_regime": couts,
         "lecture": ("le cout de `generalise` est le prix de la protection de "
                     "l'intention ; celui de `masque` le prix de la protection "
-                    "des donnees. Les deux se cumulent en deploiement."),
+                    "des donnees. En production, les deux s'additionnent."),
     }
 
 
 def generaliseur_depuis_politique(politique, cle_entite, entite, attributs):
     """Construit un transformateur de requete a partir du pilier 2.
 
-    La requete emise n'est pas la question de l'utilisateur mais sa forme
-    generalisee sous le gabarit fige. C'est ce que je cherche a mesurer : la
-    degradation subie par la recherche, et non par la question.
+    La requete envoyee est la question de l'utilisateur completee par les
+    termes generalises selon le gabarit fige. On mesure ainsi ce que la
+    recherche perd a cause de la generalisation.
     """
     def transformer(requete, paire):
         decision = politique.evaluer(cle_entite, entite, attributs)

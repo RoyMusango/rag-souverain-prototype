@@ -1,16 +1,15 @@
-# Diagnostic : elements manquants de l'installation.
+# Diagnostic : liste les fichiers manquants de l'installation.
 #
-#     cd C:\Dev\rag-souverain
-#     .\verifier_installation.ps1
+#     .\scripts\verifier_installation.ps1      (depuis la racine du depot)
 #
-# A lancer si installer_poc.ps1 signale des absents, ou apres avoir depose
-# l'archive, pour verification avant de poursuivre.
+# A lancer si installer_poc.ps1 signale des fichiers absents, ou apres avoir
+# depose l'archive, pour verifier avant de continuer.
 
 $ErrorActionPreference = "Continue"
 
 if (-not (Test-Path "src\ingestion")) {
-    Write-Host "src\ingestion introuvable : vous n'etes pas a la racine du projet." -ForegroundColor Red
-    Write-Host "Attendu : C:\Dev\rag-souverain"
+    Write-Host "src\ingestion introuvable : vous n'etes pas a la racine du depot." -ForegroundColor Red
+    Write-Host "Placez-vous dans le dossier qui contient src\ et scripts\."
     exit 1
 }
 
@@ -35,7 +34,7 @@ $attendus = @{
   "src\fournisseur\base.py"                = "trois paliers"
   "src\simulateur\adverse.py"              = "support E3"
   "src\evaluation\e1_hybridation.py"       = "E1"
-  "src\evaluation\e2_anonymat.py"          = "E2 - resultat signature"
+  "src\evaluation\e2_anonymat.py"          = "E2 - resultat principal"
   "src\evaluation\e3_injection.py"         = "E3"
   "src\evaluation\e4_provenance.py"        = "E4"
   "src\evaluation\e5_cout.py"              = "E5"
@@ -74,8 +73,8 @@ foreach ($a in $absents) {
     Write-Host ("  {0,-42} {1}" -f $a, $attendus[$a]) -ForegroundColor Red
 }
 
-# Les fichiers vides passent Test-Path, puisqu'ils existent, mais font echouer
-# l'import de facon peu explicite ; un copier-coller interrompu en produit.
+# Un fichier vide passe Test-Path, puisqu'il existe, mais fait echouer
+# l'import avec un message peu clair. Un copier-coller interrompu en cree.
 $vides = @($presents | Where-Object { (Get-Item $_).Length -lt 200 })
 if ($vides.Count -gt 0) {
     Write-Host ""
@@ -86,7 +85,7 @@ if ($vides.Count -gt 0) {
 }
 
 Write-Host ""
-Write-Host "Remede : deposez poc.zip a la racine du projet, puis" -ForegroundColor Cyan
+Write-Host "Solution : deposez poc.zip a la racine du depot, puis" -ForegroundColor Cyan
 Write-Host "  Expand-Archive -Path poc.zip -DestinationPath . -Force"
 Write-Host "  .\scripts\installer_poc.ps1"
 exit 1

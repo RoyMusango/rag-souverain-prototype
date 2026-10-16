@@ -1,32 +1,30 @@
 """
 Adaptateur EnronQA -> schema commun.
 
-DECISIONS DE CONCEPTION (reprises dans le memoire)
+CHOIX DE CONCEPTION (repris dans le memoire)
 
-  Unite documentaire : un courriel unique, identifie par son champ 'path'.
-  rubrique           : boite aux lettres ('user'), qui reproduit le
-                       cloisonnement d'une organisation ; 150 boites
-                       distinctes.
-  page               : 1. Un courriel n'a pas de pagination naturelle. C'est
-                       la limite de ce corpus au regard de I3, et la raison
-                       pour laquelle EUR-Lex sert de corpus de demonstration
-                       de la chaine complete.
+  Unite documentaire : un courriel, identifie par son champ 'path'.
+  rubrique           : boite aux lettres ('user'), comme les services
+                       separes d'une organisation ; 150 boites.
+  page               : 1. Un courriel n'a pas de pages. C'est la limite de ce
+                       corpus pour I3, et c'est pour cela qu'EUR-Lex sert a
+                       montrer la chaine complete.
   pave               : rang du courriel dans sa boite.
   source             : interne
 
-  Deduplication necessaire : le jeu compte 221 316 lignes pour environ
-  103 638 courriels, chaque courriel apparaissant une fois par question
-  posee. Sans deduplication, chaque courriel serait indexe plusieurs fois et
-  tout denominateur de rappel serait faux. Les questions sont regroupees et
-  conservees a part (fichier QA), hors du schema documentaire.
+  Deduplication : le jeu a 221 316 lignes pour environ 103 638 courriels,
+  car chaque courriel apparait une fois par question posee. Sans
+  deduplication, un courriel serait indexe plusieurs fois et le calcul du
+  rappel serait faux. Les questions sont regroupees et gardees dans un
+  fichier a part (fichier QA).
 
-  Analyse : les champs 'questions', 'gold_answers', etc. sont des chaines
-  contenant une representation de liste Python. ast.literal_eval est
-  requis ; json.loads echoue (guillemets simples).
+  Lecture des champs : 'questions', 'gold_answers', etc. sont des chaines qui
+  contiennent une liste Python. Il faut ast.literal_eval ; json.loads echoue
+  a cause des guillemets simples.
 
   Filtrage : les courriels reduits a une signature ou a une citation sont
-  ecartes (< 40 caracteres de corps utile). Le nombre de courriels filtres
-  est rapporte dans le memoire.
+  retires (moins de 40 caracteres de corps utile). Le nombre de courriels
+  retires est donne dans le memoire.
 
 Sortie : data/enronqa/enronqa_schema.jsonl
          data/enronqa/enronqa_qa.jsonl
@@ -49,7 +47,7 @@ LONGUEUR_MIN = 40
 
 
 def en_liste(valeur):
-    """Les champs sont des chaines contenant des listes Python."""
+    """Convertit en liste un champ qui contient une liste Python sous forme de texte."""
     if isinstance(valeur, list):
         return valeur
     if not valeur:
@@ -62,7 +60,7 @@ def en_liste(valeur):
 
 
 def corps_utile(email):
-    """Retire les lignes d'en-tete pour juger de la longueur reelle."""
+    """Retire les lignes d'en-tete pour mesurer la longueur reelle du courriel."""
     lignes = [l for l in email.split("\n")
               if not l.startswith(("Subject:", "Sender:", "Recipients:",
                                    "File:", "=====")) and l.strip()]

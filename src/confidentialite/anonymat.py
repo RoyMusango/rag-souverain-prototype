@@ -1,10 +1,9 @@
 """
 Ensemble d'anonymat et hierarchies de generalisation (pilier 2, section 3.3).
 
-Ce module ignore le RAG et le reseau : il ne manipule que la population
-d'entites decrite dans docs/JOURNAL_DONNEES.md section 10, et repond a une
-seule question, a savoir combien d'entites restent compatibles avec ce qui a
-ete emis.
+Ce module ne touche ni au RAG ni au reseau. Il travaille sur la population
+d'entites decrite dans docs/JOURNAL_DONNEES.md (section 10) et repond a une
+question : combien d'entites restent compatibles avec ce qui a ete envoye ?
 
 Vocabulaire du rapport :
   entite (e)          l'entite enquetee, le secret a proteger
@@ -13,13 +12,13 @@ Vocabulaire du rapport :
   ensemble d'anonymat les entites compatibles avec les attributs reveles
   |S|                 taille de cet ensemble
 
-Invariant garanti : I1 (etancheite sortante), volet intention.
+Invariant concerne : I1 (etancheite sortante), cote intention.
 """
 
 from collections import defaultdict
 
 # Quasi-identifiants retenus pour E2 (JOURNAL_DONNEES.md section 10).
-# L'ordre est significatif : il fixe l'ordre de lecture des gabarits.
+# L'ordre compte : c'est l'ordre de lecture des gabarits.
 QUASI_IDENTIFIANTS = (
     "ville",
     "cp",
@@ -49,9 +48,9 @@ def generaliser(attribut, valeur, niveau, entite=None):
     """Applique un niveau de generalisation a une valeur de quasi-identifiant.
 
     `entite` sert aux hierarchies qui remontent vers un autre attribut du
-    meme enregistrement (ville -> comte, cp -> comte). Je la passe plutot que
-    de recalculer une table de correspondance : la population est deja en
-    memoire et la correspondance y est exacte.
+    meme enregistrement (ville -> comte, cp -> comte). Je la passe en argument
+    au lieu de construire une table de correspondance : la population est deja
+    en memoire et la correspondance y est exacte.
     """
     if niveau <= 0:
         return str(valeur)
@@ -72,8 +71,8 @@ def generaliser(attribut, valeur, niveau, entite=None):
         return "etat"
 
     if attribut == "tranche_age":
-        # tranche_age est deja un palier de 10 ans (JOURNAL section 10) :
-        # l'elargissement se fait par regroupement de paliers.
+        # tranche_age est deja un palier de 10 ans (JOURNAL section 10). On
+        # elargit en regroupant des paliers.
         base = _borne_inferieure(valeur)
         if base is None:
             return SUPPRIME
@@ -119,7 +118,7 @@ def ensemble_anonymat(population, entite, gabarit, attributs):
 
 
 def taille_ensemble(population, entite, gabarit, attributs):
-    """|S|, version economique, sans materialiser la liste."""
+    """|S|, calcule sans construire la liste."""
     if not attributs:
         return len(population)
     cible = signature(entite, gabarit, attributs)
@@ -139,17 +138,15 @@ def classes_equivalence(population, gabarit, attributs):
 
 
 class Population:
-    """Population indexee, avec colonnes generalisees precalculees.
+    """Population indexee, avec les colonnes generalisees precalculees.
 
-    Les fonctions libres ci-dessus definissent le modele ; cette classe le
-    rend executable a l'echelle d'une campagne. La recherche de gabarit
-    evalue plusieurs centaines de candidats sur 11 538 entites : sans
-    precalcul, une seule recherche prend une trentaine de secondes, ce qui
-    rend E2b impraticable.
+    Les fonctions ci-dessus definissent le calcul. Cette classe le rend assez
+    rapide pour une campagne. La recherche de gabarit teste plusieurs
+    centaines de candidats sur 11 538 entites : sans precalcul, une recherche
+    prend une trentaine de secondes et E2b devient trop lent.
 
-    Le precalcul est effectue une fois par population et par couple
-    attribut/niveau. Il ne modifie aucun resultat : la mesure est strictement
-    la meme, en plus rapide.
+    Le precalcul est fait une fois par population et par couple
+    attribut/niveau. Les resultats sont identiques, seul le temps change.
     """
 
     def __init__(self, entites):
@@ -196,11 +193,11 @@ class Population:
     def _comptes_signatures(self, gabarit=None, attributs=None):
         """Signature de chaque entite, et effectif de chaque classe.
 
-        Facteur commun de `taux_uniques` et `entites_uniques`, qui posent la
-        meme question (quelles entites sont seules dans leur classe
-        d'equivalence) et doivent donc partir du meme decompte. Les separer
-        risquerait de faire porter la borne pessimiste sur d'autres entites
-        que celles qu'annonce le taux, sans que rien ne le signale.
+        Utilise par `taux_uniques` et `entites_uniques`. Les deux cherchent les
+        entites seules dans leur classe d'equivalence et doivent partir du
+        meme decompte. Avec deux decomptes separes, la borne pessimiste
+        pourrait porter sur d'autres entites que celles comptees par le taux,
+        sans que rien ne le signale.
 
         Les deux valeurs sont appariees par position : `signatures[i]` est
         celle de `self.entites[i]`.
@@ -222,13 +219,12 @@ class Population:
         """Les entites seules dans leur classe d'equivalence.
 
         Sans argument, ce sont les entites uniques sur les quasi-identifiants
-        bruts : les 46,2 % de la section 10 du JOURNAL, pris individuellement
-        plutot qu'en proportion.
+        bruts, c'est-a-dire la liste des 46,2 % de la section 10 du JOURNAL.
 
-        Sert de vivier a la borne pessimiste d'E2b. La restriction porte sur
-        les cibles enquetees, jamais sur la population : celle-ci reste
-        entiere, faute de quoi N changerait et la fuite log2(N/|S|) ne
-        mesurerait plus la meme chose d'une borne a l'autre.
+        E2b tire ses cibles dans cette liste (borne pessimiste). Seules les
+        cibles sont restreintes, la population reste entiere. Sinon N
+        changerait, et la fuite log2(N/|S|) ne mesurerait plus la meme chose
+        d'une borne a l'autre.
         """
         signatures, comptes = self._comptes_signatures(gabarit, attributs)
         return [entite for entite, s in zip(self.entites, signatures)
@@ -242,7 +238,7 @@ def taux_uniques(population, gabarit=None, attributs=None):
     """Proportion d'entites seules dans leur classe d'equivalence.
 
     Sans gabarit ni attributs, retourne le taux sur les quasi-identifiants
-    bruts : c'est le 46,2 % du JOURNAL_DONNEES.md section 10, point de depart
+    bruts : les 46,2 % du JOURNAL_DONNEES.md (section 10), point de depart
     de la courbe d'effondrement.
     """
     gabarit = gabarit or {}

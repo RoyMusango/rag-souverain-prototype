@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
-"""Existence d'une famille de generalisations a intersection bornee.
+"""Peut-on varier les gabarits sans que leur intersection fasse fuir plus ?
 
-Trois verifications, dans l'ordre logique :
+Quatre verifications, dans cet ordre :
 
-  1. EMBOITEMENT   convenir au niveau L implique-t-il convenir au niveau L+1 ?
-                   C'est l'hypothese sur laquelle repose la suite.
-  2. TREILLIS      S(G1) inter ... inter S(Gn) vaut-il S(min composante) ?
-  3. DOMINATION    la famille adaptative fait-elle mieux que son minimum ?
+  1. EMBOITEMENT   deux individus egaux au niveau L sont-ils aussi egaux au
+                   niveau L+1 ? Les points suivants reposent sur cette
+                   hypothese.
+  2. TREILLIS      S(G1) inter ... inter S(Gn) vaut-il S(minimum, attribut
+                   par attribut) ?
+  3. DOMINATION    une famille de gabarits varies protege-t-elle mieux que
+                   son minimum ?
+  4. CAS LIMITE    une requete sans aucun quasi-identifiant.
+
+Les verifications 2 et 3 se font sur des tirages aleatoires : elles
+appuient le resultat, sans le demontrer.
 """
 import io
 import itertools
@@ -44,7 +51,7 @@ def ens(gab, i):
 print("=" * 70)
 print("1. EMBOITEMENT DES NIVEAUX")
 print("=" * 70)
-print("   convenir au niveau L doit impliquer convenir au niveau L+1.\n")
+print("   deux individus egaux au niveau L doivent l'etre au niveau L+1.\n")
 rupture = False
 for attribut in QI:
     maxi = anonymat.NIVEAU_MAX.get(attribut, 1)
@@ -97,8 +104,8 @@ print(f"   => theoreme {'FAUX' if echecs else 'VERIFIE sur 40 familles'}\n")
 print("=" * 70)
 print("3. LA FAMILLE ADAPTATIVE BAT-ELLE SON PROPRE MINIMUM ?")
 print("=" * 70)
-print("   protection = |S(min)| ; utilite = finesse de chaque requete.")
-print("   Une requete plus grossiere que le minimum ne protege rien de plus.\n")
+print("   protection = |S(min)| ; utilite = precision de chaque requete.")
+print("   Une requete plus large que le minimum ne protege rien de plus.\n")
 alea = random.Random(7)
 lignes = []
 for _ in range(6):
@@ -123,15 +130,15 @@ for t, ii, mm, cm, cf in lignes:
     print(f"   {str(t):<26} {ii:>6} {mm:>9} {cm:>9} {str(cf):>20}")
 
 print("""
-   LECTURE. L'intersection egale toujours |S(min)|. La protection
-   effective est donc celle de la requete LA PLUS FINE jamais emise.
-   Les requetes plus grossieres de la famille coutent du rappel sans
-   rien ajouter : elles sont strictement dominees.
+   LECTURE. L'intersection vaut toujours |S(min)|. La protection reelle
+   est donc celle de la requete LA PLUS PRECISE jamais envoyee. Les
+   requetes plus larges de la famille font perdre du rappel sans rien
+   proteger de plus.
 """)
 
 # ---------------------------------------------------------------- 4
 print("=" * 70)
-print("4. LE CAS QUI ECHAPPE : LA REQUETE SANS QUASI-IDENTIFIANT")
+print("4. LE CAS PARTICULIER : LA REQUETE SANS QUASI-IDENTIFIANT")
 print("=" * 70)
 i = alea.randrange(N)
 vide = {a: anonymat.NIVEAU_MAX.get(a, 1) for a in QI}   # tout supprime
@@ -141,8 +148,8 @@ print(f"   |S| sous gabarit minimal admissible      : {len(ens(fin, i))}")
 inter = ens(vide, i) & ens(fin, i)
 print(f"   intersection des deux                    : {len(inter)}")
 print("""
-   Le gabarit maximal rend S = toute la population : c'est l'element
-   neutre de l'intersection. Emettre une requete qui ne porte aucun
-   quasi-identifiant ne contraint donc RIEN, et peut sortir en clair.
-   C'est la seule variation licite, et le treillis la demontre.
+   Avec le gabarit maximal, S = toute la population : l'intersection avec
+   lui ne change rien. Une requete sans aucun quasi-identifiant ne
+   revele donc RIEN de plus, et peut sortir en clair. C'est la seule
+   variation sans risque que montrent ces verifications.
 """)

@@ -9,20 +9,20 @@ Verite terrain. Le format des paires question-reponse est celui que produit
      "reponse":  "Elizabeth Sager asked Stephanie Panus to forward ..."}
 
 Chaque question a un seul document pertinent, identifie par `doc_id`. Le
-rappel est donc binaire : Recall@k vaut 1 si le bon document figure parmi les
-k premiers. FinQA et TAT-QA suivent la meme logique, via
-`finqa_programmes.json` et les paires de leurs splits respectifs.
+rappel vaut donc 0 ou 1 : Recall@k vaut 1 si le bon document est dans les k
+premiers. FinQA et TAT-QA fonctionnent de la meme facon, avec
+`finqa_programmes.json` et les paires de leurs splits.
 
-Quatre configurations comparees, qui isolent chaque etage de la cascade :
+On compare quatre configurations, pour isoler chaque etage de la cascade :
 
     dense       bi-encodeur seul
     lexical     BM25 seul
     fusion      RRF des deux
     complet     RRF puis re-classement par cross-encodeur
 
-Le rapport soutient que les versants lexical et dense sont complementaires
-par nature. E1 verifie cette hypothese au lieu de la postuler ; un apport nul
-de la fusion sur ces corpus serait rapporte comme tel.
+Le rapport fait l'hypothese que les recherches lexicale et dense se
+completent. E1 la teste. Si la fusion n'apporte rien sur ces corpus, le
+resultat est rapporte tel quel.
 """
 
 import json
@@ -51,11 +51,11 @@ def charger_paires(chemin, limite=None):
 
 
 def echantillonner(paires, nombre=200, graine=42):
-    """Echantillon reproductible, a raison d'un tirage par document.
+    """Echantillon reproductible, avec une seule question par document.
 
-    Une meme boite aux lettres porte plusieurs questions sur le meme
-    courriel : les tirer toutes surponderait quelques documents, et le rappel
-    moyen mesurerait surtout leur facilite.
+    Un meme courriel peut avoir plusieurs questions. Les garder toutes
+    donnerait trop de poids a quelques documents, et le rappel moyen
+    dependrait surtout de leur difficulte.
     """
     import random
     alea = random.Random(graine)
@@ -129,7 +129,7 @@ def campagne(fabrique_recuperateur, paires, k=10,
         "k": k,
         "resultats": resultats,
         "apport_sur_dense_seul": apports,
-        "lecture": ("un apport positif de 'fusion' sur 'dense' etablit la "
-                    "complementarite lexical/dense postulee au chapitre 2 ; "
-                    "un apport nul l'infirme et doit etre rapporte tel quel"),
+        "lecture": ("un apport positif de 'fusion' sur 'dense' confirme que "
+                    "lexical et dense se completent (hypothese du chapitre 2) ; "
+                    "un apport nul la contredit et se rapporte tel quel"),
     }

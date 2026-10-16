@@ -1,24 +1,23 @@
 """
 Recherche hybride : fusion RRF et re-classement (section 2.2 et pilier 3).
 
-La cascade retenue est la reference standard et reproductible du rapport :
-BM25 et recuperation dense en parallele, fusion par rangs reciproques, puis
-re-classement par cross-encodeur sur le seul top-k.
+La cascade est la reference standard du rapport : BM25 et recherche dense
+en parallele, fusion par rangs reciproques (RRF), puis re-classement par
+cross-encodeur sur le top-k seulement.
 
-Deux choix de conception structurants :
+Deux choix importants :
 
-1. La fusion se fait par rangs et non par scores. Les scores de BM25 et d'un
-   bi-encodeur relevent d'echelles non comparables ; les normaliser exigerait
-   un calage arbitraire, que RRF evite entierement.
+1. La fusion utilise les rangs, pas les scores. Les scores de BM25 et d'un
+   bi-encodeur n'ont pas la meme echelle. Il faudrait les normaliser avec un
+   reglage arbitraire ; RRF evite ce probleme.
 
-2. La couche de recuperation est le seul endroit ou attacher les metadonnees
-   de provenance. La recherche hybride n'est donc pas seulement un choix de
-   qualite : c'est le point d'insertion de l'invariant I3.
+2. C'est dans la couche de recherche qu'on attache les metadonnees de
+   provenance. C'est donc ici que l'invariant I3 commence.
 
-PRINCIPE DIRECTEUR : aucun embedding ne franchit la Frontiere A. Les vecteurs
-sont calcules localement ; le contenu externe est rapatrie en texte, puis
-vectorise et indexe ici. Ce module ne doit jamais ouvrir de client vers un
-service vectoriel distant.
+PRINCIPE DU PROJET : aucun embedding ne franchit la Frontiere A. Les vecteurs
+sont calcules en local. Le contenu externe est rapatrie en texte, puis
+vectorise et indexe ici. Ce module ne doit jamais se connecter a un service
+vectoriel distant.
 """
 
 from collections import defaultdict
@@ -29,8 +28,8 @@ K_RRF = 60  # constante d'amortissement usuelle de la fusion par rangs
 def fusion_rrf(classements, k=K_RRF, cle=lambda f: f.doc_id):
     """Combine plusieurs classements par somme de rangs inverses.
 
-    `classements` est une liste de listes de fragments, chacune deja ordonnee
-    par pertinence decroissante selon un recuperateur.
+    `classements` est une liste de listes de fragments, chacune deja triee
+    par pertinence decroissante par un recuperateur.
     """
     scores = defaultdict(float)
     connus = {}
@@ -51,9 +50,9 @@ def fusion_rrf(classements, k=K_RRF, cle=lambda f: f.doc_id):
 def reclasser(requete, fragments, reclasseur, top_k=20):
     """Re-classe le top-k par cross-encodeur.
 
-    Le cross-encodeur encode conjointement la requete et chaque passage : il
-    ameliore nettement la precision, au prix d'un cout eleve, d'ou son
-    application au seul top-k et jamais a l'ensemble des candidats.
+    Le cross-encodeur traite la requete et chaque passage ensemble. Il
+    ameliore beaucoup la precision mais coute cher, donc on ne l'applique
+    qu'au top-k.
     """
     tete = fragments[:top_k]
     reste = fragments[top_k:]
@@ -70,10 +69,10 @@ def reclasser(requete, fragments, reclasseur, top_k=20):
 def ponderer_par_confiance(fragments, poids=None):
     """Applique la teinte au classement (fusion teintee du pilier 3).
 
-    Une fusion naive traiterait interne et externe a egalite de rang. La
-    ponderation retablit l'asymetrie : l'interne verifie prime, la source
-    externe unique est retrogradee, et un signal de collusion l'est davantage
-    (sa fiabilite a deja ete penalisee par `teinte.teinter`).
+    Une fusion simple mettrait l'interne et l'externe au meme niveau. La
+    ponderation corrige cela : l'interne verifie passe en premier, une source
+    externe unique descend, et une source suspecte de collusion descend
+    encore plus (sa fiabilite a deja ete baissee par `teinte.teinter`).
     """
     poids = poids or {
         "interne-verifie": 1.0,
@@ -89,10 +88,10 @@ def ponderer_par_confiance(fragments, poids=None):
 class RecuperateurHybride:
     """Assemble la cascade complete.
 
-    `dense` et `lexical` sont des callables (requete, n) -> liste de Fragment,
-    injectes plutot que figes : dans le prototype, `dense` s'appuie sur
-    Qdrant et BGE-M3 et `lexical` sur un index BM25 local, mais les tests et
-    les ablations du chapitre 5 doivent pouvoir les remplacer.
+    `dense` et `lexical` sont des fonctions (requete, n) -> liste de Fragment,
+    passees en argument. Dans le prototype, `dense` utilise Qdrant et BGE-M3,
+    et `lexical` un index BM25 local. Les tests et les ablations du
+    chapitre 5 peuvent ainsi les remplacer.
     """
 
     def __init__(self, dense=None, lexical=None, reclasseur=None,

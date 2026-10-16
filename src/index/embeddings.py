@@ -3,26 +3,23 @@ Embeddings BGE-M3 calcules localement (principe directeur, section 3.3.1).
 
     AUCUN EMBEDDING NE FRANCHIT LA FRONTIERE A.
 
-Un embedding de texte peut etre inverse : il permet d'inferer le sac de mots
-et, pour un texte court, de retrouver presque l'original. Deleguer la vectorisation
-a un service distant reviendrait donc a lui transmettre la requete en clair.
-Ce module ne doit jamais ouvrir de client vers une API d'embeddings, quelle
-qu'elle soit.
+On peut inverser un embedding de texte : il revele les mots du texte et,
+pour un texte court, permet de retrouver presque l'original. Confier la
+vectorisation a un service distant revient donc a lui envoyer la requete en
+clair. Ce module ne doit jamais se connecter a une API d'embeddings.
 
-Il traite en revanche une contrainte que le rapport n'aborde pas : 419 342
-documents a vectoriser. Sur processeur seul, l'operation n'a pas ete tentee
-(voir JOURNAL_DONNEES.md section 6, ou l'ingestion NER seule demande plus de
-neuf heures) ; sur GPU, elle prend quelques dizaines de minutes. D'ou trois
-exigences :
+Il gere aussi un probleme que le rapport n'aborde pas : il y a 419 342
+documents a vectoriser. Sur processeur seul, je ne l'ai pas tente (voir
+JOURNAL_DONNEES.md section 6 : l'extraction NER seule prend plus de neuf
+heures). Sur GPU, cela prend quelques dizaines de minutes. Le module doit
+donc :
 
-  - selection explicite du peripherique et de la precision ;
-  - traitement par lots dimensionne selon la memoire disponible ;
-  - reprise sur incident : un calcul de plusieurs dizaines de minutes sur une
-    machine louee doit pouvoir etre relance sans tout recalculer.
+  - choisir explicitement le peripherique et la precision ;
+  - traiter les textes par lots, selon la memoire disponible ;
+  - savoir reprendre apres une interruption, sans tout recalculer.
 
-La derniere est necessaire : une session sur machine louee peut etre
-interrompue, et sans reprise chaque interruption couterait la totalite du
-calcul.
+Le dernier point compte sur une machine louee : la session peut etre coupee,
+et sans reprise il faudrait tout recommencer.
 """
 
 import json
@@ -32,16 +29,16 @@ from pathlib import Path
 
 try:
     import numpy as np
-except ImportError:  # numpy est requis ; message explicite en son absence
+except ImportError:  # numpy est requis ; une erreur claire est levee plus loin
     np = None
 
 
 def peripherique_disponible(prefere=None):
-    """Determine le peripherique de calcul, sans jamais le supposer.
+    """Detecte le peripherique de calcul disponible.
 
-    Retourne (nom, precision). La demi-precision (fp16) divise par deux
-    l'empreinte memoire et accelere nettement le calcul sur GPU ; sur
-    processeur elle le ralentit, et je ne la retiens donc pas.
+    Renvoie (nom, precision). La demi-precision (fp16) divise par deux la
+    memoire utilisee et accelere nettement le calcul sur GPU. Sur processeur
+    elle le ralentit, donc je ne l'utilise pas.
     """
     if prefere:
         return prefere, ("float16" if prefere.startswith("cuda") else "float32")
@@ -59,9 +56,9 @@ def peripherique_disponible(prefere=None):
 def taille_lot_recommandee(peripherique, longueur_moyenne=1500):
     """Taille de lot prudente selon le peripherique et la longueur des textes.
 
-    Les valeurs sont volontairement conservatrices : un lot trop grand
-    provoque une erreur de memoire apres vingt minutes de calcul, ce qui est
-    le cas le plus defavorable sur une machine louee a l'heure.
+    Les valeurs sont volontairement basses : un lot trop grand peut provoquer
+    une erreur de memoire apres vingt minutes de calcul, ce qui coute cher
+    sur une machine louee a l'heure.
     """
     if peripherique == "cpu":
         return 8
@@ -73,10 +70,9 @@ def taille_lot_recommandee(peripherique, longueur_moyenne=1500):
 
 
 class Vectoriseur:
-    """Encapsule BGE-M3 et le calcul par lots, avec reprise.
+    """BGE-M3 et le calcul par lots.
 
-    L'etat d'avancement est ecrit sur disque a chaque lot. Une execution
-    interrompue reprend au dernier lot complet.
+    La reprise apres interruption est geree par `CalculPersistant`.
     """
 
     def __init__(self, modele="BAAI/bge-m3", peripherique=None,
@@ -89,7 +85,7 @@ class Vectoriseur:
         self._modele = None
 
     def charger(self):
-        """Chargement differe : importer torch coute plusieurs secondes."""
+        """Charge le modele au premier usage (importer torch prend plusieurs secondes)."""
         if self._modele is None:
             from sentence_transformers import SentenceTransformer
             self._modele = SentenceTransformer(
@@ -125,12 +121,11 @@ class Vectoriseur:
 class CalculPersistant:
     """Calcul d'embeddings sur un corpus entier, repris apres interruption.
 
-    Les vecteurs sont ecrits par tranches dans `dossier`, accompagnes d'un
-    fichier d'etat. Relancer la meme commande reprend le calcul la ou il
-    s'est arrete, sans recalculer.
+    Les vecteurs sont ecrits par tranches dans `dossier`, avec un fichier
+    d'etat. Relancer la meme commande reprend la ou le calcul s'est arrete.
 
-    Cela rend le calcul compatible avec une machine louee et avec la
-    persistance prevue a la section 4.1.3 du rapport.
+    C'est utile sur une machine louee, et cela correspond a la sauvegarde
+    prevue a la section 4.1.3 du rapport.
     """
 
     def __init__(self, vectoriseur, dossier="data/embeddings",
@@ -193,7 +188,7 @@ class CalculPersistant:
             debit = len(tranche) / duree if duree else 0
             restant = (total - len(faites)) * self.taille_tranche / debit \
                 if debit else 0
-            message = (f"  tranche {numero + 1}/{total} — "
+            message = (f"  tranche {numero + 1}/{total} : "
                        f"{len(tranche)} docs en {duree:.1f}s "
                        f"({debit:.0f} docs/s, reste ~{restant / 60:.0f} min)")
             print(message)
@@ -208,7 +203,7 @@ class CalculPersistant:
         return self
 
     def charger_tout(self):
-        """Relit les vecteurs persistes, dans l'ordre des tranches."""
+        """Relit les vecteurs sauvegardes, dans l'ordre des tranches."""
         etat = self._etat()
         vecteurs, identifiants = [], []
         for numero in sorted(etat["tranches_faites"]):

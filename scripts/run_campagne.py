@@ -1,19 +1,22 @@
 r"""
-Orchestration des campagnes E1, E3, E4 et E5 sur un index construit.
+Lance les campagnes E1, E4 et E5 sur un index deja construit.
 
-    py -3.11 scripts\run_campagne.py --experiences e1,e5 --corpus enronqa
-    py -3.11 scripts\run_campagne.py --experiences e3,e4 --sans-index
+    python scripts\run_campagne.py --experiences e1,e5 --corpus enronqa
+    python scripts\run_campagne.py --experiences e4 --sans-index
 
-Ce script assemble ce que les modules d'evaluation ne peuvent assembler
-seuls : il monte la cascade a partir des index persistes, construit les
-configurations d'ablation et estampille l'execution.
+Ce script fait le lien entre les modules d'evaluation : il monte la cascade
+a partir des index sauvegardes, construit les configurations d'ablation et
+estampille l'execution.
 
-E2 dispose de son propre lanceur (run_e2.py), car il ne depend d'aucun
-index : |S| est un decompte sur une population enumeree. Il en va de meme
-pour E7. Ce script couvre les experiences qui exigent la chaine de
-recherche.
+E2 a son propre lanceur (run_e2.py), car il n'a besoin d'aucun index : |S|
+se compte sur une population connue. C'est pareil pour E7. Ce script
+couvre les experiences qui ont besoin de la chaine de recherche.
 
-E6 n'y figure pas ; il dispose de son propre lanceur (run_e6.py).
+E3 et E6 ont aussi leurs propres lanceurs (run_e3.py, run_e6.py). Ici,
+`--experiences e3` affiche seulement un rappel.
+
+Pour E1b, E4 et E5, les lanceurs dedies sont run_e1b.py, run_e4.py et
+run_e5.py (voir le README).
 """
 
 import argparse
@@ -58,11 +61,11 @@ def lire_schema(chemin):
 
 
 def monter_index(corpus, config, avec_dense=True):
-    """Charge les index persistes et construit les recuperateurs.
+    """Charge les index sauvegardes et construit les recuperateurs.
 
-    Retourne (dense, lexical, reclasseur). Chacun peut valoir None : les
-    ablations d'E1 en dependent, et une voie absente doit degrader la
-    cascade sans la faire echouer.
+    Renvoie (dense, lexical, reclasseur). Chacun peut valoir None : les
+    ablations d'E1 en ont besoin, et si une voie manque, la cascade doit
+    tourner sans elle au lieu d'echouer.
     """
     dense = reclasseur = None
     chemin_lex = Path(f"data/index_lexical/{corpus}.pkl")
@@ -87,7 +90,7 @@ def monter_index(corpus, config, avec_dense=True):
                 config.recherche.modele_reclasseur)
         except Exception as erreur:
             print(f"  voie dense indisponible : {type(erreur).__name__} "
-                  f"— {str(erreur)[:70]}")
+                  f": {str(erreur)[:70]}")
 
     return dense, lexique, reclasseur
 
@@ -146,7 +149,7 @@ def main():
         if "e1" in experiences:
             chemin = PAIRES.get(corpus)
             if not chemin or not Path(chemin).exists():
-                print(f"E1 : paires absentes ({chemin}) — ignore\n")
+                print(f"E1 : paires absentes ({chemin}), experience ignoree\n")
             else:
                 paires = e1_hybridation.echantillonner(
                     e1_hybridation.charger_paires(chemin, limite=20000),
@@ -174,7 +177,7 @@ def main():
             recup = (RecuperateurHybride(dense=dense, lexical=lexique)
                      if (dense or lexique) else None)
             if not chemin or not Path(chemin).exists() or recup is None:
-                print("E5 : paires ou index absents — ignore\n")
+                print("E5 : paires ou index absents, experience ignoree\n")
             else:
                 from src.confidentialite.verrou import Masqueur
                 paires = e1_hybridation.echantillonner(
@@ -195,7 +198,7 @@ def main():
         if "e4" in experiences:
             documents = lire_schema(SCHEMAS.get("eurlex", ""))
             if not documents:
-                print("E4 : eurlex absent — ignore\n")
+                print("E4 : eurlex absent, experience ignoree\n")
             else:
                 from src.isolation.teinte import Fragment
                 fragments = [
@@ -215,10 +218,8 @@ def main():
 
         # ---- E3 : injection sous attaque adaptative ---------------------
         if "e3" in experiences:
-            print("E3 : necessite un fournisseur de generation branche.")
-            print("   Sans modele, seules les familles 'instruction' et")
-            print("   'assertion' sont mesurables ; voir "
-                  "LISEZ_MOI_POC_complement.md.\n")
+            print("E3 : il faut un fournisseur de generation (modele de langue).")
+            print("   Utilisez scripts/run_e3.py, le lanceur dedie a E3.\n")
 
         chemin = ex.dossier / "campagne.json"
         with open(chemin, "w", encoding="utf-8") as f:

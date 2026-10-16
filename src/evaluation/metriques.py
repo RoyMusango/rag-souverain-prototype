@@ -1,7 +1,7 @@
 """
 Metriques d'evaluation (chapitre 5).
 
-Trois familles, chacune adossee a une reference de la bibliographie du
+Trois familles, chacune liee a une reference de la bibliographie du
 rapport :
 
   RECUPERATION  Recall@k et nDCG            -> jarvelin2002ndcg
@@ -10,10 +10,11 @@ rapport :
   JUGEMENT      modele employe comme juge, avec ses biais documentes
                                             -> zheng2023judge
 
-Les biais de position, de verbosite et d'auto-preference d'un juge
-automatique sont documentes. Je les controle explicitement (permutation des
-ordres, normalisation de longueur, interdiction pour un modele de se juger
-lui-meme) plutot que de les subir.
+Un juge automatique a des biais connus : position, verbosite et
+auto-preference. `JugeControle` traite le biais de position (chaque paire
+est jugee dans les deux ordres) et l'auto-preference (un modele ne peut pas
+se juger lui-meme). La normalisation de longueur contre le biais de
+verbosite n'est pas encore codee.
 """
 
 import math
@@ -24,7 +25,7 @@ import statistics
 # -------------------------------------------------------------- recuperation
 
 def recall_at_k(pertinents, classement, k=10, cle=lambda x: x):
-    """Proportion des documents pertinents retrouves dans le top-k."""
+    """Part des documents pertinents retrouves dans le top-k."""
     if not pertinents:
         return None
     tete = {cle(d) for d in classement[:k]}
@@ -52,11 +53,11 @@ def dcg(gains):
 
 
 def ndcg_at_k(pertinences, classement, k=10, cle=lambda x: x):
-    """nDCG : gain cumule actualise, normalise par le classement ideal.
+    """nDCG : gain cumule actualise, divise par celui du classement ideal.
 
-    `pertinences` associe un identifiant a un gain (0, 1, 2...). Les gains
-    gradues, plutot que binaires, distinguent nDCG du rappel : un passage tres
-    pertinent en tete vaut mieux que trois passages moyens.
+    `pertinences` associe un identifiant a un gain (0, 1, 2...). Avec des
+    gains gradues, nDCG se distingue du rappel : un passage tres pertinent en
+    tete vaut mieux que trois passages moyens.
     """
     obtenus = [pertinences.get(cle(d), 0) for d in classement[:k]]
     ideaux = sorted(pertinences.values(), reverse=True)[:k]
@@ -67,19 +68,17 @@ def ndcg_at_k(pertinences, classement, k=10, cle=lambda x: x):
 # ------------------------------------------------------------------ reponse
 
 def decouper_phrases(texte):
-    """Segmentation en phrases, suffisante pour l'attribution."""
+    """Decoupage en phrases, suffisant pour l'attribution."""
     morceaux = re.split(r"(?<=[.!?])\s+", str(texte).strip())
     return [m.strip() for m in morceaux if m.strip()]
 
 
 def fidelite(reponse, fragments, juge=None):
-    """Part des affirmations de la reponse effectivement soutenues.
+    """Part des affirmations de la reponse qui sont appuyees par le contexte.
 
-    Sans juge, j'utilise une approximation lexicale : le recouvrement du
-    vocabulaire de contenu entre la phrase et le contexte. Grossiere mais
-    deterministe, elle permet de mesurer sans modele, ce que je prefere a une
-    metrique fine mais non rejouable. Avec un juge, la mesure devient
-    semantique.
+    Sans juge, j'utilise une approximation lexicale : les mots en commun
+    entre la phrase et le contexte. C'est grossier, mais deterministe et
+    sans modele, donc rejouable. Avec un juge, la mesure devient semantique.
     """
     phrases = decouper_phrases(reponse)
     if not phrases:
@@ -99,9 +98,9 @@ def fidelite(reponse, fragments, juge=None):
 
 
 def pertinence_reponse(requete, reponse):
-    """Adequation de la reponse a la question posee.
+    """La reponse correspond-elle a la question ?
 
-    Approximation lexicale, meme reserve que ci-dessus.
+    Approximation lexicale, avec la meme limite que ci-dessus.
     """
     jetons_q = set(re.findall(r"\w{4,}", str(requete).lower()))
     jetons_r = set(re.findall(r"\w{4,}", str(reponse).lower()))
@@ -111,12 +110,11 @@ def pertinence_reponse(requete, reponse):
 
 
 def precision_contexte(fragments, pertinents, cle=lambda f: f.doc_id):
-    """Part du contexte injecte qui est effectivement utile.
+    """Part du contexte fourni qui est vraiment utile.
 
-    Metrique essentielle pour E5 : une protection qui elargit la requete
-    ramene du contexte hors sujet, qui doit etre filtre localement a
-    posteriori. C'est le cout en rappel annonce dans la table des techniques
-    d'obfuscation.
+    Importante pour E5 : une protection qui elargit la requete ramene du
+    contexte hors sujet, qu'il faut ensuite filtrer en local. C'est le cout
+    en rappel indique dans le tableau des techniques d'obfuscation.
     """
     if not fragments:
         return None
@@ -132,7 +130,7 @@ def rappel_contexte(fragments, pertinents, cle=lambda f: f.doc_id):
 
 
 def taux_abstention(reponses):
-    """Comportement de refus, attendu et valorise en contexte bancaire."""
+    """Part des reponses ou le systeme refuse de repondre (souhaitable en banque)."""
     if not reponses:
         return None
     return sum(1 for r in reponses if r.abstention) / len(reponses)
@@ -152,7 +150,7 @@ def taux_non_verifie(reponses):
 # ----------------------------------------------------------------- securite
 
 def taux_succes_attaque(resultats):
-    """Taux de succes d'attaque, ventile par palier (grandeur d'E3).
+    """Taux de succes d'attaque, par palier (mesure d'E3).
 
     `resultats` est une liste de dict {palier, famille, reussie}.
     """
@@ -172,7 +170,7 @@ def ablation(mesures_par_configuration, reference="complete"):
 
     Le rapport annonce « la part de chaque couche » sous attaque adaptative.
     Cette fonction la calcule comme l'ecart entre la configuration complete
-    et chaque configuration privee d'une protection.
+    et chaque configuration a laquelle on a retire une protection.
     """
     base = mesures_par_configuration.get(reference)
     if base is None:
@@ -187,11 +185,11 @@ def ablation(mesures_par_configuration, reference="complete"):
 # ------------------------------------------------------------------ juge
 
 class JugeControle:
-    """Juge automatique, avec controle explicite de ses biais.
+    """Juge automatique, avec controle de ses biais.
 
-    Trois precautions, correspondant aux trois biais documentes :
-      position       chaque paire est evaluee dans les deux ordres
-      verbosite      la longueur est normalisee avant comparaison
+    Biais connus et ce qui est fait contre eux :
+      position        chaque paire est evaluee dans les deux ordres
+      verbosite       normalisation de longueur prevue, pas encore codee
       auto-preference un modele ne juge jamais ses propres sorties
     """
 
@@ -211,8 +209,8 @@ class JugeControle:
     def comparer(self, requete, reponse_a, reponse_b):
         """Compare deux reponses dans les deux ordres.
 
-        Un verdict qui s'inverse selon l'ordre est declare indecis plutot que
-        tranche, la permutation le contredisant.
+        Si le verdict change quand on inverse l'ordre, le resultat est
+        "indecis".
         """
         premier = self._demander(requete, reponse_a, reponse_b)
         second = self._demander(requete, reponse_b, reponse_a)
@@ -234,7 +232,7 @@ class JugeControle:
 
 
 def resumer(valeurs):
-    """Mediane et etendue, preferables a la moyenne sur de petits effectifs."""
+    """Mediane, moyenne, minimum et maximum (la mediane est plus fiable sur peu de valeurs)."""
     propres = [v for v in valeurs if v is not None]
     if not propres:
         return None

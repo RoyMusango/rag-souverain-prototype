@@ -1,5 +1,5 @@
-# Pousse vers le depot Git ce qui doit y figurer : code, scripts et artefacts
-# d'audit legers. Jamais les corpus ni les embeddings.
+# Pousse vers le depot Git ce qui doit y etre : code, scripts et petits
+# fichiers d'audit. Jamais les corpus ni les embeddings.
 #
 #     .\scripts\pousser_journal.ps1 -Message "index eurlex calcule sur GPU"
 #
@@ -9,8 +9,9 @@
 #   data\embeddings\*\etat.json         avancement du calcul
 #
 # Ce qui n'est jamais pousse : *.npy, *.pkl, les instantanes Qdrant,
-# data\<corpus>\. Le motif est detaille dans sauvegarder_embeddings.ps1 : un
-# embedding peut etre inverse en texte, et le depot ne redistribue aucun corpus.
+# data\<corpus>\. La raison est expliquee dans sauvegarder_embeddings.ps1 : on
+# peut retrouver le texte a partir d'un embedding, et le depot ne redistribue
+# aucun corpus.
 
 param(
     [string]$Message = "avancement",
@@ -21,9 +22,9 @@ $ErrorActionPreference = "Stop"
 
 if (-not (Test-Path ".git")) { throw "pas un depot Git. Lancez depuis la racine." }
 
-# Garde-fou : verifier que .gitignore couvre les artefacts volumineux avant
-# tout ajout. Un oubli est difficile a corriger, car un fichier pousse reste
-# dans l'historique meme apres suppression.
+# Verifie d'abord que .gitignore exclut les gros fichiers. Une erreur est
+# difficile a rattraper : un fichier pousse reste dans l'historique meme
+# apres suppression.
 $motifs = @("data/", "*.npy", "*.pkl", "*.snapshot", ".venv/")
 $gitignore = if (Test-Path ".gitignore") { Get-Content ".gitignore" -Raw } else { "" }
 $absents = @($motifs | Where-Object { $gitignore -notmatch [regex]::Escape($_) })
@@ -41,15 +42,15 @@ if ($absents.Count -gt 0) {
 
 git add src scripts requirements*.txt docs 2>$null
 
-# Les artefacts d'audit sont ajoutes en forcant, car data/ est ignore : ce
-# sont des fichiers de quelques kilo-octets qui portent la reproductibilite
-# (hash de manifeste, hash de commit, avancement des tranches).
+# Les fichiers d'audit sont ajoutes avec -f, car data/ est ignore. Ils font
+# quelques kilo-octets et servent a la reproductibilite (hash du manifeste,
+# hash du commit, avancement des tranches).
 Get-ChildItem -Recurse "resultats" -Filter "execution.json" -ErrorAction SilentlyContinue |
     ForEach-Object { git add -f $_.FullName 2>$null }
 Get-ChildItem -Recurse "data\embeddings" -Filter "etat.json" -ErrorAction SilentlyContinue |
     ForEach-Object { git add -f $_.FullName 2>$null }
 
-# Derniere verification : rien de volumineux ne doit etre indexe.
+# Derniere verification : aucun gros fichier ne doit etre indexe.
 $gros = git diff --cached --name-only | ForEach-Object {
     if (Test-Path $_) {
         $f = Get-Item $_

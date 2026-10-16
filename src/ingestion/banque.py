@@ -3,48 +3,44 @@ Corpus interne bancaire synthetique (section 4.3.1 du rapport).
 
     python -m src.ingestion.banque --clients 300 --graine 42
 
-Le rapport prevoit un corpus interne « ensemence d'identifiants realistes mais
-fictifs (noms, IBAN, identifiants) », a partir duquel est constitue l'ensemble
-des secrets. Ce module le produit.
+Le rapport prevoit un corpus interne contenant des « identifiants realistes
+mais fictifs (noms, IBAN, identifiants) ». L'ensemble des secrets est tire de
+ce corpus. Ce module le genere.
 
-NECESSITE DE CE CORPUS
+POURQUOI CE CORPUS
 
 Synthea est genere a partir de regles cliniques : il ne contient ni IBAN, ni
-numero de compte, ni reference de dossier. Sans ce corpus, les
-reconnaisseurs deterministes de `confidentialite/verrou.py`
-(MOTIFS_BANCAIRES) ne seraient exerces par aucune experience, et E7 ne
-mesurerait que l'etage statistique en le presentant comme la performance de
-la chaine.
+numero de compte, ni reference de dossier. Sans ce corpus, aucune experience
+ne testerait les reconnaisseurs deterministes de `confidentialite/verrou.py`
+(MOTIFS_BANCAIRES). E7 ne mesurerait que la partie statistique, et on la
+prendrait pour la performance de toute la chaine.
 
-Ce corpus permet de mesurer les deux etages separement et de montrer qu'ils
-sont complementaires plutot que redondants, ce qui constitue le resultat le
-plus utile d'E7.
+Avec ce corpus, on mesure les deux parties separement, et on peut voir
+qu'elles se completent. C'est le resultat le plus utile d'E7.
 
-DECISIONS DE CONCEPTION
+CHOIX DE CONCEPTION
 
   Unite documentaire : une note (KYC, AML, procedure, position).
   rubrique           : le dossier client (identifiant CLI-xxxxxx).
-  page               : 1. Une note n'a pas de pagination native ; meme
-                       limite que pour EnronQA et Synthea.
+  page               : 1. Une note n'a pas de pages ; meme limite que pour
+                       EnronQA et Synthea.
   pave               : rang de la note dans le dossier.
   source             : interne
 
-  IBAN valides. Les IBAN produits satisfont le reste modulo 97. Un corpus
-  d'IBAN invalides mesurerait la detection de forme et non la detection
-  d'identifiants, et empecherait toute evaluation ulterieure d'une
-  validation par somme de controle.
+  IBAN valides. Les IBAN generes respectent le controle modulo 97. Avec des
+  IBAN invalides, on mesurerait seulement si le detecteur reconnait la
+  forme, et on ne pourrait pas tester plus tard une validation par somme
+  de controle.
 
   Cartes valides. Pour la meme raison, elles respectent la cle de Luhn.
 
-  Verite terrain exacte. Chaque note est produite a partir d'un
-  enregistrement structure ; les chaines sensibles et leur categorie sont
-  donc connues exactement. C'est la meme discipline que pour E2 et E7 : la
-  mesure est exacte parce que la population est enumeree, et non estimee.
+  Verite terrain exacte. Chaque note est ecrite a partir d'un
+  enregistrement structure : on connait exactement les chaines sensibles et
+  leur categorie. Meme principe que pour E2 et E7.
 
-  Aucune donnee reelle. Noms, entreprises et villes proviennent de listes
-  fixes combinees sous graine ; les IBAN portent des codes banque fictifs.
-  Aucune correspondance avec une personne ou un etablissement existant n'est
-  recherchee, et le module ne lit aucune source externe.
+  Aucune donnee reelle. Les noms, entreprises et villes viennent de listes
+  fixes, combinees avec une graine. Les IBAN fictifs utilisent des codes
+  pays qui n'existent pas. Le module ne lit aucune source externe.
 
 Sorties :
     data/banque/banque_schema.json       schema commun
@@ -70,7 +66,7 @@ SORTIE_REFERENCE = Path("data/banque/banque_reference.json")
 SORTIE_SECRETS = Path("data/banque/banque_secrets.json")
 
 # --------------------------------------------------------------------------
-# Vocabulaire. Listes fixes, combinees sous graine : aucune donnee reelle.
+# Vocabulaire. Listes fixes combinees avec une graine : aucune donnee reelle.
 # --------------------------------------------------------------------------
 
 PRENOMS = [
@@ -109,7 +105,7 @@ MOTIFS_VIGILANCE = [
     "activité déclarée sans substance vérifiable",
 ]
 
-# Codes banque fictifs : aucun ne correspond a un etablissement reel.
+# Codes pays fictifs pour les IBAN : aucun n'existe.
 CODES_BANQUE = ["ZQ", "XV", "QW"]
 
 CATEGORIES = {
@@ -125,14 +121,14 @@ CATEGORIES = {
 
 
 # --------------------------------------------------------------------------
-# Identifiants valides : ce qui distingue ce corpus d'un corpus jouet
+# Identifiants valides (controle IBAN et cle de Luhn)
 # --------------------------------------------------------------------------
 
 def _reste_97(chaine):
     """Reste modulo 97 d'une chaine alphanumerique, chiffre par chiffre.
 
-    Je ne convertis pas en entier d'un seul coup : un IBAN compte jusqu'a 34
-    caracteres, et le calcul progressif est celui que decrit la norme.
+    Je ne convertis pas tout en un seul entier : un IBAN peut avoir 34
+    caracteres, et la norme decrit ce calcul pas a pas.
     """
     reste = 0
     for caractere in chaine:
@@ -144,24 +140,24 @@ def _reste_97(chaine):
 
 
 def iban_belge(alea):
-    """IBAN belge (16 caracteres) satisfaisant le reste modulo 97.
+    """IBAN belge (16 caracteres) qui respecte le controle modulo 97.
 
     Format : BE + 2 chiffres de controle + 12 chiffres. La cle nationale
-    belge (3 derniers chiffres) n'est pas simulee : elle n'entre pas dans la
-    validation IBAN et aucun detecteur ne la verifie.
+    belge (3 derniers chiffres) n'est pas simulee : la validation IBAN ne
+    l'utilise pas et aucun detecteur ne la verifie.
     """
     corps = "".join(str(alea.randint(0, 9)) for _ in range(12))
-    # Controle calcule sur corps + "BE00" reordonne, selon la norme.
+    # Controle calcule sur corps + "BE00", dans l'ordre fixe par la norme.
     reste = _reste_97(corps + "BE00")
     controle = 98 - reste
     return f"BE{controle:02d}{corps}"
 
 
 def iban_fictif(alea):
-    """IBAN a code pays fictif, pour eprouver la detection hors Belgique.
+    """IBAN avec un code pays fictif, pour tester la detection hors Belgique.
 
-    Le code pays n'existe pas, ce qui garantit l'absence de collision avec un
-    compte reel tout en conservant une structure valide au regard du motif.
+    Le code pays n'existe pas, donc aucun compte reel ne peut correspondre.
+    La structure reste valide pour le motif de detection.
     """
     pays = alea.choice(CODES_BANQUE)
     corps = "".join(str(alea.randint(0, 9)) for _ in range(14))
@@ -171,16 +167,16 @@ def iban_fictif(alea):
 
 
 def carte_luhn(alea):
-    """Numero a 16 chiffres satisfaisant la cle de Luhn.
+    """Numero a 16 chiffres qui respecte la cle de Luhn.
 
-    Le prefixe 4 (Visa) est conserve : un detecteur qui filtre par plage
-    d'emetteur doit pouvoir s'exercer. Les quinze premiers chiffres sont
-    aleatoires, le seizieme est calcule.
+    Le prefixe 4 (Visa) est garde, pour qu'un detecteur qui filtre par
+    emetteur puisse fonctionner. Le premier chiffre vaut 4, les quatorze
+    suivants sont aleatoires et le seizieme est calcule.
     """
     base = [4] + [alea.randint(0, 9) for _ in range(14)]
     somme = 0
-    # La position du chiffre de controle est paire depuis la droite : je
-    # double donc les rangs impairs de la base lue a l'envers.
+    # Le chiffre de controle sera ajoute a droite. En lisant la base a
+    # l'envers, je double donc les chiffres de rang pair (0, 2, 4...).
     for rang, chiffre in enumerate(reversed(base)):
         if rang % 2 == 0:
             chiffre *= 2
@@ -192,11 +188,10 @@ def carte_luhn(alea):
 
 
 def verifier_identifiants():
-    """Auto-controle : les generateurs produisent-ils des identifiants valides ?
+    """Verifie que les generateurs produisent des identifiants valides.
 
-    Appele au lancement. Un corpus d'identifiants invalides mesurerait la
-    detection de forme et non la detection d'identifiants ; l'erreur serait
-    silencieuse et invaliderait E7.
+    Appele au lancement. Avec des identifiants invalides, E7 mesurerait
+    seulement la reconnaissance de la forme, et rien ne le signalerait.
     """
     alea = random.Random(0)
     for _ in range(200):
@@ -225,7 +220,7 @@ def verifier_identifiants():
 # --------------------------------------------------------------------------
 
 def engendrer_client(alea, rang):
-    """Un enregistrement structure, qui constitue la verite terrain."""
+    """Un enregistrement structure, qui sert de verite terrain."""
     return {
         "client": f"CLI-{100000 + rang}",
         "dossier": f"KYC-{200000 + rang}",
@@ -252,24 +247,22 @@ GABARITS = [
      "exercer par l'intermédiaire de {societe}, dont le siège est établi à "
      "{ville}. Le secteur déclaré est {secteur}. Aucune pièce complémentaire "
      "n'a été produite à ce jour concernant le bénéficiaire effectif."),
-    # Corrige le 18/09/2026. Ce gabarit etait le seul des cinq a ne designer
-    # le client que par son identifiant de dossier, sans prenom, nom, ville ni
-    # secteur. Or les questions engendrees pour cette rubrique citent le nom
-    # et le secteur : tous les termes discriminants de la question etaient
-    # absents de la note attendue, et presents dans les quatre autres notes
-    # du dossier.
+    # Corrige le 18/09/2026. Ce gabarit etait le seul des cinq a ne citer le
+    # client que par son identifiant de dossier, sans prenom, nom, ville ni
+    # secteur. Or les questions sur cette rubrique citent le nom et le
+    # secteur : les mots utiles de la question manquaient dans la note
+    # attendue, et se trouvaient dans les quatre autres notes du dossier.
     #
-    # Effet mesure avant correction, sur 200 questions, graine 42 : les 37
-    # questions `aml` de l'echantillon echouaient toutes, a l'identique pour
-    # la voie lexicale, la voie dense et leur fusion, alors que le bon dossier
-    # client figurait dans les dix premiers resultats 37 fois sur 37 : le
-    # systeme trouvait le client mais se trompait de note. Le rappel de
-    # 0,8150 mesure par E1b et E5 sur ce corpus etait donc un plafond du jeu
-    # de test, et non une performance du moteur.
+    # Avant correction, sur 200 questions (graine 42), les 37 questions `aml`
+    # de l'echantillon echouaient toutes, de la meme facon pour la voie
+    # lexicale, la voie dense et leur fusion. Pourtant le bon dossier client
+    # etait dans les dix premiers resultats 37 fois sur 37 : le systeme
+    # trouvait le client mais pas la bonne note. Le rappel de 0,8150 mesure
+    # par E1b et E5 sur ce corpus etait donc une limite du jeu de test.
     #
-    # Aucun tirage aleatoire n'est ajoute ici : la suite des tirages reste
-    # identique, et les 1 200 notes des quatre autres rubriques sont
-    # inchangees au caractere pres.
+    # La correction n'ajoute aucun tirage aleatoire : la suite des tirages
+    # reste la meme, et les 1 200 notes des quatre autres rubriques sont
+    # identiques au caractere pres.
     ("aml",
      "Note de vigilance — {client}. Le client {prenom} {nom}, domicilié à "
      "{ville} et actif dans le secteur {secteur}, fait l'objet d'un examen "
@@ -290,14 +283,14 @@ GABARITS = [
 
 
 def composer(client, alea):
-    """Produit les notes d'un client, et la verite terrain de chacune."""
+    """Ecrit les notes d'un client, avec la verite terrain de chacune."""
     documents, references = [], []
     for rang, (nature, gabarit) in enumerate(GABARITS, start=1):
         texte = gabarit.format(**client)
 
-        # Verite terrain : les chaines ne sont pas recherchees apres coup,
-        # elles sont connues des leur insertion. Seules celles effectivement
-        # presentes dans ce gabarit sont retenues.
+        # Verite terrain : on connait les chaines au moment ou on les insere,
+        # pas besoin de les chercher apres. On garde seulement celles qui
+        # apparaissent dans ce gabarit.
         attendus = []
         for champ, categorie in CATEGORIES.items():
             valeur = str(client[champ])
@@ -346,8 +339,8 @@ def main():
     documents = numeroter_paves(documents)
 
     if not arguments.sans_ner:
-        # Meme chaine que les autres adaptateurs, sans quoi le champ
-        # `entities` de ce corpus ne serait pas comparable aux autres.
+        # Meme chaine que les autres adaptateurs, sinon le champ `entities`
+        # de ce corpus ne serait pas comparable aux autres.
         try:
             from common import charger_ner, extraire_entites_lot
         except ImportError:

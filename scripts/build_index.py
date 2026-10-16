@@ -1,18 +1,18 @@
 r"""
-Construction de l'index, etape la plus lourde, a executer sur GPU.
+Construction de l'index : l'etape la plus lourde, a lancer sur GPU.
 
-    set RAG_MATERIEL=shadow
-    py -3.11 scripts\build_index.py --corpus tous --tranche 5000
+    $env:RAG_MATERIEL = "scaleway"
+    python scripts\build_index.py --corpus tous --tranche 5000
 
-Le script peut reprendre apres interruption : il ecrit son avancement a
-chaque tranche. Une session interrompue se relance par la meme commande et
-repart du dernier lot complet, ce qui est necessaire sur une machine louee,
-ou une interruption couterait sinon la totalite du calcul.
+Le script sait reprendre apres une interruption : il enregistre son
+avancement a chaque tranche. On relance la meme commande et il repart de la
+derniere tranche terminee. C'est indispensable sur une machine louee, ou une
+coupure ferait sinon perdre tout le calcul.
 
-Perimetre : les embeddings sont calcules localement, sur la machine qui
-execute ce script. Aucun vecteur ne franchit la Frontiere A, quelle que soit
-la machine employee (section 3.3.1) : une machine louee est un substrat de
-calcul, et non un service d'embeddings distant.
+Les embeddings sont calcules sur la machine qui execute ce script. Aucun
+vecteur ne franchit la Frontiere A, quelle que soit la machine (section
+3.3.1) : une machine louee fait seulement du calcul, aucun service
+d'embeddings distant n'intervient.
 """
 
 import argparse
@@ -34,16 +34,16 @@ SCHEMAS = {
     "eurlex": "data/external/eurlex/eurlex_schema.json",
     "pubmedqa": "data/pubmedqa/pubmedqa_schema.jsonl",
     "enronqa": "data/enronqa/enronqa_schema.jsonl",
-    # Corpus bancaire synthetique. Absent jusqu'au 07/09, ce qui rendait E5
-    # impossible : elle interroge ce corpus, et un rappel mesure sur un index
-    # qui ne le contient pas serait nul par construction.
+    # Corpus bancaire synthetique. Absent jusqu'au 07/09, ce qui empechait E5 :
+    # E5 interroge ce corpus, et sur un index qui ne le contient pas, le
+    # rappel vaudrait forcement 0.
     "banque": "data/banque/banque_schema.json",
 }
 
-# Palier d'origine : emplacement reel de la donnee, a distinguer du champ
-# `source` du schema, qui indique comment le moteur la traite. PubMedQA est
-# etiquete externe alors que son contenu est fiable : il sert de substitut
-# controle du web biomedical (JOURNAL_DONNEES section 5.5).
+# Palier d'origine : ou se trouve vraiment la donnee. Le champ `source` du
+# schema dit autre chose : comment le moteur la traite. PubMedQA est
+# etiquete externe alors que son contenu est fiable, car il remplace le web
+# biomedical (JOURNAL_DONNEES section 5.5).
 PALIERS = {
     "synthea": "interne", "finqa": "interne", "tatqa": "interne",
     "enronqa": "interne", "eurlex": "externe", "pubmedqa": "externe",
@@ -60,7 +60,7 @@ def resoudre(chemin):
 
 
 def lire(chemin):
-    """Lecture du schema commun. Reprend la convention de src/ingestion."""
+    """Lit un fichier au schema commun, comme src/ingestion."""
     try:
         from common import lire as lire_ingestion
         return lire_ingestion(chemin)
@@ -82,9 +82,10 @@ def main():
     parseur.add_argument("--taille-lot", type=int, default=None,
                          help="par defaut : deduite du peripherique")
     parseur.add_argument("--peripherique", default=None,
-                         help="cuda, cpu, mps — par defaut : detecte")
+                         help="cuda, cpu, mps ; par defaut : detecte")
     parseur.add_argument("--sans-qdrant", action="store_true",
-                         help="calcule et persiste les vecteurs, sans verser")
+                         help="calcule et sauvegarde les vecteurs, sans les "
+                              "ecrire dans Qdrant")
     parseur.add_argument("--sans-lexical", action="store_true")
     parseur.add_argument("--recreer", action="store_true")
     arguments = parseur.parse_args()
@@ -103,8 +104,8 @@ def main():
     print(f"materiel     : {config.materiel.nom} (role : {config.materiel.role})")
     print(f"peripherique : {vectoriseur.peripherique} / {vectoriseur.precision}")
     if vectoriseur.peripherique == "cpu":
-        print("  ATTENTION — sans accelerateur, le calcul sur les six corpus")
-        print("  se compte en heures. Declarez RAG_MATERIEL et un GPU.")
+        print("  ATTENTION : sans GPU, le calcul sur tous les corpus prend")
+        print("  des heures. Utilisez un GPU et declarez RAG_MATERIEL.")
     print()
 
     with mod_journal.Execution("construction-index", config,
@@ -148,7 +149,7 @@ def main():
                 chemin_lex = lexique.enregistrer(f"data/index_lexical/{nom}.pkl")
                 print(f"  index lexical : {chemin_lex}")
 
-        print("\nA reporter dans JOURNAL_DONNEES.md section 9 (encore vide) :")
+        print("\nA reporter dans JOURNAL_DONNEES.md section 9 :")
         print("  temps d'embedding par 1000 docs, taille de l'index Qdrant,")
         print("  latence de recuperation dense / BM25 / fusion.")
 

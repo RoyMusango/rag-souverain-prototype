@@ -1,36 +1,36 @@
 """
-Purge d'un journal de reprise E3 les appels dont la reponse est vide.
+Retire d'un journal de reprise E3 les appels dont la reponse est vide.
 
-MOTIVATION
+POURQUOI
 
-Un modele soumis a un budget de jetons serre peut consommer la totalite de
-`--max-jetons` sans rendre un seul caractere visible. La campagne `assertion`
-du 16 septembre en compte douze sur cent quatre-vingt-quinze, factures 2 500
+Avec un budget de jetons serre, un modele peut utiliser tout `--max-jetons`
+sans ecrire un seul caractere visible. La campagne `assertion` du 16
+septembre en compte douze sur cent quatre-vingt-quinze, factures 2 500
 jetons chacun pour une reponse vide.
 
 Ces appels faussent aussi la mesure. Pour les familles `assertion` et
-`instruction`, le verdict lit la reponse : une reponse vide ne contient ni
-valeur inventee ni marqueur d'execution, et l'attaque est donc comptee comme
-echouee alors que son issue est inconnue. L'ASR publie est alors sous-estime
-d'un montant inconnu.
+`instruction`, le verdict lit la reponse. Une reponse vide ne contient ni
+valeur inventee ni marqueur d'execution : l'attaque est comptee comme
+echouee alors qu'on ne sait pas ce qu'elle aurait donne. L'ASR publie est
+donc trop bas, d'une valeur inconnue.
 
-Purger ces lignes du journal de reprise les rend rejouables : la commande
-d'origine, relancee avec un `--max-jetons` plus large, ne refacture que ces
-appels.
+Une fois ces lignes retirees du journal de reprise, on peut rejouer ces
+appels : la commande d'origine, relancee avec un `--max-jetons` plus grand,
+ne refacture qu'eux.
 
-Pour la famille `duplication`, la purge est inutile : son verdict ne lit pas
-la reponse, et une reponse vide ne fausse rien. Le script le signale.
+Pour la famille `duplication`, c'est inutile : son verdict ne lit pas la
+reponse, donc une reponse vide ne fausse rien. Le script le signale.
 
 PRECAUTION
 
-Purger implique de repayer ces appels. Le script ne modifie donc rien sans
-`--confirmer`, et ecrit toujours une sauvegarde horodatee a cote du journal
-avant toute modification.
+Retirer ces appels oblige a les payer de nouveau. Le script ne modifie donc
+rien sans `--confirmer`, et ecrit toujours une sauvegarde horodatee a cote
+du journal avant de le modifier.
 
-    .venv\\Scripts\\python.exe scripts\\purger_appels_vides.py ^
+    .venv\\Scripts\\python.exe scripts\\purger_appels_vides.py `
         resultats\\e3_complet\\journal_assertion.jsonl
 
-    .venv\\Scripts\\python.exe scripts\\purger_appels_vides.py ^
+    .venv\\Scripts\\python.exe scripts\\purger_appels_vides.py `
         resultats\\e3_complet\\journal_assertion.jsonl --confirmer
 """
 
@@ -42,7 +42,7 @@ from pathlib import Path
 
 
 def lire(chemin):
-    """Rend la liste des entrees, en conservant l'ordre du fichier."""
+    """Renvoie la liste des entrees, dans l'ordre du fichier."""
     entrees = []
     for numero, ligne in enumerate(
             chemin.read_text(encoding="utf-8").splitlines(), start=1):
@@ -53,8 +53,8 @@ def lire(chemin):
         except json.JSONDecodeError as erreur:
             raise SystemExit(
                 "ligne %d illisible dans %s : %s\n"
-                "Le journal est peut-etre tronque par une coupure en pleine "
-                "ecriture. Retire la derniere ligne a la main et relance."
+                "Le journal a peut-etre ete coupe en pleine ecriture. "
+                "Supprimez la derniere ligne a la main et relancez."
                 % (numero, chemin, erreur))
     return entrees
 
@@ -69,8 +69,9 @@ def main():
     parseur.add_argument("journal",
                          help="chemin du journal_<famille>.jsonl")
     parseur.add_argument("--confirmer", action="store_true",
-                         help="ecrit reellement. Sans ce drapeau, le script "
-                              "se contente de rapporter ce qu'il ferait.")
+                         help="modifie vraiment le journal. Sans cette "
+                              "option, le script affiche seulement ce qu'il "
+                              "ferait.")
     arguments = parseur.parse_args()
 
     chemin = Path(arguments.journal)
@@ -87,8 +88,8 @@ def main():
     if "duplication" in chemin.name:
         print()
         print("ATTENTION : famille duplication. Son verdict ne lit pas la")
-        print("reponse du modele, une reponse vide ne fausse donc AUCUN")
-        print("resultat. Purger ne ferait que repayer des appels pour rien.")
+        print("reponse du modele, donc une reponse vide ne fausse AUCUN")
+        print("resultat. Retirer ces appels ferait payer pour rien.")
 
     if not vides:
         print("\nRien a purger.")
@@ -106,8 +107,8 @@ def main():
     if not arguments.confirmer:
         print()
         print("SIMULATION. Rien n'a ete modifie.")
-        print("Ajoute --confirmer pour purger, puis relance la commande de")
-        print("campagne d'origine avec un --max-jetons plus large.")
+        print("Ajoutez --confirmer pour retirer ces appels, puis relancez la")
+        print("commande de campagne d'origine avec un --max-jetons plus grand.")
         return
 
     sauvegarde = chemin.with_suffix(
@@ -122,8 +123,8 @@ def main():
     print("lignes conservees  : %d" % len(gardees))
     print("lignes purgees     : %d" % len(vides))
     print()
-    print("Relance maintenant la commande de campagne d'origine, en portant")
-    print("--max-jetons a 4000. Seuls les %d appels purges seront refactures."
+    print("Relancez maintenant la commande de campagne d'origine, avec")
+    print("--max-jetons 4000. Seuls les %d appels retires seront refactures."
           % len(vides))
 
 

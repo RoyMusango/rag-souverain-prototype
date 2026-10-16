@@ -1,31 +1,32 @@
 r"""
-E6b : abstention par ignorance, lorsque la reponse n'existe nulle part.
+E6b : abstention quand la reponse n'existe nulle part.
 
     python scripts\run_e6b.py
+    python scripts\run_e6b.py --echantillon calage  --seuil-externe 0.45
+    python scripts\run_e6b.py --echantillon epreuve --seuil-externe 0.45
 
-MOTIVATION
+POURQUOI
 
-Comme l'indique `e6_routage.py`, l'abstention y est, dans l'implementation
-actuelle, un interrupteur de disponibilite et non un jugement reflexif : le
-routeur ne s'abstient que lorsque la sortie lui est fermee. Il n'evalue
-jamais le soutien externe, si bien que sur les 40 requetes dont la reponse
-n'existe nulle part, il decide de sortir 40 fois sur 40, ce qu'E6 compte
-comme correct puisque rien ne permet de savoir avant de sortir qu'une
-reponse est introuvable.
+Comme l'explique `e6_routage.py`, dans le code actuel le routeur ne
+s'abstient que si la sortie lui est fermee. Il ne juge jamais le soutien
+externe. Sur les 40 requetes dont la reponse n'existe nulle part, il sort
+donc 40 fois sur 40. E6 compte cela comme correct, car avant de sortir on ne
+peut pas savoir que la reponse est introuvable.
 
-Ce script mesure l'autre moitie de la question : une fois sorti, le systeme
-reconnait-il qu'il n'a rien trouve, et s'abstient-il plutot que d'inventer ?
+Ce script mesure la suite : une fois sorti, le systeme voit-il qu'il n'a
+rien trouve, et se tait-il au lieu d'inventer ?
 
-La difference est la suivante : E6 indexe le seul corpus interne et utilise
-EUR-Lex comme verite terrain, alors qu'ici EUR-Lex est indexe et soumis au
-meme evaluateur de couverture.
+Difference avec E6 : E6 n'indexe que le corpus interne et se sert d'EUR-Lex
+comme verite terrain. Ici, EUR-Lex est indexe et juge par le meme
+evaluateur de couverture.
 
-AUCUN NOUVEAU SEUIL
+SEUILS
 
-Le jugement externe reutilise les seuils du jugement interne (pertinence
-0,55, vocabulaire 0,25). Introduire un seuil propre a l'externe et le regler
-sur ce jeu reviendrait a caler un chiffre sur les donnees qui servent a le
-mesurer.
+Par defaut, le jugement externe reprend les seuils du jugement interne
+(pertinence 0,55, vocabulaire 0,25). `--seuil-externe` permet un seuil
+propre a l'externe. Pour ne pas le regler sur les donnees qui servent a le
+mesurer, on coupe le jeu en deux : on choisit le seuil sur la moitie
+`calage`, puis on le mesure sur la moitie `epreuve`.
 
 VERITE TERRAIN
 
@@ -34,13 +35,13 @@ VERITE TERRAIN
     interne, decrit      -> INTERNE
     enrichissement-interdit -> ABSTENIR
 
-Deux erreurs, que je n'agrege pas davantage que celles d'E6 :
+Deux erreurs, gardees separees comme dans E6 :
 
-    INVENTION       le systeme poursuit alors que rien ne porte la reponse
-    SILENCE INDU    il s'abstient alors que la reponse etait a l'exterieur
+    INVENTION       le systeme continue alors que rien ne contient la reponse
+    SILENCE INDU    il se tait alors que la reponse etait a l'exterieur
 
-La seconde est la plus couteuse en usage : un assistant qui refuse de
-repondre a des questions legitimes finit par ne plus etre utilise.
+En pratique, la seconde coute le plus : un assistant qui refuse de repondre
+a des questions legitimes finit par ne plus etre utilise.
 """
 
 import argparse
@@ -60,7 +61,7 @@ REFERENCE = "data/banque/banque_reference.json"
 EURLEX = "data/external/eurlex/eurlex_schema.json"
 
 # Issues attendues une fois l'externe consulte. Seule `absente` change par
-# rapport a E6 : c'est precisement la question que ce script ajoute.
+# rapport a E6 : c'est ce que ce script mesure en plus.
 ATTENDU = {
     e6.INTERNE: mod_routeur.INTERNE,
     e6.INTERNE_DECRIT: mod_routeur.INTERNE,
@@ -86,17 +87,17 @@ def main():
     p.add_argument("--seuil-pertinence", type=float, default=0.55)
     p.add_argument("--seuil-completude", type=float, default=0.70)
     p.add_argument("--seuil-vocabulaire", type=float, default=0.25)
-    # A None, le jugement externe reutilise exactement le seuil interne.
-    # L'option sert a tracer l'arbitrage, et non a caler une valeur sur ce
-    # jeu (voir l'en-tete du fichier).
+    # A None, le jugement externe reprend exactement le seuil interne. Pour
+    # choisir un autre seuil, utiliser --echantillon (voir l'en-tete du
+    # fichier).
     p.add_argument("--seuil-externe", type=float, default=None,
                    help="seuil de pertinence applique a l'externe ; "
                         "par defaut celui de l'interne")
     p.add_argument("--graine", type=int, default=20260902)
-    # Couper le jeu en deux est le seul moyen de choisir un seuil sans le
-    # caler sur les donnees qui servent a le mesurer. Le partage est
-    # deterministe et effectue au sein de chaque classe, afin que les deux
-    # moities conservent la meme composition.
+    # Couper le jeu en deux permet de choisir un seuil sans le regler sur
+    # les donnees qui servent a le mesurer. La coupe est deterministe et
+    # faite dans chaque classe, pour que les deux moities aient la meme
+    # composition.
     p.add_argument("--echantillon", default="tout",
                    choices=("tout", "calage", "epreuve"),
                    help="calage : la moitie ou l'on CHOISIT le seuil. "
@@ -110,17 +111,16 @@ def main():
     reference = lire(a.reference)
 
     print(f"corpus interne : {len(interne)} notes")
-    print(f"corpus externe : {len(externe)} documents — INDEXE ici")
+    print(f"corpus externe : {len(externe)} documents, INDEXE ici")
 
     cas = e6.construire_jeu(reference, externe, par_classe=a.par_classe,
                             graine=a.graine)
     if a.echantillon != "tout":
-        # Melange prealable a la coupe. `construire_jeu` produit les cas
-        # d'une classe en alternant ses gabarits : une coupe pair/impair
-        # placait donc un gabarit entier d'un cote et l'autre gabarit de
-        # l'autre. Les deux moities n'etaient pas deux echantillons d'une
-        # meme population mais deux types de questions, avec pour effet
-        # mesure 0 % d'abstention d'un cote et 100 % de l'autre au meme seuil.
+        # On melange avant de couper. `construire_jeu` produit les cas d'une
+        # classe en alternant ses gabarits : une coupe pair/impair mettait
+        # donc un gabarit entier d'un cote et l'autre de l'autre. Les deux
+        # moities etaient deux types de questions differents. Resultat :
+        # 0 % d'abstention d'un cote et 100 % de l'autre, au meme seuil.
         import random as _random
         par_classe = {}
         for entree in cas:
@@ -144,9 +144,9 @@ def main():
     routeur = mod_routeur.Routeur(ev_interne, a.seuil_pertinence,
                                   a.seuil_completude,
                                   seuil_vocabulaire=a.seuil_vocabulaire)
-    # Le second routeur sert uniquement a reutiliser `juger` sur l'externe :
-    # memes seuils, meme code de decision, seule la source des fragments
-    # change.
+    # Le second routeur sert seulement a appliquer `juger` a l'externe : meme
+    # code de decision, seule la source des fragments change (et le seuil de
+    # pertinence si --seuil-externe est donne).
     seuil_externe = (a.seuil_pertinence if a.seuil_externe is None
                      else a.seuil_externe)
     juge_externe = mod_routeur.Routeur(ev_externe, seuil_externe,
@@ -166,7 +166,7 @@ def main():
                 entree["requete"], n=a.fragments)]
             jugement = juge_externe.juger(entree["requete"], fragments)
             etat_externe = jugement.etat
-            # Rien a l'exterieur non plus : le cas qu'E6 ne pouvait pas voir.
+            # Rien a l'exterieur non plus : le cas qu'E6 ne voyait pas.
             if jugement.etat == mod_routeur.FAIBLE:
                 issue = mod_routeur.ABSTENIR
 
@@ -194,10 +194,10 @@ def main():
 
     mesures = {
         "taux_decision_correcte": part(details, lambda d: d["correcte"]),
-        # Abstention lorsque rien ne porte la reponse : grandeur principale.
+        # Abstention quand rien ne contient la reponse : mesure principale.
         "abstention_par_ignorance": part(
             absentes, lambda d: d["issue_obtenue"] == mod_routeur.ABSTENIR),
-        # Poursuite alors que rien ne porte la reponse.
+        # Le systeme continue alors que rien ne contient la reponse.
         "invention": part(
             absentes, lambda d: d["issue_obtenue"] != mod_routeur.ABSTENIR),
         # Abstention alors que la reponse etait a l'exterieur (erreur
@@ -219,11 +219,11 @@ def main():
         "mesures": mesures,
         "details": details,
         "lecture": (
-            "L'abstention par ignorance est mesuree une fois l'externe "
-            "consulte : c'est la moitie de la question que E6 ne pouvait pas "
-            "voir, EUR-Lex n'y etant pas indexe. Les deux erreurs ne "
-            "s'agregent pas : inventer trompe l'utilisateur, se taire a tort "
-            "le prive d'une reponse qui existait."
+            "L'abstention est mesuree apres consultation de l'externe. E6 "
+            "ne pouvait pas la mesurer, car EUR-Lex n'y etait pas indexe. "
+            "Les deux erreurs restent separees : inventer trompe "
+            "l'utilisateur, se taire a tort le prive d'une reponse qui "
+            "existait."
         ),
     }
 

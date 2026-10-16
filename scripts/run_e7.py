@@ -1,12 +1,12 @@
 r"""
 E7 : comparaison des detecteurs d'entites nommees.
 
-    py -3.11 scripts\run_e7.py --patients 300
+    python scripts\run_e7.py --patients 300 --langue en --moteurs spacy,presidio
 
-Aucun GPU n'est requis pour spaCy ni pour Presidio ; CamemBERT en beneficie
-sans en dependre. Le script peut etre execute sur le poste local comme sur la
-machine de calcul : la qualite se mesure partout, seul le debit exige un
-materiel representatif, ce que le journal signale.
+spaCy et Presidio n'ont pas besoin de GPU. CamemBERT va plus vite avec un
+GPU, mais tourne sans. Le script peut tourner sur le poste local comme sur
+la machine de calcul : la qualite se mesure partout, seul le debit demande
+un materiel representatif, et le journal le signale.
 
 Prerequis :
     python -m spacy download fr_core_news_lg     (si absent)
@@ -37,13 +37,13 @@ def lire_schema(chemin):
 
 
 def main():
-    parseur = argparse.ArgumentParser(description="E7 — detecteurs de PII")
+    parseur = argparse.ArgumentParser(description="E7 : detecteurs de PII")
     parseur.add_argument("--patients", type=int, default=300,
                          help="nombre de patients echantillonnes")
     # Pas de valeur par defaut : les rubriques Synthea sont en anglais et le
-    # corpus bancaire en francais. Une valeur erronee ne leve aucune erreur :
-    # le mauvais modele spaCy s'execute, le rappel s'effondre, et le resultat
-    # a toutes les apparences d'une mesure. Voir JOURNAL_DONNEES section 11.
+    # corpus bancaire en francais. Une mauvaise valeur ne leve aucune erreur :
+    # le mauvais modele spaCy tourne, le rappel s'effondre, et le resultat
+    # ressemble a une vraie mesure. Voir JOURNAL_DONNEES section 11.
     parseur.add_argument("--langue", required=True, choices=("fr", "en"),
                          help="langue du corpus : en pour Synthea, "
                               "fr pour le corpus bancaire")
@@ -67,11 +67,10 @@ def main():
 
     print(f"patients de reference : {len(reference)}")
     print(f"rubriques identite    : {len(documents)}")
-    # Deux comptes distincts, dont la confusion avait conduit a indiquer 2121
-    # dans le rapport alors que le denominateur du rappel vaut 2712 :
-    # `attendus` liste des chaines sensibles, `positions_attendues` en
-    # localise toutes les occurrences dans le texte. Le rappel se calcule sur
-    # les secondes.
+    # Deux comptes differents. Les confondre avait fait ecrire 2121 dans le
+    # rapport, alors que le denominateur du rappel vaut 2712 : `attendus`
+    # liste les chaines sensibles, `positions_attendues` trouve toutes leurs
+    # occurrences dans le texte. Le rappel se calcule sur les occurrences.
     chaines = sum(len(r["attendus"]) for r in reference)
     occurrences = sum(
         len(e7.positions_attendues(d.get("text", ""),
@@ -95,7 +94,7 @@ def main():
         for nom in moteurs:
             m = rapport["resultats"].get(nom, {})
             if "erreur" in m:
-                print(f"{nom:<12} INDISPONIBLE — {m['erreur'][:60]}")
+                print(f"{nom:<12} INDISPONIBLE : {m['erreur'][:60]}")
                 continue
             print(f"{nom:<12} {m['rappel']:>8.3f} {m['precision']:>8.3f} "
                   f"{m['f1']:>8.3f} {m['debit_car_s']:>10,}")

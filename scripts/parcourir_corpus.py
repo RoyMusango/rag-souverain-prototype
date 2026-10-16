@@ -5,17 +5,16 @@ Affiche des extraits d'un corpus, pour rediger des questions a partir du texte.
     .venv\Scripts\python.exe scripts\parcourir_corpus.py --corpus eurlex --n 8
     .venv\Scripts\python.exe scripts\parcourir_corpus.py --corpus eurlex --texte DORA
 
-MOTIVATION
+POURQUOI
 
 Les corpus sont des JSON de plusieurs megaoctets, difficiles a lire dans un
-editeur. Rediger des questions pertinentes suppose pourtant d'avoir le texte
-reel sous les yeux ; sinon, les questions risquent de ne pas trouver de
-reponse dans le corpus, et la mesure porterait sur des cas impossibles
-plutot que sur le routeur.
+editeur. Pour ecrire de bonnes questions, il faut pourtant voir le vrai
+texte. Sinon les questions risquent de ne pas avoir de reponse dans le
+corpus, et on mesurerait des cas impossibles au lieu du routeur.
 
-Le script n'affiche volontairement aucune mesure, aucun score ni aucune
-statistique de vocabulaire : il sert a preparer un jeu de validation, dont
-le redacteur ne doit pas voir la grandeur que le jeu servira a eprouver.
+Le script n'affiche volontairement aucun score ni aucune statistique de
+vocabulaire. Il sert a preparer un jeu de validation, et la personne qui
+ecrit les questions ne doit pas voir la valeur que ce jeu va tester.
 """
 
 import argparse

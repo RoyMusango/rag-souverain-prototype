@@ -1,24 +1,27 @@
-"""Departage les trois hypotheses sur le rappel ORGANISATION de Presidio.
+"""Teste les hypotheses sur le faible rappel ORGANISATION de Presidio.
 
 A lancer depuis la racine du depot :
 
     python scripts\\diag_presidio_org.py
 
-Le script ne modifie rien. Il affiche, dans l'ordre, ce que Presidio declare
-supporter, la configuration NER effectivement en vigueur, ce que produit le
-modele spaCy brut, ce que produit Presidio a seuil nul, puis le verdict.
+Le script ne modifie rien. Il affiche, dans l'ordre : ce que produit spaCy
+seul, ce que Presidio dit gerer, la configuration NER reellement utilisee,
+ce que Presidio produit avec un seuil nul, le verdict, puis la table de
+normalisation du projet.
 
-Aucun de ces releves n'est concluant isolement : le premier peut afficher
-ORGANIZATION alors que le moteur l'ecarte, et le dernier peut le produire
-alors que la normalisation du projet le perd. C'est leur combinaison qui
-permet de conclure.
+Aucun releve ne suffit seul : Presidio peut annoncer ORGANIZATION et
+l'ecarter ensuite, ou le produire alors que la normalisation du projet le
+perd. Il faut les lire ensemble.
+
+Resultat (01/09/2026) : c'etait la table de normalisation, qui ne
+connaissait pas ORGANIZATION. Voir verrou.py et JOURNAL_DONNEES, section 11.
 """
 
 import argparse
 import sys
 
-# Une note de la meme facture que le corpus bancaire synthetique : une
-# organisation nommee, une personne, un lieu, un identifiant.
+# Une note dans le style du corpus bancaire synthetique : une organisation,
+# une personne, un lieu, un identifiant.
 NOTE = (
     "Le dossier KYC-200147 concerne Pieter Marchand, domicilie a Namur, "
     "titulaire d un compte chez Banque Delvaux SA et administrateur de la "
@@ -50,7 +53,7 @@ def main():
           f"   spaCy {spacy.__version__}   modele {args.modele}")
 
     # -- D3 (temoin) : ce que le modele spaCy produit, hors Presidio ---------
-    separateur("D3  TEMOIN — spaCy brut, sans Presidio")
+    separateur("D3  TEMOIN : spaCy seul, sans Presidio")
     nlp = spacy.load(args.modele)
     ents_spacy = [(e.text, e.label_) for e in nlp(args.texte).ents]
     for texte, etiquette in ents_spacy:
@@ -60,7 +63,7 @@ def main():
         print("   AUCUN ORG. Le probleme est en amont de Presidio : le modele "
               "lui-meme n'etiquette pas cette organisation.")
 
-    # -- Construction du moteur, telle que decrite dans _charger_presidio ----
+    # -- Construction du moteur, comme dans _charger_presidio ---------------
     configuration = {
         "nlp_engine_name": "spacy",
         "models": [{"lang_code": args.langue, "model_name": args.modele}],
@@ -76,8 +79,8 @@ def main():
     org_declare = "ORGANIZATION" in exposees
     print(f"\n   ORGANIZATION declare : {org_declare}")
 
-    # -- D2 : la configuration NER reellement en vigueur --------------------
-    separateur("D2  Configuration NER en vigueur (NerModelConfiguration)")
+    # -- D2 : la configuration NER reellement utilisee ----------------------
+    separateur("D2  Configuration NER utilisee (NerModelConfiguration)")
     c = moteur.ner_model_configuration
     print(f"   labels_to_ignore            : {list(c.labels_to_ignore)}")
     print(f"   low_score_entity_names      : {list(c.low_score_entity_names)}")
@@ -104,30 +107,30 @@ def main():
     # -- Verdict ------------------------------------------------------------
     separateur("VERDICT")
     if not org_spacy:
-        print("   AMONT — le modele spaCy n'a pas produit d'ORG sur ce texte.")
-        print("   Rejouez avec --texte tire d'une vraie note du corpus avant")
-        print("   de conclure : ce diagnostic ne vaut que si le temoin D3 en")
-        print("   contient au moins une.")
+        print("   EN AMONT : spaCy n'a trouve aucune ORG dans ce texte.")
+        print("   Relancez avec un --texte tire d'une vraie note du corpus")
+        print("   avant de conclure : ce diagnostic n'a de sens que si le")
+        print("   temoin D3 contient au moins une organisation.")
     elif not orgs_seuil_nul:
-        print("   HYPOTHESE 2 — reconnaisseur ORG non expose.")
-        print("   ORG sort de spaCy et n'arrive pas jusqu'a Presidio : il est")
+        print("   HYPOTHESE 2 : reconnaisseur ORG non expose.")
+        print("   spaCy produit ORG, mais Presidio ne le recoit pas : il est")
         print("   filtre par labels_to_ignore (voir D2). Le seuil n'y est pour")
-        print("   rien : l'entite est jetee avant tout scoring.")
-        print("   => difference de CONFIGURATION, cote Presidio.")
+        print("   rien : l'entite est retiree avant tout calcul de score.")
+        print("   => probleme de CONFIGURATION, cote Presidio.")
     elif not orgs_seuil:
-        print(f"   HYPOTHESE 1 — effet de seuil.")
-        print(f"   ORGANIZATION est produit mais a "
+        print(f"   HYPOTHESE 1 : effet de seuil.")
+        print(f"   ORGANIZATION est produit mais avec un score de "
               f"{[round(x.score, 3) for x in orgs_seuil_nul]}, sous le seuil de")
         print(f"   {args.seuil}. Voir low_score_entity_names en D2 : Presidio")
-        print("   dedouble le score des entites reputees peu fiables.")
-        print("   => difference de POINT DE FONCTIONNEMENT, cote Presidio.")
+        print("   baisse le score des entites jugees peu fiables.")
+        print("   => probleme de SEUIL, cote Presidio.")
     else:
-        print("   NI 1 NI 2 — Presidio produit bien ORGANIZATION au-dessus du")
-        print("   seuil. La perte est donc en aval, dans notre code.")
-        print("   => passez au releve D5 (table NORMALISATION) ci-dessous.")
-        print("   Candidat le plus probable : Presidio emet 'ORGANIZATION'")
-        print("   (orthographe americaine) la ou notre table n'a d'entree que")
-        print("   pour 'ORG' ou 'ORGANISATION'.")
+        print("   NI 1 NI 2 : Presidio produit bien ORGANIZATION au-dessus du")
+        print("   seuil. L'entite se perd donc ensuite, dans notre code.")
+        print("   => voir le releve D5 (table NORMALISATION) ci-dessous.")
+        print("   Cause la plus probable : Presidio produit 'ORGANIZATION'")
+        print("   (orthographe americaine) alors que notre table ne connait")
+        print("   que 'ORG' ou 'ORGANISATION'.")
 
     # -- D5 : table de normalisation du projet ------------------------------
     separateur("D5  Notre table NORMALISATION")
@@ -135,8 +138,8 @@ def main():
         from src.confidentialite import verrou
         table = getattr(verrou, "NORMALISATION", None)
         if table is None:
-            print("   verrou.NORMALISATION introuvable — le nom de la table a")
-            print("   change. Cherchez-la et signalez-moi l'ecart.")
+            print("   verrou.NORMALISATION introuvable : le nom de la table a")
+            print("   change. Cherchez-la dans src/confidentialite/verrou.py.")
         else:
             for cle in sorted(table):
                 print(f"   {cle:<16} -> {table[cle]}")

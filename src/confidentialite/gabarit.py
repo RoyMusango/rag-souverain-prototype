@@ -1,24 +1,24 @@
 """
 Gabarit de generalisation (section 3.3.5 du rapport).
 
-Point de conception materialise par ce module :
+Le gabarit se calcule ainsi :
 
     G(e) = f(e, kappa)
 
-Le gabarit est une fonction deterministe de l'entite enquetee et d'un sel de
-deploiement, jamais un tirage propre a une session. C'est ce qui rend
-inoffensive la liaison de deux sessions : deux sessions portant sur la meme
-entite emettent depuis le meme ensemble d'anonymat, et leur intersection
-n'apporte rien a l'adversaire (S_e inter S_e = S_e).
+C'est une fonction deterministe de l'entite enquetee et d'un sel propre au
+deploiement. Il n'est pas tire au hasard a chaque session. Deux sessions sur
+la meme entite envoient donc des requetes depuis le meme ensemble
+d'anonymat, et l'adversaire ne gagne rien a les croiser
+(S_e inter S_e = S_e).
 
-Un gabarit retire a chaque session reproduirait, a un niveau superieur,
-l'effondrement observe a l'echelle des requetes. C'est ce que met en
-evidence la configuration C2 de l'experience E2b.
+Si le gabarit etait tire a nouveau a chaque session, on retrouverait entre
+sessions le meme effondrement qu'entre requetes. La configuration C2 de
+l'experience E2b le montre.
 
-Effet de bord identifie (section 3.3.5) : un gabarit deterministe constitue
-une empreinte stable de l'entite. Le sel `kappa` y repond ; sa rotation
-re-randomise les gabarits et rouvre donc l'intersection, ce qui consomme du
-budget au sens de budget.py.
+Inconvenient (section 3.3.5) : un gabarit deterministe forme une empreinte
+stable de l'entite. Le sel `kappa` limite ce risque. Changer le sel change
+les gabarits, ce qui permet de nouveau de croiser les sessions : un
+changement de sel consomme donc du budget (voir budget.py).
 """
 
 import hashlib
@@ -28,17 +28,17 @@ import itertools
 from . import anonymat
 
 # Cout d'information attribue a chaque niveau de generalisation.
-# Croissant : perdre la ville coute moins que perdre l'attribut entier.
+# Les couts croissent : perdre la ville coute moins que perdre tout l'attribut.
 COUT_NIVEAU = (0, 1, 3, 7)
 
 
 def _empreinte(entite, kappa):
     """HMAC stable de l'entite, sous le sel de deploiement.
 
-    Sert uniquement a departager des gabarits de cout egal. Sans lui, le
-    gabarit serait une fonction publique de la population : un adversaire
-    connaissant l'algorithme pourrait le recalculer pour chaque candidat et
-    retrouver l'entite par correspondance.
+    Sert seulement a departager des gabarits de meme cout. Sans ce HMAC,
+    n'importe qui connaissant l'algorithme et la population pourrait
+    recalculer le gabarit de chaque candidat et retrouver l'entite par
+    correspondance.
     """
     cle = str(kappa).encode("utf-8")
     message = "|".join(
@@ -57,10 +57,10 @@ def cout(gabarit):
 def _candidats(attributs):
     """Enumere les gabarits possibles sur les attributs consideres.
 
-    L'espace reste petit : sept quasi-identifiants dont les niveaux maximaux
-    valent 1 a 3, soit quelques centaines de combinaisons. Une enumeration
-    exhaustive est donc preferable a une heuristique, et elle garantit le
-    determinisme.
+    Il y a peu de combinaisons : sept quasi-identifiants avec 1 a 3 niveaux
+    chacun, soit quelques centaines de gabarits. On peut donc tous les
+    enumerer, ce qui est plus simple qu'une heuristique et reste
+    deterministe.
     """
     plages = [range(anonymat.NIVEAU_MAX.get(a, 1) + 1) for a in attributs]
     for combinaison in itertools.product(*plages):
@@ -70,15 +70,15 @@ def _candidats(attributs):
 def calculer(population, entite, k, kappa, attributs=None):
     """Gabarit minimal garantissant |S| >= k pour cette entite.
 
-    Retourne le gabarit de cout minimal qui atteint le seuil, les ex aequo
-    etant departages par l'empreinte de l'entite sous le sel. Si aucun
-    gabarit n'atteint le seuil (entite trop atypique), retourne le gabarit
-    maximal, qui supprime tous les quasi-identifiants : l'appelant doit alors
-    basculer vers la recuperation privee ou s'abstenir.
+    Renvoie le gabarit de cout minimal qui atteint le seuil. En cas
+    d'egalite, l'empreinte de l'entite sous le sel departage. Si aucun
+    gabarit n'atteint le seuil (entite trop atypique), renvoie le gabarit
+    maximal, qui supprime tous les quasi-identifiants. L'appelant doit alors
+    passer a la recuperation privee ou s'abstenir.
 
-    La recherche procede par cout croissant et s'arrete a la fin du premier
-    palier de cout qui fournit une solution, ce qui preserve la garantie de
-    minimalite tout en n'evaluant qu'une fraction des candidats.
+    Les candidats sont testes par cout croissant. La recherche s'arrete au
+    premier cout qui donne une solution : le resultat reste minimal et on
+    n'evalue qu'une partie des candidats.
     """
     attributs = tuple(attributs or anonymat.QUASI_IDENTIFIANTS)
     if not isinstance(population, anonymat.Population):
@@ -95,9 +95,9 @@ def calculer(population, entite, k, kappa, attributs=None):
             if population.taille_ensemble(entite, candidat, attributs) >= k:
                 retenus.append(candidat)
         if retenus:
-            # Ex aequo departages par le sel : le gabarit reste deterministe
-            # en l'entite, sans etre recalculable par un adversaire qui
-            # ignorerait kappa.
+            # Le sel departage les egalites : le gabarit reste deterministe
+            # pour l'entite, mais un adversaire qui ne connait pas kappa ne
+            # peut pas le recalculer.
             return min(retenus, key=lambda g: _rang(g, marque))
 
     return {a: anonymat.NIVEAU_MAX.get(a, 1) for a in attributs}
@@ -114,8 +114,8 @@ def _rang(gabarit, marque):
 def admissibles(population, entite, k, attributs=None, tolerance=4):
     """Tous les gabarits atteignant le seuil, a `tolerance` de cout du minimum.
 
-    Sert au tirage aleatoire ci-dessous, et a auditer la marge de manoeuvre
-    dont dispose la politique pour une entite donnee.
+    Sert au tirage aleatoire ci-dessous, et a voir combien de choix la
+    politique a pour une entite donnee.
     """
     attributs = tuple(attributs or anonymat.QUASI_IDENTIFIANTS)
     if not isinstance(population, anonymat.Population):
@@ -135,15 +135,13 @@ def choisir_aleatoire(population, entite, k, graine, attributs=None,
                       tolerance=4):
     """Tire un gabarit au hasard parmi les gabarits admissibles.
 
-    Ce n'est pas la politique retenue par le rapport, mais la contre-mesure
-    naive que l'experience E2b met en echec (configuration C2). Je la fournis
-    parce qu'une comparaison n'a de valeur que si l'alternative est
-    implementee loyalement.
+    Cette fonction correspond a la configuration C2 d'E2b, la contre-mesure
+    naive que le rapport ecarte. Elle est implementee pour que la
+    comparaison soit honnete.
 
-    Son objectif apparent est de supprimer l'empreinte que constitue un
-    gabarit deterministe (section 3.3.5, effets de bord). E2b montre qu'elle
-    echange ce risque contre un risque plus grave : la reouverture de
-    l'attaque par intersection.
+    L'idee est d'eviter l'empreinte stable d'un gabarit deterministe
+    (section 3.3.5). E2b montre que cela cree un risque plus grave : l'attaque
+    par intersection redevient possible.
     """
     import random
 

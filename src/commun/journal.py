@@ -1,13 +1,12 @@
 """
-Reproductibilite : manifeste, empreintes, journal d'execution (section 4.1.5).
+Reproductibilite : manifeste, empreintes et journal d'execution (section 4.1.5).
 
-Le rapport s'engage sur une discipline precise : versions epinglees, graines
-fixees, index persiste, et chaque execution estampillee par une empreinte du
-manifeste et du commit. Cette discipline conditionne l'auditabilite attendue
-par le reglement europeen sur l'IA et la resilience visee par DORA. Ce module
-la rend effective.
+Le rapport prevoit des versions epinglees, des graines fixees, un index
+sauvegarde, et une empreinte du manifeste et du commit pour chaque execution.
+Ce module enregistre ces informations. Elles servent l'auditabilite demandee
+par le reglement europeen sur l'IA et par DORA.
 
-Une execution non estampillee ne doit pas figurer au chapitre 5.
+Seules les executions estampillees par ce module sont citees au chapitre 5.
 """
 
 import hashlib
@@ -34,11 +33,10 @@ def hash_fichier(chemin, blocs=1 << 20):
 
 
 def hash_manifeste(chemins):
-    """Empreinte d'un ensemble de fichiers : le manifeste de donnees.
+    """Empreinte d'un ensemble de fichiers (le manifeste de donnees).
 
-    Deux executions portant la meme empreinte de manifeste ont vu exactement
-    les memes corpus, ce qui permet d'attribuer un ecart de resultat au
-    moteur et non aux donnees.
+    Si deux executions ont la meme empreinte, elles ont lu exactement les
+    memes corpus. Un ecart de resultat entre elles vient donc du moteur.
     """
     entrees = {}
     for chemin in sorted(str(c) for c in chemins):
@@ -69,11 +67,10 @@ def hash_commit():
 
 def versions_paquets(paquets=("torch", "sentence_transformers", "qdrant_client",
                               "spacy", "rank_bm25", "numpy")):
-    """Versions effectivement chargees, pour le tableau du chapitre 4.
+    """Versions des paquets importes pendant l'execution (tableau du chapitre 4).
 
-    Le rapport prevoit un tableau des versions exactes issu d'un `pip freeze`.
-    Ce releve le complete en indiquant ce qui a effectivement ete importe
-    pendant l'execution, ce qu'un `pip freeze` de fin de projet n'indique pas.
+    Un `pip freeze` donne ce qui est installe. Ce releve donne ce qui a
+    reellement ete charge pendant l'execution.
     """
     releve = {}
     for nom in paquets:
@@ -86,7 +83,7 @@ def versions_paquets(paquets=("torch", "sentence_transformers", "qdrant_client",
 
 
 class Execution:
-    """Une execution estampillee, de bout en bout.
+    """Une execution estampillee, du debut a la fin.
 
     Usage :
 
@@ -132,12 +129,12 @@ class Execution:
         return self
 
     def mesure(self, nom, valeur, grandeur="qualite"):
-        """Consigne une mesure, en verifiant qu'elle est opposable.
+        """Enregistre une mesure et verifie qu'elle est valable sur ce materiel.
 
-        Une latence relevee sur un materiel de developpement est enregistree
-        avec un avertissement : elle ne doit pas figurer telle quelle au
-        chapitre 5. Ce garde-fou evite de decouvrir tardivement que des
-        chiffres de latence sont a refaire.
+        Une latence mesuree sur un materiel de developpement est enregistree
+        avec un avertissement, car elle ne peut pas etre citee telle quelle au
+        chapitre 5. On le sait ainsi des l'execution, et pas au moment de
+        rediger.
         """
         opposable, motif = self.config.materiel.valider_pour(grandeur)
         self.mesures[nom] = {

@@ -3,28 +3,29 @@ Figure E5, le rappel en fonction de la profondeur de recherche.
 
     .venv\Scripts\python.exe scripts\tracer_e5_profondeur.py
 
-MOTIVATION
+POURQUOI
 
-La version precedente ne comportait que deux points, k=10 et k=100, et
-suggerait une lecture simple : la cible est releguee, non perdue. Six points
-montrent la forme reelle de la courbe, qui apporte deux informations
-supplementaires.
+La version precedente n'avait que deux points, k=10 et k=100, avec un
+message simple : la cible descend dans le classement mais ne disparait pas.
+Avec six points, on voit la vraie forme de la courbe.
 
-AXE DES ABSCISSES LOGARITHMIQUE
+ABSCISSES EN ECHELLE LOGARITHMIQUE
 
-Les valeurs de k vont de 10 a 500. Sur une echelle lineaire, les quatre
-premiers points seraient tasses contre l'axe et la partie informative de la
-courbe deviendrait illisible. L'echelle logarithmique est la representation
-adaptee a un balayage a pas multiplicatif.
+k va de 10 a 500. En echelle lineaire, les quatre premiers points seraient
+serres contre l'axe et la partie interessante de la courbe serait
+illisible. L'echelle logarithmique convient a des valeurs de k qui sont
+multipliees a chaque pas.
 
-ZONE k > 200 GRISEE
+ZONE k > 200 EN GRIS
 
-Le corpus bancaire compte 1500 notes. A k=500, le tiers du corpus est
-rapporte et les quatre regimes convergent entre 0,95 et 0,99 : l'ecart entre
-eux se reduit a quelques questions sur 200 et n'est plus interpretable. Il
-s'agit d'une saturation de la mesure et non d'un resultat. Je grise cette
-zone plutot que de la retirer, afin de rendre explicite la raison pour
-laquelle elle n'est pas interpretee.
+Le corpus bancaire a 1500 notes. A k=500, on ramene un tiers du corpus, et
+les quatre regimes se rejoignent entre 0,95 et 0,99. L'ecart entre eux
+tient alors a quelques questions sur 200 et ne veut plus rien dire : la
+mesure sature. Je mets cette zone en gris au lieu de la retirer, pour qu'on
+voie pourquoi elle n'est pas interpretee.
+
+Le script lit les dossiers resultats/e5_profondeur_k<k>/ (balayage v1, avant
+la correction du gabarit `aml`). Pour la v2, voir JOURNAL_DONNEES, E5b v2.
 """
 
 import glob
@@ -43,8 +44,8 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
 SORTIE = "figures"
 SATURATION = 200          # au-dela, k depasse 13 % du corpus
 
-# Memes couleurs que les autres figures du chapitre : les regimes doivent se
-# reconnaitre d'une figure a l'autre.
+# Memes couleurs que les autres figures du chapitre, pour reconnaitre les
+# regimes d'une figure a l'autre.
 REGIMES = [
     ("brut", "requête brute", "#2b6cb0", "o", "-"),
     ("generalise-1", "généralisée, cran 1", "#2f855a", "s", "-"),
@@ -54,7 +55,7 @@ REGIMES = [
 
 
 def charger():
-    """Lit toutes les executions du balayage, indexees par k."""
+    """Lit tous les resultats du balayage, ranges par k."""
     mesures = {}
     for chemin in glob.glob("resultats/e5_profondeur_k*/e5_cout.json"):
         with open(chemin, encoding="utf-8") as f:
@@ -78,8 +79,8 @@ def tracer(mesures):
 
     if max(ks) > SATURATION:
         axes.axvspan(SATURATION, max(ks) * 1.08, color="#edf2f7", zorder=0)
-        # Placee dans le creux de la bande : entre k=200 et k=500, les courbes
-        # protegees passent de 0,54 a 0,97, et la zone basse est donc libre.
+        # Texte place en bas de la bande grise : entre k=200 et k=500, les
+        # courbes protegees montent de 0,54 a 0,97, donc le bas est libre.
         axes.text(SATURATION * 1.55, 0.22,
                   "mesure saturée\nk > 13 % du corpus",
                   ha="center", fontsize=8.5, color="#4a5568")
@@ -100,7 +101,7 @@ def tracer(mesures):
     axes.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
     axes.grid(alpha=0.3, zorder=1)
     axes.set_axisbelow(True)
-    # A gauche et a mi-hauteur : seule zone que ne traverse aucune courbe.
+    # A gauche, a mi-hauteur : la seule zone qu'aucune courbe ne traverse.
     axes.legend(fontsize=9.5, loc="center left", frameon=False)
 
     figure.subplots_adjust(left=0.09, right=0.98, top=0.97, bottom=0.12)
@@ -118,8 +119,8 @@ def main():
     print("valeurs de k :", ", ".join(str(k) for k in mesures))
     tracer(mesures)
 
-    # Le point de dimensionnement : la profondeur a partir de laquelle chaque
-    # regime protege depasse la moitie du rappel de la requete brute.
+    # Regle de dimensionnement : a partir de quelle profondeur chaque regime
+    # protege depasse la moitie du rappel de la requete brute.
     print("\nprofondeur necessaire pour atteindre la moitie du rappel brut :")
     for cle, libelle, _, _, _ in REGIMES[1:]:
         cible = mesures[min(mesures)]["brut"] / 2

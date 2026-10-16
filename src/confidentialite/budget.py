@@ -1,23 +1,23 @@
 """
 Budget d'exposition et registre (sections 3.2.4 et 3.3.5 du rapport).
 
-L'unite de comptabilite est le secret, et non l'interaction. Un budget remis
-a zero a la cloture d'une session ne bornerait rien : il suffirait de fermer
-puis de rouvrir la session. Le budget est donc attache a l'entite enquetee,
-persiste sur disque et survit aux frontieres de session, selon la meme
-discipline qu'en confidentialite differentielle, ou le budget est attache a
-l'individu protege et non au lot de requetes.
+Le budget se compte par secret protege, pas par session. Un budget remis a
+zero a la fin de chaque session ne limiterait rien : il suffirait de fermer
+puis de rouvrir la session. Le budget est donc attache a l'entite enquetee
+et enregistre sur disque, d'une session a l'autre. C'est le meme principe
+qu'en confidentialite differentielle, ou le budget est attache a l'individu
+protege.
 
-Mesure de la fuite retenue, en bits :
+La fuite est mesuree en bits :
 
     fuite = log2( N / |S| )
 
-C'est la reduction d'incertitude de l'adversaire sur l'entite : nulle quand
-|S| = N, maximale quand |S| = 1. Le budget plafonne cette quantite, ce qui
-donne une composition additive analogue a la composition differentielle.
+Elle vaut 0 quand |S| = N et atteint son maximum quand |S| = 1. Le budget
+plafonne cette valeur. Les fuites s'additionnent d'une requete a l'autre,
+comme en confidentialite differentielle.
 
-Le registre produit par ce module sert aussi de substrat a la piste d'audit
-(invariant I3, journalisation attendue par le reglement europeen sur l'IA).
+Le registre sert aussi de base a la piste d'audit (invariant I3,
+journalisation demandee par le reglement europeen sur l'IA).
 """
 
 import json
@@ -27,8 +27,8 @@ from pathlib import Path
 
 CHEMIN_REGISTRE = Path("data/registre_exposition.json")
 
-# Valeurs par defaut du deploiement. A fixer en configuration, jamais en dur
-# dans le corps du moteur (le coeur ne porte aucune regle sectorielle).
+# Valeurs par defaut. Au deploiement, elles se reglent dans la configuration
+# et pas dans le code du moteur.
 K_DEFAUT = 50
 BUDGET_BITS_DEFAUT = 6.0
 
@@ -41,11 +41,11 @@ def fuite_bits(taille_population, taille_ensemble):
 
 
 class Registre:
-    """Registre d'exposition, indexe par entite et persiste.
+    """Registre d'exposition par entite, enregistre sur disque.
 
     Une instance couvre tout un deploiement : elle est chargee au demarrage
-    et reecrite a chaque mise a jour. Le format est volontairement du JSON
-    lisible, afin de pouvoir etre relu par un auditeur.
+    et reecrite a chaque mise a jour. Le fichier est un JSON lisible, pour
+    qu'un auditeur puisse le relire.
     """
 
     def __init__(self, chemin=CHEMIN_REGISTRE, budget_bits=BUDGET_BITS_DEFAUT,
@@ -106,11 +106,11 @@ class Registre:
     # ------------------------------------------------------------ ecriture
 
     def fixer_gabarit(self, cle_entite, gabarit):
-        """Fige le gabarit d'une entite. Operation idempotente, ce qui est essentiel.
+        """Fige le gabarit d'une entite. Rappeler la fonction ne change rien.
 
-        Un second appel sur la meme entite ne retire pas de nouveau gabarit :
-        il retourne celui deja enregistre, ce qui neutralise le contournement
-        du budget par reinitialisation de session.
+        Un second appel sur la meme entite ne tire pas de nouveau gabarit : il
+        renvoie celui deja enregistre. Ouvrir une nouvelle session ne permet
+        donc pas de contourner le budget.
         """
         entree = self.entree(cle_entite)
         if entree["gabarit"] is None:
@@ -129,11 +129,10 @@ class Registre:
         return entree
 
     def journaliser_escalade(self, cle_entite, motif, operateur, session=None):
-        """Trace une escalade sous validation humaine (section 3.2).
+        """Enregistre une escalade validee par un humain (section 3.2).
 
-        L'escalade n'est pas un relachement de la politique mais une sortie
-        legitime, explicitement autorisee, motivee et journalisee. Son
-        enregistrement alimente la piste d'audit.
+        Une escalade est une sortie autorisee explicitement, avec un motif,
+        et enregistree. Elle figure dans la piste d'audit.
         """
         entree = self.entree(cle_entite)
         entree["escalades"].append({
@@ -145,10 +144,10 @@ class Registre:
         return entree
 
     def reinitialiser(self, cle_entite=None):
-        """Purge, reservee aux campagnes de mesure et jamais au deploiement.
+        """Vide le registre. Reserve aux campagnes de mesure, jamais en production.
 
-        C'est volontairement la seule voie de remise a zero, et son nom evite
-        un appel accidentel depuis le pipeline.
+        C'est le seul moyen de remettre le registre a zero. Son nom explicite
+        evite de l'appeler par erreur depuis le pipeline.
         """
         if cle_entite is None:
             self.entrees = {}

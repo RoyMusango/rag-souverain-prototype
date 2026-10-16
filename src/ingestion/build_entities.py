@@ -1,8 +1,8 @@
 """
 Construction de la population d'entites pour E2 (courbe d'effondrement de |S|).
 
-Distinct de synthea_schema.json : ce fichier ne sert pas a la recherche mais
-au calcul exact de la taille de l'ensemble d'anonymat.
+Ce fichier est separe de synthea_schema.json. Il ne sert pas a la recherche :
+il sert a calculer exactement la taille de l'ensemble d'anonymat.
 
 Sortie : data/synthea/entities.json
 """
@@ -58,15 +58,15 @@ sortie = {
         "source": "Synthea",
         "graine": GRAINE,
         "etat": ETAT,
-        "population_demandee": 1000,
+        "population_demandee": 10000,
         "population_obtenue": len(entities),
         "date_reference_age": DATE_REFERENCE.isoformat(),
         "palier_age": PALIER_AGE,
         "quasi_identifiants": ATTRIBUTS,
         "exclus": ["Id", "SSN", "DRIVERS", "PASSPORT", "LAT", "LON",
                    "INCOME", "HEALTHCARE_EXPENSES", "HEALTHCARE_COVERAGE"],
-        "motif_exclusion": "identifiants directs ou continus : |S| = 1 immediat, "
-                           "mesure triviale plutot que representative",
+        "motif_exclusion": "identifiants directs ou continus : |S| = 1 "
+                           "immediatement, la mesure n'aurait aucun interet",
     },
     "entities": entities,
 }
@@ -90,5 +90,6 @@ print(f"Combinaisons completes distinctes : {len(combinaison)}")
 print(f"Patients uniques sur la combinaison complete : {uniques} "
       f"({100*uniques/len(entities):.1f} %)")
 print()
-print("Lecture : ce pourcentage est le point de depart de la courbe E2 — "
-      "la proportion de patients deja re-identifiables sans aucune protection.")
+print("Lecture : ce pourcentage est le point de depart de la courbe E2, "
+      "c'est-a-dire la part des patients deja re-identifiables sans aucune "
+      "protection.")

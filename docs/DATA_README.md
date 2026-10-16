@@ -1,9 +1,11 @@
-# data/ — non versionné
+# Le dossier data/ n'est pas dans le dépôt
 
-Ce répertoire est volontairement absent du dépôt (voir `.gitignore`).
-Il est **reconstructible intégralement** par les adaptateurs de `src/ingestion/` (`scripts/ingest_all.ps1`) et,
-pour Synthea, par la graine fixée documentée dans `docs/JOURNAL_DONNEES.md`.
+Ce dossier est volontairement exclu du dépôt (voir `.gitignore`).
 
-Ce choix est méthodologique et non pratique : il permet la reproductibilité
-sans redistribution des corpus, exigence directe du régime de licence
-(voir `NOTICE.md`).
+On peut le reconstruire entièrement avec les adaptateurs de `src/ingestion/`
+(`scripts/ingest_all.ps1`, puis `python -m src.ingestion.banque` pour le
+corpus bancaire). Pour Synthea, la graine utilisée est notée dans
+`docs/JOURNAL_DONNEES.md`.
+
+C'est un choix lié aux licences (voir `NOTICE.md`) : on peut reproduire les
+résultats sans que le dépôt redistribue les corpus.

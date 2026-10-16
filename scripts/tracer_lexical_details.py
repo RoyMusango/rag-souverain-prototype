@@ -3,13 +3,14 @@ Figures complementaires sur la recuperation lexicale.
 
     python scripts\tracer_lexical_details.py
 
-Deux figures, toutes deux lues depuis le JSON produit par run_e1_lexical.py.
+Trois figures, construites a partir du JSON produit par run_e1_lexical.py.
 Aucune valeur n'est ecrite en dur.
 
-  C  distribution des rangs : position du document cherche
-  D  comparaison au resultat publie : validation externe
+  distribution des rangs   position du document cherche
+  validation externe       comparaison avec le resultat publie
+  latence                  si le JSON contient les latences une par une
 
-Le script est separe de tracer_graphiques.py afin de ne pas modifier un
+Le script est separe de tracer_graphiques.py pour ne pas toucher a un
 fichier deja verifie.
 """
 
@@ -24,7 +25,7 @@ import matplotlib.pyplot as plt   # noqa: E402
 
 SORTIE = Path("figures")
 
-# Resultats publies par les auteurs du corpus, pour validation externe.
+# Resultats publies par les auteurs du corpus, pour la validation externe.
 # Ryan, Xu, Nivera, Campos, "EnronQA: Towards Personalized RAG over Private
 # Documents", arXiv:2505.00263, 2025, table 4. Rappel@5.
 PUBLIE = {"BM25 (publie)": 0.875, "ColBERT (publie)": 0.541}
@@ -50,18 +51,18 @@ def lire(chemin):
 
 
 def figure_distribution(donnees):
-    """Position du document cherche, lorsqu'il est trouve.
+    """Position du document cherche, quand il est trouve.
 
-    Une courbe de rappel indique combien de questions sont satisfaites, sans
-    distinguer un document classe premier d'un document classe trentieme.
-    Cette figure montre cette position et rend visible le plancher des
-    questions jamais satisfaites.
+    Une courbe de rappel dit combien de questions trouvent leur document,
+    sans distinguer un document classe premier d'un document classe
+    trentieme. Cette figure montre la position, et aussi les questions qui ne
+    trouvent jamais leur document.
     """
     rangs = donnees["rangs_bruts"]
     total = len(rangs)
     jamais = sum(1 for r in rangs if r is None)
 
-    # Regroupement : les rangs eleves sont rares, les detailler n'apporte rien.
+    # Les rangs eleves sont rares : inutile de les detailler.
     tranches = ["1", "2-3", "4-5", "6-10", "11-20", "21-50", "absent"]
 
     def classer(rang):
@@ -95,7 +96,7 @@ def figure_distribution(donnees):
     axes.set_xlabel("rang auquel le document cherche apparait")
     axes.set_ylabel("part des questions (%)")
     axes.set_title(
-        f"Distribution des rangs — BM25 seul, {total} questions\n"
+        f"Distribution des rangs : BM25 seul, {total} questions\n"
         f"{jamais} question(s) jamais satisfaite(s) dans les 50 premiers",
         fontsize=11)
     axes.grid(alpha=0.3, axis="y")
@@ -107,10 +108,9 @@ def figure_distribution(donnees):
 def figure_comparaison(donnees):
     """Rappel@5 obtenu, compare aux valeurs publiees sur le meme corpus.
 
-    Il s'agit d'une validation de la chaine et non d'une comparaison de
-    methodes : BM25 est reimplemente de part et d'autre. Un ecart important
-    signalerait un defaut d'ingestion ou d'alignement, et non une
-    superiorite.
+    Le but est de valider la chaine, pas de comparer des methodes : les deux
+    cotes utilisent BM25. Un gros ecart signalerait un probleme d'ingestion
+    ou d'alignement.
     """
     notre = donnees["mesures"]["rappel@5"]
     questions = donnees["corpus"]["questions_evaluees"]
@@ -131,7 +131,7 @@ def figure_comparaison(donnees):
     axes.set_ylabel("Rappel@5")
     axes.set_ylim(0, 1.05)
     axes.set_title(
-        f"Validation externe sur EnronQA — ecart de {ecart:.3f} au resultat "
+        f"Validation externe sur EnronQA : ecart de {ecart:.3f} avec le resultat "
         f"publie\n(Ryan et al., arXiv:2505.00263, table 4)",
         fontsize=10)
     axes.grid(alpha=0.3, axis="y")
@@ -143,15 +143,15 @@ def figure_comparaison(donnees):
 def figure_latence(donnees):
     """Distribution des latences de recherche.
 
-    Une mediane ne renseigne pas sur la queue de distribution, qui determine
-    pourtant l'experience percue. Je trace donc l'histogramme, avec la
-    mediane et le p90 comme reperes.
+    La mediane ne dit rien des requetes les plus lentes, qui comptent
+    pourtant beaucoup pour l'utilisateur. Je trace donc l'histogramme, avec
+    la mediane et le p90 comme reperes.
     """
     latences = donnees.get("latences_ms")
     if not latences:
         raise SystemExit(
-            "champ 'latences_ms' absent : appliquez d'abord le patch de "
-            "run_e1_lexical.py, puis relancez la mesure.")
+            "champ 'latences_ms' absent : relancez run_e1_lexical.py, qui "
+            "enregistre maintenant les latences une par une.")
 
     mesures = donnees["mesures"]
     mediane = mesures["latence_mediane_ms"]
@@ -167,7 +167,7 @@ def figure_latence(donnees):
     axes.set_xlabel("latence d'une recherche (ms)")
     axes.set_ylabel("nombre de requetes")
     axes.set_title(
-        f"Latence de recuperation lexicale — {len(latences)} requetes\n"
+        f"Latence de recuperation lexicale : {len(latences)} requetes\n"
         f"rank_bm25 en Python pur, sans index inverse, "
         f"{donnees['corpus']['documents']} documents",
         fontsize=10)

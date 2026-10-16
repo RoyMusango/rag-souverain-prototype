@@ -1,23 +1,21 @@
 """
 Parite materielle : comparaison de deux executions du meme moteur.
 
-La section 4.1.1 du rapport distingue deux roles du calcul et affirme que
-« la qualite du modele local se mesure sur tout materiel, au besoin sur un
-echantillon ». C'est une hypothese ; ce module permet de la verifier.
+La section 4.1.1 du rapport affirme que « la qualite du modele local se
+mesure sur tout materiel, au besoin sur un echantillon ». C'est une
+hypothese, et ce module sert a la verifier.
 
-Deux comparaisons de nature differente :
+Deux comparaisons differentes :
 
-  PARITE    meme modele, materiel different. La derive attendue est nulle,
-            et c'est le resultat recherche : il autorise a transferer au
-            deploiement souverain les mesures de qualite obtenues sur
-            substrat accelere.
+  PARITE    meme modele, autre materiel. On attend une derive nulle. Si
+            c'est le cas, les mesures de qualite faites sur GPU valent aussi
+            pour un deploiement souverain.
 
-  DEGRADE   modele different, materiel modeste. La derive attendue est
-            reelle, et c'est elle qui est mesuree : elle represente le cout
-            en qualite de la souverainete materielle, que la section 3.1.5
-            s'engage a chiffrer.
+  DEGRADE   autre modele, materiel modeste. On attend une vraie derive, et
+            c'est elle qu'on mesure : c'est ce que coute en qualite un
+            materiel modeste (section 3.1.5).
 
-Trois familles de grandeurs :
+Trois familles de mesures :
   representation   derive des vecteurs (distance cosinus)
   classement       accord des ordres (Spearman, Kendall, Jaccard@k)
   bout en bout     ecart des metriques de recuperation et de reponse
@@ -43,11 +41,11 @@ def derive_representation(vecteurs_a, vecteurs_b, identifiants_a=None,
                           identifiants_b=None):
     """Derive entre deux jeux de vecteurs pour les memes documents.
 
-    Deux causes possibles, a distinguer a la lecture :
-      - precision : fp16 sur accelerateur contre fp32 sur processeur. Derive
-        attendue de l'ordre de 1e-3, sans effet pratique sur les rangs.
+    Deux causes possibles :
+      - precision : fp16 sur GPU contre fp32 sur processeur. Derive attendue
+        de l'ordre de 1e-3, sans effet reel sur les rangs.
       - modele : dimensions differentes, comparaison impossible. La fonction
-        le signale plutot que de produire un nombre trompeur.
+        le signale au lieu de renvoyer un nombre sans signification.
     """
     if identifiants_a and identifiants_b:
         index_b = {i: n for n, i in enumerate(identifiants_b)}
@@ -83,12 +81,12 @@ def derive_representation(vecteurs_a, vecteurs_b, identifiants_a=None,
 
 def _verdict_derive(derive_max):
     if derive_max < 1e-4:
-        return "identique — parite materielle etablie"
+        return "identique : parite materielle etablie"
     if derive_max < 1e-2:
-        return ("derive numerique negligeable — compatible avec un ecart de "
+        return ("derive numerique negligeable : compatible avec un ecart de "
                 "precision fp16/fp32, sans effet attendu sur les rangs")
-    return ("DERIVE SIGNIFICATIVE — verifier le modele, la longueur maximale "
-            "et la graine avant de conclure a un effet materiel")
+    return ("DERIVE SIGNIFICATIVE : verifier le modele, la longueur maximale "
+            "et la graine avant de conclure a un effet du materiel")
 
 
 # ------------------------------------------------------------- classement
@@ -124,7 +122,7 @@ def spearman(x, y):
 
 
 def kendall_tau(x, y):
-    """Tau de Kendall, plus severe que Spearman sur les inversions locales."""
+    """Tau de Kendall, plus sensible que Spearman aux inversions locales."""
     n = len(x)
     if n < 2:
         return None
@@ -141,11 +139,11 @@ def kendall_tau(x, y):
 
 
 def jaccard_at_k(classement_a, classement_b, k=10, cle=lambda x: x):
-    """Recouvrement des k premiers, grandeur determinante en pratique.
+    """Recouvrement des k premiers resultats, la mesure qui compte en pratique.
 
-    Deux classements peuvent differer profondement dans la queue sans
-    consequence : seuls les k premiers sont injectes dans le contexte du
-    generateur.
+    Deux classements peuvent etre tres differents apres le rang k sans que
+    cela change quoi que ce soit : seuls les k premiers vont dans le
+    contexte du generateur.
     """
     tete_a = {cle(d) for d in classement_a[:k]}
     tete_b = {cle(d) for d in classement_b[:k]}
@@ -188,11 +186,11 @@ def accord_classement(classement_a, classement_b, k=10, cle=lambda x: x):
 # ------------------------------------------------------------ bout en bout
 
 def comparer_executions(reference, candidat, nature="parite"):
-    """Compare deux rapports d'execution et rend un verdict lisible.
+    """Compare deux rapports d'execution et renvoie un verdict lisible.
 
     `reference` et `candidat` sont les dictionnaires `mesures` produits par
-    `commun.journal.Execution`. La comparaison porte sur les grandeurs
-    presentes des deux cotes.
+    `commun.journal.Execution`. Seules les mesures presentes des deux cotes
+    sont comparees.
     """
     communes = sorted(set(reference) & set(candidat))
     if not communes:
@@ -233,24 +231,22 @@ def comparer_executions(reference, candidat, nature="parite"):
 def _verdict_execution(nature, ecart_max):
     if nature == "parite":
         if ecart_max < 0.01:
-            return ("PARITE ETABLIE — les mesures de qualite relevees sur le "
+            return ("PARITE ETABLIE : les mesures de qualite faites sur le "
                     "materiel de reference valent pour le materiel modeste. "
-                    "Le transfert postule a la section 4.1.1 est verifie.")
+                    "L'hypothese de la section 4.1.1 est verifiee.")
         if ecart_max < 0.05:
-            return ("parite approximative — ecart inferieur a 5 %, a "
-                    "mentionner comme incertitude plutot qu'a passer sous "
-                    "silence.")
-        return ("PARITE NON ETABLIE — un ecart de cette ampleur a modele "
-                "constant signale un probleme de protocole (graine, "
-                "echantillon, longueur maximale) avant d'etre un effet "
-                "materiel. A diagnostiquer avant publication.")
+            return ("parite approximative : ecart inferieur a 5 %, a "
+                    "mentionner comme incertitude.")
+        return ("PARITE NON ETABLIE : un tel ecart avec le meme modele "
+                "indique plutot un probleme de protocole (graine, "
+                "echantillon, longueur maximale) qu'un effet du materiel. "
+                "A diagnostiquer avant publication.")
     if ecart_max < 0.02:
-        return ("degradation negligeable — le modele allege soutient la "
-                "comparaison ; argument favorable a un deploiement souverain "
+        return ("degradation negligeable : le modele leger tient la "
+                "comparaison, ce qui plaide pour un deploiement souverain "
                 "sur materiel modeste.")
     if ecart_max < 0.15:
-        return (f"degradation mesuree de {ecart_max:.1%} — c'est le cout en "
-                f"qualite de la souverainete materielle, a rapporter tel quel.")
-    return (f"degradation importante de {ecart_max:.1%} — resultat notable : "
-            f"la souverainete materielle a un cout que le chapitre 5 doit "
-            f"enoncer sans l'attenuer.")
+        return (f"degradation mesuree de {ecart_max:.1%} : c'est ce que coute "
+                f"en qualite un materiel modeste, a rapporter tel quel.")
+    return (f"degradation importante de {ecart_max:.1%} : un materiel modeste "
+            f"coute cher en qualite, a rapporter tel quel au chapitre 5.")

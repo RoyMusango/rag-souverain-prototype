@@ -1,34 +1,34 @@
-# Sauvegarde incrementale des embeddings hors de la machine de calcul.
+# Sauvegarde incrementale des embeddings en dehors de la machine de calcul.
 #
 #     .\scripts\sauvegarder_embeddings.ps1 -Destination "D:\sauvegarde"
 #     .\scripts\sauvegarder_embeddings.ps1 -Destination "$HOME\OneDrive\rag"
 #
-# A lancer sur la machine de calcul, pendant ou apres le calcul. La sauvegarde
-# est incrementale : seules les tranches nouvelles ou modifiees sont copiees,
-# ce qui permet de la relancer toutes les dix minutes sans surcout.
+# A lancer sur la machine de calcul, pendant ou apres le calcul. Seules les
+# tranches nouvelles ou modifiees sont copiees : on peut donc relancer le
+# script toutes les dix minutes sans que cela coute.
 #
-# CHOIX DE NE PAS UTILISER GIT
+# POURQUOI PAS GIT
 #
-#   1. Volume. 419 342 documents x 1024 dimensions x 4 octets = 1,64 Go, dont
-#      des fichiers .npy de plusieurs dizaines de Mo. GitHub refuse tout
-#      fichier au-dela de 100 Mo et deconseille les depots au-dela de 1 Go.
-#      Git LFS offre 1 Go de stockage et 1 Go de bande passante mensuelle en
-#      formule gratuite : le premier clone epuiserait le quota.
+#   1. Volume. 419 342 documents x 1024 dimensions x 4 octets = 1,64 Go, avec
+#      des fichiers .npy de plusieurs dizaines de Mo. GitHub refuse les
+#      fichiers de plus de 100 Mo et deconseille les depots de plus de 1 Go.
+#      Git LFS gratuit donne 1 Go de stockage et 1 Go de bande passante par
+#      mois : le premier clone epuiserait le quota.
 #
-#   2. Nature des donnees. Un embedding de texte peut etre inverse (Morris et
-#      al., Song et Raghunathan, references de la section 3.3.1). Publier les
-#      embeddings d'EnronQA reviendrait a publier les courriels dont ils
-#      derivent, c'est-a-dire la correspondance de personnes physiques
-#      reelles. Cela contredirait :
+#   2. Nature des donnees. On peut retrouver un texte a partir de son
+#      embedding (Morris et al., Song et Raghunathan, references de la
+#      section 3.3.1). Publier les embeddings d'EnronQA reviendrait a publier
+#      les courriels, donc la correspondance de vraies personnes. Ce serait
+#      contraire a :
 #         - NOTICE.md : « Ce depot ne redistribue aucun corpus »
 #         - DATA_README.md : data/ volontairement absent du depot
-#         - la qualification RGPD article 89 du memoire (usage strictement
-#           local, aucune redistribution)
-#      Cela contredirait surtout la these elle-meme, qui etablit qu'un
-#      embedding est une donnee identifiante.
+#         - l'article 89 du RGPD tel qu'applique dans le memoire (usage
+#           local uniquement, aucune redistribution)
+#      Et surtout au memoire lui-meme, qui traite un embedding comme une
+#      donnee identifiante.
 #
-#   Le depot Git est reserve au code, aux scripts et aux resultats agreges
-#   (voir pousser_journal.ps1).
+#   Le depot Git ne contient que le code, les scripts et les resultats
+#   agreges (voir pousser_journal.ps1).
 
 param(
     [Parameter(Mandatory=$true)][string]$Destination,
@@ -52,9 +52,9 @@ Get-ChildItem -Recurse $Source -File | ForEach-Object {
     $dossier = Split-Path $cible
     if (-not (Test-Path $dossier)) { New-Item -ItemType Directory -Force -Path $dossier | Out-Null }
 
-    # Comparaison par taille et date : une empreinte complete sur 1,6 Go
-    # couterait plusieurs minutes a chaque passage et empecherait les
-    # relances frequentes, qui sont l'objet d'une sauvegarde incrementale.
+    # Comparaison par taille et date : calculer l'empreinte de 1,6 Go prendrait
+    # plusieurs minutes a chaque passage, et on ne pourrait plus relancer
+    # souvent.
     $aCopier = $true
     if (Test-Path $cible) {
         $c = Get-Item $cible
@@ -75,8 +75,8 @@ if ($AvecResultats -and (Test-Path "resultats")) {
     Write-Host "  + resultats\"
 }
 
-# Empreintes : elles permettront de verifier le transfert vers le poste de
-# redaction, et de prouver que l'index mesure est celui qui a ete transporte.
+# Empreintes : elles servent a verifier la copie vers le poste de redaction,
+# et a prouver que l'index mesure est bien celui qui a ete copie.
 Get-ChildItem -Recurse $Destination -File -Filter *.npy |
     Get-FileHash -Algorithm SHA256 |
     Select-Object Hash, Path |

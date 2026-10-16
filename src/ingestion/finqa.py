@@ -1,7 +1,7 @@
 """
 Adaptateur FinQA -> schema commun.
 
-DECISIONS DE CONCEPTION
+CHOIX DE CONCEPTION
 
   Unite documentaire : un contexte financier (pre_text + table + post_text)
   rubrique           : rapport source (champ 'filename')
@@ -9,10 +9,9 @@ DECISIONS DE CONCEPTION
   pave               : rang du contexte dans le rapport
   source             : interne
 
-  Le split 'test' est exclu et reserve a une evaluation finale non
-  contaminee. Les programmes de raisonnement annotes (champ qa.program) sont
-  conserves hors schema, dans un fichier separe, pour la verification du
-  chemin de calcul en E5.
+  Le split 'test' n'est pas ingere : il est garde pour une evaluation finale
+  propre. Les programmes de raisonnement annotes (champ qa.program) sont
+  enregistres dans un fichier separe, pour verifier le calcul en E5.
 
 Sortie : data/finqa/finqa_schema.json
          data/finqa/finqa_programmes.json

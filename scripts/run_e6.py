@@ -4,19 +4,19 @@ Lance E6, la justesse du routage reflexif.
     python scripts\run_e6.py
     python scripts\run_e6.py --par-classe 60 --sortie resultats\e6
 
-Utiliser `python` et non `py -3.11` : lorsqu'une version est passee
-explicitement, le lanceur Windows ignore l'environnement virtuel.
+Utiliser `python` et non `py -3.11` : quand on donne une version, le
+lanceur Windows ignore l'environnement virtuel.
 
-L'experience ne requiert ni accelerateur ni index dense. La recuperation
-interne repose sur BM25 applique au corpus bancaire, indexe a la volee :
-1500 notes s'indexent en quelques secondes, et la reproductibilite y gagne,
-puisque l'index mesure est celui que l'execution vient de construire et non
-un artefact d'une campagne anterieure.
+L'experience n'a besoin ni de GPU ni d'index dense. La recherche interne
+utilise BM25 sur le corpus bancaire, indexe au lancement : 1500 notes
+s'indexent en quelques secondes. C'est aussi plus reproductible, car on
+mesure l'index que l'execution vient de construire, et pas un fichier
+d'une ancienne campagne.
 
-Le corpus EUR-Lex n'est pas indexe. Il sert uniquement a etablir la verite
-terrain de la classe « externe » (les numeros d'article qui existent
-reellement). Le routeur ne voit que l'interne, ce qui correspond a sa
-situation reelle au moment de decider s'il faut sortir.
+Le corpus EUR-Lex n'est pas indexe. Il sert seulement a construire la
+verite terrain de la classe « externe » (les numeros d'article qui
+existent vraiment). Le routeur ne voit que l'interne, comme en vrai au
+moment ou il decide s'il faut sortir.
 """
 
 import argparse
@@ -47,21 +47,21 @@ def lire(chemin):
 
 
 def main():
-    parseur = argparse.ArgumentParser(description="E6 — routage reflexif")
+    parseur = argparse.ArgumentParser(description="E6 : routage reflexif")
     parseur.add_argument("--banque", default=BANQUE)
     parseur.add_argument("--reference", default=REFERENCE)
     parseur.add_argument("--eurlex", default=EURLEX)
     parseur.add_argument("--par-classe", type=int, default=40,
                          help="cas etiquetes par classe de verite terrain")
     parseur.add_argument("--fragments", type=int, default=5,
-                         help="taille de la tete rapportee par BM25")
+                         help="nombre de resultats rapportes par BM25")
     parseur.add_argument("--seuil-pertinence", type=float, default=0.55)
     parseur.add_argument("--seuil-completude", type=float, default=0.70)
     parseur.add_argument("--seuil-vocabulaire", type=float, default=None,
-                         help="part minimale du vocabulaire de la requete que "
-                              "le corpus doit connaitre, appliquee AUX SEULES "
+                         help="part minimale des mots de la requete que le "
+                              "corpus doit connaitre, appliquee SEULEMENT aux "
                               "requetes qui ne nomment rien. Sans ce "
-                              "parametre, le routeur se comporte comme avant.")
+                              "parametre, le routeur fonctionne comme avant.")
     parseur.add_argument("--graine", type=int, default=20260902)
     parseur.add_argument("--sortie", default="resultats/e6")
     arguments = parseur.parse_args()
@@ -80,7 +80,7 @@ def main():
     repartition = {}
     for entree in cas:
         repartition[entree["classe"]] = repartition.get(entree["classe"], 0) + 1
-    print(f"jeu etiquete    : {len(cas)} cas — "
+    print(f"jeu etiquete    : {len(cas)} cas : "
           + ", ".join(f"{c} {n}" for c, n in sorted(repartition.items())))
     print(f"seuils          : pertinence {arguments.seuil_pertinence} | "
           f"completude {arguments.seuil_completude} | "
@@ -102,12 +102,11 @@ def main():
         mesures = rapport["mesures"]
 
         def pourcent(valeur):
-            return "—" if valeur is None else f"{valeur:.1%}"
+            return "-" if valeur is None else f"{valeur:.1%}"
 
-        print("=== LES TROIS GRANDEURS ===")
-        print("Elles ne sont pas interchangeables et ne s'agregent pas :")
-        print("rater une source externe degrade la reponse, sortir")
-        print("inutilement expose la requete.\n")
+        print("=== LES TROIS MESURES ===")
+        print("Elles restent separees : rater une source externe donne une")
+        print("moins bonne reponse, sortir pour rien expose la requete.\n")
         print(f"  decision correcte            : "
               f"{pourcent(mesures['taux_decision_correcte'])}")
         print(f"  franchissement INJUSTIFIE    : "
@@ -126,10 +125,10 @@ def main():
               f"{pourcent(mesures['sorties_infructueuses'])}"
               f"   (classe absente : sortie sans reponse au bout)")
 
-        print("\n=== LES MEMES, SUR LES SEULES REQUETES DIFFICILES ===")
-        print("Celles qui DECRIVENT au lieu de nommer. Une requete qui cite")
-        print("la cle de son dossier est retrouvee mot pour mot par BM25 :")
-        print("le routage y est trivial et le chiffre global le masque.\n")
+        print("\n=== LES MEMES, SUR LES REQUETES DIFFICILES SEULEMENT ===")
+        print("Celles qui DECRIVENT sans nommer. BM25 retrouve mot pour mot")
+        print("une requete qui cite la cle de son dossier : le routage y est")
+        print("facile, et le chiffre global le cache.\n")
         print(f"  franchissement injustifie    : "
               f"{pourcent(mesures['franchissement_injustifie_sur_decrit'])}"
               f"   (interne decrit sans etre nomme)")
@@ -138,8 +137,8 @@ def main():
               f"   (reglementaire, texte non nomme)")
 
         print("\n=== PAR CLASSE DE VERITE TERRAIN ===")
-        print("Le label dit OU se trouve la reponse, jamais ce que le")
-        print("routeur devrait decider.\n")
+        print("Le label dit OU se trouve la reponse, pas ce que le routeur")
+        print("devrait decider.\n")
         for classe, valeurs in mesures["par_classe"].items():
             print(f"  {classe:<24} {valeurs['cas']:>4} cas   "
                   f"correct {valeurs['taux_correct']:.1%}")

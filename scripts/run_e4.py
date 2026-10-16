@@ -6,35 +6,35 @@ Lance E4, l'attribuabilite.
 
 Utiliser `python` et non `py -3.11`.
 
-OBJET DE LA CAMPAGNE
+BUT DE LA CAMPAGNE
 
-L'invariant I3 exige que toute assertion soit rattachable a sa source, avec
-un niveau de confiance. E4 mesure dans quelle proportion cette exigence est
-satisfaite, et a quelle profondeur : document, rubrique, page, pave.
+L'invariant I3 demande que chaque assertion puisse etre rattachee a sa
+source, avec un niveau de confiance. E4 mesure dans quelle proportion c'est
+le cas, et a quelle profondeur : document, rubrique, page, pave.
 
-DEUX MESURES DISTINCTES
+DEUX MESURES
 
-La premiere ne requiert aucun modele de langue. Elle verifie que la chaine de
-provenance n'est pas rompue entre l'index et la recherche : chaque fragment
-rapporte porte-t-il ses quatre niveaux d'adresse ? Elle couvre la menace de
-« rupture de chaine », perte silencieuse du lien vers la source, sans
-adversaire actif, qui viole I3 sans aucun signal. Elle peut etre executee
+La premiere n'a besoin d'aucun modele de langue. Elle verifie que la chaine
+de provenance n'est pas cassee entre l'index et la recherche : chaque
+fragment rapporte a-t-il ses quatre niveaux d'adresse ? Elle correspond a
+la menace « rupture de chaine » : le lien vers la source se perd, sans
+attaquant, et I3 est viole sans que rien ne le signale. On peut la lancer
 des que l'index existe.
 
-La seconde requiert le moteur complet, donc un modele de langue. Elle mesure
-la part des assertions produites rattachees a un pave. Elle est activee par
---avec-generation.
+La seconde a besoin du moteur complet, donc d'un modele de langue. Elle
+mesure la part des assertions produites qui sont rattachees a un pave. On
+l'active avec --avec-generation.
 
-Par defaut, seule la premiere est executee : elle conditionne la seconde, et
-un taux d'integrite degrade rendrait celle-ci ininterpretable.
+Par defaut, seule la premiere tourne. La seconde en depend : si la chaine
+est cassee, son resultat ne veut rien dire.
 
 LIMITE
 
-Cinq corpus sur six ont page = 1, un courriel ou un resume d'article n'ayant
-pas de pagination native. Seul EUR-Lex instancie effectivement les quatre
-niveaux : la mesure a quatre niveaux repose sur lui, celle a trois niveaux
-sur les autres. Le module les separe plutot que de melanger des chiffres non
-comparables, et ce script rapporte les deux.
+Tous les corpus sauf EUR-Lex ont page = 1, car un courriel ou un resume
+d'article n'a pas de pages. Seul EUR-Lex utilise vraiment les quatre
+niveaux. La mesure a quatre niveaux se fait donc sur EUR-Lex, celle a trois
+niveaux sur les autres. Le module les garde separees, et ce script donne
+les deux.
 
 PREREQUIS. L'index dense doit exister (voir scripts\build_index.py).
 """
@@ -52,14 +52,13 @@ from src.evaluation import e4_provenance as e4                        # noqa: E4
 from src.evaluation import montage_gpu as montage                     # noqa: E402
 
 PAIRES = "data/enronqa/enronqa_qa.jsonl"
-# Un index lexical par corpus. Le corpus choisi restreint aussi la voie
-# dense au meme vivier.
+# Un index lexical par corpus. Le corpus choisi limite aussi la voie dense
+# aux memes documents.
 #
-# EUR-Lex ne dispose pas de paires question-reponse, ce qui n'est pas un
-# obstacle ici : les questions servent uniquement a provoquer des
-# recuperations, et la mesure porte sur les fragments rapportes, non sur leur
-# pertinence. C'est le seul corpus dont la pagination est native, donc le
-# seul ou la profondeur d'adresse soit reellement discriminante.
+# EUR-Lex n'a pas de paires question-reponse. Ici, cela ne gene pas : les
+# questions servent seulement a declencher des recherches, et on mesure les
+# fragments rapportes, pas leur pertinence. C'est le seul corpus qui a de
+# vraies pages, donc le seul ou la profondeur d'adresse fait une difference.
 INDEX_LEXICAL = {
     "enronqa": "data/index_lexical/enronqa.pkl",
     "eurlex": "data/index_lexical/eurlex.pkl",
@@ -82,11 +81,11 @@ def main():
     parseur.add_argument("--peripherique", default=None)
     parseur.add_argument("--corpus", choices=tuple(INDEX_LEXICAL),
                          default="enronqa",
-                         help="corpus inspecte ; eurlex est le seul dont "
-                              "la pagination soit native")
+                         help="corpus inspecte ; eurlex est le seul qui a de "
+                              "vraies pages")
     parseur.add_argument("--avec-generation", action="store_true",
                          help="mesurer aussi les assertions produites ; "
-                              "exige un modele de langue configure")
+                              "demande un modele de langue configure")
     parseur.add_argument("--sortie", default="resultats/e4")
     arguments = parseur.parse_args()
 
@@ -131,8 +130,8 @@ def main():
 
         # --- mesure 1 : integrite de la chaine ------------------------------
         print("=== INTEGRITE DE LA CHAINE DE PROVENANCE ===")
-        print("Chaque fragment rapporte porte-t-il ses quatre niveaux")
-        print("d'adresse ? Une perte a cet endroit viole I3 en silence.\n")
+        print("Chaque fragment rapporte a-t-il ses quatre niveaux d'adresse ?")
+        print("Une perte ici viole I3 sans aucun message.\n")
 
         fragments = []
         for rang, paire in enumerate(echantillon, start=1):
@@ -163,8 +162,8 @@ def main():
                 e4.profondeur(fragment), 0) + 1
 
         print("\n=== PROFONDEUR D'ADRESSE ATTEINTE ===")
-        print("Le niveau 4 suppose une pagination reelle. Cinq corpus sur")
-        print("six ont page = 1 par nature, ce n'est pas un defaut.\n")
+        print("Le niveau 4 suppose de vraies pages. Tous les corpus sauf")
+        print("EUR-Lex ont page = 1, c'est normal.\n")
         total = len(fragments) or 1
         for niveau in sorted(repartition):
             print(f"  {niveau} niveau(x) sur 4 : {repartition[niveau]:>6} "
@@ -180,11 +179,10 @@ def main():
             "attribuabilite": None,
             "lecture": (
                 "L'integrite de la chaine mesure si le lien vers la source "
-                "survit au passage de l'index a la recherche. Le taux a "
-                "quatre niveaux n'est interpretable que sur les corpus a "
-                "pagination reelle, EUR-Lex en pratique ; ailleurs, trois "
-                "niveaux sont le maximum atteignable et ce n'est pas une "
-                "defaillance."
+                "est conserve entre l'index et la recherche. Le taux a "
+                "quatre niveaux n'a de sens que sur les corpus qui ont de "
+                "vraies pages, EUR-Lex en pratique. Ailleurs, trois niveaux "
+                "sont le maximum possible."
             ),
         }
 
@@ -196,11 +194,11 @@ def main():
             except ImportError as erreur:
                 raise SystemExit(f"pipeline indisponible : {erreur}")
 
-            # Le moteur recoit toutes ses dependances par injection. Seuls la
-            # recuperation interne et le fournisseur sont utiles ici : le
-            # routage et la politique de confidentialite sont mesures par E6
-            # et E2, et les inclure rendrait le taux d'attribuabilite
-            # dependant de decisions qui lui sont etrangeres.
+            # Le moteur recoit tous ses composants en argument. Ici, seuls la
+            # recherche interne et le fournisseur servent : le routage et la
+            # politique de confidentialite sont mesures par E6 et E2. Les
+            # ajouter ferait dependre le taux d'attribuabilite de decisions
+            # qui n'ont rien a voir avec lui.
             moteur = mod_pipeline.Moteur(config=config,
                                          recuperateur_interne=recuperateur)
             reponses = []
@@ -234,7 +232,7 @@ def main():
                     print(f"  non comparable : {attribuabilite.get('motif')}")
         else:
             print("\nLa mesure des assertions produites n'a pas ete faite.")
-            print("Elle exige un modele de langue : relancez avec")
+            print("Elle demande un modele de langue : relancez avec")
             print("--avec-generation une fois le fournisseur configure.")
 
         chemin = Path(arguments.sortie)

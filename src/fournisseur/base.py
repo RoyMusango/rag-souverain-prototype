@@ -1,16 +1,15 @@
 """
 Abstraction de fournisseur : trois paliers de souverainete (section 3.1.5).
 
-Interface unique derriere laquelle les trois paliers sont interchangeables.
-Le palier est journalise, et c'est a cette frontiere que sont instrumentes la
-latence, le cout et le volume de jetons sortants exploites au chapitre 5.
+Une seule interface pour les trois paliers, qui sont donc interchangeables.
+Le palier est enregistre avec chaque appel. C'est ici que l'on mesure la
+latence, le cout et le nombre de jetons sortants utilises au chapitre 5.
 
-Choix de conception : supprimer la Frontiere B en choisissant le palier local
-ne supprime pas le risque, il le deplace. Un modele local, souvent plus petit,
-peut se reveler plus vulnerable aux injections (invariant I2) et moins fidele
-aux sources qu'une API adossee a un modele de grande taille. Le benefice reel
-d'un deploiement entierement souverain ne peut donc etre tenu pour acquis et
-doit etre mesure ; c'est la raison d'etre du champ `palier` dans chaque trace.
+Choisir le palier local supprime la Frontiere B, mais le risque se deplace.
+Un modele local, souvent plus petit, peut etre plus sensible aux injections
+(invariant I2) et moins fidele aux sources qu'un grand modele servi par API.
+L'interet d'un deploiement entierement souverain doit donc etre mesure.
+C'est pour cela que chaque trace contient le champ `palier`.
 """
 
 import time
@@ -26,7 +25,7 @@ FRONTIERE_B = {LOCAL: False, API_UE: True, API_HORS_UE: True}
 
 @dataclass
 class Trace:
-    """Instrumentation d'un appel, pour le chapitre 5."""
+    """Mesures d'un appel, pour le chapitre 5."""
     palier: str
     latence_ms: float = 0.0
     jetons_entree: int = 0
@@ -39,9 +38,9 @@ class Trace:
 class Fournisseur:
     """Interface commune aux trois paliers.
 
-    Les implementations concretes surchargent `_appeler`. Elles ne doivent
-    jamais etre instanciees directement par le pipeline : celui-ci ne connait
-    que cette interface, ce qui rend le palier commutable par configuration.
+    Les sous-classes redefinissent `_appeler`. Le pipeline ne les cree jamais
+    lui-meme : il ne connait que cette interface. On change donc de palier
+    dans la configuration, sans toucher au pipeline.
     """
 
     def __init__(self, palier, modele, tarif_entree=0.0, tarif_sortie=0.0):
@@ -55,7 +54,7 @@ class Fournisseur:
         raise NotImplementedError
 
     def generer(self, prompt, systeme=None, max_jetons=1024, etapes_amont=None):
-        """Appel instrumente. Toute generation passe par ici."""
+        """Appel mesure. Toute generation passe par ici."""
         debut = time.perf_counter()
         texte, jetons_entree, jetons_sortie = self._appeler(
             prompt, systeme, max_jetons
@@ -80,7 +79,7 @@ class Fournisseur:
         return texte, trace
 
     def resume(self):
-        """Agregats pour le chapitre 5, ventiles par palier."""
+        """Totaux et medianes pour le chapitre 5, par palier."""
         if not self.traces:
             return {}
         latences = sorted(t.latence_ms for t in self.traces)
@@ -104,15 +103,15 @@ class FournisseurLocal(Fournisseur):
         self.hote = hote
 
     def _appeler(self, prompt, systeme=None, max_jetons=1024):
-        # A connecter au serveur local (Ollama). Laisse explicitement non
-        # implemente ; le contrat de retour est (texte, jetons_in, jetons_out).
+        # A brancher sur le serveur local (Ollama). Pas encore code. La
+        # fonction doit renvoyer (texte, jetons_in, jetons_out).
         raise NotImplementedError(
             "brancher le client local ; voir JOURNAL_DONNEES.md section 9"
         )
 
 
 class FournisseurAPI(Fournisseur):
-    """Paliers a API. Maintient ou non B dans l'espace juridique europeen."""
+    """Paliers a API. La Frontiere B reste en Europe ou non, selon le palier."""
 
     def __init__(self, palier=API_UE, modele="mistral-large",
                  tarif_entree=0.0, tarif_sortie=0.0, client=None):
@@ -128,7 +127,7 @@ class FournisseurAPI(Fournisseur):
 class FournisseurSimule(Fournisseur):
     """Fournisseur deterministe, pour les tests et les ablations.
 
-    Il conditionne le rejeu a l'identique des experiences du chapitre 5.
+    Il permet de rejouer a l'identique les experiences du chapitre 5.
     """
 
     def __init__(self, reponses=None, palier=LOCAL):

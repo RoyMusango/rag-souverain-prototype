@@ -1,8 +1,8 @@
 """Compare pypdf et pymupdf sur les memes PDF, avec les deux memes motifs.
 
-Le residuel de lettres isolees avec pymupdf n'est pas du bruit : c'est le
-taux de faux positifs du detecteur, mesure sur un texte propre. Sans lui, le
-premier test de severite ne serait pas interpretable.
+Les lettres isolees qui restent avec pymupdf correspondent aux faux positifs
+du motif, mesures sur un texte propre. Ce chiffre sert de reference pour
+lire le premier compte (lettres isolees avec pypdf).
 """
 
 import glob

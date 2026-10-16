@@ -1,14 +1,14 @@
 """
-E4 : attribuabilite. Chaque assertion est-elle rattachable a un pave ?
+E4 : attribuabilite. Peut-on rattacher chaque assertion a un pave ?
 
-Grandeur rapportee : la part des assertions rattachees a une reference
-complete document -> rubrique -> page -> pave.
+Valeur mesuree : la part des assertions rattachees a une reference complete
+document -> rubrique -> page -> pave.
 
-Limite : cinq corpus sur six ont page = 1, un courriel ou un resume n'ayant
-pas de pagination native (JOURNAL_DONNEES section 5.1). Seul EUR-Lex
-instancie effectivement les quatre niveaux ; la mesure a quatre niveaux
-repose donc sur lui, et la mesure a trois niveaux sur les autres. Ce module
-distingue les deux plutot que de melanger des chiffres non comparables.
+Limite : tous les corpus sauf EUR-Lex ont page = 1, car un courriel ou un
+resume n'a pas de pages (JOURNAL_DONNEES section 5.1). Seul EUR-Lex utilise
+vraiment les quatre niveaux. La mesure a quatre niveaux se fait donc sur
+EUR-Lex, la mesure a trois niveaux sur les autres. Le module garde les deux
+separees, car leurs chiffres ne sont pas comparables.
 """
 
 from ..isolation import teinte
@@ -17,7 +17,7 @@ NIVEAUX = ("doc_id", "rubrique", "page", "pave")
 
 
 def profondeur(fragment):
-    """Nombre de niveaux effectivement renseignes pour ce fragment."""
+    """Nombre de niveaux renseignes pour ce fragment."""
     atteinte = 0
     if str(fragment.doc_id).strip():
         atteinte += 1
@@ -31,7 +31,7 @@ def profondeur(fragment):
 
 
 def corpus_a_quatre_niveaux(fragments):
-    """Corpus dont la pagination est reelle, donc eligibles a la mesure 4/4."""
+    """Corpus qui ont de vraies pages, donc mesurables sur quatre niveaux."""
     pages = {}
     for fragment in fragments:
         pages.setdefault(fragment.origine or "inconnu", set()).add(
@@ -41,7 +41,7 @@ def corpus_a_quatre_niveaux(fragments):
 
 
 def evaluer(reponses, fragments_par_reponse=None):
-    """Taux d'attribuabilite, ventile par profondeur atteinte."""
+    """Taux d'attribuabilite, detaille par profondeur atteinte."""
     total = 0
     par_profondeur = {1: 0, 2: 0, 3: 0, 4: 0}
     sans_source = 0
@@ -57,9 +57,9 @@ def evaluer(reponses, fragments_par_reponse=None):
                 continue
             if not assertion.verifiee:
                 non_verifiees += 1
-            # La profondeur retenue est celle du fragment le plus precis :
-            # une assertion soutenue par un pave EUR-Lex et un courriel est
-            # attribuable au pave.
+            # On garde la profondeur du fragment le plus precis : une
+            # assertion appuyee sur un pave EUR-Lex et sur un courriel est
+            # rattachee au pave.
             meilleure = max(profondeur(f) for f in assertion.fragments)
             par_profondeur[meilleure] = par_profondeur.get(meilleure, 0) + 1
 
@@ -77,16 +77,17 @@ def evaluer(reponses, fragments_par_reponse=None):
         "sans_source": sans_source,
         "taux_non_verifiees": round(non_verifiees / attribuees, 4)
         if attribuees else None,
-        "note": ("le taux a quatre niveaux n'est interpretable que sur les "
-                 "corpus a pagination reelle ; voir JOURNAL_DONNEES 5.1"),
+        "note": ("le taux a quatre niveaux n'a de sens que sur les corpus "
+                 "qui ont de vraies pages ; voir JOURNAL_DONNEES 5.1"),
     }
 
 
 def verifier_chaine(fragments):
-    """Controle que la chaine de provenance n'a pas ete rompue.
+    """Verifie que la chaine de provenance n'est pas rompue.
 
-    Couvre la menace « rupture de chaine » du modele de menace : une perte du
-    lien fragment -> source, sans adversaire actif, qui viole I3 sans signal.
+    Correspond a la menace « rupture de chaine » du modele de menace : le
+    lien fragment -> source se perd, sans attaquant, et I3 est viole sans
+    que rien ne le signale.
     """
     ruptures = []
     for fragment in fragments:

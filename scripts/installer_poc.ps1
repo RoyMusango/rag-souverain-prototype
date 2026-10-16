@@ -1,16 +1,15 @@
 # Cree l'arborescence du POC et verifie que tout est importable.
 #
-# A executer depuis la racine du projet :
-#     cd C:\Dev\rag-souverain
+# A lancer depuis la racine du depot :
 #     .\scripts\installer_poc.ps1
 #
-# Idempotent : une relance ne modifie rien d'existant. Ne touche ni a
-# src\ingestion\, ni a data\, ni aux scripts existants.
+# On peut le relancer sans risque : il ne modifie rien d'existant. Il ne
+# touche ni a src\ingestion\, ni a data\, ni aux scripts existants.
 
 $ErrorActionPreference = "Stop"
 
 if (-not (Test-Path "src\ingestion")) {
-    throw "src\ingestion introuvable. Lancez ce script depuis la racine du projet (C:\Dev\rag-souverain)."
+    throw "src\ingestion introuvable. Lancez ce script depuis la racine du depot."
 }
 
 Write-Host "Creation des paquets Python" -ForegroundColor Cyan
@@ -27,9 +26,9 @@ foreach ($p in $paquets) {
     Write-Host "  src\$p\__init__.py"
 }
 
-# src\ingestion NE DOIT PAS recevoir de __init__.py : les adaptateurs et
+# src\ingestion NE DOIT PAS avoir de __init__.py : les adaptateurs et
 # build_index.py l'importent par sys.path, pas comme paquet. Un __init__.py
-# y changerait la resolution des imports.
+# changerait la facon dont les imports sont resolus.
 if (Test-Path "src\ingestion\__init__.py") {
     Write-Warning "src\ingestion\__init__.py existe : verifiez que l'ingestion fonctionne toujours."
 }
@@ -76,7 +75,7 @@ if ($absents.Count -gt 0) {
     Write-Host "    Expand-Archive -Path poc.zip -DestinationPath . -Force"
     Write-Host ""
     Write-Host "  Les imports ne sont pas testes tant que des fichiers manquent :"
-    Write-Host "  ils produiraient des erreurs en cascade sans interet diagnostique."
+    Write-Host "  ils donneraient une suite d'erreurs qui n'aiderait pas a trouver le probleme."
     exit 1
 }
 Write-Host ("  {0} fichiers presents" -f $attendus.Count) -ForegroundColor Green
@@ -125,9 +124,9 @@ Write-Host "Modules a dependances lourdes, verifies separement :" -ForegroundCol
 $ancien = $ErrorActionPreference
 $ErrorActionPreference = "Continue"
 foreach ($m in @("src.index.embeddings","src.index.qdrant_index")) {
-    # 2>&1 fusionne les flux, et ErrorActionPreference doit etre relache :
+    # 2>&1 fusionne les flux, et ErrorActionPreference doit etre assoupli :
     # sinon PowerShell transforme la sortie d'erreur de py en exception
-    # bloquante, alors qu'une dependance absente est ici un cas attendu.
+    # bloquante, alors qu'une dependance absente est normale ici.
     $null = py -3.11 -c "import sys; sys.path.insert(0,'.'); import $m" 2>&1
     if ($LASTEXITCODE -eq 0) { Write-Host "  OK   $m" -ForegroundColor Green }
     else { Write-Host "  --   $m (dependance absente : normal avant pip install)" }

@@ -4,30 +4,29 @@ Interroge le systeme avec des questions dont la reponse attendue est connue.
     .venv\Scripts\python.exe scripts\run_recherche_questions.py
 
 Ecrit un fichier par question sous `resultats/recherche_questions/`, nomme
-`Resultats_recherche_question_<n>.txt`, contenant l'enonce, l'ancrage attendu,
-puis les resultats rendus par le systeme : rang, score, ancrage exact et les
-trente premiers caracteres du texte.
+`Resultats_recherche_question_<n>.txt`, avec la question, l'ancrage attendu,
+puis les resultats du systeme : rang, score, ancrage exact et les trente
+premiers caracteres du texte.
 
 COMPARAISON PAR ANCRAGE
 
-Verifier une recherche en lisant des extraits est lent et subjectif, alors
-que comparer deux chemins ne l'est pas : `eurlex/MiFID2/FR/art_29/p66_7bf8c66d`
-est le bon passage ou ne l'est pas. Les trente caracteres servent seulement a
-identifier le sujet du passage, jamais a juger de sa correction.
+Verifier une recherche en lisant des extraits est lent et subjectif.
+Comparer deux chemins est simple : `eurlex/MiFID2/FR/art_29/p66_7bf8c66d`
+est le bon passage, ou pas. Les trente caracteres servent seulement a voir
+de quoi parle le passage, pas a juger s'il est correct.
 
-PORTEE DE LA MESURE
+LIMITE DE LA MESURE
 
-Le rappel est calcule ici sur un seul document attendu par question : il
-vaut 1 si ce document figure parmi les k premiers, 0 sinon. Sur une question
-reglementaire, plusieurs passages peuvent legitimement repondre (un article
-et son considerant, la version FR et la version EN). Un rappel de 0 ne
-signifie donc pas que la reponse etait absente des k premiers resultats,
-mais que le passage designe comme reference n'y figurait pas. Il s'agit
-d'une borne inferieure.
+Le rappel se calcule ici avec un seul document attendu par question : il
+vaut 1 si ce document est dans les k premiers, 0 sinon. Or, sur une question
+reglementaire, plusieurs passages peuvent repondre (un article et son
+considerant, la version FR et la version EN). Un rappel de 0 veut donc dire
+que le passage de reference n'est pas dans les k premiers, pas forcement que
+la reponse y manque. C'est une borne basse.
 
-C'est aussi pourquoi chaque fichier liste les resultats : il permet de voir
-immediatement si un passage voisin du bon a ete rapporte, ce qu'un chiffre
-seul masquerait.
+C'est aussi pour cela que chaque fichier liste les resultats : on voit tout
+de suite si un passage proche du bon a ete trouve, ce qu'un chiffre seul ne
+montre pas.
 """
 
 import argparse
@@ -44,8 +43,8 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
 from src.commun import config as mod_config          # noqa: E402
 from src.evaluation import montage_gpu as montage    # noqa: E402
 
-# Les douze questions reglementaires, avec le passage dont elles sont issues.
-# Redigees le 13/09/2026 a partir de la lecture du corpus.
+# Les douze questions reglementaires, avec le passage d'ou elles viennent.
+# Ecrites le 13/09/2026 en lisant le corpus.
 QUESTIONS = [
     ("Quelles procédures doivent être faites par les déployeurs avant de mettre en service ou d'utiliser un système d'IA à haut risque ?",
      "eurlex/AI_Act/FR/art_49/p81_51e82120"),

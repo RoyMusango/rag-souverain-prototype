@@ -3,22 +3,22 @@ Figure : rang auquel chaque question trouve sa reponse, selon la voie.
 
     .venv\Scripts\python.exe scripts\tracer_recherche_questions.py
 
-Lit `resultats/recherche_questions_rangs.json`, produit par le depouillement
-des trois campagnes lexicale, dense et fusion sur les douze questions
-reglementaires redigees manuellement.
+Lit `resultats/recherche_questions_rangs.json`, qui regroupe les rangs des
+trois campagnes (lexicale, dense, fusion) de run_recherche_questions.py
+sur les douze questions reglementaires ecrites a la main.
 
-INTERET PAR RAPPORT A UN TAUX
+CE QUE LA FIGURE APPORTE PAR RAPPORT A UN TAUX
 
-Un rappel de 0,92 n'indique ni si la reponse arrive au premier ou au
+Un rappel de 0,92 ne dit pas si la reponse arrive au premier ou au
 vingt-cinquieme rang, ni si les trois voies echouent sur les memes
-questions. La figure le montre, et permet ainsi d'etablir que les deux voies
-sont complementaires plutot que redondantes.
+questions. La figure le montre : on voit si les deux voies se completent ou
+font les memes erreurs.
 
 ECHELLE LOGARITHMIQUE
 
-Les rangs vont de 1 a 14, plus un cas absent. Sur une echelle lineaire, la
-difference entre les rangs 1 et 3, la plus significative pour un
-utilisateur, deviendrait invisible a cote d'un rang 14.
+Les rangs vont de 1 a 14, plus un cas absent. En echelle lineaire, la
+difference entre les rangs 1 et 3, la plus importante pour un utilisateur,
+serait invisible a cote d'un rang 14.
 """
 
 import io
@@ -48,15 +48,15 @@ def main():
     if not os.path.exists(SOURCE):
         raise SystemExit(
             "introuvable : %s\nLancez run_recherche_questions.py pour les "
-            "trois configurations, puis le depouillement." % SOURCE)
+            "trois configurations, puis regroupez les rangs." % SOURCE)
     with open(SOURCE, encoding="utf-8") as f:
         donnees = json.load(f)
 
     questions = sorted(int(n) for n in donnees["lexical"])
     figure, axes = plt.subplots(figsize=(9.0, 5.6))
 
-    # Bande des cinq premiers rangs : ce qu'un utilisateur consulte
-    # effectivement avant de reformuler sa question.
+    # Bande des cinq premiers rangs : ce qu'un utilisateur regarde vraiment
+    # avant de reformuler sa question.
     axes.axvspan(0.9, 5, color="#f0fff4", zorder=0)
     # L'axe des ordonnees est inverse plus bas : le haut du graphique
     # correspond donc aux valeurs negatives.

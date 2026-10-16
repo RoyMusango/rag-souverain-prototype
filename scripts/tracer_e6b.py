@@ -1,14 +1,14 @@
 r"""
-Figure E6b : l'arbitrage de l'abstention par ignorance.
+Figure E6b : le compromis de l'abstention quand la reponse n'existe pas.
 
     python scripts\tracer_e6b.py
 
-Deux courbes de sens oppose : plus le systeme exige de soutien externe avant
-de repondre, plus il s'abstient lorsque rien ne porte la reponse, mais aussi
-lorsque la reponse se trouvait a l'exterieur.
+Deux courbes : plus le systeme exige de soutien externe avant de repondre,
+plus il se tait quand la reponse n'existe nulle part. Mais il se tait aussi
+plus souvent quand la reponse etait a l'exterieur.
 
-Aucun titre dans l'image. Le seuil effectivement retenu est marque, sans etre
-presente comme un optimum : il n'a pas ete cale sur cette courbe.
+Pas de titre dans l'image. Le seuil applique est marque, sans etre presente
+comme le meilleur : il n'a pas ete choisi sur cette courbe.
 """
 
 import argparse
@@ -31,7 +31,7 @@ def main():
                    default=sorted(str(d) for d in Path("resultats").glob(
                        "e6b_seuil_*")))
     p.add_argument("--retenu", type=float, default=0.55,
-                   help="seuil effectivement applique, marque sur la figure")
+                   help="seuil applique, marque sur la figure")
     p.add_argument("--nom", default="e6b_abstention")
     a = p.parse_args()
 
@@ -78,8 +78,8 @@ def main():
     axes.set_yticklabels(["0 %", "25 %", "50 %", "75 %", "100 %"])
     axes.grid(alpha=0.3, axis="y")
     axes.set_axisbelow(True)
-    # Le coin superieur gauche est le seul emplacement libre : la courbe
-    # verte y est basse et la rouge au plancher.
+    # Le coin superieur gauche est le seul endroit libre : la courbe verte y
+    # est basse et la rouge tout en bas.
     axes.legend(fontsize=9.5, loc="upper left", frameon=False)
 
     SORTIE.mkdir(parents=True, exist_ok=True)

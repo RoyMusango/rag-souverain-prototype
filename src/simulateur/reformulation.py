@@ -1,37 +1,34 @@
 r"""
-Reformulateur de charge par modele de langue : l'attaquant de l'echelon
-superieur.
+Reformulateur de charge par modele de langue : un attaquant plus fort.
 
-MOTIVATION
+POURQUOI
 
-`adverse._reformuler` dispose de cinq transformations enumerees : remplacer
-« Ignore » par une periphrase, inserer une espace insecable, commenter en
-HTML, espacer « SYSTEME », passer en minuscules. Elles modifient la surface
-du texte, jamais ses mots, alors qu'un adversaire reel ne se limite pas a
-cela.
+`adverse._reformuler` a cinq transformations fixes : remplacer « Ignore »
+par une periphrase, inserer une espace insecable, mettre en commentaire
+HTML, espacer « SYSTEME », passer en minuscules. Elles changent l'apparence
+du texte, jamais ses mots. Un vrai adversaire ne s'arrete pas la.
 
-Ce module fournit l'echelon suivant : une reecriture qui poursuit le meme
-but en changeant la formulation. Il ne requiert ni gradient ni GPU, ce qui
-le distingue de GCG et permet de le mesurer pour le cout d'une campagne E3
-ordinaire.
+Ce module va plus loin : il reecrit la charge avec d'autres mots, pour le
+meme but. Il n'a besoin ni de gradient ni de GPU, contrairement a GCG, et
+coute autant qu'une campagne E3 normale.
 
 REPRODUCTIBILITE
 
-Une reecriture par modele de langue n'est pas rejouable a graine fixe. Je
-retiens donc la regle suivante : une mesure non reproductible doit etre
-journalisee assez precisement pour etre rejouee a l'identique. Chaque
-reecriture emise est conservee dans `SimulateurAdverse.reformulations`, et
-le simulateur met en cache le couple (texte, variante) afin qu'une meme
-variante rende toujours le meme texte au sein d'une execution.
+Une reecriture par modele de langue ne se rejoue pas avec une graine. La
+regle est donc : une mesure non reproductible doit etre enregistree assez
+precisement pour etre rejouee a l'identique. Chaque reecriture est gardee
+dans `SimulateurAdverse.reformulations`, et le simulateur met en cache le
+couple (texte, variante) pour qu'une meme variante donne toujours le meme
+texte pendant une execution.
 
-Une campagne se rejoue alors a l'identique en rechargeant le journal via
+On rejoue ensuite une campagne a l'identique en rechargeant le journal avec
 `depuis_journal`, sans nouvel appel au modele ni facturation.
 
 LIMITES
 
-Ce n'est pas un attaquant optimise : il n'evalue pas la probabilite de sa
-sortie et ne cherche pas de maximum, il propose une variante plausible. Il
-se situe entre l'attaquant naif et GCG, et doit etre rapporte comme tel.
+C'est un attaquant simple : il ne calcule pas ses chances de
+reussite, il propose juste une variante plausible. Il se situe entre
+l'attaquant naif et GCG, et il faut le presenter ainsi.
 """
 
 import json
@@ -51,17 +48,16 @@ CONSIGNE = (
 
 
 def fabriquer(fournisseur, journal=None, max_jetons=120):
-    """Rend un reformulateur (texte, variante) -> texte reecrit ou None.
+    """Renvoie un reformulateur (texte, variante) -> texte reecrit ou None.
 
-    `fournisseur` est le Fournisseur de la campagne, et non le client brut :
-    les reecritures sont facturees comme les autres appels, et les faire
-    passer par le fournisseur les soumet au meme plafond de depense et a la
-    meme comptabilite appel par appel. Des appels hors plafond
-    contourneraient la seule limite de depense dont dispose le compte.
+    `fournisseur` est le Fournisseur de la campagne, pas le client brut. Les
+    reecritures sont facturees comme les autres appels. En passant par le
+    fournisseur, elles comptent dans le meme plafond de depense. Sinon elles
+    echapperaient a la seule limite de depense du compte.
 
-    `journal` est un chemin JSONL facultatif : chaque reecriture y est
-    ajoutee au fil de l'eau, ce qui permet de rejouer la campagne sans
-    nouvel appel au modele.
+    `journal` est un chemin JSONL facultatif. Chaque reecriture y est
+    ajoutee au fur et a mesure, pour pouvoir rejouer la campagne sans
+    rappeler le modele.
     """
     chemin = Path(journal) if journal else None
     if chemin is not None:
@@ -71,9 +67,8 @@ def fabriquer(fournisseur, journal=None, max_jetons=120):
         invite = f"{CONSIGNE}\n\nPhrase a reecrire :\n{texte}"
         reponse, _trace = fournisseur.generer(invite, max_jetons=max_jetons)
         reecrit = (reponse or "").strip().strip('"').strip()
-        # Une reecriture vide ou identique n'apporte rien : je rends None
-        # pour que le simulateur retombe sur les transformations enumerees
-        # plutot que de consommer une variante.
+        # Une reecriture vide ou identique ne sert a rien : je renvoie None
+        # pour que le simulateur utilise les transformations fixes.
         if not reecrit or reecrit == texte.strip():
             return None
         if chemin is not None:
@@ -87,11 +82,11 @@ def fabriquer(fournisseur, journal=None, max_jetons=120):
 
 
 def depuis_journal(chemin):
-    """Rend un reformulateur qui relit un journal au lieu d'appeler le modele.
+    """Renvoie un reformulateur qui relit un journal au lieu d'appeler le modele.
 
-    Sert au rejeu exact d'une campagne deja payee. Une variante absente du
-    journal rend None, et le simulateur retombe explicitement sur les
-    transformations enumerees.
+    Sert a rejouer exactement une campagne deja payee. Pour une variante
+    absente du journal, il renvoie None et le simulateur utilise les
+    transformations fixes.
     """
     table = {}
     with open(chemin, encoding="utf-8") as f:

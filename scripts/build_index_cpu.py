@@ -1,30 +1,30 @@
 r"""
 Construction de l'index sur processeur (profils PARITE et MODESTE).
 
-    py -3.11 scripts\build_index_cpu.py --profil parite  --corpus eurlex
-    py -3.11 scripts\build_index_cpu.py --profil modeste --corpus tous
+    python scripts\build_index_cpu.py --profil parite  --corpus eurlex
+    python scripts\build_index_cpu.py --profil modeste --corpus tous
 
-Ce script n'est pas un mode degrade mais le second terme d'une comparaison.
-Le profil PARITE verifie que les mesures de qualite obtenues sur substrat
-accelere valent pour un deploiement sur site ; le profil MODESTE chiffre le
-cout en qualite de la souverainete materielle.
+Ce script fournit le point de comparaison avec l'index construit sur GPU.
+Le profil PARITE verifie que les mesures de qualite faites sur GPU restent
+valables pour un deploiement sur site. Le profil MODESTE mesure ce que l'on
+perd en qualite avec un materiel modeste.
 
 Trois precautions propres au processeur :
 
-  ESTIMATION PREALABLE   la duree est annoncee et confirmee avant tout calcul.
-                         BGE-M3 sur processeur traite environ deux documents
-                         par seconde : le corpus entier demanderait des
-                         dizaines d'heures.
+  ESTIMATION AVANT CALCUL  la duree est affichee et doit etre confirmee
+                           avant de lancer. BGE-M3 sur processeur traite
+                           environ 0,5 a 2 documents par seconde : le corpus
+                           entier prendrait des dizaines d'heures.
 
-  ECHANTILLONNAGE        stratifie par rubrique et ensemence, donc rejouable.
-                         Un tirage uniforme sur EnronQA pourrait ne toucher
-                         que quelques boites, et la comparaison porterait sur
-                         des corpus de structures differentes.
+  ECHANTILLONNAGE          stratifie par rubrique, avec une graine, donc
+                           rejouable. Un tirage uniforme sur EnronQA pourrait
+                           ne toucher que quelques boites, et on comparerait
+                           des corpus de structures differentes.
 
-  DETERMINISME           graines, fils et noyaux fixes. Sans cela, deux
-                         executions sur la meme machine peuvent deja
-                         differer, et la comparaison entre materiels perd
-                         son sens.
+  DETERMINISME             graines, fils et noyaux fixes. Sinon deux
+                           executions sur la meme machine peuvent deja
+                           differer, et on ne peut plus comparer deux
+                           materiels.
 """
 
 import argparse
@@ -68,7 +68,7 @@ def lire(chemin):
 
 def main():
     parseur = argparse.ArgumentParser(
-        description="Index sur processeur — profils de comparaison")
+        description="Index sur processeur (profils de comparaison)")
     parseur.add_argument("--profil", choices=[mod_profils.PARITE,
                                               mod_profils.MODESTE],
                          default=mod_profils.PARITE)
@@ -96,7 +96,7 @@ def main():
     noms = (list(SCHEMAS) if arguments.corpus == "tous"
             else [c.strip() for c in arguments.corpus.split(",")])
 
-    print(f"profil       : {profil.nom} — {profil.question}")
+    print(f"profil       : {profil.nom} : {profil.question}")
     print(f"modele       : {profil.modele_embeddings} ({profil.dimension} dim)")
     print(f"materiel     : {config.materiel.nom} (role : {config.materiel.role})")
     print(f"determinisme : {releve}")
@@ -106,7 +106,7 @@ def main():
         print(f"comparable a : profil '{profil.comparable_a}'")
     print()
 
-    # --- estimation prealable, avant tout calcul ---------------------------
+    # --- estimation de la duree, avant tout calcul -------------------------
     total_estime = 0
     plan = []
     for nom in noms:
@@ -126,7 +126,7 @@ def main():
 
     print(f"\n  TOTAL ESTIME : {total_estime:.0f} min "
           f"({total_estime / 60:.1f} h)")
-    print("  Estimation prealable, a remplacer par le debit observe.")
+    print("  Estimation approximative, a remplacer par le debit observe.")
 
     if total_estime > 90 and not arguments.sans_confirmation:
         reponse = input("\n  Plus d'une heure et demie. Continuer ? [o/N] ")
@@ -168,8 +168,8 @@ def main():
 
             debit = len(retenus) / duree if duree else 0
             execution.mesure(f"{nom}.documents", len(retenus))
-            # La qualite se mesure sur tout materiel ; le debit est une
-            # grandeur de performance, que le journal signale comme telle.
+            # La qualite se mesure sur n'importe quel materiel. Le debit est
+            # une mesure de performance, et le journal le signale comme tel.
             execution.mesure(f"{nom}.debit_docs_s", round(debit, 2),
                              grandeur="latence")
             print(f"  debit observe : {debit:.1f} docs/s "

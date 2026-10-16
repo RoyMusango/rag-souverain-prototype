@@ -1,24 +1,21 @@
 """
-Configuration centralisee : aucune regle sectorielle dans le coeur du moteur.
+Configuration centrale du projet.
 
-Le rapport (section 1.4) pose que les specificites sectorielles relevent de
-la configuration. Ce module en est l'application : seuils, paliers, chemins
-et parametres de campagne y sont rassembles, et aucun autre module ne doit
-contenir de constante metier.
+Tous les seuils, paliers, chemins et parametres de campagne sont definis ici.
+Les autres modules ne contiennent pas de constante metier : ce qui depend du
+secteur se regle dans ce fichier (section 1.4 du rapport).
 
-Il porte aussi la description du materiel, qui conditionne l'interpretation
-des mesures. La section 4.1.1 du rapport distingue deux roles du calcul :
+Le module decrit aussi le materiel utilise. La section 4.1.1 du rapport
+distingue deux usages du calcul :
 
-  - developpement et iteration rapide, ou tout materiel convient, y compris
-    un GPU loue ou un carnet cloud, sur donnees synthetiques ;
-  - campagne de mesure du palier local, dont l'objet est de representer un
-    deploiement souverain sur site, et qui exige un materiel representatif
-    et souverain.
+  - le developpement, ou n'importe quel materiel convient (GPU loue, carnet
+    cloud...), sur donnees synthetiques ;
+  - les campagnes de mesure du palier local, qui doivent tourner sur un
+    materiel representatif d'un deploiement sur site.
 
-Chaque trace d'execution indique donc le materiel employe. Sans ce champ, une
-latence relevee sur un GPU loue serait indiscernable d'une latence relevee
-sur le cluster de l'universite, et le chapitre 5 melangerait deux grandeurs
-non comparables.
+Chaque trace d'execution enregistre donc le materiel. Sans cette information,
+on ne pourrait pas distinguer une latence mesuree sur un GPU loue d'une
+latence mesuree sur le cluster de l'universite.
 """
 
 import os
@@ -27,19 +24,19 @@ from dataclasses import dataclass, field, asdict
 
 # --------------------------------------------------------------- materiel
 
-DEV = "developpement"        # iteration rapide, ne fait pas foi pour la latence
-MESURE_SOUVERAINE = "mesure-souveraine"   # fait foi pour le palier local
-MESURE_TIERCE = "mesure-tierce"           # borne de comparaison
+DEV = "developpement"        # iteration rapide, latence non valable
+MESURE_SOUVERAINE = "mesure-souveraine"   # valable pour le palier local
+MESURE_TIERCE = "mesure-tierce"           # point de comparaison
 
 
 @dataclass
 class Materiel:
-    """Description du substrat de calcul, attachee a chaque execution.
+    """Description de la machine de calcul, enregistree avec chaque execution.
 
-    `role` determine la portee de la mesure :
-      DEV                -> qualite oui, latence et cout non opposables
-      MESURE_SOUVERAINE  -> latence et cout du palier local, opposables
-      MESURE_TIERCE      -> borne de comparaison, hors perimetre souverain
+    `role` indique quelles mesures sont valables :
+      DEV                -> qualite valable, latence et cout seulement indicatifs
+      MESURE_SOUVERAINE  -> latence et cout du palier local valables
+      MESURE_TIERCE      -> point de comparaison, hors perimetre souverain
     """
     nom: str = "inconnu"
     role: str = DEV
@@ -49,12 +46,11 @@ class Materiel:
     note: str = ""
 
     def valider_pour(self, grandeur):
-        """La grandeur mesuree est-elle opposable sur ce materiel ?
+        """Indique si la grandeur mesuree est valable sur ce materiel.
 
         `grandeur` vaut 'qualite', 'latence' ou 'cout'. La qualite d'un modele
-        se mesure sur tout materiel, au besoin sur un echantillon ; la latence
-        et le cout du palier local exigent en revanche le materiel
-        representatif.
+        peut se mesurer sur n'importe quel materiel. La latence et le cout du
+        palier local demandent le materiel representatif.
         """
         if grandeur == "qualite":
             return True, ""
@@ -62,14 +58,14 @@ class Materiel:
             return True, ""
         return False, (
             f"{grandeur} relevee sur un materiel de role '{self.role}' "
-            f"({self.nom}) : valeur indicative, non opposable pour le "
+            f"({self.nom}) : valeur seulement indicative pour le "
             f"palier local (section 4.1.1)."
         )
 
 
 # Profils connus, a completer avec les caracteristiques reelles du materiel.
-# Le profil ShadowPC a ete ecarte pour des raisons de souverainete, bien que
-# le fournisseur soit europeen.
+# Le profil ShadowPC a ete retire pour des raisons de souverainete, meme si
+# le fournisseur est europeen.
 PROFILS = {
     "ultraportable": Materiel(
         nom="ultraportable de developpement", role=DEV,
@@ -81,12 +77,11 @@ PROFILS = {
         role=MESURE_SOUVERAINE,
         accelerateur="NVIDIA L4 24 Go",
         juridiction="France (PAR-2)", souverain=True,
-        note="calcul des embeddings ; substrat de calcul, non service distant",
+        note="calcul des embeddings ; machine louee, pas un service distant",
     ),
-    
     "cluster": Materiel(
         nom="cluster de l'universite", role=MESURE_SOUVERAINE,
-        accelerateur="GPU — a preciser", juridiction="Belgique",
+        accelerateur="GPU (a preciser)", juridiction="Belgique",
         souverain=True,
         note="mesure de reference pour la latence et le cout du palier local",
     ),
@@ -98,9 +93,11 @@ PROFILS = {
 
 
 def materiel_courant():
-    """Materiel declare par l'environnement, avec un defaut prudent.
+    """Profil de materiel choisi par la variable RAG_MATERIEL.
 
-        set RAG_MATERIEL=shadow
+    Sans variable, le profil "ultraportable" s'applique. Exemple :
+
+        $env:RAG_MATERIEL = "scaleway"
     """
     cle = os.environ.get("RAG_MATERIEL", "ultraportable")
     profil = PROFILS.get(cle, PROFILS["ultraportable"])
@@ -121,7 +118,7 @@ def empreinte_machine():
 
 @dataclass
 class ConfigConfidentialite:
-    """Pilier 2. Ces valeurs relevent du deploiement, non du moteur."""
+    """Pilier 2. Ces valeurs se reglent au deploiement."""
     k: int = 50
     budget_bits: float = 6.0
     kappa: str = "a-remplacer-au-deploiement"
@@ -169,7 +166,7 @@ class ConfigGeneration:
     palier: str = "local"          # local | api-ue | api-hors-ue
     modele: str = "mistral-small"
     max_jetons: int = 1024
-    temperature: float = 0.0       # deterministe, condition du rejeu
+    temperature: float = 0.0       # deterministe, pour pouvoir rejouer
 
 
 @dataclass

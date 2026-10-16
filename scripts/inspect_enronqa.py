@@ -1,13 +1,12 @@
 """
-Inspection de la structure du jeu EnronQA, prealable a l'ingestion.
+Affiche la structure du jeu EnronQA, avant l'ingestion.
 
-Outil de reconnaissance, et non de mesure : il indique quelles colonnes le
-jeu contient et sous quelle forme. Le schema commun de `src/ingestion/`
-impose une structure ; il faut donc connaitre ce que fournit la source avant
-d'ecrire la conversion.
+Le script montre les colonnes du jeu et leur format. Il faut les connaitre
+pour ecrire la conversion vers le schema commun de `src/ingestion/`.
 
-Il essaie d'abord le jeu deja telecharge sur disque, puis se rabat sur les
-fichiers parquet bruts. Aucune sortie n'est citee dans le rapport.
+Il essaie d'abord le jeu deja telecharge sur disque, sinon il lit les
+fichiers parquet bruts. Aucun resultat de ce script n'est cite dans le
+rapport.
 
     .venv\\Scripts\\python.exe scripts\\inspect_enronqa.py
 """

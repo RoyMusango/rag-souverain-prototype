@@ -1,29 +1,29 @@
 """
 E6 : routage reflexif. Le systeme sort-il quand il le faut, et seulement alors ?
 
-Le pilier 1 (section 3.2) decide du sort d'une requete avant toute sortie.
-Cette experience mesure la justesse de cette decision a travers trois
-grandeurs, non interchangeables, que je n'agrege pas :
+Le pilier 1 (section 3.2) decide quoi faire d'une requete avant toute
+sortie. Cette experience verifie ces decisions avec trois mesures, que je
+garde separees :
 
-    taux de decision correcte      l'issue retenue est-elle la bonne ?
+    taux de decision correcte      l'issue choisie est-elle la bonne ?
     taux de franchissement injustifie   sortie alors que l'interne suffisait
-    taux d'abstention              abstention lorsqu'elle s'impose ?
+    taux d'abstention              abstention quand il le faut ?
 
-La deuxieme est la plus importante pour ce travail. Manquer une source
-externe degrade la reponse ; sortir inutilement expose la requete, et chaque
-cas constitue une exposition sans contrepartie. Un score unique effacerait
-precisement la distinction que le memoire cherche a etablir.
+La deuxieme compte le plus pour ce travail. Rater une source externe donne
+une moins bonne reponse. Sortir pour rien expose la requete sans aucun
+benefice. Un score unique melangerait ces deux erreurs, que le memoire veut
+distinguer.
 
 VERITE TERRAIN
 
-Le risque est le meme que celui decrit dans e7_masquage. Si j'ecrivais a la
-fois les requetes et la table de jugement de
-`routeur.evaluateur_deterministe`, le routeur obtiendrait 100 % par
-construction, et seule la connexion de `decider()` serait mesuree.
+Le risque est le meme que dans e7_masquage. Si j'ecrivais a la fois les
+requetes et la table de jugement de `routeur.evaluateur_deterministe`, le
+routeur aurait 100 % d'office, et on ne mesurerait que le branchement de
+`decider()`.
 
-Comme pour E2 et E7, la verite terrain provient donc de la construction et
-non d'un jugement a posteriori. Le label d'un cas est determine par un fait
-independant du routeur, a savoir l'emplacement reel de la reponse :
+Comme pour E2 et E7, la verite terrain vient donc de la facon dont le jeu
+est construit. Le label d'un cas depend d'un fait que le routeur ne voit
+pas : l'endroit ou se trouve vraiment la reponse.
 
     interne   la reponse est un champ d'une note du corpus bancaire
               (source « interne ») : l'interne suffit et rien ne doit
@@ -33,28 +33,26 @@ independant du routeur, a savoir l'emplacement reel de la reponse :
               l'interne ne peut pas suffire
     absente   la reponse ne se trouve dans aucun des deux
 
-L'evaluateur n'a jamais acces au label : il juge la couverture a partir des
-seuls scores d'une recuperation BM25 reelle sur le corpus interne. Le routeur
-peut donc se tromper, ce qui rend la mesure informative.
+L'evaluateur ne voit jamais le label. Il juge la couverture seulement a
+partir d'une vraie recherche BM25 sur le corpus interne. Le routeur peut donc
+se tromper, et c'est ce qu'on veut mesurer.
 
-PERIMETRE NON MESURE
+CE QUI N'EST PAS MESURE
 
-`routeur.py` annonce cinq issues, mais `decider()` n'en rend que quatre a
-partir d'un jugement de couverture. ABSTENIR n'est atteint que par
-`if not enrichissement_possible` : le routeur n'evalue jamais le soutien
-externe, contrairement a ce qu'indique la docstring du module (« ni l'interne
-ni l'externe ne soutiennent une reponse fiable »). Dans l'implementation
-actuelle, l'abstention est un interrupteur de disponibilite et non un
-jugement reflexif.
+`routeur.py` annonce cinq issues, mais `decider()` n'en renvoie que quatre a
+partir du jugement de couverture. On n'arrive a ABSTENIR que par
+`if not enrichissement_possible` : le routeur ne juge jamais le soutien
+externe. Dans le code actuel, l'abstention depend donc seulement du fait
+que la sortie soit autorisee ou non. E6b mesure l'autre cas, quand la
+reponse n'existe nulle part.
 
-Je mesure donc le comportement effectif du code : l'abstention est eprouvee
-sur des cas ou l'enrichissement est interdit, ce qui correspond a une source
-fermee ou a une politique de deploiement restrictive. L'ecart avec la
-docstring constitue un resultat a rapporter, et non un defaut du harnais.
+Je mesure le comportement reel du code : l'abstention est testee sur des
+cas ou l'enrichissement est interdit (source fermee, ou politique de
+deploiement restrictive).
 
-ESCALADER n'est pas mesuree ici : elle depend de l'etat du budget
-d'exposition, qui fait l'objet d'E2. La rendre dependante d'une population
-d'entites etrangere au corpus bancaire rendrait la mesure incoherente.
+ESCALADER n'est pas mesure ici. Cette issue depend du budget d'exposition,
+etudie dans E2, et la population d'entites d'E2 n'a rien a voir avec le
+corpus bancaire.
 """
 
 import random
@@ -63,36 +61,34 @@ import re
 from ..index import lexical as mod_lexical
 from ..routage import routeur as mod_routeur
 
-# Classes de verite terrain. Le nom indique ou se trouve la reponse, jamais ce
-# que le routeur devrait decider, ce qui garantit l'independance du label.
+# Classes de verite terrain. Le nom dit ou se trouve la reponse, et pas ce que
+# le routeur devrait decider. Le label reste ainsi independant du routeur.
 INTERNE = "interne"
 EXTERNE = "externe"
 ABSENTE = "absente"
 INTERDIT = "enrichissement-interdit"
 
-# Les deux classes difficiles, et la raison de leur presence.
+# Les deux classes difficiles, et pourquoi elles existent.
 #
-# Une premiere version du jeu ne contenait que les classes ci-dessus. Elle
-# donnait 100 % de decisions correctes, un resultat sans valeur : les requetes
-# internes nommaient la cle du dossier, que BM25 retrouve mot pour mot, si
-# bien que la pertinence valait 1,000 pour l'interne et 0,000 ailleurs. Le jeu
-# etait trivialement separable et ne mesurait que sa propre construction.
+# La premiere version du jeu n'avait que les classes ci-dessus. Elle donnait
+# 100 % de bonnes decisions, ce qui ne prouvait rien : les requetes internes
+# citaient la cle du dossier, que BM25 retrouve mot pour mot. La pertinence
+# valait donc 1,000 pour l'interne et 0,000 ailleurs, et le jeu etait trop
+# facile.
 #
-# Les deux classes suivantes retirent cet indice : elles decrivent au lieu de
-# nommer, ce qui correspond a l'usage reel (un analyste demande rarement une
-# fiche par sa cle primaire). C'est la que le routeur peut se tromper, et
-# donc la que la mesure devient informative.
+# Les deux classes suivantes retirent cet indice : elles decrivent le dossier
+# sans le nommer, comme dans la realite (un analyste demande rarement une
+# fiche par sa cle). C'est la que le routeur peut se tromper.
 INTERNE_DECRIT = "interne-decrit"
 EXTERNE_IMPLICITE = "externe-implicite"
 
-# Issue attendue pour chaque classe, sous l'implementation actuelle.
+# Issue attendue pour chaque classe, avec le code actuel.
 ISSUE_ATTENDUE = {
     INTERNE: mod_routeur.INTERNE,
     EXTERNE: mod_routeur.ENRICHIR,
-    # Le routeur ne peut pas savoir, avant d'etre sorti, qu'une reponse est
-    # introuvable partout. Sortir pour verifier est le comportement
-    # defendable ; je l'attends donc, et je rapporte separement le fait que
-    # ces sorties sont infructueuses.
+    # Avant de sortir, le routeur ne peut pas savoir que la reponse n'existe
+    # nulle part. Sortir pour verifier est raisonnable, c'est donc l'issue
+    # attendue. Je rapporte a part que ces sorties ne trouvent rien.
     ABSENTE: mod_routeur.ENRICHIR,
     INTERDIT: mod_routeur.ABSTENIR,
     INTERNE_DECRIT: mod_routeur.INTERNE,
@@ -105,9 +101,9 @@ ISSUE_ATTENDUE = {
 def _champs_par_client(reference):
     """Regroupe les chaines de la reference bancaire par client et par champ.
 
-    La reference porte un `champ` (prenom, nom, ville, societe, iban...), que
-    j'utilise pour composer des questions dont la reponse est, par
-    construction, un fait du corpus interne.
+    La reference contient un `champ` (prenom, nom, ville, societe, iban...).
+    Je m'en sers pour ecrire des questions dont la reponse est forcement un
+    fait du corpus interne.
     """
     clients = {}
     for entree in reference:
@@ -128,21 +124,21 @@ MOTIF_MOT = re.compile(r"[\w'-]+", re.UNICODE)
 
 
 def jetons_designants(requete, langue="fr"):
-    """Jetons par lesquels la requete designe quelque chose.
+    """Jetons par lesquels la requete nomme quelque chose.
 
     Noms propres et identifiants : nom de client, numero de dossier, sigle
-    d'un reglement, numero d'article. En francais, ils se reconnaissent a la
-    majuscule hors position initiale ou a la presence d'un chiffre.
+    d'un reglement, numero d'article. En francais, on les reconnait a une
+    majuscule (hors premier mot) ou a la presence d'un chiffre.
 
-    Cette definition ne depend que de la requete. Elle ne consulte ni le
-    corpus ni le label, et s'applique de la meme facon a « Verhaegen » et a
-    « DORA », ce qui empeche de l'ajuster au profit d'une classe.
+    Cette regle ne regarde que la requete, ni le corpus ni le label. Elle
+    traite « Verhaegen » et « DORA » de la meme facon, donc on ne peut pas
+    l'ajuster pour favoriser une classe.
 
-    Une premiere version considerait comme discriminant tout jeton rare du
-    corpus. Elle mesurait alors le vocabulaire interrogatif (« domiciliation »,
-    « titulaire », absents des notes) plutot que l'objet de la requete : les
-    requetes internes tombaient a une pertinence de 0,40 alors que leur cible
-    etait presente mot pour mot.
+    La premiere version prenait tous les jetons rares du corpus. Elle
+    retenait alors les mots de la question (« domiciliation », « titulaire »,
+    absents des notes) au lieu de ce que la requete cherche : les requetes
+    internes tombaient a une pertinence de 0,40 alors que leur cible etait
+    presente mot pour mot.
     """
     mots = MOTIF_MOT.findall(str(requete))
     designants = []
@@ -150,8 +146,8 @@ def jetons_designants(requete, langue="fr"):
         noyau = mot.strip("'-")
         if not noyau:
             continue
-        # La majuscule du premier mot d'une phrase est positionnelle et ne
-        # designe rien (« Quelle »).
+        # La majuscule du premier mot vient de la phrase et ne nomme rien
+        # (« Quelle »).
         if any(c.isdigit() for c in noyau) or (rang > 0 and noyau[:1].isupper()):
             designants.extend(mod_lexical.jetons(noyau, langue))
     return sorted(set(designants))
@@ -161,24 +157,23 @@ MOTIF_RUBRIQUE_ARTICLE = re.compile(r"^eurlex/([^/]+)/[^/]+/art_0*(\d+)$")
 
 
 def _sujets_eurlex(documents, limite=400, depuis_rubrique=True):
-    """Couples (texte reglementaire, numero d'article) reellement presents.
+    """Couples (texte reglementaire, numero d'article) qui existent vraiment.
 
-    Je ne fabrique aucun numero d'article : seuls sont retenus ceux que porte
-    effectivement un document EUR-Lex. Sinon, la classe `externe` contiendrait
-    des questions sans reponse et se confondrait avec `absente`.
+    Je n'invente aucun numero d'article : je ne garde que ceux d'un vrai
+    document EUR-Lex. Sinon la classe `externe` contiendrait des questions
+    sans reponse, comme la classe `absente`.
 
-    CORRECTION DE LA PREMIERE LECTURE
+    CORRECTION DE LA PREMIERE VERSION
 
-    La version initiale cherchait le motif `Article <n>` dans le texte du
-    document et associait le numero trouve au reglement de ce document. Or un
-    texte de MiFID 2 cite des articles d'autres reglements : le couple
-    (MiFID2, 201) etait alors construit a partir d'un renvoi, alors que
-    MiFID 2 ne comporte pas d'article 201. Mesure du 25/09 : 6 % du vivier,
-    4 questions sur 40 tirees.
+    La premiere version cherchait `Article <n>` dans le texte du document et
+    associait ce numero au reglement du document. Mais un texte de MiFID 2
+    cite des articles d'autres reglements : on obtenait par exemple
+    (MiFID2, 201) a partir d'un renvoi, alors que MiFID 2 n'a pas d'article
+    201. Mesure du 25/09 : 6 % des sujets, 4 questions sur 40 tirees.
 
-    La rubrique indique l'article auquel le document appartient et ne peut
-    donc pas designer un article inexistant. `depuis_rubrique=False` restaure
-    l'ancien comportement, pour rejouer une campagne anterieure.
+    La rubrique donne l'article auquel le document appartient, donc toujours
+    un article qui existe. `depuis_rubrique=False` remet l'ancien
+    comportement, pour rejouer une ancienne campagne.
     """
     sujets = []
     vus = set()
@@ -204,8 +199,8 @@ def _sujets_eurlex(documents, limite=400, depuis_rubrique=True):
     return sujets
 
 
-# Gabarits de questions. Le champ interroge est toujours un fait du corpus
-# vise : la classe est portee par le gabarit, non par une annotation manuelle.
+# Gabarits de questions. Le champ demande est toujours un fait du corpus
+# vise : c'est le gabarit qui donne la classe, sans annotation a la main.
 GABARITS_INTERNES = [
     ("Quelle est la ville de domiciliation du client {nom} au dossier {cli} ?",
      ("nom", "ville")),
@@ -229,9 +224,9 @@ GABARITS_ABSENTS = [
 ]
 
 # Requetes qui decrivent un fait du corpus interne sans nommer de dossier.
-# Le vocabulaire est celui des notes (encours, vigilance, entree en relation,
-# examen periodique), mais aucun identifiant n'y figure : le routeur ne peut
-# plus s'appuyer sur un appariement exact.
+# Elles utilisent les mots des notes (encours, vigilance, entree en relation,
+# examen periodique) mais aucun identifiant : le routeur ne peut plus
+# s'appuyer sur une correspondance exacte.
 GABARITS_INTERNES_DECRITS = [
     "Quel motif de vigilance a ete retenu pour les mouvements au credit en "
     "provenance d'une contrepartie liee ?",
@@ -246,23 +241,22 @@ GABARITS_INTERNES_DECRITS = [
     "Quelles operations ont ete signalees depuis le dernier examen periodique "
     "sur les comptes principaux ?",
 
-    # Onze questions que j'ai redigees le 13/09/2026 sans acces a la mesure de
-    # couverture de vocabulaire utilisee depuis par le routeur. Cette
-    # independance en fait un jeu de validation.
+    # Onze questions ecrites le 13/09/2026, avant que le routeur utilise la
+    # couverture de vocabulaire. Elles n'ont donc pas pu etre ecrites pour
+    # lui, et servent de jeu de validation.
     #
-    # Elles sont accentuees, et ce point est determinant : `lexical.jetons` ne
-    # replie pas les accents, si bien que « beneficiaire » et « benéficiaire »
-    # sont deux jetons distincts, et le corpus bancaire est accentue. Une
-    # premiere transcription sans accents, alignee sur les gabarits
-    # ci-dessus, faisait passer deux questions sous le seuil par simple
-    # artefact.
+    # Elles sont accentuees, et c'est important : `lexical.jetons` ne retire
+    # pas les accents, donc « beneficiaire » et « benéficiaire » sont deux
+    # jetons differents, et le corpus bancaire est accentue. Une premiere
+    # version sans accents, comme les gabarits ci-dessus, faisait passer deux
+    # questions sous le seuil pour cette seule raison.
     #
-    # Trois d'entre elles restent sous le seuil ; ce sont les plus
-    # paraphrastiques : « exercice professionnel » pour « secteur declare »,
+    # Trois questions restent sous le seuil. Ce sont celles qui emploient des
+    # synonymes : « exercice professionnel » pour « secteur declare »,
     # « instrument de paiement » pour « carte de paiement », « avoirs
-    # financiers » pour « encours consolide ». Un comptage de mots ne
-    # surmonte pas la synonymie ; ces trois echecs plaident en faveur d'un
-    # jugement de couverture semantique.
+    # financiers » pour « encours consolide ». Compter des mots ne gere pas
+    # les synonymes : ces trois echecs vont dans le sens d'un jugement de
+    # couverture semantique.
     "Quelle mesure de suivi le document indique-t-il concernant l'état actuel du dossier client ?",
     "Quel élément est désigné comme bénéficiaire du mouvement financier atypique consigné dans la note ?",
     "Quelles indications le document livre-t-il sur les modalités d'exercice professionnel de la personne physique identifiée ?",
@@ -277,10 +271,10 @@ GABARITS_INTERNES_DECRITS = [
 ]
 
 # Requetes reglementaires qui ne nomment pas le texte applicable. La reponse
-# est dans EUR-Lex et le corpus interne ne contient aucun texte reglementaire :
-# le label reste « externe ». Leur vocabulaire (etablissement, obligations,
-# prestataire) recoupe toutefois celui des notes, et ce recoupement peut
-# conduire le routeur a juger l'interne suffisant.
+# est dans EUR-Lex et le corpus interne n'a aucun texte reglementaire : le
+# label reste « externe ». Mais leurs mots (etablissement, obligations,
+# prestataire) se retrouvent aussi dans les notes, ce qui peut pousser le
+# routeur a croire que l'interne suffit.
 GABARITS_EXTERNES_IMPLICITES = [
     "Quelles obligations de notification pesent sur un etablissement "
     "financier en cas d'incident majeur affectant ses prestataires "
@@ -296,13 +290,13 @@ GABARITS_EXTERNES_IMPLICITES = [
     "Quelles obligations de tenue de registre s'imposent au fournisseur d'un "
     "systeme a haut risque ?",
 
-    # Douze questions redigees le 13/09/2026 dans les memes conditions, et
-    # accentuees pour la meme raison. Huit ne contiennent aucun jeton
-    # designant et empruntent donc le nouveau chemin de decision ; les quatre
-    # autres contiennent un chiffre ou une majuscule (« demande 6 »,
-    # « comite IA », « Etat membre ») et sont jugees comme auparavant. Aucune
-    # des huit ne depasse le seuil : le correctif ne retient a tort aucune
-    # question reglementaire.
+    # Douze questions ecrites le 13/09/2026 dans les memes conditions, et
+    # accentuees pour la meme raison. Huit n'ont aucun jeton designant et
+    # passent donc par la nouvelle regle de decision. Les quatre autres ont
+    # un chiffre ou une majuscule (« demande 6 », « comite IA », « Etat
+    # membre ») et sont jugees comme avant. Aucune des huit ne depasse le
+    # seuil : la nouvelle regle ne garde a tort aucune question
+    # reglementaire en interne.
     "Quelles procédures doivent être faites par les déployeurs avant de mettre en service ou d'utiliser un système d'IA à haut risque ?",
     "Qui doit démontrer le caractère infondé ou excessif de la demande 6 ?",
     "Quelles actions sont autorisés à effectuer des agents liés à qui une entreprise d'investissement fait appel ?",
@@ -325,11 +319,11 @@ FAUX_LIEUX = ("Sarrebruck", "Ostrava", "Trondheim", "Valladolid",
 
 def construire_jeu(reference_banque, documents_eurlex, par_classe=40,
                    graine=20260902):
-    """Construit le jeu etiquete ; le label decoule de l'emplacement de la reponse.
+    """Construit le jeu etiquete. Le label depend de l'endroit ou est la reponse.
 
-    Retourne une liste de cas
+    Renvoie une liste de cas
     {requete, classe, issue_attendue, enrichissement_possible, appui}.
-    `appui` consigne le fait sur lequel repose le label, afin qu'un relecteur
+    `appui` indique sur quel fait repose le label, pour qu'un relecteur
     puisse verifier un cas sans rejouer la campagne.
     """
     alea = random.Random(graine)
@@ -387,8 +381,8 @@ def construire_jeu(reference_banque, documents_eurlex, par_classe=40,
         })
 
     # --- classes difficiles : decrire au lieu de nommer ---------------------
-    # Plafonnees au nombre de gabarits distincts. Les repeter pour atteindre
-    # `par_classe` gonflerait l'effectif sans apporter d'information.
+    # Limitees au nombre de gabarits distincts. Les repeter pour atteindre
+    # `par_classe` ajouterait des cas sans rien apprendre de plus.
     for rang in range(min(par_classe, len(GABARITS_INTERNES_DECRITS))):
         cas.append({
             "requete": GABARITS_INTERNES_DECRITS[
@@ -411,7 +405,7 @@ def construire_jeu(reference_banque, documents_eurlex, par_classe=40,
         })
 
     # --- classe interdite : memes requetes externes, sortie fermee ----------
-    # C'est la seule voie par laquelle l'implementation actuelle s'abstient.
+    # C'est le seul cas ou le code actuel s'abstient.
     externes = [c for c in cas if c["classe"] == EXTERNE]
     for source in externes[:par_classe]:
         cas.append({
@@ -429,28 +423,28 @@ def construire_jeu(reference_banque, documents_eurlex, par_classe=40,
 # ------------------------------------------------- l'evaluateur de couverture
 
 class EvaluateurCouverture:
-    """Juge la couverture interne a partir d'une recuperation BM25 reelle.
+    """Juge la couverture interne a partir d'une vraie recherche BM25.
 
-    Il ne connait ni les classes ni les labels : il ne voit qu'une requete et
-    ce que l'index interne lui rend, ce qui rend la mesure informative.
+    Il ne connait ni les classes ni les labels. Il ne voit que la requete et
+    ce que l'index interne renvoie.
 
-    Il calcule les deux grandeurs attendues par `Routeur.juger` :
+    Il calcule les deux valeurs attendues par `Routeur.juger` :
 
       pertinence  part des jetons designants de la requete (noms propres et
-                  identifiants, voir `jetons_designants`) couverts par les
-                  fragments rapportes. Ce sont eux qui decident, car une
+                  identifiants, voir `jetons_designants`) presents dans les
+                  fragments rapportes. Ce sont eux qui comptent, car une
                   requete porte sur ce qu'elle nomme.
 
-      completude  part des autres jetons de contenu connus du corpus interne
-                  et couverts par les fragments. La restriction au
-                  vocabulaire du corpus est necessaire : un mot que les notes
-                  n'emploient jamais ne peut pas etre couvert par une
-                  recuperation interne, et le compter confondrait « le corpus
-                  n'emploie pas ce mot » avec « le corpus n'a pas ce contenu ».
+      completude  part des autres jetons de contenu, connus du corpus
+                  interne, presents dans les fragments. On ne garde que les
+                  mots du corpus : un mot que les notes n'emploient jamais ne
+                  peut pas etre retrouve en interne. Le compter melangerait
+                  « le corpus n'utilise pas ce mot » et « le corpus n'a pas
+                  ce contenu ».
 
-    Un jeton designant absent de l'index ne peut etre couvert par aucun
-    fragment, et la pertinence chute : c'est le signal recherche, a savoir
-    une requete portant sur un objet que le corpus interne ne contient pas.
+    Si un jeton designant n'est pas dans l'index, aucun fragment ne le
+    contient et la pertinence baisse. C'est le signal cherche : la requete
+    porte sur quelque chose que le corpus interne ne contient pas.
     """
 
     def __init__(self, index, n=5):
@@ -492,8 +486,8 @@ class EvaluateurCouverture:
         designants = [j for j in jetons_designants(requete, self.index.langue)
                       if j in uniques]
         # Une requete qui ne nomme rien ne peut pas etre jugee sur ce qu'elle
-        # nomme : je me rabats sur l'ensemble de ses jetons plutot que de
-        # rendre 1,0 par defaut, ce qui la ferait passer pour couverte.
+        # nomme. J'utilise alors tous ses jetons. Renvoyer 1,0 par defaut la
+        # ferait passer pour couverte.
         base = designants or uniques
         pertinence = sum(1 for j in base if j in couvert) / len(base)
 
@@ -503,13 +497,12 @@ class EvaluateurCouverture:
         else:
             completude = pertinence
 
-        # Part du vocabulaire de la requete connue du corpus interne, tous
-        # jetons confondus. C'est la seule des trois grandeurs qui distingue
-        # une question descriptive a reponse interne d'une question
-        # reglementaire : la premiere emploie les mots des notes, la seconde
-        # un vocabulaire qui leur est etranger. La pertinence n'a pas d'objet
-        # sans jeton designant, et le denominateur de la completude exclut
-        # precisement les mots inconnus du corpus.
+        # Part des mots de la requete que le corpus interne connait, tous
+        # jetons compris. C'est la seule des trois valeurs qui separe une
+        # question descriptive a reponse interne d'une question
+        # reglementaire : la premiere utilise les mots des notes, la seconde
+        # d'autres mots. La pertinence ne sert a rien sans jeton designant, et
+        # la completude ne compte pas les mots inconnus du corpus.
         vocabulaire = sum(1 for j in uniques if df.get(j, 0) > 0) / len(uniques)
 
         return mod_routeur.Jugement(
@@ -528,12 +521,11 @@ def router_jusqu_au_bout(routeur_initial, evaluateur, cas, index,
                          seuil_pertinence, seuil_completude):
     """Deroule le routage d'une requete, correction comprise.
 
-    CORRIGER n'est pas une issue terminale : c'est une instruction de
-    reprendre la recuperation interne avant de conclure. Comparer la premiere
-    decision a la verite terrain compterait donc comme erreur un routage qui
-    aboutit correctement. Je rejoue une fois avec `deja_corrige` et je retiens
-    l'issue finale, en conservant la trace du passage par la correction, qui
-    a un cout.
+    CORRIGER ne termine pas le routage : cela demande de refaire la recherche
+    interne avant de conclure. Si on comparait la premiere decision a la
+    verite terrain, un routage qui finit bien serait compte comme une erreur.
+    Je rejoue donc une fois avec `deja_corrige` et je garde l'issue finale.
+    Je note aussi le passage par la correction, qui a un cout.
     """
     requete = cas["requete"]
     fragments = [d for d, _ in index.rechercher(requete, n=evaluateur.n,
@@ -545,12 +537,12 @@ def router_jusqu_au_bout(routeur_initial, evaluateur, cas, index,
     corrige = False
     if decision.issue == mod_routeur.CORRIGER:
         corrige = True
-        # La correction elargit la tete rapportee : c'est la seule action
-        # possible ici pour une reprise de recuperation interne, faute
-        # d'index dense. Je ne simule pas de gain inexistant.
-        # `apres_correction` propage tous les seuils du routeur initial, y
-        # compris celui du vocabulaire ; les reconstruire ici a la main
-        # risquerait de les perdre silencieusement.
+        # La correction rapporte plus de resultats. Sans index dense, c'est
+        # la seule facon de refaire la recherche interne ici. Je ne simule
+        # pas de gain qui n'existe pas.
+        # `apres_correction` reprend tous les seuils du routeur initial, y
+        # compris celui du vocabulaire. Les recopier ici a la main risquerait
+        # d'en oublier un sans le voir.
         second = routeur_initial.apres_correction()
         fragments = [d for d, _ in index.rechercher(
             requete, n=evaluateur.n * 4, source="interne")]
@@ -563,9 +555,10 @@ def router_jusqu_au_bout(routeur_initial, evaluateur, cas, index,
 
 def campagne(cas, index, seuil_pertinence=0.55, seuil_completude=0.70, n=5,
              seuil_vocabulaire=None):
-    """Route tout le jeu et calcule les trois grandeurs.
+    """Route tout le jeu et calcule les trois mesures.
 
-    `seuil_vocabulaire` a None reproduit la campagne d'origine a l'identique.
+    Avec `seuil_vocabulaire` a None, on retrouve exactement la campagne
+    d'origine.
     """
     evaluateur = EvaluateurCouverture(index, n=n)
     routeur = mod_routeur.Routeur(evaluateur, seuil_pertinence,
@@ -599,21 +592,19 @@ def campagne(cas, index, seuil_pertinence=0.55, seuil_completude=0.70, n=5,
         "mesures": mesurer(details),
         "details": details,
         "lecture": (
-            "Le taux de franchissement injustifie est la grandeur qui compte "
-            "pour ce travail : chaque cas est une requete emise vers "
-            "l'exterieur alors que le corpus interne suffisait, donc une "
-            "exposition gratuite. Il n'est pas symetrique du franchissement "
-            "manque, qui degrade la reponse sans rien exposer ; les agreger "
-            "en un score unique effacerait la distinction que le memoire "
-            "cherche a etablir. La verite terrain est construite : le label "
-            "d'un cas est decide par l'endroit ou se trouve reellement la "
+            "Le taux de franchissement injustifie est la mesure principale : "
+            "chaque cas est une requete envoyee a l'exterieur alors que le "
+            "corpus interne suffisait, donc une exposition inutile. Le "
+            "franchissement manque est une autre erreur, qui donne une moins "
+            "bonne reponse sans rien exposer. Les deux restent separes. Le "
+            "label d'un cas depend de l'endroit ou se trouve vraiment la "
             "reponse, et l'evaluateur de couverture ne le voit jamais."
         ),
     }
 
 
 def mesurer(details):
-    """Les trois grandeurs, plus la matrice des issues."""
+    """Les trois mesures, plus la matrice des issues."""
     total = len(details)
     if not total:
         return {}
@@ -626,9 +617,8 @@ def mesurer(details):
                      / len(population), 4)
 
     sortants = (mod_routeur.ENRICHIR, mod_routeur.ESCALADER)
-    # Les classes sont regroupees selon ce qu'exige la verite terrain, non
-    # selon leur difficulte : une requete interne reste interne, qu'elle
-    # nomme son dossier ou qu'elle le decrive.
+    # Les classes sont regroupees selon la verite terrain : une requete
+    # interne reste interne, qu'elle nomme son dossier ou qu'elle le decrive.
     doit_rester = (INTERNE, INTERNE_DECRIT)
     doit_sortir = (EXTERNE, EXTERNE_IMPLICITE)
 
@@ -651,17 +641,17 @@ def mesurer(details):
 
     return {
         "taux_decision_correcte": part(lambda d: d["correcte"]),
-        # Grandeur centrale du sujet : sortie alors que l'interne suffisait.
+        # Mesure principale : sortie alors que l'interne suffisait.
         "taux_franchissement_injustifie": part(
             lambda d: d["issue_obtenue"] in sortants,
             sur=lambda d: d["classe"] in doit_rester),
-        # Erreur inverse, non symetrique : rester a l'interne alors qu'il
-        # fallait sortir. Elle degrade la reponse sans rien exposer.
+        # Erreur inverse : rester en interne alors qu'il fallait sortir. La
+        # reponse est moins bonne, mais rien n'est expose.
         "taux_franchissement_manque": part(
             lambda d: d["issue_obtenue"] not in sortants,
             sur=lambda d: d["classe"] in doit_sortir),
-        # Les deux memes grandeurs, restreintes aux requetes qui decrivent au
-        # lieu de nommer : c'est la que le routage est reellement eprouve.
+        # Les deux memes mesures, seulement sur les requetes qui decrivent
+        # sans nommer. C'est la que le routage est vraiment mis a l'epreuve.
         "franchissement_injustifie_sur_decrit": part(
             lambda d: d["issue_obtenue"] in sortants,
             sur=lambda d: d["classe"] == INTERNE_DECRIT),

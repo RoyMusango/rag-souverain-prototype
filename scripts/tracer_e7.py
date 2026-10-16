@@ -4,7 +4,7 @@ Figure E7 : comparaison des detecteurs d'entites nommees.
     python scripts\tracer_e7.py
 
 Sans argument, le script prend la derniere execution e7-masquage du dossier
-resultats. Pour en designer une precise :
+resultats. Pour en choisir une :
 
     python scripts\tracer_e7.py --json resultats\e7-masquage-<horodatage>\e7_masquage.json
 
@@ -12,9 +12,9 @@ Deux panneaux :
   gauche  qualite : rappel, precision, F1 par moteur
   droite  debit   : caracteres par seconde
 
-Le debit est trace separement, et son titre le precise : il est releve sur un
-materiel de role 'developpement' et reste donc indicatif, non opposable pour
-le palier local (section 4.1.1 du rapport).
+Le debit est dans un panneau a part, et son titre le precise : il a ete
+mesure sur un materiel de developpement. Il est donc seulement indicatif, et
+ne vaut pas pour le palier local (section 4.1.1 du rapport).
 """
 
 import argparse
@@ -70,8 +70,8 @@ def main():
                and "rappel" in mesures]
     if not moteurs:
         raise SystemExit(
-            "aucun moteur exploitable dans ce fichier : tous ont echoue, "
-            "ou le format differe de celui attendu.")
+            "aucun moteur utilisable dans ce fichier : tous ont echoue, "
+            "ou le format n'est pas celui attendu.")
 
     print(f"moteurs : {', '.join(moteurs)}")
 
@@ -115,7 +115,7 @@ def main():
                     f"{valeur:,}".replace(",", " "), ha="center", fontsize=9)
 
     droite.set_ylabel("caractères par seconde")
-    droite.set_title("Débit — indicatif,\nmatériel de développement",
+    droite.set_title("Débit (indicatif,\nmatériel de développement)",
                      fontsize=10)
     droite.grid(alpha=0.3, axis="y")
     droite.set_axisbelow(True)
@@ -129,7 +129,7 @@ def main():
         break
 
     figure.suptitle(
-        "E7 — détecteurs d'entités personnelles" +
+        "E7 : détecteurs d'entités personnelles" +
         (f"\n{sous_titre}" if sous_titre else ""),
         fontsize=12)
     figure.tight_layout(rect=[0, 0, 1, 0.93])

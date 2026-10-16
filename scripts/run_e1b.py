@@ -4,39 +4,39 @@ Lance E1b, l'apport de l'hybridation.
     python scripts\run_e1b.py
     python scripts\run_e1b.py --questions 200 --k 10
 
-Utiliser `python` et non `py -3.11` : lorsqu'une version est passee
-explicitement, le lanceur Windows ignore l'environnement virtuel.
+Utiliser `python` et non `py -3.11` : quand on donne une version, le
+lanceur Windows ignore l'environnement virtuel.
 
-OBJET DE LA CAMPAGNE
+BUT DE LA CAMPAGNE
 
-Le chapitre 2 soutient que les versants lexical et dense sont
-complementaires par nature : BM25 apparie les jetons exacts, le bi-encodeur
-absorbe les reformulations. E1b verifie cette hypothese au lieu de la
-postuler, sur quatre configurations et les memes questions :
+Le chapitre 2 fait l'hypothese que les recherches lexicale et dense se
+completent : BM25 retrouve les mots exacts, le bi-encodeur gere les
+reformulations. E1b teste cette hypothese sur quatre configurations, avec
+les memes questions :
 
     dense       le bi-encodeur seul
     lexical     BM25 seul
     fusion      les deux, fusionnes par rangs reciproques
     complet     la fusion, puis re-classement par cross-encodeur
 
-Un apport nul de la fusion sur ces corpus serait un resultat a part entiere :
-il signifierait que l'un des deux versants suffit, ce qui simplifierait le
-deploiement.
+Si la fusion n'apporte rien sur ces corpus, c'est aussi un resultat : une
+seule des deux voies suffirait, et le deploiement serait plus simple.
 
 PREREQUIS
 
-L'index dense doit exister. Il se construit une fois, sur GPU :
+L'index dense doit exister. On le construit une fois, sur GPU :
 
     python scripts\build_index.py --corpus tous --tranche 5000
 
-Cette construction represente l'essentiel du calcul, environ 235 heures de
-processeur sans accelerateur pour les 422 189 passages du dispositif ; c'est
-elle, et non cette campagne, qui justifie la location d'une machine. E1b ne
-demande que quelques minutes une fois l'index en place.
+C'est la partie la plus lourde du calcul : environ 235 heures de processeur
+sans GPU pour les 422 189 passages. C'est pour elle qu'on loue une machine.
+E1b ne prend que quelques minutes une fois l'index pret, sans le
+cross-encodeur. Avec lui, sur processeur, compter environ une minute par
+question (voir JOURNAL_DONNEES, E1b complet).
 
-PERIMETRE. Les embeddings sont calcules localement, sur la machine qui
-execute ce code. Une machine louee est un substrat de calcul et non un
-service d'embeddings distant : aucun vecteur ne franchit la Frontiere A.
+Les embeddings sont calcules sur la machine qui execute ce code. Une machine
+louee fait seulement du calcul, aucun service d'embeddings distant
+n'intervient : aucun vecteur ne franchit la Frontiere A.
 """
 
 import argparse
@@ -50,10 +50,11 @@ from src.commun import config as mod_config, journal as mod_journal   # noqa: E4
 from src.evaluation import e1_hybridation as e1                       # noqa: E402
 from src.evaluation import montage_gpu as montage                     # noqa: E402
 
-# Un corpus mesurable dispose a la fois de paires question-reponse et d'un
-# index. EUR-Lex n'en a pas : construire moi-meme des questions
-# reglementaires reviendrait a decider si elles reprennent le vocabulaire du
-# passage cible, donc a determiner le resultat avant de le mesurer.
+# Un corpus mesurable a des paires question-reponse et un index. EUR-Lex n'a
+# pas de paires : si j'ecrivais moi-meme les questions, je deciderais si
+# elles reprennent les mots du passage cible, et donc le resultat avant de le
+# mesurer. (Les douze questions de run_recherche_questions.py sont une
+# exception, mesuree a part.)
 CORPUS = {
     "enronqa": ("data/enronqa/enronqa_qa.jsonl",
                 "data/index_lexical/enronqa.pkl"),
@@ -64,11 +65,11 @@ CORPUS = {
 }
 DEFAUT = "enronqa"
 
-# Le corpus choisi restreint aussi la voie dense au meme vivier que la voie
-# lexicale. L'index Qdrant contient les sept corpus, un index BM25 un seul :
-# sans ce filtre, la voie dense affronterait cinq fois plus de distracteurs
-# et l'ecart mesure tiendrait a la taille du vivier, non a la qualite de la
-# recuperation.
+# Le corpus choisi limite aussi la voie dense aux memes documents que la voie
+# lexicale. L'index Qdrant contient les sept corpus, un index BM25 un seul.
+# Sans ce filtre, la voie dense aurait cinq fois plus de documents parasites,
+# et l'ecart mesure viendrait du nombre de documents, pas de la qualite de
+# la recherche.
 
 
 def main():
@@ -105,8 +106,9 @@ def main():
     if not chemin_paires.exists():
         raise SystemExit(
             f"introuvable : {chemin_paires}\n"
-            f"Ce fichier est produit par l'ingestion EnronQA. Verifiez le "
-            f"chemin, ou passez --paires vers un autre jeu de paires.")
+            f"Ce fichier vient de l'ingestion (EnronQA) ou de "
+            f"build_paires_banque.py (banque). Verifiez le chemin, ou "
+            f"passez --paires vers un autre jeu de paires.")
 
     paires = e1.charger_paires(chemin_paires)
     echantillon = e1.echantillonner(paires, arguments.questions,
@@ -140,7 +142,7 @@ def main():
           f"{reclasseur.nom_modele if reclasseur else 'absent'}")
     if reclasseur is None and not arguments.sans_reclasseur:
         print("  Le cross-encodeur n'a pas pu etre charge. La configuration")
-        print("  'complet' sera absente du tableau, et son absence dite.")
+        print("  'complet' manquera dans le tableau, et ce sera indique.")
     print()
 
     fabrique = montage.fabrique(
@@ -180,9 +182,10 @@ def main():
             for nom, ecart in rapport["apport_sur_dense_seul"].items():
                 signe = "+" if ecart >= 0 else ""
                 print(f"  {nom:<12} {signe}{ecart:.4f}")
-            print("\nUn apport positif de 'fusion' sur 'dense' etablit la")
-            print("complementarite postulee au chapitre 2. Un apport nul")
-            print("l'infirme et doit etre rapporte tel quel.")
+            print("\nUn apport positif de 'fusion' sur 'dense' confirme que")
+            print("les deux voies se completent (hypothese du chapitre 2).")
+            print("Un apport nul la contredit et se rapporte tel quel.")
+            print("Comparer aussi la fusion a la meilleure voie seule.")
         else:
             print("  configuration 'dense' absente, aucun apport calculable")
 

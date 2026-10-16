@@ -1,30 +1,28 @@
 """
-Profils d'execution, du portable modeste au substrat accelere.
+Profils d'execution, du petit portable a la machine avec GPU.
 
-Ce module ne vise pas seulement a permettre l'execution sur une petite
-machine : il sert a mesurer le cout du materiel, question qui fait partie du
-sujet. La section 3.1.5 du rapport pose que le benefice d'un deploiement
-entierement souverain ne peut etre tenu pour acquis et doit etre mesure ; une
-banque qui deploie sur site ne dispose pas necessairement d'un accelerateur
-de laboratoire.
+Ces profils permettent de faire tourner le projet sur une petite machine, et
+aussi de mesurer ce que coute le materiel. La section 3.1.5 du rapport
+demande de mesurer l'interet d'un deploiement entierement souverain : une
+banque qui deploie sur site n'a pas forcement un GPU de laboratoire.
 
-Trois profils, repondant a trois questions distinctes :
+Il y a trois profils, chacun pour une question :
 
-  COMPLET      substrat accelere, modele de reference, corpus entier.
+  COMPLET      GPU, modele de reference, corpus entier.
                Question : quelles sont les performances du moteur ?
 
-  PARITE       memes modele et corpus que COMPLET, sur processeur, en
+  PARITE       meme modele et meme corpus que COMPLET, sur processeur, en
                precision simple, sur un echantillon.
-               Question : les resultats obtenus sur accelerateur valent-ils
-               pour un deploiement sur site ? Il s'agit d'un controle, dont
-               le resultat attendu est une derive nulle.
+               Question : les resultats obtenus sur GPU restent-ils valables
+               pour un deploiement sur site ? C'est un controle : on attend
+               une derive nulle.
 
-  MODESTE      modele allege, corpus echantillonne, processeur.
-               Question : que coute la souverainete materielle en qualite ?
-               Il s'agit d'une mesure, et non d'un mode degrade.
+  MODESTE      modele plus leger, corpus echantillonne, processeur.
+               Question : combien de qualite perd-on avec un materiel
+               modeste ?
 
-Confondre PARITE et MODESTE priverait les deux de leur sens : le premier
-change le materiel a modele constant, le second change le modele.
+PARITE change le materiel et garde le modele. MODESTE change le modele. Il
+ne faut pas melanger les deux.
 """
 
 from dataclasses import dataclass, field
@@ -51,11 +49,11 @@ class ProfilExecution:
     comparable_a: str = None          # profil de reference pour la comparaison
 
     def echantillonner(self, documents, graine=42):
-        """Echantillon stratifie par rubrique, reproductible.
+        """Echantillon reproductible, stratifie par rubrique.
 
-        Je stratifie plutot que de tirer au hasard : un tirage uniforme sur
-        EnronQA peut ne toucher que quelques boites aux lettres, et la
-        comparaison porterait alors sur des corpus de structures differentes.
+        Un tirage uniforme sur EnronQA peut ne toucher que quelques boites aux
+        lettres. On comparerait alors des corpus de structures differentes.
+        D'ou la stratification.
         """
         if self.taux_echantillon >= 1.0:
             return list(documents)
@@ -87,7 +85,7 @@ PROFILS = {
     ),
     PARITE: ProfilExecution(
         nom=PARITE,
-        # Modele identique au profil complet : condition du controle.
+        # Meme modele que le profil complet, sinon le controle ne vaut rien.
         modele_embeddings="BAAI/bge-m3", dimension=1024,
         modele_reclasseur="BAAI/bge-reranker-v2-m3",
         peripherique="cpu", precision="float32",
@@ -113,10 +111,10 @@ PROFILS = {
 }
 
 
-# Debits observes, en documents par seconde. Ces valeurs sont des ordres de
-# grandeur destines a l'estimation prealable, et non des mesures : elles
-# evitent de lancer sans le savoir un calcul de neuf heures. Elles doivent
-# etre remplacees par les debits observes des la premiere tranche.
+# Debits approximatifs, en documents par seconde. Ils servent seulement a
+# estimer la duree avant de lancer un calcul, pour ne pas demarrer sans le
+# savoir un calcul de neuf heures. A remplacer par les debits observes des
+# la premiere tranche.
 DEBITS_INDICATIFS = {
     ("BAAI/bge-m3", "cuda"): 220.0,
     # Observe le 24/08/2026 sur ultraportable Core U, 4 fils, float32 :
@@ -129,20 +127,20 @@ DEBITS_INDICATIFS = {
 
 def estimer_duree(profil, nombre_documents, peripherique=None,
                   documents=None, graine=42):
-    """Duree indicative, en minutes, avant tout lancement.
+    """Duree estimee du calcul, en minutes, a consulter avant de lancer.
 
-    Sur une machine louee a l'heure comme sur un portable, savoir a l'avance
-    si le calcul durera dix minutes ou neuf heures conditionne la decision.
-    Le rapport documente neuf heures d'extraction NER sur processeur : l'ordre
-    de grandeur n'est pas theorique.
+    Sur une machine louee a l'heure comme sur un portable, il faut savoir a
+    l'avance si le calcul durera dix minutes ou neuf heures. Le rapport
+    mentionne neuf heures d'extraction NER sur processeur.
     """
     peripherique = peripherique or profil.peripherique or "cpu"
     debit = DEBITS_INDICATIFS.get(
         (profil.modele_embeddings, peripherique),
         2.0 if peripherique == "cpu" else 150.0,
     )
-    # Le plancher par strate de `echantillonner` domine sur les corpus a
-    # rubriques nombreuses : je compte reellement plutot que d'extrapoler.
+    # `echantillonner` garde au moins un document par rubrique. Sur un corpus
+    # avec beaucoup de rubriques, ce minimum pese lourd : je compte donc les
+    # documents retenus au lieu d'extrapoler.
     if documents is not None:
         retenus = len(profil.echantillonner(documents, graine))
     else:
@@ -163,11 +161,10 @@ def estimer_duree(profil, nombre_documents, peripherique=None,
 
 
 def appliquer_determinisme(graine=42, fils=None):
-    """Fixe tout ce qui peut l'etre avant un calcul.
+    """Fixe toutes les graines possibles avant un calcul.
 
-    Sans cela, deux executions sur le meme materiel peuvent deja differer, et
-    la comparaison entre materiels perdrait son sens. Le determinisme est ici
-    une condition de la mesure.
+    Sinon, deux executions sur le meme materiel peuvent deja donner des
+    resultats differents, et on ne peut plus comparer deux materiels.
     """
     import os
     import random
@@ -182,9 +179,9 @@ def appliquer_determinisme(graine=42, fils=None):
         if fils:
             torch.set_num_threads(fils)
             releve["fils"] = fils
-        # Certains noyaux CUDA sont non deterministes par defaut (atomiques,
-        # autotuning cuDNN). Je les desactive : un ecart de rang du a une
-        # reduction non ordonnee serait indiscernable d'un ecart de materiel.
+        # Certains noyaux CUDA ne sont pas deterministes par defaut (atomiques,
+        # autotuning cuDNN). Je les desactive : sinon un ecart de rang du a
+        # l'ordre des calculs ressemblerait a un ecart de materiel.
         if torch.cuda.is_available():
             torch.cuda.manual_seed_all(graine)
             torch.backends.cudnn.deterministic = True

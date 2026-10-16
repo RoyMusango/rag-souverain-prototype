@@ -1,14 +1,14 @@
 """
 Adaptateur Synthea -> schema commun.
 
-DECISIONS DE CONCEPTION (memoire, section 4.2.4)
+CHOIX DE CONCEPTION (memoire, section 4.2.4)
 
   Unite documentaire  : un document = une rubrique du dossier d'un patient.
-                        Un patient produit donc jusqu'a 4 documents.
-                        Motif : un dossier patient possede des rubriques
-                        reelles ; les traiter comme un bloc unique priverait
-                        I3 de toute granularite et rendrait l'attribution
-                        non testable.
+                        Un patient donne donc jusqu'a 4 documents.
+                        Raison : un dossier patient a de vraies rubriques. Un
+                        seul bloc par patient ne laisserait aucun niveau de
+                        detail a I3, et on ne pourrait pas tester
+                        l'attribution.
 
   rubrique            : identite | conditions | observations | medications
   page                : 1 (aucune pagination dans un dossier structure)
@@ -16,11 +16,11 @@ DECISIONS DE CONCEPTION (memoire, section 4.2.4)
   source              : interne
   doc_id              : synthea/<patient_id>/<rubrique>   (deterministe, A1)
 
-  Suffixes numeriques : Synthea suffixe les noms ('Wallace647') pour garantir
-                        l'unicite. Ils sont retires du texte : les conserver
-                        fausserait la mesure de rappel NER, aucun modele
-                        n'ayant vu de telles chaines. L'unicite reste assuree
-                        par l'identifiant patient.
+  Suffixes numeriques : Synthea ajoute un nombre aux noms ('Wallace647') pour
+                        les rendre uniques. Je les retire du texte : sinon le
+                        rappel NER serait fausse, car aucun modele n'a vu de
+                        tels noms. L'identifiant patient garde chaque patient
+                        unique.
 
 Sortie : data/synthea/synthea_schema.json(l)
 """
@@ -36,8 +36,8 @@ from common import (charger_ner, extraire_entites_lot, nettoyer_nom_synthea,
 
 BASE = Path("data/synthea")
 SORTIE = BASE / "synthea_schema.json"
-# Aucun plafond arbitraire : la deduplication par type d'observation borne
-# naturellement la rubrique (mediane 63 lignes, p99 126). Voir journal 5.10.
+# Pas de plafond fixe : garder une ligne par type d'observation limite deja
+# la taille de la rubrique (mediane 63 lignes, p99 126). Voir journal 5.9.
 
 
 def lire_csv(nom):
@@ -95,12 +95,11 @@ conditions = agreger(
 
 def agreger_dernier_par_type(nom_csv, cle_patient, cle_type, formateur):
     """
-    Conserve, pour chaque patient, la derniere valeur de chaque type.
-    Un dossier clinique se lit par ce qui est a jour, et non par l'historique
-    exhaustif : garder les N premieres lignes chronologiques donnerait des
-    mesures repetees d'une meme consultation et perdrait la diversite
-    diagnostique. Le CSV Synthea etant ordonne chronologiquement, un simple
-    ecrasement par cle suffit.
+    Garde, pour chaque patient, la derniere valeur de chaque type.
+    Un dossier clinique se lit par ses valeurs a jour. Garder les N premieres
+    lignes donnerait plusieurs mesures d'une meme consultation et ferait
+    perdre des types d'examens. Le CSV Synthea est trie par date, donc il
+    suffit d'ecraser la valeur precedente pour chaque type.
     """
     par_patient = {}
     for ligne in lire_csv(nom_csv):

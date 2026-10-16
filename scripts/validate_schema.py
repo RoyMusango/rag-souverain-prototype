@@ -1,5 +1,5 @@
 """
-Validateur du schema commun — aligne sur les sorties reelles de src/ingestion/.
+Verifie que les sorties de src/ingestion/ respectent le schema commun.
 """
 
 import sys
@@ -38,7 +38,7 @@ def valider(chemin):
 
     records = lire(reel)
     if not records:
-        print(f"[ECHEC]    {nom} — aucun enregistrement")
+        print(f"[ECHEC]    {nom} : aucun enregistrement")
         return False
 
     erreurs = []

@@ -1,33 +1,31 @@
 """
-Montage de la chaine complete pour les campagnes qui exigent l'index dense.
+Assemblage de la chaine complete pour les campagnes qui ont besoin de
+l'index dense.
 
-Trois experiences en dependent (E1b, E4 et E5), et toutes trois requierent le
-meme assemblage : un vectoriseur local, l'index Qdrant, l'index BM25 et, selon
-la configuration, un re-classeur. Ce module realise cet assemblage une seule
-fois, au lieu de le repeter dans les trois scripts de lancement.
+E1b, E4 et E5 utilisent le meme assemblage : un vectoriseur local, l'index
+Qdrant, l'index BM25 et, selon la configuration, un re-classeur. Ce module
+le construit, pour ne pas le repeter dans trois scripts.
 
-CHOIX D'UN MODULE COMMUN
+POURQUOI UN MODULE COMMUN
 
-Les quatre configurations d'ablation d'E1b doivent etre exactement celles
-qu'emploie E5, faute de quoi le cout mesure par E5 ne se rapporte pas a la
-qualite mesuree par E1b. Les definir a deux endroits exposerait a une
-divergence silencieuse au premier changement de parametre.
+E5 doit utiliser exactement les memes configurations qu'E1b, sinon le cout
+mesure par E5 ne correspond plus a la qualite mesuree par E1b. Avec deux
+definitions separees, un changement de parametre a un seul endroit les
+ferait diverger sans qu'on le voie.
 
-PERIMETRE, INDEPENDANT DE LA MACHINE
+LA MACHINE NE CHANGE RIEN A LA SOUVERAINETE
 
-Les embeddings sont calcules localement, sur la machine qui execute ce code.
-Une machine louee est un substrat de calcul et non un service d'embeddings
-distant : aucun vecteur ne franchit la Frontiere A, quelle que soit la
-machine (section 3.3.1). La location d'un GPU ne contredit donc pas le
-principe directeur.
+Les embeddings sont calcules sur la machine qui execute ce code. Une machine
+louee fait seulement du calcul, aucun service d'embeddings distant
+n'intervient : aucun vecteur ne franchit la Frontiere A (section 3.3.1). Louer un
+GPU reste donc compatible avec le principe du projet.
 
-HORS PERIMETRE
+CE QUE LE MODULE NE FAIT PAS
 
-Le module ne construit pas l'index. Cette etape, la plus lourde, dispose de
-son propre script, `scripts/build_index.py`, qui peut reprendre apres
-interruption. Ici, l'index est suppose deja construit ; s'il ne l'est pas,
-le module echoue explicitement plutot que de le reconstruire a l'insu de
-l'appelant.
+Le module ne construit pas l'index. Cette etape, la plus lourde, a son
+propre script, `scripts/build_index.py`, qui sait reprendre apres une
+interruption. Ici, l'index doit deja exister. Sinon le module s'arrete avec
+une erreur claire, sans reconstruire l'index en cachette.
 """
 
 from pathlib import Path
@@ -36,8 +34,8 @@ from ..index import lexical as mod_lexical
 from ..index import qdrant_index as mod_qdrant
 from ..index import recuperateurs as mod_recup
 
-# Les quatre configurations d'ablation du chapitre 5. L'ordre est celui de la
-# cascade : chaque etage s'ajoute au precedent.
+# Les quatre configurations d'ablation du chapitre 5, dans l'ordre de la
+# cascade.
 DENSE = "dense"
 LEXICAL = "lexical"
 FUSION = "fusion"
@@ -46,16 +44,16 @@ CONFIGURATIONS = (DENSE, LEXICAL, FUSION, COMPLET)
 
 
 class ChaineIndisponible(RuntimeError):
-    """Levee lorsqu'un index attendu n'existe pas.
+    """Levee quand un index attendu n'existe pas.
 
-    J'echoue explicitement plutot que de rendre une chaine degradee : une
-    campagne executee sans index dense produirait des chiffres semblables a
-    ceux d'E1b, mais mesurant tout autre chose.
+    Je prefere une erreur a une chaine incomplete : une campagne sans index
+    dense donnerait des chiffres qui ressemblent a ceux d'E1b mais qui
+    mesurent autre chose.
     """
 
 
 def charger_vectoriseur(config, peripherique=None, taille_lot=None):
-    """Vectoriseur local, sur le peripherique demande ou detecte."""
+    """Vectoriseur local, sur le peripherique demande ou detecte automatiquement."""
     from ..index import embeddings as mod_emb
     return mod_emb.Vectoriseur(
         modele=config.recherche.modele_embeddings,
@@ -67,9 +65,8 @@ def charger_vectoriseur(config, peripherique=None, taille_lot=None):
 def charger_index_dense(config, hote=None, chemin_local=None):
     """Index Qdrant, sur serveur ou sur fichier.
 
-    `chemin_local` sert lorsque l'index a ete construit ailleurs puis
-    transfere sous forme de fichier, par exemple apres une campagne sur
-    machine louee.
+    `chemin_local` sert quand l'index a ete construit ailleurs puis copie en
+    fichier, par exemple apres une campagne sur machine louee.
     """
     index = mod_qdrant.IndexQdrant(
         collection=config.recherche.collection,
@@ -93,7 +90,7 @@ def charger_index_dense(config, hote=None, chemin_local=None):
 
 
 def charger_index_lexical(chemin):
-    """Index BM25 persiste, construit par build_index.py."""
+    """Index BM25 sauvegarde, construit par build_index.py."""
     chemin = Path(chemin)
     if not chemin.exists():
         raise ChaineIndisponible(
@@ -104,10 +101,10 @@ def charger_index_lexical(chemin):
 
 
 def charger_reclasseur(config, peripherique=None):
-    """Cross-encodeur du dernier etage. Rend None s'il est indisponible.
+    """Cross-encodeur du dernier etage. Renvoie None s'il n'est pas disponible.
 
-    Son absence n'interrompt pas la campagne : elle retire simplement la
-    configuration `complet`, ce que l'appelant rapporte.
+    Sans lui, la campagne continue sans la configuration `complet`, et
+    l'appelant le signale.
     """
     try:
         return mod_lexical.Reclasseur(
@@ -120,29 +117,28 @@ def charger_reclasseur(config, peripherique=None):
 
 def fabrique(config, index_dense, index_lexical, vectoriseur,
              reclasseur=None, source=None, corpus=None):
-    """Rend une fonction configuration -> RecuperateurHybride.
+    """Renvoie une fonction configuration -> RecuperateurHybride.
 
-    `corpus` restreint la voie dense au meme corpus que la voie lexicale ;
-    cette restriction est une condition de validite de la mesure.
+    `corpus` limite la voie dense au meme corpus que la voie lexicale. Sans
+    cette limite, la mesure est faussee.
 
-    L'index dense est une collection unique contenant les sept corpus, soit
-    422 189 passages, alors qu'un index lexical est construit par corpus. Sans
-    ce filtre, la voie dense chercherait parmi 422 189 candidats et la voie
-    lexicale parmi 73 772 : la premiere affronterait cinq fois plus de
-    distracteurs, et l'ecart mesure par E1b tiendrait a la taille du vivier
-    plutot qu'a la qualite de la recuperation, alors qu'E1b a precisement
-    pour objet de departager les deux voies.
+    L'index dense est une seule collection avec les sept corpus (422 189
+    passages), alors qu'il y a un index lexical par corpus. Sans filtre, la
+    voie dense chercherait parmi 422 189 candidats et la voie lexicale parmi
+    73 772. La voie dense aurait cinq fois plus de documents parasites, et
+    l'ecart mesure par E1b viendrait du nombre de documents au lieu de la
+    qualite de la recherche.
 
-    C'est l'objet qu'attend `e1_hybridation.campagne`. Chaque configuration
-    retire un etage de la cascade :
+    C'est la fonction qu'attend `e1_hybridation.campagne`. Les
+    configurations :
 
         dense     l'index vectoriel seul
         lexical   BM25 seul, aucun calcul vectoriel
         fusion    les deux, fusionnes par rangs reciproques
         complet   la fusion, puis re-classement du top-k
 
-    Une configuration dont un composant manque rend None, et la campagne
-    l'ignore en le consignant, ce qui est preferable a un echec global.
+    Si un composant manque, la configuration renvoie None. La campagne la
+    saute et le note, au lieu de tout arreter.
     """
     def construire(configuration):
         if configuration == DENSE:
@@ -173,10 +169,10 @@ def fabrique(config, index_dense, index_lexical, vectoriseur,
             if index_dense is None or index_lexical is None:
                 return None
             if reclasseur is None:
-                # Sans cross-encodeur, `complet` serait identique a `fusion` :
-                # la conserver produirait deux lignes identiques dans le
-                # tableau d'ablation, lues a tort comme un apport nul du
-                # re-classement alors que celui-ci n'a pas eu lieu.
+                # Sans cross-encodeur, `complet` serait identique a `fusion`.
+                # Le tableau d'ablation aurait deux lignes identiques, qu'on
+                # lirait a tort comme un re-classement sans effet, alors qu'il
+                # n'a pas eu lieu.
                 return None
             return mod_recup.monter_chaine(
                 index_qdrant=index_dense, index_lexical=index_lexical,
@@ -190,7 +186,7 @@ def fabrique(config, index_dense, index_lexical, vectoriseur,
 
 def decrire(vectoriseur=None, index_dense=None, index_lexical=None,
             reclasseur=None):
-    """Etat du montage, a consigner au journal de campagne."""
+    """Etat de l'assemblage, a enregistrer dans le journal de campagne."""
     return {
         "vectoriseur": (vectoriseur.decrire()
                         if vectoriseur is not None else None),

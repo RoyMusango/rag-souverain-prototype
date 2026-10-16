@@ -1,21 +1,20 @@
 r"""
-Lance E2 et E2b et ecrit les resultats. Ce script ne depend ni du modele de
-langue ni de l'index : |S| est un decompte sur une population exactement
-enumeree.
+Lance E2 et E2b et ecrit les resultats. Ce script n'a besoin ni du modele de
+langue ni de l'index : |S| se compte sur une population connue en entier.
 
     python scripts\run_e2.py --k 50 --budget 6.0 --entites 20
     python scripts\run_e2.py --k 50 --budget 6.0 --entites 20 --cibles uniques
 
-Utiliser `python` et non `py -3.11` : lorsqu'une version est passee
-explicitement, le lanceur Windows ignore l'environnement virtuel et execute
-l'interpreteur systeme, ou les dependances du projet ne sont pas installees.
+Utiliser `python` et non `py -3.11` : quand on donne une version, le lanceur
+Windows ignore l'environnement virtuel et utilise le Python du systeme, ou
+les dependances du projet ne sont pas installees.
 
-Deux bornes, une seule population. `--cibles aleatoire` preleve a pas
-regulier sur toute la population : c'est le cas moyen. `--cibles uniques`
-preleve parmi les seules entites uniques sur les quasi-identifiants bruts,
-soit les 46,2 % que la population ne protege pas : c'est le pire cas. La
-population reste entiere dans les deux modes, faute de quoi N changerait et
-les deux bornes ne seraient plus comparables.
+Deux bornes, une seule population. `--cibles aleatoire` prend des entites a
+intervalle regulier dans toute la population : c'est le cas moyen.
+`--cibles uniques` les prend parmi les entites deja uniques sur les
+quasi-identifiants bruts (les 46,2 % que la population ne protege pas) :
+c'est le pire cas. La population reste entiere dans les deux modes. Sinon N
+changerait, et on ne pourrait plus comparer les deux bornes.
 """
 
 import argparse
@@ -31,11 +30,11 @@ from src.evaluation import e2_anonymat as e2        # noqa: E402
 
 
 def moyenner(campagnes):
-    """Agrege plusieurs entites, une courbe isolee n'ayant pas de portee generale.
+    """Regroupe les resultats de plusieurs entites (une seule courbe ne dit pas grand chose).
 
-    L'agregation porte sur le couple (configuration, mode) : melanger le mode
-    reel et le mode a effort constant produirait une moyenne entre deux
-    grandeurs non comparables.
+    Le regroupement se fait par couple (configuration, mode). Melanger le
+    mode reel et le mode a effort constant donnerait une moyenne de deux
+    valeurs qui ne se comparent pas.
     """
     agrege = {}
     for campagne in campagnes:
@@ -76,8 +75,8 @@ def moyenner(campagnes):
             "S_T_median": statistics.median(e["S_T"]),
             "t_etoile_median": (statistics.median(e["t_etoile"])
                                 if e["t_etoile"] else None),
-            # Proportion d'entites reidentifiees : une mediane a None masque
-            # le nombre d'entites ayant franchi le seuil.
+            # Part des entites reidentifiees. Une mediane a None cache le
+            # nombre d'entites passees sous le seuil.
             "part_franchissement": round(len(e["t_etoile"]) / nombre, 4),
             "aire_moyenne": round(statistics.mean(e["aire"]), 4),
             "aire_emises_moyenne": round(statistics.mean(e["aire_emises"]), 4),
@@ -103,10 +102,10 @@ def main():
                          default="progression")
     parseur.add_argument("--cibles", choices=("aleatoire", "uniques"),
                          default="aleatoire",
-                         help="population des entites enquetees : par pas "
-                              "regulier sur toute la population, ou "
-                              "restreinte aux entites uniques sur les "
-                              "quasi-identifiants bruts (borne pessimiste)")
+                         help="choix des entites enquetees : a intervalle "
+                              "regulier dans toute la population, ou "
+                              "seulement parmi les entites uniques sur les "
+                              "quasi-identifiants bruts (pire cas)")
     parseur.add_argument("--sortie", default="resultats/e2")
     arguments = parseur.parse_args()
 
@@ -118,17 +117,17 @@ def main():
           f"{population.taux_uniques():.3f}")
     print(f"k = {arguments.k} | budget = {arguments.budget} bits\n")
 
-    # Le mode `uniques` ne restreint que les cibles enquetees, jamais la
-    # population : `e2.campagne` recoit `population` entiere dans les deux
-    # cas. C'est la condition de comparabilite des deux bornes : meme N, donc
-    # meme calcul de fuite log2(N/|S|). Restreindre la population ferait
-    # mesurer autre chose a la borne pessimiste, sous le meme nom.
+    # Le mode `uniques` limite seulement les cibles, jamais la population :
+    # `e2.campagne` recoit toute la population dans les deux cas. Ainsi les
+    # deux bornes ont le meme N, donc le meme calcul de fuite log2(N/|S|).
+    # Avec une population reduite, la borne pessimiste mesurerait autre
+    # chose sous le meme nom.
     if arguments.cibles == "uniques":
         cibles = population.entites_uniques()
     else:
         cibles = population.entites
-    print(f"cibles enquetees  : {arguments.cibles} — {len(cibles)} entites "
-          f"disponibles, {arguments.entites} prelevees par pas regulier")
+    print(f"cibles enquetees  : {arguments.cibles}, {len(cibles)} entites "
+          f"disponibles, {arguments.entites} prises a intervalle regulier")
     print(f"population passee a la campagne : {len(population)} entites "
           f"(inchangee)\n")
 
@@ -152,16 +151,16 @@ def main():
     print("\n")
     resume = moyenner(campagnes)
 
-    print("=== PROTECTION — a effort constant, budget desactive ===")
-    print("Toutes les requetes sont emises : les trajectoires ont la meme")
+    print("=== PROTECTION : effort constant, budget desactive ===")
+    print("Toutes les requetes sont envoyees : les traces ont la meme")
     print("longueur, donc |S_T| et l'aire se comparent.\n")
     for cfg in (e2.C1, e2.C2, e2.C3):
         r = resume[f"{cfg}|effort-constant"]
         print(f"{r['libelle']}")
-        # Une decimale plutot qu'aucune : la mediane de vingt entites tombe
-        # sur un demi-entier. `:.0f` affichait 100 pour 100,5 et 122 pour
-        # 121,5, deux valeurs absentes des tableaux du memoire, ce qui
-        # exposait a citer un chiffre faux depuis la console.
+        # Une decimale : la mediane de vingt entites peut tomber sur un
+        # demi-entier. `:.0f` affichait 100 pour 100,5 et 122 pour 121,5,
+        # deux valeurs absentes des tableaux du memoire. On risquait de citer
+        # un chiffre faux en le recopiant depuis la console.
         print(f"   |S_T| median      : {r['S_T_median']:.1f}")
         print(f"   t* median         : {r['t_etoile_median']}")
         print(f"   entites sous k    : {r['part_franchissement']:.0%}")
@@ -170,9 +169,9 @@ def main():
               + " ".join(f"{v:.0f}" for v in r["courbe_mediane"]))
         print()
 
-    print("=== POLITIQUE — mode reel, avec blocage ===")
+    print("=== POLITIQUE : mode reel, avec blocage ===")
     print("Le deficit mesure l'ecart entre ce que l'adversaire apprend et ce")
-    print("que le systeme croit avoir revele. Nul par construction en C3.\n")
+    print("que le systeme croit avoir revele. Il vaut toujours 0 en C3.\n")
     for cfg in (e2.C1, e2.C2, e2.C3):
         r = resume[f"{cfg}|reel"]
         print(f"{r['libelle']}")

@@ -3,29 +3,27 @@ Figure E4 : pourquoi un seul corpus permet la mesure a quatre niveaux.
 
     python scripts\tracer_e4.py
 
-CONTENU DE LA FIGURE
+CE QUE MONTRE LA FIGURE
 
-E4 donne deux valeurs identiques sur les deux corpus mesures : une integrite
-de chaine de 1,0000 et 100 % de fragments a quatre niveaux d'adresse. Les
-tracer produirait quatre barres egales, sans information.
+E4 donne les memes valeurs sur les deux corpus mesures : une integrite de
+chaine de 1,0000 et 100 % de fragments a quatre niveaux d'adresse. Les
+tracer donnerait quatre barres egales, qui n'apprennent rien.
 
-Le contraste se situe ailleurs. Sur EnronQA, les quatre niveaux sont
-renseignes, mais les deux derniers ne distinguent rien : chaque courriel
-tient sur une page. Sur EUR-Lex, la pagination est native et le niveau page
-prend 141 valeurs.
+La difference est ailleurs. Sur EnronQA, les quatre niveaux sont remplis,
+mais le niveau page ne distingue rien : chaque courriel tient sur une page.
+Sur EUR-Lex, il y a de vraies pages et le niveau page prend 141 valeurs.
 
-La figure represente donc la donnee qui explique le resultat plutot que le
-resultat lui-meme : le nombre de valeurs distinctes du niveau page dans
-chaque corpus. Elle montre pourquoi la profondeur d'attribution n'est
-mesurable que sur EUR-Lex, et qu'il s'agit d'une propriete des corpus et non
-d'un defaut.
+La figure montre donc ce qui explique le resultat : le nombre de valeurs
+distinctes du niveau page dans chaque corpus. On voit pourquoi la
+profondeur d'attribution ne se mesure que sur EUR-Lex. C'est une propriete
+des corpus, pas un defaut.
 
 ECHELLE LINEAIRE
 
-Six corpus a 1 et un a 141 : sur une echelle logarithmique, les six premiers
-auraient une hauteur nulle et disparaitraient. En lineaire, ils restent
-visibles comme des traits et l'ecart est immediat. La valeur est inscrite au
-bout de chaque barre pour lever toute ambiguite.
+Six corpus a 1 et un a 141 : avec une echelle logarithmique, les six
+premiers auraient une hauteur nulle et disparaitraient. En lineaire, ils
+restent visibles sous forme de traits, et l'ecart saute aux yeux. La valeur
+est ecrite au bout de chaque barre.
 """
 
 import json
@@ -38,7 +36,7 @@ import matplotlib.pyplot as plt   # noqa: E402
 SORTIE = Path("figures")
 STRUCTURE = Path("resultats/e4_structure_corpus.json")
 
-# Les deux corpus sur lesquels E4 a effectivement tourne, mis en evidence.
+# Les deux corpus sur lesquels E4 a tourne, mis en couleur.
 MESURES = ("EnronQA", "EUR-Lex")
 
 
@@ -46,7 +44,7 @@ def main():
     if not STRUCTURE.exists():
         raise SystemExit(
             f"introuvable : {STRUCTURE}\n"
-            f"Ce fichier est produit par le releve de structure des corpus.")
+            f"Ce fichier vient du releve de structure des corpus.")
 
     with open(STRUCTURE, encoding="utf-8") as f:
         donnees = json.load(f)
@@ -75,9 +73,9 @@ def main():
     axes.grid(alpha=0.3, axis="x")
     axes.set_axisbelow(True)
 
-    # Les deux corpus mesures sont en bleu, les autres en gris. Sans cette
-    # distinction, la figure se lirait comme un simple releve de corpus
-    # alors qu'elle explique un resultat.
+    # Les deux corpus mesures sont en bleu, les autres en gris. Sinon on
+    # lirait la figure comme une simple description des corpus, alors
+    # qu'elle explique un resultat.
     axes.text(max(pages) * 0.42, 0.2,
               "en bleu, les deux corpus sur lesquels E4 a tourné",
               fontsize=9, color="#4a5568", style="italic")

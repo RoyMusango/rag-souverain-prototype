@@ -3,19 +3,18 @@ Produit le document de comparaison : reponse attendue contre reponse obtenue.
 
     .venv\Scripts\python.exe scripts\generer_comparaison_reponses.py
 
-Ecrit `etat_actuel_des_slides/COMPARAISON_REPONSES.md`, document destine a
-une lecture humaine.
+Ecrit `etat_actuel_des_slides/COMPARAISON_REPONSES.md`, un document a lire.
 
-COMPLEMENT A LA FIGURE
+EN PLUS DE LA FIGURE
 
-La figure donne le rang, mais pas le contenu rapporte par le systeme. Ce
-document presente, pour chaque question, la reponse attendue et le texte
-effectivement rendu. Un rang de 3 ne s'interprete qu'une fois constate, par
-exemple, que les rangs 1 et 2 proviennent du meme article.
+La figure donne le rang, mais pas ce que le systeme a renvoye. Ce document
+montre, pour chaque question, la reponse attendue et le texte renvoye. Par
+exemple, un rang de 3 se comprend mieux quand on voit que les rangs 1 et 2
+viennent du meme article.
 
-Le texte est genere a partir des JSON de resultats, jamais recopie
-manuellement : une transcription introduirait des ecarts invisibles entre le
-document et la mesure.
+Le texte est genere a partir des fichiers de resultats, jamais recopie a la
+main : une recopie pourrait introduire des ecarts avec la mesure sans qu'on
+les voie.
 """
 
 import json
@@ -25,10 +24,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-# Chargement par chemin plutot que par `from scripts...` : cela evite de faire
-# de `scripts` un paquet, et surtout d'heriter de l'enveloppe de sortie que
-# run_recherche_questions installe a l'import, laquelle se fermait des la
-# premiere ecriture lorsqu'elle etait enveloppee une seconde fois.
+# Chargement par chemin plutot que par `from scripts...`. Ainsi `scripts` n'a
+# pas besoin d'etre un paquet. Surtout, run_recherche_questions remplace
+# sys.stdout a l'import, et ce remplacement fait deux fois fermait la sortie
+# des la premiere ecriture.
 import importlib.util
 
 _source = Path(__file__).with_name("run_recherche_questions.py")
@@ -56,7 +55,7 @@ def propre(texte, limite):
 
 
 def lire_resultats(dossier, numero):
-    """Rejoue le depouillement d'un fichier de resultats deja ecrit."""
+    """Relit un fichier de resultats deja ecrit et renvoie les doc_id dans l'ordre."""
     chemin = Path(dossier) / ("Resultats_recherche_question_%d.txt" % numero)
     lignes = chemin.read_text(encoding="utf-8").splitlines()
     debut = next(i for i, l in enumerate(lignes)
@@ -128,7 +127,7 @@ def main():
         ajoute("")
         ajoute("> %s" % question)
         ajoute("")
-        ajoute("**Le passage attendu** — `%s`" % attendu)
+        ajoute("**Le passage attendu** : `%s`" % attendu)
         ajoute("")
         ajoute("> %s" % propre(textes.get(attendu, ""), EXTRAIT_ATTENDU))
         ajoute("")
@@ -141,7 +140,7 @@ def main():
             rang = rangs[cle][str(numero)]
             etat = ("trouvé au rang %d" % rang) if rang else \
                 "non trouvé dans les 25 premiers"
-            ajoute("### %s — %s" % (libelle, etat))
+            ajoute("### %s : %s" % (libelle, etat))
             ajoute("")
             for position, doc in enumerate(obtenus, start=1):
                 marque = "  **← ATTENDU**" if doc == attendu else ""

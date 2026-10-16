@@ -1,18 +1,15 @@
 """
-Recuperateurs concrets : le raccord entre les index et la cascade hybride.
+Recuperateurs : le lien entre les index et la cascade hybride.
 
 `hybride.RecuperateurHybride` attend deux fonctions (requete, n) -> liste de
 Fragment. Ce module les construit a partir d'un index Qdrant et d'un index
-BM25, et assure la conversion qu'aucun des deux ne realise : transformer une
-charge utile en Fragment, provenance comprise.
+BM25. Il convertit aussi chaque charge utile en Fragment, provenance
+comprise.
 
-Sans ce module, la chaine serait interrompue entre l'indexation et la
-recherche.
-
-Perimetre : le vectoriseur employe ici est local. La requete est vectorisee
-sur la machine qui execute ce code, et le vecteur ne quitte jamais le
-processus. Ce qui franchit la Frontiere A, en cas d'enrichissement, est une
-requete texte, jamais son embedding (section 3.3.1).
+Le vectoriseur utilise ici est local. La requete est vectorisee sur la
+machine qui execute ce code, et le vecteur ne quitte jamais le processus.
+En cas d'enrichissement, seule une requete texte franchit la Frontiere A,
+jamais son embedding (section 3.3.1).
 """
 
 from ..isolation import teinte
@@ -21,9 +18,9 @@ from ..isolation import teinte
 def fragment_depuis_charge(charge, score=0.0):
     """Convertit une charge utile Qdrant en Fragment.
 
-    C'est ici que la provenance passe de l'index a la recherche. Toute
-    metadonnee omise a cet endroit est definitivement perdue pour
-    l'attribution : apres l'indexation, elle est irrecuperable.
+    C'est ici que la provenance passe de l'index a la recherche. Une
+    metadonnee oubliee ici est perdue pour l'attribution : on ne peut plus la
+    retrouver apres l'indexation.
     """
     return teinte.Fragment(
         doc_id=str(charge.get("doc_id", "")),
@@ -53,8 +50,8 @@ class RecuperateurDense:
         self.corpus = corpus
 
     def __call__(self, requete, n=50):
-        # Vectorisation locale de la requete. Le vecteur reste dans ce
-        # processus ; seul un identifiant de point revient de l'index.
+        # La requete est vectorisee en local. Le vecteur ne sort pas de ce
+        # processus.
         vecteur = self.vectoriseur.encoder([requete])[0]
         resultats = self.index.rechercher(
             vecteur, n=n, source=self.source, corpus=self.corpus
@@ -79,9 +76,9 @@ class RecuperateurLexical:
 class RecuperateurMemoire:
     """Recuperateur en memoire, pour les tests et les ablations.
 
-    Il est necessaire : les experiences du chapitre 5 doivent pouvoir
-    s'executer sans serveur Qdrant, faute de quoi une ablation dependrait
-    d'un service externe et ne serait plus rejouable.
+    Il permet de lancer les experiences du chapitre 5 sans serveur Qdrant.
+    Sinon une ablation dependrait d'un service externe et ne serait plus
+    rejouable.
     """
 
     def __init__(self, documents, source=None):
@@ -105,10 +102,10 @@ def monter_chaine(index_qdrant=None, index_lexical=None, vectoriseur=None,
                   reclasseur=None, source=None, corpus=None, config=None):
     """Assemble une cascade complete a partir des index disponibles.
 
-    Retourne un `RecuperateurHybride` pret a etre passe au Moteur. Si un seul
-    des deux index est fourni, la cascade fonctionne en mode degrade, ce qui
-    correspond aux configurations d'ablation d'E1 : dense seul, lexical seul,
-    fusion, fusion plus re-classement.
+    Renvoie un `RecuperateurHybride` pret pour le Moteur. Si un seul des deux
+    index est fourni, la cascade tourne avec une seule voie. Cela donne les
+    configurations d'ablation d'E1 : dense seul, lexical seul, fusion, fusion
+    plus re-classement.
     """
     from .hybride import RecuperateurHybride
 
