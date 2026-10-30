@@ -1,0 +1,136 @@
+{
+  "identifiant": "index-parite-20260824-212417-c71e67c5",
+  "nom": "index-parite",
+  "commit": "c71e67c59ee8-modifie",
+  "manifeste_hash": "3520526f45129d4989cd718f28a1823e11b73f5096e12e1b409f38cc33ca3eb0",
+  "manifeste": {
+    "data\\external\\eurlex\\eurlex_schema.json": "d3d8885f6fa753a07cdf89b40dda0dac7b06c7c0179dd4d18a750bf4e447a330"
+  },
+  "materiel": {
+    "nom": "ultraportable de developpement",
+    "role": "developpement",
+    "accelerateur": "aucun",
+    "juridiction": "Belgique",
+    "souverain": true,
+    "note": "ingestion et E2 ; aucun accelerateur graphique",
+    "systeme": "Windows",
+    "version": "10",
+    "processeur": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.11.9"
+  },
+  "versions": {
+    "torch": "2.13.0+cpu",
+    "sentence_transformers": "3.4.1",
+    "qdrant_client": "inconnue",
+    "spacy": "3.8.14",
+    "rank_bm25": "inconnue",
+    "numpy": "2.4.6"
+  },
+  "configuration": {
+    "confidentialite": {
+      "k": 50,
+      "budget_bits": 6.0,
+      "kappa": "a-remplacer-au-deploiement",
+      "moteur_ner": "souverain",
+      "langue_ner": "fr",
+      "tolerance_gabarit": 4,
+      "chemin_registre": "data/registre_exposition.json"
+    },
+    "routage": {
+      "seuil_pertinence": 0.55,
+      "seuil_completude": 0.7,
+      "correction_autorisee": true,
+      "escalade_autorisee": true
+    },
+    "recherche": {
+      "modele_embeddings": "BAAI/bge-m3",
+      "dimension": 1024,
+      "top_k_dense": 50,
+      "top_k_lexical": 50,
+      "top_k_reclassement": 20,
+      "n_final": 10,
+      "modele_reclasseur": "BAAI/bge-reranker-v2-m3",
+      "k_rrf": 60,
+      "collection": "rag_souverain",
+      "hote_qdrant": "http://localhost:6333"
+    },
+    "isolation": {
+      "seuil_corroboration": 2,
+      "seuil_collusion": 2,
+      "penalite_collusion": 0.1
+    },
+    "generation": {
+      "palier": "local",
+      "modele": "mistral-small",
+      "max_jetons": 1024,
+      "temperature": 0.0
+    },
+    "graine": 42,
+    "materiel": {
+      "nom": "ultraportable de developpement",
+      "role": "developpement",
+      "accelerateur": "aucun",
+      "juridiction": "Belgique",
+      "souverain": true,
+      "note": "ingestion et E2 ; aucun accelerateur graphique"
+    }
+  },
+  "mesures": {
+    "eurlex.documents": {
+      "valeur": 769,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "eurlex.debit_docs_s": {
+      "valeur": 0.5,
+      "grandeur": "latence",
+      "opposable": false,
+      "materiel": "ultraportable de developpement"
+    }
+  },
+  "evenements": [
+    {
+      "horodatage": "21:24:17",
+      "libelle": "debut",
+      "materiel": "ultraportable de developpement"
+    },
+    {
+      "horodatage": "21:24:17",
+      "libelle": "profil",
+      "nom": "parite",
+      "modele": "BAAI/bge-m3",
+      "dimension": 1024,
+      "taux_echantillon": 0.02,
+      "determinisme": {
+        "graine": 42,
+        "torch": "2.13.0+cpu",
+        "fils": 4,
+        "fils_effectifs": 4,
+        "numpy": "2.4.6"
+      }
+    },
+    {
+      "horodatage": "21:45:23",
+      "libelle": "tranche",
+      "numero": 0,
+      "documents": 500,
+      "duree_s": 1266.46
+    },
+    {
+      "horodatage": "21:50:10",
+      "libelle": "tranche",
+      "numero": 1,
+      "documents": 269,
+      "duree_s": 286.9
+    },
+    {
+      "horodatage": "21:50:10",
+      "libelle": "fin",
+      "duree_s": 1553.61
+    }
+  ],
+  "avertissements": [
+    "latence relevee sur un materiel de role 'developpement' (ultraportable de developpement) : valeur indicative, non opposable pour le palier local (section 4.1.1)."
+  ]
+}

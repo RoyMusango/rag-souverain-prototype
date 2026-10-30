@@ -1,0 +1,172 @@
+{
+  "corpus": {
+    "notes": 1500,
+    "dossiers": 300,
+    "attendus": 7800,
+    "chaines_distinctes": 2400
+  },
+  "global": {
+    "spacy": {
+      "moteur": "spacy",
+      "detecteur": {
+        "moteur": "spacy",
+        "langue": "fr",
+        "modele": "fr_core_news_lg",
+        "categories": [
+          "CARTE",
+          "COURRIEL",
+          "DATE",
+          "IBAN",
+          "IDENTIFIANT",
+          "LIEU",
+          "MONTANT",
+          "ORGANISATION",
+          "PERSONNE",
+          "TELEPHONE"
+        ],
+        "duree_chargement_s": 7.88,
+        "souverain": true
+      },
+      "documents": 1500,
+      "vrais_positifs": 7796,
+      "faux_negatifs": 4,
+      "faux_positifs": 656,
+      "reference": 7800,
+      "detectees": 6954,
+      "detections_appariees": 6298,
+      "rappel": 0.9995,
+      "precision": 0.9057,
+      "precision_par_reference": 0.9224,
+      "f1": 0.9503,
+      "duree_s": 24.41,
+      "debit_car_s": 17456
+    },
+    "camembert": {
+      "moteur": "camembert",
+      "detecteur": {
+        "moteur": "camembert",
+        "langue": "fr",
+        "modele": "Jean-Baptiste/camembert-ner",
+        "categories": [
+          "CARTE",
+          "COURRIEL",
+          "DATE",
+          "IBAN",
+          "IDENTIFIANT",
+          "LIEU",
+          "MONTANT",
+          "ORGANISATION",
+          "PERSONNE",
+          "TELEPHONE"
+        ],
+        "duree_chargement_s": 7.78,
+        "souverain": true
+      },
+      "documents": 1500,
+      "vrais_positifs": 7799,
+      "faux_negatifs": 1,
+      "faux_positifs": 86,
+      "reference": 7800,
+      "detectees": 6418,
+      "detections_appariees": 6332,
+      "rappel": 0.9999,
+      "precision": 0.9866,
+      "precision_par_reference": 0.9891,
+      "f1": 0.9932,
+      "duree_s": 218.02,
+      "debit_car_s": 1954
+    },
+    "presidio": {
+      "moteur": "presidio",
+      "detecteur": {
+        "moteur": "presidio",
+        "langue": "fr",
+        "modele": "fr_core_news_lg",
+        "categories": [
+          "CARTE",
+          "COURRIEL",
+          "DATE",
+          "IBAN",
+          "IDENTIFIANT",
+          "LIEU",
+          "MONTANT",
+          "ORGANISATION",
+          "PERSONNE",
+          "TELEPHONE"
+        ],
+        "duree_chargement_s": 3.17,
+        "souverain": false
+      },
+      "documents": 1500,
+      "vrais_positifs": 7784,
+      "faux_negatifs": 16,
+      "faux_positifs": 686,
+      "reference": 7800,
+      "detectees": 6978,
+      "detections_appariees": 6292,
+      "rappel": 0.9979,
+      "precision": 0.9017,
+      "precision_par_reference": 0.919,
+      "f1": 0.9474,
+      "duree_s": 31.17,
+      "debit_car_s": 13669
+    }
+  },
+  "par_categorie": {
+    "CARTE": {
+      "attendus": 300,
+      "chaines_distinctes": 300,
+      "rappel": {
+        "spacy": 1.0,
+        "camembert": 1.0,
+        "presidio": 1.0
+      }
+    },
+    "IBAN": {
+      "attendus": 900,
+      "chaines_distinctes": 300,
+      "rappel": {
+        "spacy": 0.8278,
+        "camembert": 0.9356,
+        "presidio": 0.8278
+      }
+    },
+    "IDENTIFIANT": {
+      "attendus": 2100,
+      "chaines_distinctes": 600,
+      "rappel": {
+        "spacy": 0.9914,
+        "camembert": 1.0,
+        "presidio": 0.9914
+      }
+    },
+    "LIEU": {
+      "attendus": 900,
+      "chaines_distinctes": 300,
+      "rappel": {
+        "spacy": 1.0,
+        "camembert": 1.0,
+        "presidio": 1.0
+      }
+    },
+    "ORGANISATION": {
+      "attendus": 600,
+      "chaines_distinctes": 300,
+      "rappel": {
+        "spacy": 0.8733,
+        "camembert": 1.0,
+        "presidio": 0.8733
+      }
+    },
+    "PERSONNE": {
+      "attendus": 3000,
+      "chaines_distinctes": 600,
+      "rappel": {
+        "spacy": 0.9987,
+        "camembert": 0.7807,
+        "presidio": 0.9947
+      }
+    }
+  },
+  "lecture": "Le rappel global melange deux familles de detection : un modele statistique sur les entites linguistiques, des motifs deterministes sur les identifiants. Seule la ventilation par categorie les separe, et c'est elle qui etablit que les deux etages sont complementaires plutot que redondants. La precision n'est rapportee qu'au niveau global : restreindre la reference a une categorie fait compter comme faux positives les detections des autres categories."
+}

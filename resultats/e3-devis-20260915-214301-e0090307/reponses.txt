@@ -1,0 +1,83 @@
+==========================================================================
+APPEL 1   416 jetons
+==========================================================================
+Les motifs de vigilance retenus sont les suivants :
+
+- **Structure de détention à plusieurs niveaux** : CLI-100005, CLI-100039, CLI-100048 et CLI-100041.  
+  Sources : [banque/CLI-100005/aml#banque/CLI-100005:p1:§3], [banque/CLI-100039/aml#banque/CLI-100039:p1:§3], [banque/CLI-100048/aml#banque/CLI-100048:p1:§3], [banque/CLI-100041/aml#banque/CLI-100041:p1:§3]
+
+- **Opérations fractionnées sous le seuil de déclaration** : CLI-100026 et CLI-100020.  
+  Sources : [banque/CLI-100026/aml#banque/CLI-100026:p1:§3], [banque/CLI-100020/aml#banque/CLI-100020:p1:§3]
+
+- **Activité déclarée sans substance vérifiable** : CLI-100016, CLI-100010, CLI-100049 et CLI-100013.  
+  Sources : [banque/CLI-100016/aml#banque/CLI-100016:p1:§3], [banque/CLI-100010/aml#banque/CLI-100010:p1:§3], [banque/CLI-100049/aml#banque/CLI-100049:p1:§3], [banque/CLI-100013/aml#banque/CLI-100013:p1:§3]
+
+==========================================================================
+APPEL 2   562 jetons
+==========================================================================
+Les sources indiquent **trois motifs de vigilance** retenus pour ces mouvements au crédit en provenance d’une contrepartie liée :
+
+- **Structure de détention à plusieurs niveaux** : CLI-100005, CLI-100039, CLI-100048 et CLI-100041.  
+  Sources : [CLI-100005](banque/CLI-100005/aml#banque/CLI-100005:p1:§3), [CLI-100039](banque/CLI-100039/aml#banque/CLI-100039:p1:§3), [CLI-100048](banque/CLI-100048/aml#banque/CLI-100048:p1:§3), [CLI-100041](banque/CLI-100041/aml#banque/CLI-100041:p1:§3)
+
+- **Opérations fractionnées sous le seuil de déclaration** : CLI-100026 et CLI-100020.  
+  Sources : [CLI-100026](banque/CLI-100026/aml#banque/CLI-100026:p1:§3), [CLI-100020](banque/CLI-100020/aml#banque/CLI-100020:p1:§3)
+
+- **Activité déclarée sans substance vérifiable** : CLI-100016, CLI-100010, CLI-100049 et CLI-100013.  
+  Sources : [CLI-100016](banque/CLI-100016/aml#banque/CLI-100016:p1:§3), [CLI-100010](banque/CLI-100010/aml#banque/CLI-100010:p1:§3), [CLI-100049](banque/CLI-100049/aml#banque/CLI-100049:p1:§3), [CLI-100013](banque/CLI-100013/aml#banque/CLI-100013:p1:§3)
+
+Les sources ne permettent donc pas d’identifier **un motif unique** applicable à tous les mouvements.
+
+==========================================================================
+APPEL 3   574 jetons
+==========================================================================
+Les motifs de vigilance retenus sont les suivants :
+
+- **Structure de détention à plusieurs niveaux** :
+  - CLI-100005 — contrepartie liée à Alzette Property [banque/CLI-100005/aml#banque/CLI-100005:p1:§3]
+  - CLI-100039 — contrepartie liée à Meuse Invest [banque/CLI-100039/aml#banque/CLI-100039:p1:§3]
+  - CLI-100048 — contrepartie liée à Hainaut Développement [banque/CLI-100048/aml#banque/CLI-100048:p1:§3]
+  - CLI-100041 — contrepartie liée à Meuse Invest [banque/CLI-100041/aml#banque/CLI-100041:p1:§3]
+
+- **Opérations fractionnées sous le seuil de déclaration** :
+  - CLI-100026 — contrepartie liée à Ardennes Holding [banque/CLI-100026/aml#banque/CLI-100026:p1:§3]
+  - CLI-100020 — contrepartie liée à Borinage Logistics [banque/CLI-100020/aml#banque/CLI-100020:p1:§3]
+
+- **Activité déclarée sans substance vérifiable** :
+  - CLI-100016 — contrepartie liée à Alzette Property [banque/CLI-100016/aml#banque/CLI-100016:p1:§3]
+  - CLI-100010 — contrepartie liée à Meuse Invest [banque/CLI-100010/aml#banque/CLI-100010:p1:§3]
+  - CLI-100049 — contrepartie liée à Ardennes Holding [banque/CLI-100049/aml#banque/CLI-100049:p1:§3]
+  - CLI-100013 — contrepartie liée à Kirchberg Capital [banque/CLI-100013/aml#banque/CLI-100013:p1:§3]
+
+Les sources ne permettent donc pas de retenir un motif unique pour l’ensemble des mouvements.
+
+==========================================================================
+APPEL 4   436 jetons
+==========================================================================
+Trois motifs de vigilance ont été retenus pour ces mouvements au crédit en provenance d’une contrepartie liée :
+
+- **Structure de détention à plusieurs niveaux** : CLI-100005, CLI-100039, CLI-100048 et CLI-100041.  
+  Sources : [banque/CLI-100005/aml#banque/CLI-100005:p1:§3], [banque/CLI-100039/aml#banque/CLI-100039:p1:§3], [banque/CLI-100048/aml#banque/CLI-100048:p1:§3], [banque/CLI-100041/aml#banque/CLI-100041:p1:§3]
+
+- **Opérations fractionnées sous le seuil de déclaration** : CLI-100026 et CLI-100020.  
+  Sources : [banque/CLI-100026/aml#banque/CLI-100026:p1:§3], [banque/CLI-100020/aml#banque/CLI-100020:p1:§3]
+
+- **Activité déclarée sans substance vérifiable** : CLI-100016, CLI-100010, CLI-100049 et CLI-100013.  
+  Sources : [banque/CLI-100016/aml#banque/CLI-100016:p1:§3], [banque/CLI-100010/aml#banque/CLI-100010:p1:§3], [banque/CLI-100049/aml#banque/CLI-100049:p1:§3], [banque/CLI-100013/aml#banque/CLI-100013:p1:§3]
+
+==========================================================================
+APPEL 5   323 jetons
+==========================================================================
+Les sources mentionnent **trois motifs de vigilance** pour ces mouvements au crédit en provenance d’une contrepartie liée :
+
+- **Structure de détention à plusieurs niveaux** : CLI-100005, CLI-100039, CLI-100048 et CLI-100041.  
+  Sources : [CLI-100005, §3], [CLI-100039, §3], [CLI-100048, §3], [CLI-100041, §3]
+
+- **Opérations fractionnées sous le seuil de déclaration** : CLI-100026 et CLI-100020.  
+  Sources : [CLI-100026, §3], [CLI-100020, §3]
+
+- **Activité déclarée sans substance vérifiable** : CLI-100016, CLI-100010, CLI-100049 et CLI-100013.  
+  Sources : [CLI-100016, §3], [CLI-100010, §3], [CLI-100049, §3], [CLI-100013, §3]
+
+Les sources ne permettent donc pas de retenir **un motif unique** pour l’ensemble des mouvements.
+

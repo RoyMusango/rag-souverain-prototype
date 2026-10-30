@@ -1,0 +1,238 @@
+{
+  "identifiant": "e7b-banque-20260918-083116-ec779852",
+  "nom": "e7b-banque",
+  "commit": "ec7798525631-modifie",
+  "manifeste_hash": "bc0418f387a759a09bc191da92ee67dbd813c057f0e679dfba43476ea6b80634",
+  "manifeste": {
+    "data/banque/banque_reference.json": "5d625b35931ffe055ebc84003586ea1bfd4bea775b81906b9614a4f11aed17cc",
+    "data/banque/banque_schema.json": "deca983eafecbdeb094f4b87f22179cbd857622a0cc713ea41cec0f34e85b351"
+  },
+  "materiel": {
+    "nom": "ultraportable de developpement",
+    "role": "developpement",
+    "accelerateur": "aucun",
+    "juridiction": "Belgique",
+    "souverain": true,
+    "note": "ingestion et E2 ; aucun accelerateur graphique",
+    "systeme": "Windows",
+    "version": "10",
+    "processeur": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.11.9"
+  },
+  "versions": {
+    "torch": "2.13.0+cpu",
+    "sentence_transformers": "3.4.1",
+    "qdrant_client": "inconnue",
+    "spacy": "3.8.14",
+    "rank_bm25": "inconnue",
+    "numpy": "2.4.6"
+  },
+  "configuration": {
+    "confidentialite": {
+      "k": 50,
+      "budget_bits": 6.0,
+      "kappa": "a-remplacer-au-deploiement",
+      "moteur_ner": "souverain",
+      "langue_ner": "fr",
+      "tolerance_gabarit": 4,
+      "chemin_registre": "data/registre_exposition.json"
+    },
+    "routage": {
+      "seuil_pertinence": 0.55,
+      "seuil_completude": 0.7,
+      "correction_autorisee": true,
+      "escalade_autorisee": true
+    },
+    "recherche": {
+      "modele_embeddings": "BAAI/bge-m3",
+      "dimension": 1024,
+      "top_k_dense": 50,
+      "top_k_lexical": 50,
+      "top_k_reclassement": 20,
+      "n_final": 10,
+      "modele_reclasseur": "BAAI/bge-reranker-v2-m3",
+      "k_rrf": 60,
+      "collection": "rag_souverain",
+      "hote_qdrant": "http://localhost:6333"
+    },
+    "isolation": {
+      "seuil_corroboration": 2,
+      "seuil_collusion": 2,
+      "penalite_collusion": 0.1
+    },
+    "generation": {
+      "palier": "local",
+      "modele": "mistral-small",
+      "max_jetons": 1024,
+      "temperature": 0.0
+    },
+    "graine": 42,
+    "materiel": {
+      "nom": "ultraportable de developpement",
+      "role": "developpement",
+      "accelerateur": "aucun",
+      "juridiction": "Belgique",
+      "souverain": true,
+      "note": "ingestion et E2 ; aucun accelerateur graphique"
+    }
+  },
+  "mesures": {
+    "spacy.rappel": {
+      "valeur": 0.9995,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "spacy.precision": {
+      "valeur": 0.9057,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "camembert.rappel": {
+      "valeur": 0.9999,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "camembert.precision": {
+      "valeur": 0.9866,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "presidio.rappel": {
+      "valeur": 0.9979,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "presidio.precision": {
+      "valeur": 0.9017,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "spacy.rappel.carte": {
+      "valeur": 1.0,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "camembert.rappel.carte": {
+      "valeur": 1.0,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "presidio.rappel.carte": {
+      "valeur": 1.0,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "spacy.rappel.iban": {
+      "valeur": 0.8278,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "camembert.rappel.iban": {
+      "valeur": 0.9356,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "presidio.rappel.iban": {
+      "valeur": 0.8278,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "spacy.rappel.identifiant": {
+      "valeur": 0.9914,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "camembert.rappel.identifiant": {
+      "valeur": 1.0,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "presidio.rappel.identifiant": {
+      "valeur": 0.9914,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "spacy.rappel.lieu": {
+      "valeur": 1.0,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "camembert.rappel.lieu": {
+      "valeur": 1.0,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "presidio.rappel.lieu": {
+      "valeur": 1.0,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "spacy.rappel.organisation": {
+      "valeur": 0.8733,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "camembert.rappel.organisation": {
+      "valeur": 1.0,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "presidio.rappel.organisation": {
+      "valeur": 0.8733,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "spacy.rappel.personne": {
+      "valeur": 0.9987,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "camembert.rappel.personne": {
+      "valeur": 0.7807,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "presidio.rappel.personne": {
+      "valeur": 0.9947,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    }
+  },
+  "evenements": [
+    {
+      "horodatage": "08:31:16",
+      "libelle": "debut",
+      "materiel": "ultraportable de developpement"
+    },
+    {
+      "horodatage": "09:01:59",
+      "libelle": "fin",
+      "duree_s": 1843.18
+    }
+  ],
+  "avertissements": []
+}

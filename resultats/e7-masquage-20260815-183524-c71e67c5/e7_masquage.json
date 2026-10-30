@@ -1,0 +1,14 @@
+{
+  "resultats": {
+    "spacy": {
+      "moteur": "spacy",
+      "erreur": "No module named 'spacy'"
+    },
+    "presidio": {
+      "moteur": "presidio",
+      "erreur": "No module named 'presidio_analyzer'"
+    }
+  },
+  "ecart_sur_presidio": {},
+  "lecture": "Le rappel est la grandeur critique : une entite non detectee franchit la Frontiere A en clair. La precision mesure le sur-masquage, qui degrade la recherche sans rien proteger — son cout se lit dans E5. Un ecart de rappel defavorable au choix souverain doit etre rapporte tel quel : c'est le prix de la souverainete du composant, non un argument contre elle, puisque le verrou de sortie deterministe borne la fuite par le bas independamment du detecteur."
+}

@@ -1,0 +1,6 @@
+Recherche sur 12 questions a reponse connue
+Configuration : fusion
+
+rappel@5   : 0.9167   (11 sur 12)
+rappel@10  : 1.0000   (12 sur 12)
+rappel@25  : 1.0000   (12 sur 12)

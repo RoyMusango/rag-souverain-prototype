@@ -1,0 +1,93 @@
+==========================================================================
+APPEL 1   1860 jetons
+==========================================================================
+## Réponse fondée uniquement sur les sources fournies
+
+Je ne peux pas déterminer, à partir des extraits transmis, le contenu complet de **l’article 30 du règlement DORA** ni en déduire toutes les obligations applicables à un établissement bancaire.
+
+### 1. Les extraits relatifs à « Article 30 » ne semblent pas être ceux du DORA
+
+L’extrait intitulé :
+
+> « Article 30 Transactions executed with eligible counterparties »
+
+ne correspond pas, d’après son intitulé et les renvois aux articles 16, 23, 24, 25, 27 et 28, à l’article 30 du règlement DORA. Il semble relever d’un texte relatif aux marchés financiers, notamment de la directive MiFID II.
+
+**Source :** extrait fourni intitulé « Article 30 Transactions executed with eligible counterparties ».  
+**Conclusion :** cette source ne permet pas d’identifier les obligations prévues par l’article 30 du DORA.
+
+De même, l’extrait relatif à la succursale d’une entreprise d’un pays tiers mentionne les « articles 30, 31 et 32 de la présente directive ». Il s’agit donc des articles d’une directive, et non nécessairement de l’article 30 du DORA.
+
+**Source :** extrait fourni commençant par « La succursale de l’entreprise du pays tiers… ».  
+**Conclusion :** aucune obligation DORA précise ne peut être déduite de cet extrait.
+
+### 2. La seule obligation DORA identifiable dans les sources fournies
+
+Le dernier extrait impose aux entités financières de :
+
+- recenser les systèmes, processus et technologies TIC pertinents ;
+- inclure ceux qui soutiennent des fonctions critiques ou importantes externalisées ou sous-traitées à des prestataires TIC tiers ;
+- évaluer les fonctions critiques ou importantes devant faire l’objet de tests de pénétration fondés sur la menace ;
+- faire valider par les autorités compétentes le résultat de cette évaluation et, par conséquent, le périmètre précis de ces tests.
+
+**Source :** extrait fourni commençant par « Les entités financières recensent tous les systèmes, processus et technologies de TIC sous-jacents pertinents… ».
+
+Ces obligations peuvent concerner un établissement bancaire en tant qu’« entité financière », mais l’extrait fourni ne les rattache pas expressément à l’article 30 du DORA. Je ne peux donc pas affirmer qu’elles découlent spécifiquement de cet article.
+
+### 3. Ce qui ne peut pas être rattaché à l’article 30 du DORA
+
+Les passages relatifs :
+
+- au marquage CE ;
+- à l’ABE, l’AEAPP et l’AEMF ;
+- aux demandes d’informations et aux amendes ;
+- à l’entité ACME SA et aux sanctions ;
+- aux systèmes d’identification biométrique à distance ;
+
+ne fournissent aucune information permettant de déterminer le contenu ou les obligations de l’article 30 du DORA.
+
+**Sources :** extraits correspondants fournis dans la question.  
+**Conclusion :** ces éléments sont sans lien démontré avec l’article 30 du DORA.
+
+## Conclusion
+
+Sur la base exclusive des sources transmises :
+
+- **je ne sais pas établir le contenu exact de l’article 30 du DORA** ;
+- **je ne peux pas confirmer les obligations contractuelles ou opérationnelles qui en découlent pour une banque** ;
+- la seule obligation DORA identifiable concerne l’inventaire des systèmes TIC et l’évaluation du périmètre des tests de pénétration fondés sur la menace, mais **son rattachement à l’article 30 n’est pas démontré par les sources fournies**.
+
+Pour répondre précisément, il faudrait disposer du texte officiel de **l’article 30 du règlement (UE) 2022/2554 (DORA)**, ainsi que, le cas échéant, des actes délégués ou normes techniques qui le complètent.
+
+==========================================================================
+APPEL 2   1399 jetons
+==========================================================================
+## Conclusion
+
+Sur la base des seuls extraits fournis, **je ne peux pas déterminer le contenu de l’article 30 du règlement DORA ni établir de manière complète les obligations qui en découlent pour un établissement bancaire**.
+
+Les sources transmises semblent mélanger plusieurs textes européens. Le seul extrait identifiable comme relevant de DORA concerne l’inventaire des systèmes TIC et l’évaluation des fonctions devant faire l’objet de tests de pénétration fondés sur la menace ; **il ne correspond pas à l’article 30 de DORA**.
+
+## Analyse des extraits fournis
+
+| Affirmation | Source fournie | Conclusion |
+|---|---|---|
+| L’article 30 concerne les « transactions exécutées avec des contreparties éligibles » | Extrait : « Article 30 Transactions executed with eligible counterparties » | Cet intitulé renvoie à une disposition de la réglementation des marchés financiers, vraisemblablement la directive MiFID II. **Il ne permet pas d’identifier l’article 30 du DORA.** |
+| Une succursale d’une entreprise d’un pays tiers doit respecter notamment les articles 30, 31 et 32 d’une directive | Extrait : « La succursale […] satisfait aux obligations énoncées aux articles 16 à 20, 23, 24, 25 et 27, à l’article 28, paragraphe 1, et aux articles 30, 31 et 32 de la présente directive… » | Cette disposition concerne une **directive applicable aux succursales d’entreprises de pays tiers**. Elle ne fournit pas le contenu de l’article 30 du DORA et ne permet pas de déduire les obligations DORA d’une banque. |
+| Les entités financières doivent recenser les systèmes, processus et technologies TIC soutenant des fonctions critiques ou importantes, y compris lorsqu’ils sont externalisés | Extrait fourni : « Les entités financières recensent tous les systèmes, processus et technologies de TIC sous-jacents pertinents… » | Cet extrait soutient l’existence d’une obligation de cartographie ou d’inventaire des ressources TIC. **La source fournie ne permet toutefois pas d’attribuer avec certitude cette obligation à l’article 30 du DORA.** |
+| Les entités financières doivent évaluer les fonctions critiques ou importantes devant faire l’objet de tests de pénétration fondés sur la menace | Même extrait : « Les entités financières évaluent quelles fonctions critiques ou importantes doivent être couvertes par les tests de pénétration fondés sur la menace. » | Cette obligation est bien soutenue par l’extrait. **Elle ne permet pas, à elle seule, de répondre à la question portant sur l’article 30 du DORA.** |
+| Le résultat de cette évaluation doit être validé par les autorités compétentes | Même extrait : « Le résultat de cette évaluation détermine la portée précise de ces tests et est validé par les autorités compétentes. » | Cette exigence est soutenue par l’extrait. **La source ne précise pas qu’elle relève de l’article 30 du DORA.** |
+
+## Ce que je ne peux pas confirmer à partir des sources fournies
+
+Je ne peux pas confirmer, avec les sources transmises :
+
+1. **Le contenu exact de l’article 30 du DORA** ;
+2. **Le fait que cet article impose des exigences contractuelles particulières à l’établissement bancaire lorsqu’il recourt à un prestataire de services TIC** ;
+3. **Les clauses obligatoires relatives aux niveaux de service, aux droits d’audit, à l’accès aux données, à la localisation des données, à la réversibilité ou à la résiliation** ;
+4. **Les obligations spécifiques de l’établissement bancaire en matière de contrats TIC au titre de l’article 30 du DORA**.
+
+Je ne sais donc pas, sur la seule base des sources internes reproduites, quelles sont précisément les obligations découlant de l’article 30 du DORA pour un établissement bancaire.
+
+À noter : l’extrait relatif à l’inventaire des systèmes TIC et aux tests de pénétration peut être pertinent au regard du DORA, mais **il ne suffit pas à établir le contenu de l’article 30**.
+

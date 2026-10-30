@@ -1,0 +1,50 @@
+==============================================================================
+QUESTION 4
+==============================================================================
+
+Enonce :
+  Quelles conditions remplit un représentant d'un État membre du comité IA ?
+
+Ancrage attendu :
+  eurlex/AI_Act/FR/considerants/p38_ddf085be
+  extrait : (149) Afin de faciliter une mise en œuvre aisée, efficace et harmonisée du présent règlement, il convient de créer un Co...
+
+Configuration de recherche : dense
+
+------------------------------------------------------------------------------
+RAPPEL
+------------------------------------------------------------------------------
+  rappel@5   : OUI    (rang 3)
+  rappel@10  : OUI    (rang 3)
+  rappel@25  : OUI    (rang 3)
+
+------------------------------------------------------------------------------
+RESULTATS RENDUS PAR LE SYSTEME
+------------------------------------------------------------------------------
+rang  score     ancrage                                        debut du texte
+------------------------------------------------------------------------------
+1     0.0164    eurlex/AI_Act/FR/art_65/p96_0eeea015           Les représentants désignés des
+2     0.0161    eurlex/AI_Act/FR/art_65/p95_9ebec472           Les États membres veillent à c
+3     0.0159    eurlex/AI_Act/FR/considerants/p38_ddf085be     (149) Afin de faciliter une mi  <== ATTENDU
+4     0.0156    eurlex/AI_Act/FR/art_65/p96_2ba5fee9           Le Comité IA est présidé par l
+5     0.0154    eurlex/AI_Act/FR/art_65/p95_6dd99839           Le Comité IA est composé d’un 
+6     0.0152    eurlex/AI_Act/FR/art_66/p96_3750b78a           Article 66 Tâches du Comité IA
+7     0.0149    eurlex/AI_Act/FR/art_68/p98_0761b802           Le groupe scientifique est com
+8     0.0147    eurlex/AI_Act/FR/art_112/p122_991dc979         Aux fins des paragraphes 1 à 7
+9     0.0145    eurlex/AI_Act/FR/art_56/p87_f6198c4f           Le Bureau de l’IA et le Comité
+10    0.0143    eurlex/AI_Act/FR/art_65/p96_101c4507           c) soient habilités à facilite
+11    0.0141    eurlex/AI_Act/FR/considerants/p43_9ddb0733     (173) Afin de garantir que le 
+12    0.0139    eurlex/AI_Act/FR/considerants/p38_27b46420     (151) Afin de soutenir la mise
+13    0.0137    eurlex/AI_Act/FR/art_70/p100_0c5524f0          Au plus tard le 2 août 2025, e
+14    0.0135    eurlex/AI_Act/FR/art_43/p78_f1cda92d           Aux fins de ces évaluations, l
+15    0.0133    eurlex/AI_Act/EN/art_68/p98_f03a3ce7           The scientific panel shall con
+16    0.0132    eurlex/AI_Act/FR/art_65/p96_a2ce5f86           Le Comité IA est organisé et f
+17    0.0130    eurlex/AI_Act/FR/art_81/p108_c7ed13fb          Lorsque la Commission estime q
+18    0.0128    eurlex/AI_Act/FR/art_65/p96_e1719751           Le Comité IA établit deux sous
+19    0.0127    eurlex/AI_Act/FR/considerants/p37_294e7b11     (147) Il convient que la Commi
+20    0.0125    eurlex/AI_Act/FR/considerants/p14_3b22c5b3     Parlement européen et du Conse
+21    0.0123    eurlex/AI_Act/FR/art_82/p108_a022f0c0          Lorsque, ayant réalisé une éva
+22    0.0122    eurlex/AI_Act/EN/considerants/p38_f1818929     (151) To support the implement
+23    0.0120    eurlex/AI_Act/FR/art_83/p109_d05b2b11          Si le cas de non-conformité vi
+24    0.0119    eurlex/AI_Act/FR/art_75/p104_8c0fc337          Lorsqu’elles ont des raisons s
+25    0.0118    eurlex/AI_Act/FR/art_46/p80_6d7b25c0           Par dérogation à l’article 43 

@@ -1,0 +1,1023 @@
+{
+  "parametres": {
+    "banque": "data/banque/banque_schema.json",
+    "reference": "data/banque/banque_reference.json",
+    "eurlex": "data/external/eurlex/eurlex_schema.json",
+    "par_classe": 40,
+    "fragments": 5,
+    "seuil_pertinence": 0.55,
+    "seuil_completude": 0.7,
+    "seuil_vocabulaire": 0.25,
+    "seuil_externe": 0.75,
+    "graine": 20260902,
+    "echantillon": "epreuve",
+    "sortie": "resultats\\e6b_epreuve_0.75",
+    "seuil_externe_effectif": 0.75
+  },
+  "cas": 97,
+  "mesures": {
+    "taux_decision_correcte": 0.8144,
+    "abstention_par_ignorance": 1.0,
+    "invention": 0.0,
+    "silence_indu": 0.5517,
+    "par_classe": {
+      "absente": {
+        "cas": 20,
+        "taux_correct": 1.0
+      },
+      "enrichissement-interdit": {
+        "cas": 20,
+        "taux_correct": 1.0
+      },
+      "externe": {
+        "cas": 20,
+        "taux_correct": 0.2
+      },
+      "externe-implicite": {
+        "cas": 9,
+        "taux_correct": 1.0
+      },
+      "interne": {
+        "cas": 20,
+        "taux_correct": 1.0
+      },
+      "interne-decrit": {
+        "cas": 8,
+        "taux_correct": 0.75
+      }
+    }
+  },
+  "details": [
+    {
+      "requete": "Quelles conclusions le rapport interne Osmund Federated formule-t-il sur la contrepartie Ostrava ?",
+      "classe": "absente",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le montant de la sanction prononcee le 14 mars 2019 contre l'etablissement Vantorre Partners par le regulateur de Ostrava ?",
+      "classe": "absente",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le montant de la sanction prononcee le 14 mars 2019 contre l'etablissement Halvorsen Trust par le regulateur de Sarrebruck ?",
+      "classe": "absente",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le montant de la sanction prononcee le 14 mars 2019 contre l'etablissement Vantorre Partners par le regulateur de Szczecin ?",
+      "classe": "absente",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quelles conclusions le rapport interne Peregrin Holding formule-t-il sur la contrepartie Sarrebruck ?",
+      "classe": "absente",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le montant de la sanction prononcee le 14 mars 2019 contre l'etablissement Vantorre Partners par le regulateur de Ostrava ?",
+      "classe": "absente",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le montant de la sanction prononcee le 14 mars 2019 contre l'etablissement Halvorsen Trust par le regulateur de Sarrebruck ?",
+      "classe": "absente",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le montant de la sanction prononcee le 14 mars 2019 contre l'etablissement Halvorsen Trust par le regulateur de Valladolid ?",
+      "classe": "absente",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quelles conclusions le rapport interne Peregrin Holding formule-t-il sur la contrepartie Sarrebruck ?",
+      "classe": "absente",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le montant de la sanction prononcee le 14 mars 2019 contre l'etablissement Vantorre Partners par le regulateur de Szczecin ?",
+      "classe": "absente",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quelles conclusions le rapport interne Peregrin Holding formule-t-il sur la contrepartie Valladolid ?",
+      "classe": "absente",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quelles conclusions le rapport interne Osmund Federated formule-t-il sur la contrepartie Ostrava ?",
+      "classe": "absente",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le montant de la sanction prononcee le 14 mars 2019 contre l'etablissement Larspeak Mutual par le regulateur de Trondheim ?",
+      "classe": "absente",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quelles conclusions le rapport interne Peregrin Holding formule-t-il sur la contrepartie Valladolid ?",
+      "classe": "absente",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quelles conclusions le rapport interne Kettlewell Group formule-t-il sur la contrepartie Tarragone ?",
+      "classe": "absente",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le montant de la sanction prononcee le 14 mars 2019 contre l'etablissement Larspeak Mutual par le regulateur de Trondheim ?",
+      "classe": "absente",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quelles conclusions le rapport interne Osmund Federated formule-t-il sur la contrepartie Szczecin ?",
+      "classe": "absente",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le montant de la sanction prononcee le 14 mars 2019 contre l'etablissement Vantorre Partners par le regulateur de Szczecin ?",
+      "classe": "absente",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le montant de la sanction prononcee le 14 mars 2019 contre l'etablissement Vantorre Partners par le regulateur de Ostrava ?",
+      "classe": "absente",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quelles conclusions le rapport interne Osmund Federated formule-t-il sur la contrepartie Ostrava ?",
+      "classe": "absente",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 1 du RGPD ?",
+      "classe": "enrichissement-interdit",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": null,
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 40 du MiFID2 ?",
+      "classe": "enrichissement-interdit",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": null,
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Que prevoit l'article 21 du AI Act et quelles obligations en decoulent pour un etablissement bancaire ?",
+      "classe": "enrichissement-interdit",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": null,
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 35 du DORA ?",
+      "classe": "enrichissement-interdit",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": null,
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Que prevoit l'article 20 du AI Act et quelles obligations en decoulent pour un etablissement bancaire ?",
+      "classe": "enrichissement-interdit",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": null,
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 48 du AI Act ?",
+      "classe": "enrichissement-interdit",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": null,
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Que prevoit l'article 30 du RGPD et quelles obligations en decoulent pour un etablissement bancaire ?",
+      "classe": "enrichissement-interdit",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": null,
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Que prevoit l'article 85 du AI Act et quelles obligations en decoulent pour un etablissement bancaire ?",
+      "classe": "enrichissement-interdit",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": null,
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 34 du DORA ?",
+      "classe": "enrichissement-interdit",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": null,
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 70 du MiFID2 ?",
+      "classe": "enrichissement-interdit",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": null,
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Que prevoit l'article 4 du RGPD et quelles obligations en decoulent pour un etablissement bancaire ?",
+      "classe": "enrichissement-interdit",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": null,
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 21 du AI Act ?",
+      "classe": "enrichissement-interdit",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": null,
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Que prevoit l'article 55 du AI Act et quelles obligations en decoulent pour un etablissement bancaire ?",
+      "classe": "enrichissement-interdit",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": null,
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 42 du RGPD ?",
+      "classe": "enrichissement-interdit",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": null,
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Que prevoit l'article 31 du DORA et quelles obligations en decoulent pour un etablissement bancaire ?",
+      "classe": "enrichissement-interdit",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": null,
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 50 du RGPD ?",
+      "classe": "enrichissement-interdit",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": null,
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 20 du MiFID2 ?",
+      "classe": "enrichissement-interdit",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": null,
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Que prevoit l'article 114 du DORA et quelles obligations en decoulent pour un etablissement bancaire ?",
+      "classe": "enrichissement-interdit",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": null,
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 40 du RGPD ?",
+      "classe": "enrichissement-interdit",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": null,
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 60 du RGPD ?",
+      "classe": "enrichissement-interdit",
+      "issue_attendue": "abstenir",
+      "issue_obtenue": "abstenir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": null,
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 42 du RGPD ?",
+      "classe": "externe",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "abstenir",
+      "correcte": false,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 34 du DORA ?",
+      "classe": "externe",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "abstenir",
+      "correcte": false,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Que prevoit l'article 54 du DORA et quelles obligations en decoulent pour un etablissement bancaire ?",
+      "classe": "externe",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "abstenir",
+      "correcte": false,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 21 du AI Act ?",
+      "classe": "externe",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "abstenir",
+      "correcte": false,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Que prevoit l'article 30 du DORA et quelles obligations en decoulent pour un etablissement bancaire ?",
+      "classe": "externe",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "abstenir",
+      "correcte": false,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Que prevoit l'article 31 du DORA et quelles obligations en decoulent pour un etablissement bancaire ?",
+      "classe": "externe",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "abstenir",
+      "correcte": false,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 59 du MiFID2 ?",
+      "classe": "externe",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "abstenir",
+      "correcte": false,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Que prevoit l'article 27 du RGPD et quelles obligations en decoulent pour un etablissement bancaire ?",
+      "classe": "externe",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "abstenir",
+      "correcte": false,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 48 du AI Act ?",
+      "classe": "externe",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "abstenir",
+      "correcte": false,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Que prevoit l'article 55 du AI Act et quelles obligations en decoulent pour un etablissement bancaire ?",
+      "classe": "externe",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "enrichir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "partielle",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 60 du RGPD ?",
+      "classe": "externe",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "abstenir",
+      "correcte": false,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Que prevoit l'article 87 du AI Act et quelles obligations en decoulent pour un etablissement bancaire ?",
+      "classe": "externe",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "enrichir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "partielle",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Que prevoit l'article 30 du RGPD et quelles obligations en decoulent pour un etablissement bancaire ?",
+      "classe": "externe",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "abstenir",
+      "correcte": false,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Que prevoit l'article 4 du RGPD et quelles obligations en decoulent pour un etablissement bancaire ?",
+      "classe": "externe",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "abstenir",
+      "correcte": false,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 12 du AI Act ?",
+      "classe": "externe",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "abstenir",
+      "correcte": false,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 35 du DORA ?",
+      "classe": "externe",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "abstenir",
+      "correcte": false,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 70 du MiFID2 ?",
+      "classe": "externe",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "abstenir",
+      "correcte": false,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel est le champ d'application de l'article 25 du AI Act ?",
+      "classe": "externe",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "abstenir",
+      "correcte": false,
+      "etat_interne": "faible",
+      "etat_externe": "faible",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Que prevoit l'article 81 du AI Act et quelles obligations en decoulent pour un etablissement bancaire ?",
+      "classe": "externe",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "enrichir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "suffisante",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Que prevoit l'article 85 du AI Act et quelles obligations en decoulent pour un etablissement bancaire ?",
+      "classe": "externe",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "enrichir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "partielle",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quelles obligations de tenue de registre s'imposent au fournisseur d'un systeme a haut risque ?",
+      "classe": "externe-implicite",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "enrichir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "partielle",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quelles obligations de notification pesent sur un etablissement financier en cas d'incident majeur affectant ses prestataires informatiques ?",
+      "classe": "externe-implicite",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "enrichir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "partielle",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Dans quel delai un traitement de donnees a caractere personnel doit-il etre notifie a l'autorite de controle apres une violation ?",
+      "classe": "externe-implicite",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "enrichir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "suffisante",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quelles procédures doivent être faites par les déployeurs avant de mettre en service ou d'utiliser un système d'IA à haut risque ?",
+      "classe": "externe-implicite",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "enrichir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "suffisante",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "À quelles exigences est soumis un marché réglementé qui suspend la négociation dans tout État membre ?",
+      "classe": "externe-implicite",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "enrichir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "suffisante",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quelles exigences de transparence s'appliquent a la fourniture d'un systeme d'intelligence artificielle a haut risque ?",
+      "classe": "externe-implicite",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "enrichir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "suffisante",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quelle est la période maximale de conservation des données à caractère personnel du paragraphe 1 ?",
+      "classe": "externe-implicite",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "enrichir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "suffisante",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quelles conditions remplit un représentant d'un État membre du comité IA ?",
+      "classe": "externe-implicite",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "enrichir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "suffisante",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quelles sont les parties prenantes du forum consultatif ?",
+      "classe": "externe-implicite",
+      "issue_attendue": "enrichir",
+      "issue_obtenue": "enrichir",
+      "correcte": true,
+      "etat_interne": "faible",
+      "etat_externe": "suffisante",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quelle est la ville de domiciliation du client Vandeputte au dossier CLI-100159 ?",
+      "classe": "interne",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quel IBAN est rattache au dossier CLI-100100 du client Ferrara ?",
+      "classe": "interne",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quelle est la ville de domiciliation du client Wauters au dossier CLI-100045 ?",
+      "classe": "interne",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quel est le titulaire du dossier CLI-100054 ?",
+      "classe": "interne",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quel IBAN est rattache au dossier CLI-100180 du client Bourgeois ?",
+      "classe": "interne",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quelle societe Sofia Timmermans declare-t-il comme intermediaire au dossier CLI-100294 ?",
+      "classe": "interne",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quelle est la ville de domiciliation du client Verhaegen au dossier CLI-100175 ?",
+      "classe": "interne",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quel IBAN est rattache au dossier CLI-100252 du client Brichaux ?",
+      "classe": "interne",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quelle est la ville de domiciliation du client Vandeputte au dossier CLI-100229 ?",
+      "classe": "interne",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quel est le titulaire du dossier CLI-100192 ?",
+      "classe": "interne",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quelle societe Pieter Marchand declare-t-il comme intermediaire au dossier CLI-100185 ?",
+      "classe": "interne",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quelle societe Diederik Marchand declare-t-il comme intermediaire au dossier CLI-100016 ?",
+      "classe": "interne",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quel est le titulaire du dossier CLI-100288 ?",
+      "classe": "interne",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quel IBAN est rattache au dossier CLI-100208 du client Nowak ?",
+      "classe": "interne",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quelle est la ville de domiciliation du client Wauters au dossier CLI-100297 ?",
+      "classe": "interne",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quel est le titulaire du dossier CLI-100232 ?",
+      "classe": "interne",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quelle societe Camille Haddad declare-t-il comme intermediaire au dossier CLI-100051 ?",
+      "classe": "interne",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quel est le titulaire du dossier CLI-100243 ?",
+      "classe": "interne",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quelle est la ville de domiciliation du client Timmermans au dossier CLI-100115 ?",
+      "classe": "interne",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quelle est la ville de domiciliation du client Brichaux au dossier CLI-100033 ?",
+      "classe": "interne",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quel instrument de paiement le document indique-t-il comme étant rattaché au dossier ?",
+      "classe": "interne-decrit",
+      "issue_attendue": "interne",
+      "issue_obtenue": "enrichir",
+      "correcte": false,
+      "etat_interne": "faible",
+      "etat_externe": "suffisante",
+      "passe_par_correction": true
+    },
+    {
+      "requete": "Quel domaine professionnel est déclaré dans le dossier pour justifier l'entrée en relation ?",
+      "classe": "interne-decrit",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quel élément de référence interne est attribué pour assurer le suivi de ce dossier client ?",
+      "classe": "interne-decrit",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quel lien la note établit-elle entre le dossier du client mentionné et la directive énoncée ?",
+      "classe": "interne-decrit",
+      "issue_attendue": "interne",
+      "issue_obtenue": "enrichir",
+      "correcte": false,
+      "etat_interne": "partielle",
+      "etat_externe": "partielle",
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quel motif de vigilance a ete retenu pour les mouvements au credit en provenance d'une contrepartie liee ?",
+      "classe": "interne-decrit",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quelle condition de validation la procédure impose-t-elle pour l'entrée en relation avec ce type de contrepartie ?",
+      "classe": "interne-decrit",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quel état des lieux le dossier dresse-t-il concernant la production des pièces justificatives relatives au bénéficiaire effectif ?",
+      "classe": "interne-decrit",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    },
+    {
+      "requete": "Quels dossiers portent une structure de detention a plusieurs niveaux relevee lors de la vigilance ?",
+      "classe": "interne-decrit",
+      "issue_attendue": "interne",
+      "issue_obtenue": "interne",
+      "correcte": true,
+      "etat_interne": "suffisante",
+      "etat_externe": null,
+      "passe_par_correction": false
+    }
+  ],
+  "lecture": "L'abstention par ignorance est mesuree une fois l'externe consulte : c'est la moitie de la question que E6 ne pouvait pas voir, EUR-Lex n'y etant pas indexe. Les deux erreurs ne s'agregent pas : inventer trompe l'utilisateur, se taire a tort le prive d'une reponse qui existait."
+}

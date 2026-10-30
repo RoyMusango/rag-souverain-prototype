@@ -1,0 +1,36 @@
+{
+  "parametres": {
+    "questions": 40,
+    "taux_empoisonnement": 0.1,
+    "familles": "duplication",
+    "graine": 20260902,
+    "sortie": "resultats/e3_devis_duplication"
+  },
+  "requetes": 40,
+  "configurations": 5,
+  "appels_plafond": 200,
+  "appels_reels": 200,
+  "abstentions_evitees": 0,
+  "invite_caracteres": {
+    "total": 3291530,
+    "moyenne": 16457.7,
+    "mediane": 15151.0,
+    "min": 12678,
+    "max": 30605
+  },
+  "invite_mots": {
+    "total": 408830,
+    "moyenne": 2044.2
+  },
+  "familles": [
+    "duplication"
+  ],
+  "resultats_de_robustesse": "NON MESURES : fournisseur simule",
+  "asr_ignore": {
+    "complete": 0.0,
+    "sans_isolation": 0.0,
+    "sans_corroboration": 0.0,
+    "sans_verrou": 0.0,
+    "aucune": 0.0
+  }
+}

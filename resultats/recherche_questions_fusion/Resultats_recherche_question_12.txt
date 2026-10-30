@@ -1,0 +1,50 @@
+==============================================================================
+QUESTION 12
+==============================================================================
+
+Enonce :
+  Que précise exactement un agrément ?
+
+Ancrage attendu :
+  eurlex/MiFID2/FR/art_60/p98_eecdff2b
+  extrait : L’État membre d’origine veille à ce que l’agrément précise le service de communication de données que le prestataire de ...
+
+Configuration de recherche : fusion
+
+------------------------------------------------------------------------------
+RAPPEL
+------------------------------------------------------------------------------
+  rappel@5   : OUI    (rang 2)
+  rappel@10  : OUI    (rang 2)
+  rappel@25  : OUI    (rang 2)
+
+------------------------------------------------------------------------------
+RESULTATS RENDUS PAR LE SYSTEME
+------------------------------------------------------------------------------
+rang  score     ancrage                                        debut du texte
+------------------------------------------------------------------------------
+1     0.0325    eurlex/MiFID2/FR/art_6/p40_b47ae907            L’État membre d’origine veille
+2     0.0320    eurlex/MiFID2/FR/art_60/p98_eecdff2b           L’État membre d’origine veille  <== ATTENDU
+3     0.0271    eurlex/MiFID2/FR/art_5/p40_a2a544c2            Chaque État membre exige que l
+4     0.0269    eurlex/MiFID2/FR/art_62/p99_2f116626           Article 62 Retrait d’agrément 
+5     0.0262    eurlex/MiFID2/FR/art_8/p41_47c5219c            Article 8 Retrait d’agrément L
+6     0.0262    eurlex/MiFID2/FR/art_44/p80_750bf20a           L’autorité compétente peut ret
+7     0.0258    eurlex/MiFID2/FR/art_44/p79_5f598395           Les États membres réservent l’
+8     0.0249    eurlex/RGPD/FR/art_43/p60_5d58ce69             L'agrément des organismes de c
+9     0.0161    eurlex/MiFID2/FR/art_6/p41_ca643f10            L’agrément est valable sur tou
+10    0.0159    eurlex/MiFID2/FR/art_60/p98_93d54873           L’agrément est valable sur tou
+11    0.0159    eurlex/MiFID2/FR/considerants/p5_056cb9c0      (29) Certaines entreprises pub
+12    0.0156    eurlex/MiFID2/FR/art_7/p41_3e5f782b            Article 7 Procédures de délivr
+13    0.0154    eurlex/MiFID2/FR/art_41/p78_8224e768           L’autorité compétente de l’Éta
+14    0.0154    eurlex/MiFID2/FR/art_61/p98_3c4915e2           Article 61 Procédures de déliv
+15    0.0152    eurlex/MiFID2/FR/art_59/p97_2af5fe4d           Les États membres exigent que 
+16    0.0152    eurlex/MiFID2/FR/art_43/p78_eda73ff7           Article 43 Retrait d’agrément 
+17    0.0149    eurlex/RGPD/FR/art_43/p60_749d71af             Les organismes de certificatio
+18    0.0149    eurlex/RGPD/FR/art_41/p58_1882445c             L'autorité de contrôle compéte
+19    0.0147    eurlex/MiFID2/FR/art_7/p41_22a0755d            L’autorité compétente ne déliv
+20    0.0145    eurlex/MiFID2/FR/art_61/p98_22a0755d           L’autorité compétente ne déliv
+21    0.0145    eurlex/MiFID2/FR/art_1/p27_e878144c            c) l’agrément et le fonctionne
+22    0.0141    eurlex/MiFID2/FR/art_84/p122_262bdd21          L’autorité compétente d’un Éta
+23    0.0141    eurlex/MiFID2/FR/art_6/p40_7e4b349d            Toute entreprise d’investissem
+24    0.0139    eurlex/MiFID2/FR/art_44/p79_bd65c5f6           L’agrément en tant que marché 
+25    0.0137    eurlex/MiFID2/FR/art_10/p43_5055dabf           Lorsqu’il existe des liens étr

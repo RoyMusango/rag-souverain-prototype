@@ -1,0 +1,113 @@
+{
+  "identifiant": "construction-index-20260907-161841-e53574e5",
+  "nom": "construction-index",
+  "commit": "e53574e5c9d9-modifie",
+  "manifeste_hash": "4beb5f2b21bd7bccbf767da9f61f5e6144de77285fdf1230e71cf8fd2f460ecb",
+  "manifeste": {
+    "data/enronqa/enronqa_schema.jsonl": "3a7aaac96b2fed6883e3a1011a0f2cb0cb2e5224b89878b36ebd88c511af9ec4",
+    "data/external/eurlex/eurlex_schema.json": "c748fdcf2342f5f5c97ee375ed3fedd9f5e6ca86561b925693eb213b52c71fbe",
+    "data/finqa/finqa_schema.json": "ea37164d86d84ebe16635de7592a0db5a46d4c62b747684f0a13fc19443ebee4",
+    "data/pubmedqa/pubmedqa_schema.jsonl": "22bc2259e20de4fcc0de397c2d53cfdffe5b92063c8aaafd261ad71e52a81595",
+    "data/synthea/synthea_schema.json": "48f96c07d6ed16cb4a49d096a47b6ccb3115632308f9a6ea9fdb75234259f37f",
+    "data/tatqa/tatqa_schema.json": "6ac8cda04d6aa64e77d138a99a48b0d5594f7fff14703aaf589c08a4988daea9"
+  },
+  "materiel": {
+    "nom": "ultraportable de developpement",
+    "role": "developpement",
+    "accelerateur": "aucun",
+    "juridiction": "Belgique",
+    "souverain": true,
+    "note": "ingestion et E2 ; aucun accelerateur graphique",
+    "systeme": "Windows",
+    "version": "11",
+    "processeur": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.14.0"
+  },
+  "versions": {
+    "torch": "2.12.0+cpu",
+    "sentence_transformers": "absent",
+    "qdrant_client": "inconnue",
+    "spacy": "absent",
+    "rank_bm25": "absent",
+    "numpy": "2.5.2"
+  },
+  "configuration": {
+    "confidentialite": {
+      "k": 50,
+      "budget_bits": 6.0,
+      "kappa": "a-remplacer-au-deploiement",
+      "moteur_ner": "souverain",
+      "langue_ner": "fr",
+      "tolerance_gabarit": 4,
+      "chemin_registre": "data/registre_exposition.json"
+    },
+    "routage": {
+      "seuil_pertinence": 0.55,
+      "seuil_completude": 0.7,
+      "correction_autorisee": true,
+      "escalade_autorisee": true
+    },
+    "recherche": {
+      "modele_embeddings": "BAAI/bge-m3",
+      "dimension": 1024,
+      "top_k_dense": 50,
+      "top_k_lexical": 50,
+      "top_k_reclassement": 20,
+      "n_final": 10,
+      "modele_reclasseur": "BAAI/bge-reranker-v2-m3",
+      "k_rrf": 60,
+      "collection": "rag_souverain",
+      "hote_qdrant": "http://localhost:6333"
+    },
+    "isolation": {
+      "seuil_corroboration": 2,
+      "seuil_collusion": 2,
+      "penalite_collusion": 0.1
+    },
+    "generation": {
+      "palier": "local",
+      "modele": "mistral-small",
+      "max_jetons": 1024,
+      "temperature": 0.0
+    },
+    "graine": 42,
+    "materiel": {
+      "nom": "ultraportable de developpement",
+      "role": "developpement",
+      "accelerateur": "aucun",
+      "juridiction": "Belgique",
+      "souverain": true,
+      "note": "ingestion et E2 ; aucun accelerateur graphique"
+    }
+  },
+  "mesures": {
+    "synthea.documents": {
+      "valeur": 45883,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    }
+  },
+  "evenements": [
+    {
+      "horodatage": "16:18:41",
+      "libelle": "debut",
+      "materiel": "ultraportable de developpement"
+    },
+    {
+      "horodatage": "16:18:41",
+      "libelle": "vectoriseur",
+      "modele": "BAAI/bge-m3",
+      "peripherique": "cpu",
+      "precision": "float32",
+      "taille_lot": null,
+      "longueur_max": 8192
+    },
+    {
+      "horodatage": "16:22:12",
+      "libelle": "fin",
+      "duree_s": 211.01
+    }
+  ],
+  "avertissements": []
+}

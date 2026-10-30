@@ -1,0 +1,50 @@
+==============================================================================
+QUESTION 10
+==============================================================================
+
+Enonce :
+  À quelles exigences sont soumises les entreprises d'investissement qui exécutent des ordres de clients ?
+
+Ancrage attendu :
+  eurlex/MiFID2/FR/art_27/p65_dc0af581
+  extrait : Les États membres exigent des entreprises d’investissement qui exécutent des ordres de clients qu’elles établissent et p...
+
+Configuration de recherche : dense
+
+------------------------------------------------------------------------------
+RAPPEL
+------------------------------------------------------------------------------
+  rappel@5   : non 
+  rappel@10  : non 
+  rappel@25  : OUI    (rang 14)
+
+------------------------------------------------------------------------------
+RESULTATS RENDUS PAR LE SYSTEME
+------------------------------------------------------------------------------
+rang  score     ancrage                                        debut du texte
+------------------------------------------------------------------------------
+1     0.0164    eurlex/MiFID2/FR/art_28/p66_ee0946a6           Les États membres exigent des 
+2     0.0161    eurlex/MiFID2/EN/art_28/p66_c61863ef           Member States shall require th
+3     0.0159    eurlex/MiFID2/FR/art_27/p64_49887349           Les États membres exigent que 
+4     0.0156    eurlex/MiFID2/FR/art_27/p65_1418f25e           Les États membres exigent des 
+5     0.0154    eurlex/MiFID2/FR/art_27/p64_fdc97dce           Les États membres exigent des 
+6     0.0152    eurlex/MiFID2/FR/art_27/p65_ff68fe5d           Les États membres exigent que,
+7     0.0149    eurlex/MiFID2/EN/art_27/p65_585cf835           Member States shall require th
+8     0.0147    eurlex/MiFID2/EN/art_27/p64_960e1db1           Member States shall require th
+9     0.0145    eurlex/MiFID2/EN/art_27/p64_16827dc7           Member States shall require th
+10    0.0143    eurlex/MiFID2/FR/art_28/p66_0d5fc2d2           Les États membres exigent que,
+11    0.0141    eurlex/MiFID2/FR/art_27/p65_3d3b4a54           Les États membres exigent que 
+12    0.0139    eurlex/MiFID2/EN/art_27/p65_130e9832           Member States shall require in
+13    0.0137    eurlex/MiFID2/FR/art_30/p67_6bd5213c           Les États membres veillent à c
+14    0.0135    eurlex/MiFID2/FR/art_27/p65_dc0af581           Les États membres exigent des   <== ATTENDU
+15    0.0133    eurlex/MiFID2/EN/art_27/p65_7fd30aa6           Member States shall require in
+16    0.0132    eurlex/MiFID2/EN/art_28/p66_21faf8f0           Those procedures or arrangemen
+17    0.0130    eurlex/MiFID2/EN/art_2/p16_2d8eeae5            (96) In order to enhance the c
+18    0.0128    eurlex/MiFID2/FR/art_27/p64_cc99db0a           Les États membres exigent des 
+19    0.0127    eurlex/MiFID2/EN/art_2/p17_3f39e88b            (98) When establishing the bus
+20    0.0125    eurlex/MiFID2/FR/considerants/p16_212fba26     (95) Il convient de considérer
+21    0.0123    eurlex/MiFID2/EN/art_2/p7_4b53ceec             (44) For the purposes of this 
+22    0.0122    eurlex/MiFID2/EN/art_30/p67_0f21623f           Member States shall ensure tha
+23    0.0120    eurlex/MiFID2/EN/art_2/p16_f3e7c1f3            (91) It is necessary to impose
+24    0.0119    eurlex/MiFID2/EN/art_28/p66_f891f4a5           Member States shall require th
+25    0.0118    eurlex/MiFID2/EN/art_27/p65_4966feb6           Member States shall require in

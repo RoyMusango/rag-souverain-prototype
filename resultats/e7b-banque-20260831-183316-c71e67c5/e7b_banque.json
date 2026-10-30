@@ -1,0 +1,120 @@
+{
+  "corpus": {
+    "notes": 1500,
+    "dossiers": 300,
+    "attendus": 2400
+  },
+  "global": {
+    "spacy": {
+      "moteur": "spacy",
+      "detecteur": {
+        "moteur": "spacy",
+        "langue": "fr",
+        "modele": "fr_core_news_lg",
+        "categories": [
+          "CARTE",
+          "COURRIEL",
+          "DATE",
+          "IBAN",
+          "IDENTIFIANT",
+          "LIEU",
+          "MONTANT",
+          "ORGANISATION",
+          "PERSONNE",
+          "TELEPHONE"
+        ],
+        "duree_chargement_s": 7.79,
+        "souverain": true
+      },
+      "documents": 1500,
+      "vrais_positifs": 5699,
+      "faux_negatifs": 1201,
+      "faux_positifs": 656,
+      "reference": 6900,
+      "detectees": 6355,
+      "rappel": 0.8259,
+      "precision": 0.8968,
+      "f1": 0.8599,
+      "duree_s": 27.02,
+      "debit_car_s": 14316
+    },
+    "presidio": {
+      "moteur": "presidio",
+      "detecteur": {
+        "moteur": "presidio",
+        "langue": "fr",
+        "modele": "fr_core_news_lg",
+        "categories": [
+          "CARTE",
+          "COURRIEL",
+          "DATE",
+          "IBAN",
+          "IDENTIFIANT",
+          "LIEU",
+          "MONTANT",
+          "ORGANISATION",
+          "PERSONNE",
+          "TELEPHONE"
+        ],
+        "duree_chargement_s": 47.79,
+        "souverain": false
+      },
+      "documents": 1500,
+      "vrais_positifs": 5172,
+      "faux_negatifs": 1728,
+      "faux_positifs": 682,
+      "reference": 6900,
+      "detectees": 5854,
+      "rappel": 0.7496,
+      "precision": 0.8835,
+      "f1": 0.811,
+      "duree_s": 75.45,
+      "debit_car_s": 5128
+    }
+  },
+  "par_categorie": {
+    "CARTE": {
+      "attendus": 300,
+      "rappel": {
+        "spacy": 1.0,
+        "presidio": 1.0
+      }
+    },
+    "IBAN": {
+      "attendus": 300,
+      "rappel": {
+        "spacy": 1.0,
+        "presidio": 1.0
+      }
+    },
+    "IDENTIFIANT": {
+      "attendus": 600,
+      "rappel": {
+        "spacy": 1.0,
+        "presidio": 1.0
+      }
+    },
+    "LIEU": {
+      "attendus": 300,
+      "rappel": {
+        "spacy": 1.0,
+        "presidio": 1.0
+      }
+    },
+    "ORGANISATION": {
+      "attendus": 300,
+      "rappel": {
+        "spacy": 1.0,
+        "presidio": 0.1267
+      }
+    },
+    "PERSONNE": {
+      "attendus": 600,
+      "rappel": {
+        "spacy": 0.4996,
+        "presidio": 0.4983
+      }
+    }
+  },
+  "lecture": "Le rappel global melange deux familles de detection : un modele statistique sur les entites linguistiques, des motifs deterministes sur les identifiants. Seule la ventilation par categorie les separe, et c'est elle qui etablit que les deux etages sont complementaires plutot que redondants. La precision n'est rapportee qu'au niveau global : restreindre la reference a une categorie fait compter comme faux positives les detections des autres categories."
+}

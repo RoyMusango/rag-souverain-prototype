@@ -1,0 +1,50 @@
+==============================================================================
+QUESTION 4
+==============================================================================
+
+Enonce :
+  Quelles conditions remplit un représentant d'un État membre du comité IA ?
+
+Ancrage attendu :
+  eurlex/AI_Act/FR/considerants/p38_ddf085be
+  extrait : (149) Afin de faciliter une mise en œuvre aisée, efficace et harmonisée du présent règlement, il convient de créer un Co...
+
+Configuration de recherche : fusion
+
+------------------------------------------------------------------------------
+RAPPEL
+------------------------------------------------------------------------------
+  rappel@5   : non 
+  rappel@10  : OUI    (rang 7)
+  rappel@25  : OUI    (rang 7)
+
+------------------------------------------------------------------------------
+RESULTATS RENDUS PAR LE SYSTEME
+------------------------------------------------------------------------------
+rang  score     ancrage                                        debut du texte
+------------------------------------------------------------------------------
+1     0.0318    eurlex/AI_Act/FR/art_65/p95_6dd99839           Le Comité IA est composé d’un 
+2     0.0311    eurlex/AI_Act/FR/art_65/p95_9ebec472           Les États membres veillent à c
+3     0.0294    eurlex/AI_Act/FR/art_65/p96_101c4507           c) soient habilités à facilite
+4     0.0256    eurlex/AI_Act/FR/art_81/p108_c7ed13fb          Lorsque la Commission estime q
+5     0.0164    eurlex/AI_Act/FR/art_65/p96_0eeea015           Les représentants désignés des
+6     0.0161    eurlex/RGPD/FR/art_68/p76_08ecca75             Lorsque, dans un État membre, 
+7     0.0159    eurlex/AI_Act/FR/considerants/p38_ddf085be     (149) Afin de faciliter une mi  <== ATTENDU
+8     0.0159    eurlex/AI_Act/FR/art_65/p95_58e5904d           Chaque représentant est désign
+9     0.0156    eurlex/AI_Act/FR/art_65/p96_2ba5fee9           Le Comité IA est présidé par l
+10    0.0156    eurlex/RGPD/FR/art_53/p66_f38e36e2             Un membre ne peut être démis d
+11    0.0154    eurlex/DORA/FR/art_32/p56_612dacf3             Le forum de supervision se com
+12    0.0152    eurlex/AI_Act/FR/art_66/p96_3750b78a           Article 66 Tâches du Comité IA
+13    0.0149    eurlex/AI_Act/FR/art_68/p98_0761b802           Le groupe scientifique est com
+14    0.0147    eurlex/AI_Act/FR/art_112/p122_991dc979         Aux fins des paragraphes 1 à 7
+15    0.0147    eurlex/RGPD/FR/art_37/p55_89c4fac4             Dans les cas autres que ceux v
+16    0.0145    eurlex/AI_Act/FR/art_56/p87_f6198c4f           Le Bureau de l’IA et le Comité
+17    0.0145    eurlex/RGPD/FR/art_68/p76_e574900e             La Commission a le droit de pa
+18    0.0143    eurlex/RGPD/FR/art_68/p76_22c2e86c             Le comité se compose du chef d
+19    0.0141    eurlex/AI_Act/FR/considerants/p43_9ddb0733     (173) Afin de garantir que le 
+20    0.0141    eurlex/MiFID2/FR/art_43/p79_d6278af4           a) n’en fait pas usage dans un
+21    0.0139    eurlex/AI_Act/FR/considerants/p38_27b46420     (151) Afin de soutenir la mise
+22    0.0139    eurlex/DORA/FR/art_32/p56_ad2c69cb             Chaque État membre désigne l’a
+23    0.0137    eurlex/AI_Act/FR/art_70/p100_0c5524f0          Au plus tard le 2 août 2025, e
+24    0.0137    eurlex/MiFID2/FR/art_62/p99_2f116626           Article 62 Retrait d’agrément 
+25    0.0135    eurlex/AI_Act/FR/art_43/p78_f1cda92d           Aux fins de ces évaluations, l

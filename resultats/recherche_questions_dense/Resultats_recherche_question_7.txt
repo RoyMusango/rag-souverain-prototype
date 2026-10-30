@@ -1,0 +1,50 @@
+==============================================================================
+QUESTION 7
+==============================================================================
+
+Enonce :
+  A qui les organisme d'évaluation de la conformité doivent-ils soumettre une demande de notification ?
+
+Ancrage attendu :
+  eurlex/AI_Act/FR/art_29/p70_5c2cef6e
+  extrait : Les organismes d’évaluation de la conformité soumettent une demande de notification à l’autorité notifiante de l’État me...
+
+Configuration de recherche : dense
+
+------------------------------------------------------------------------------
+RAPPEL
+------------------------------------------------------------------------------
+  rappel@5   : OUI    (rang 1)
+  rappel@10  : OUI    (rang 1)
+  rappel@25  : OUI    (rang 1)
+
+------------------------------------------------------------------------------
+RESULTATS RENDUS PAR LE SYSTEME
+------------------------------------------------------------------------------
+rang  score     ancrage                                        debut du texte
+------------------------------------------------------------------------------
+1     0.0164    eurlex/AI_Act/FR/art_29/p70_5c2cef6e           Les organismes d’évaluation de  <== ATTENDU
+2     0.0161    eurlex/AI_Act/EN/art_29/p70_8c3e1f84           Conformity assessment bodies s
+3     0.0159    eurlex/AI_Act/FR/art_29/p70_7af10d29           Article 29 Demande de notifica
+4     0.0156    eurlex/AI_Act/FR/art_29/p71_50babd9c           La demande de notification est
+5     0.0154    eurlex/AI_Act/FR/art_45/p79_987e0846           Les organismes notifiés commun
+6     0.0152    eurlex/AI_Act/EN/art_30/p71_4322518a           Notifying authorities may noti
+7     0.0149    eurlex/AI_Act/FR/art_30/p71_caa1db05           Les autorités notifiantes ne p
+8     0.0147    eurlex/AI_Act/FR/considerants/p32_2361f526     (126) Afin de procéder à des é
+9     0.0145    eurlex/AI_Act/FR/art_30/p71_a3dbdcf0           La notification visée au parag
+10    0.0143    eurlex/AI_Act/FR/art_28/p70_7aa778c5           Chaque État membre désigne ou 
+11    0.0141    eurlex/AI_Act/EN/art_29/p70_4c7a10f7           Article 29 Application of a co
+12    0.0139    eurlex/AI_Act/EN/art_45/p79_44263ad5           Notified bodies shall inform t
+13    0.0137    eurlex/AI_Act/EN/considerants/p32_03fe326e     (126) In order to carry out th
+14    0.0135    eurlex/AI_Act/EN/art_28/p70_66357864           Each Member State shall design
+15    0.0133    eurlex/AI_Act/FR/art_43/p78_f1cda92d           Aux fins de ces évaluations, l
+16    0.0132    eurlex/AI_Act/FR/art_30/p71_ae6da14d           L’organisme d’évaluation de la
+17    0.0130    eurlex/AI_Act/EN/art_29/p71_fd30b253           The application for notificati
+18    0.0128    eurlex/AI_Act/EN/art_30/p71_daefbc07           The conformity assessment body
+19    0.0127    eurlex/AI_Act/EN/art_30/p71_dddf4c5b           Notifying authorities shall no
+20    0.0125    eurlex/AI_Act/EN/art_30/p71_82fd76c8           The notification referred to i
+21    0.0123    eurlex/AI_Act/FR/art_29/p71_7ed702df           Lorsque l’organisme d’évaluati
+22    0.0122    eurlex/AI_Act/EN/art_45/p79_eec7ad2f           Each notified body shall infor
+23    0.0120    eurlex/AI_Act/FR/art_30/p71_176c3f1b           Les autorités notifiantes info
+24    0.0119    eurlex/AI_Act/EN/art_29/p71_48dae9b1           Where the conformity assessmen
+25    0.0118    eurlex/AI_Act/FR/art_36/p74_1239af8b           En cas de restriction, de susp

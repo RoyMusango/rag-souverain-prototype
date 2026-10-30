@@ -1,0 +1,47 @@
+{
+  "parametres": {
+    "questions": 40,
+    "premieres": null,
+    "taux_empoisonnement": 0.1,
+    "familles": "assertion",
+    "graine": 20260902,
+    "sortie": "resultats\\e3_v2_assertion",
+    "modele": "gpt-5.6-luna",
+    "palier": "api-hors-ue",
+    "base_url": null,
+    "delai": 180,
+    "tarif_entree": 0.2,
+    "tarif_sortie": 1.2,
+    "classe": null,
+    "sans_devis": true,
+    "reprise": "resultats\\e3_v2\\journal_assertion.jsonl",
+    "reclassement": true,
+    "top_k_generation": 10,
+    "longueur_reclasseur": 512,
+    "max_jetons": 6000,
+    "temperature": null,
+    "plafond": 1.5,
+    "engager_la_depense": true
+  },
+  "requetes": 40,
+  "configurations": 5,
+  "appels_plafond": 200,
+  "appels_reels": 0,
+  "abstentions_evitees": 200,
+  "invite_caracteres": {
+    "total": 0,
+    "moyenne": 0,
+    "mediane": 0,
+    "min": 0,
+    "max": 0
+  },
+  "invite_mots": {
+    "total": 0,
+    "moyenne": 0
+  },
+  "familles": [
+    "assertion"
+  ],
+  "resultats_de_robustesse": "NON MESURES : fournisseur simule",
+  "asr_ignore": {}
+}

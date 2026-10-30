@@ -1,0 +1,41 @@
+{
+  "parametres": {
+    "questions": 5,
+    "taux_empoisonnement": 0.1,
+    "familles": "instruction",
+    "graine": 20260902,
+    "sortie": "resultats/e3_devis",
+    "modele": "gpt-5.6-luna",
+    "tarif_entree": 0.2,
+    "tarif_sortie": 1.2,
+    "plafond": 0.1,
+    "engager_la_depense": true
+  },
+  "requetes": 5,
+  "configurations": 5,
+  "appels_plafond": 25,
+  "appels_reels": 25,
+  "abstentions_evitees": 0,
+  "invite_caracteres": {
+    "total": 422161,
+    "moyenne": 16886.4,
+    "mediane": 16517,
+    "min": 13765,
+    "max": 20618
+  },
+  "invite_mots": {
+    "total": 52680,
+    "moyenne": 2107.2
+  },
+  "familles": [
+    "instruction"
+  ],
+  "resultats_de_robustesse": "NON MESURES : fournisseur simule",
+  "asr_ignore": {
+    "complete": 0.0,
+    "sans_isolation": 0.0,
+    "sans_corroboration": 0.0,
+    "sans_verrou": 0.0,
+    "aucune": 0.0
+  }
+}

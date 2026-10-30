@@ -1,0 +1,125 @@
+{
+  "parametres": {
+    "corpus": "enronqa",
+    "paires": null,
+    "index_lexical": null,
+    "index_fichier": null,
+    "hote": null,
+    "questions": 200,
+    "k": 10,
+    "graine": 42,
+    "peripherique": null,
+    "source": null,
+    "sans_reclasseur": true,
+    "sortie": "resultats\\e1b"
+  },
+  "k": 10,
+  "resultats": {
+    "dense": {
+      "configuration": "dense",
+      "questions": 200,
+      "recall@10": {
+        "mediane": 1.0,
+        "moyenne": 0.76,
+        "min": 0.0,
+        "max": 1.0,
+        "n": 200
+      },
+      "precision@10": {
+        "mediane": 0.1,
+        "moyenne": 0.076,
+        "min": 0.0,
+        "max": 0.1,
+        "n": 200
+      },
+      "ndcg@10": {
+        "mediane": 1.0,
+        "moyenne": 0.6788,
+        "min": 0.0,
+        "max": 1.0,
+        "n": 200
+      },
+      "mrr": {
+        "mediane": 1.0,
+        "moyenne": 0.6538,
+        "min": 0.0,
+        "max": 1.0,
+        "n": 200
+      },
+      "latence_mediane_ms": 400.66
+    },
+    "lexical": {
+      "configuration": "lexical",
+      "questions": 200,
+      "recall@10": {
+        "mediane": 1.0,
+        "moyenne": 0.95,
+        "min": 0.0,
+        "max": 1.0,
+        "n": 200
+      },
+      "precision@10": {
+        "mediane": 0.1,
+        "moyenne": 0.095,
+        "min": 0.0,
+        "max": 0.1,
+        "n": 200
+      },
+      "ndcg@10": {
+        "mediane": 1.0,
+        "moyenne": 0.8478,
+        "min": 0.0,
+        "max": 1.0,
+        "n": 200
+      },
+      "mrr": {
+        "mediane": 1.0,
+        "moyenne": 0.8142,
+        "min": 0.0,
+        "max": 1.0,
+        "n": 200
+      },
+      "latence_mediane_ms": 753.28
+    },
+    "fusion": {
+      "configuration": "fusion",
+      "questions": 200,
+      "recall@10": {
+        "mediane": 1.0,
+        "moyenne": 0.935,
+        "min": 0.0,
+        "max": 1.0,
+        "n": 200
+      },
+      "precision@10": {
+        "mediane": 0.1,
+        "moyenne": 0.0935,
+        "min": 0.0,
+        "max": 0.1,
+        "n": 200
+      },
+      "ndcg@10": {
+        "mediane": 1.0,
+        "moyenne": 0.8064,
+        "min": 0.0,
+        "max": 1.0,
+        "n": 200
+      },
+      "mrr": {
+        "mediane": 1.0,
+        "moyenne": 0.7656,
+        "min": 0.0,
+        "max": 1.0,
+        "n": 200
+      },
+      "latence_mediane_ms": 1080.13
+    }
+  },
+  "apport_sur_dense_seul": {
+    "lexical": 0.19,
+    "fusion": 0.175
+  },
+  "lecture": "un apport positif de 'fusion' sur 'dense' etablit la complementarite lexical/dense postulee au chapitre 2 ; un apport nul l'infirme et doit etre rapporte tel quel",
+  "questions_retenues": 200,
+  "graine": 42
+}

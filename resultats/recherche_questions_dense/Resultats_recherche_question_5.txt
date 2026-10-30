@@ -1,0 +1,50 @@
+==============================================================================
+QUESTION 5
+==============================================================================
+
+Enonce :
+  Que doit au moins indiquer l'alerte qualifiée ?
+
+Ancrage attendu :
+  eurlex/AI_Act/FR/art_90/p111_2277557c
+  extrait : L’alerte qualifiée est dûment motivée et indique au moins: a) le point de contact du fournisseur du modèle d’IA à usage ...
+
+Configuration de recherche : dense
+
+------------------------------------------------------------------------------
+RAPPEL
+------------------------------------------------------------------------------
+  rappel@5   : OUI    (rang 1)
+  rappel@10  : OUI    (rang 1)
+  rappel@25  : OUI    (rang 1)
+
+------------------------------------------------------------------------------
+RESULTATS RENDUS PAR LE SYSTEME
+------------------------------------------------------------------------------
+rang  score     ancrage                                        debut du texte
+------------------------------------------------------------------------------
+1     0.0164    eurlex/AI_Act/FR/art_90/p111_2277557c          L’alerte qualifiée est dûment   <== ATTENDU
+2     0.0161    eurlex/AI_Act/EN/art_90/p111_16645ac5          A qualified alert shall be dul
+3     0.0159    eurlex/AI_Act/EN/art_78/p70_86f790c5           Notifying authorities shall ha
+4     0.0156    eurlex/AI_Act/FR/art_90/p111_49581b0c          À la suite d’une telle alerte 
+5     0.0154    eurlex/AI_Act/EN/art_31/p72_4352fa69           Notified bodies shall have suf
+6     0.0152    eurlex/MiFID2/EN/art_73/p115_bcf2d1d7          Member States shall ensure tha
+7     0.0149    eurlex/AI_Act/EN/considerants/p30_5b6c2884     (113) If the Commission become
+8     0.0147    eurlex/AI_Act/FR/considerants/p43_43becf35     (172) Les personnes agissant e
+9     0.0145    eurlex/AI_Act/EN/art_31/p72_97ed0732           Notified bodies shall be capab
+10    0.0143    eurlex/AI_Act/EN/art_90/p111_e1a7c0a7          Upon such qualified alert, the
+11    0.0141    eurlex/AI_Act/EN/art_31/p71_3c54f3fe           Notified bodies shall satisfy 
+12    0.0139    eurlex/AI_Act/FR/art_28/p70_1f356494           Les autorités notifiantes disp
+13    0.0137    eurlex/DORA/EN/art_19/p41_b3f4d9a4             The initial notification and r
+14    0.0135    eurlex/AI_Act/EN/art_13/p59_5cad3f3f           High-risk AI systems shall be 
+15    0.0133    eurlex/AI_Act/EN/art_74/p78_4897471d           Article 74(8) or (9), as appli
+16    0.0132    eurlex/AI_Act/FR/considerants/p30_eb9f0f12     (113) Si la Commission prend c
+17    0.0130    eurlex/AI_Act/EN/art_57/p88_260e7d8d           Competent authorities shall pr
+18    0.0128    eurlex/AI_Act/EN/art_47/p65_93a5070e           Article 47, the technical docu
+19    0.0127    eurlex/AI_Act/EN/art_28/p70_8f3b06b2           Notifying authorities shall sa
+20    0.0125    eurlex/MiFID2/EN/art_2/p23_a3be329e            (147) In order to detect poten
+21    0.0123    eurlex/DORA/FR/considerants/p6_f966b06f        Les autorités compétentes devr
+22    0.0122    eurlex/AI_Act/EN/art_34/p73_d12346d7           Notified bodies shall avoid un
+23    0.0120    eurlex/DORA/EN/art_19/p41_b0a71b28             Financial entities may, on a v
+24    0.0119    eurlex/AI_Act/EN/considerants/p32_03fe326e     (126) In order to carry out th
+25    0.0118    eurlex/MiFID2/EN/art_11/p45_d6309bf1           The competent authorities shal

@@ -1,0 +1,50 @@
+==============================================================================
+QUESTION 2
+==============================================================================
+
+Enonce :
+  Qui doit démontrer le caractère infondé ou excessif de la demande 6 ?
+
+Ancrage attendu :
+  eurlex/RGPD/FR/art_12/p40_46255e14
+  extrait : Il incombe au responsable du traitement de démontrer le caractère manifestement infondé ou excessif de la demande. 6....
+
+Configuration de recherche : dense
+
+------------------------------------------------------------------------------
+RAPPEL
+------------------------------------------------------------------------------
+  rappel@5   : OUI    (rang 1)
+  rappel@10  : OUI    (rang 1)
+  rappel@25  : OUI    (rang 1)
+
+------------------------------------------------------------------------------
+RESULTATS RENDUS PAR LE SYSTEME
+------------------------------------------------------------------------------
+rang  score     ancrage                                        debut du texte
+------------------------------------------------------------------------------
+1     0.0164    eurlex/RGPD/FR/art_12/p40_46255e14             Il incombe au responsable du t  <== ATTENDU
+2     0.0161    eurlex/RGPD/EN/art_11/p40_3dae140d             The controller shall bear the 
+3     0.0159    eurlex/RGPD/FR/art_57/p69_e9fc154a             Lorsque les demandes sont mani
+4     0.0156    eurlex/RGPD/EN/art_35/p69_4748eee2             Where requests are manifestly 
+5     0.0154    eurlex/DORA/EN/art_37/p62_a850bb88             When requiring by decision to 
+6     0.0152    eurlex/RGPD/EN/art_61/p72_359d48ce             The requested supervisory auth
+7     0.0149    eurlex/RGPD/FR/art_12/p40_e23d1cbc             Aucun paiement n'est exigé pou
+8     0.0147    eurlex/AI_Act/EN/art_91/p112_4ca4394d          The request for information sh
+9     0.0145    eurlex/AI_Act/FR/art_3/p50_80ca98c1            57) «essais en conditions réel
+10    0.0143    eurlex/AI_Act/FR/art_73/p102_8e4a52ed          Si cela est nécessaire pour as
+11    0.0141    eurlex/RGPD/FR/art_61/p72_1b8003ae             L'autorité de contrôle requise
+12    0.0139    eurlex/AI_Act/EN/art_92/p112_55ae2008          The request for access shall s
+13    0.0137    eurlex/DORA/EN/art_42/p66_3493773a             (a) the gravity and the durati
+14    0.0135    eurlex/MiFID2/FR/art_69/p107_ae4e1a71          k) enjoindre de cesser tempora
+15    0.0133    eurlex/MiFID2/EN/art_7/p41_3b14f5e6            An applicant shall be informed
+16    0.0132    eurlex/MiFID2/EN/art_61/p98_3b14f5e6           An applicant shall be informed
+17    0.0130    eurlex/RGPD/EN/art_6/p67_541936b6              Article 6(1), the supervisory 
+18    0.0128    eurlex/AI_Act/EN/art_49/p136_f31426ac          The condition or conditions un
+19    0.0127    eurlex/MiFID2/FR/art_64/p101_2225a87e          L’État membre d’origine exige 
+20    0.0125    eurlex/MiFID2/EN/art_16/p50_20a83065           Member States may, in exceptio
+21    0.0123    eurlex/MiFID2/FR/considerants/p14_19f2f50a     (76) La présente directive pré
+22    0.0122    eurlex/DORA/EN/art_41/p60_0e4f71ff             Before imposing a periodic pen
+23    0.0120    eurlex/MiFID2/EN/art_74/p115_45e9ee3d          Member States shall ensure tha
+24    0.0119    eurlex/MiFID2/FR/art_66/p104_3c6418e8          L’État membre d’origine exige 
+25    0.0118    eurlex/AI_Act/FR/art_91/p112_421b2df1          La demande d’informations ment

@@ -1,0 +1,50 @@
+==============================================================================
+QUESTION 2
+==============================================================================
+
+Enonce :
+  Qui doit démontrer le caractère infondé ou excessif de la demande 6 ?
+
+Ancrage attendu :
+  eurlex/RGPD/FR/art_12/p40_46255e14
+  extrait : Il incombe au responsable du traitement de démontrer le caractère manifestement infondé ou excessif de la demande. 6....
+
+Configuration de recherche : lexical
+
+------------------------------------------------------------------------------
+RAPPEL
+------------------------------------------------------------------------------
+  rappel@5   : OUI    (rang 1)
+  rappel@10  : OUI    (rang 1)
+  rappel@25  : OUI    (rang 1)
+
+------------------------------------------------------------------------------
+RESULTATS RENDUS PAR LE SYSTEME
+------------------------------------------------------------------------------
+rang  score     ancrage                                        debut du texte
+------------------------------------------------------------------------------
+1     0.0164    eurlex/RGPD/FR/art_12/p40_46255e14             Il incombe au responsable du t  <== ATTENDU
+2     0.0161    eurlex/RGPD/FR/art_57/p69_e9fc154a             Lorsque les demandes sont mani
+3     0.0159    eurlex/MiFID2/FR/art_27/p65_3d3b4a54           Les États membres exigent que 
+4     0.0156    eurlex/AI_Act/FR/art_92/p112_25f11049          La demande d’accès indique la 
+5     0.0154    eurlex/MiFID2/FR/art_53/p91_11e65dde           À la demande de l’autorité com
+6     0.0152    eurlex/DORA/FR/art_37/p62_1c5f59cc             e) informe le représentant du 
+7     0.0149    eurlex/RGPD/FR/art_7/p37_c3f29349              Dans les cas où le traitement 
+8     0.0147    eurlex/MiFID2/FR/art_17/p52_15a6df28           L’autorité compétente de l’Éta
+9     0.0145    eurlex/MiFID2/FR/art_11/p45_32a1f5ea           Les autorités compétentes écha
+10    0.0143    eurlex/RGPD/FR/considerants/p6_cd5b98cb        (32) Le consentement devrait ê
+11    0.0141    eurlex/AI_Act/FR/art_24/p66_2d944322           À la demande motivée d’une aut
+12    0.0139    eurlex/RGPD/FR/considerants/p16_038a4fda       (82) Afin de démontrer qu'il r
+13    0.0137    eurlex/RGPD/FR/art_33/p52_c1caf47e             La notification visée au parag
+14    0.0135    eurlex/AI_Act/FR/art_21/p64_6b4f458f           À la demande motivée d’une aut
+15    0.0133    eurlex/AI_Act/FR/art_23/p66_9dfd5d32           À la demande motivée des autor
+16    0.0132    eurlex/MiFID2/FR/considerants/p26_6d416255     (166) La présente directive re
+17    0.0130    eurlex/RGPD/FR/art_28/p50_874223f9             L'application, par un sous-tra
+18    0.0128    eurlex/RGPD/FR/art_49/p64_819978a4             Un transfert effectué en vertu
+19    0.0127    eurlex/MiFID2/FR/art_17/p51_df0a89fe           L’autorité compétente de l’Éta
+20    0.0125    eurlex/RGPD/FR/art_15/p43_3e627bae             Le responsable du traitement f
+21    0.0123    eurlex/MiFID2/FR/art_34/p73_83e9e874           L’entreprise d’investissement 
+22    0.0122    eurlex/RGPD/FR/considerants/p2_ad7a964a        (4) Le traitement des données 
+23    0.0120    eurlex/RGPD/FR/art_61/p72_1b8003ae             L'autorité de contrôle requise
+24    0.0119    eurlex/AI_Act/FR/considerants/p20_2ff97b8a     (69) Le droit au respect de la
+25    0.0118    eurlex/DORA/FR/art_56/p73_78f86557             Les AES et les autorités compé

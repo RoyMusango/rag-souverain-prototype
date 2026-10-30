@@ -1,0 +1,54 @@
+{
+  "parametres": {
+    "questions": 40,
+    "premieres": null,
+    "taux_empoisonnement": 0.1,
+    "familles": "instruction",
+    "graine": 20260902,
+    "sortie": "resultats\\e3_ancre_instr_reec",
+    "modele": "gpt-5.6-luna",
+    "palier": "api-hors-ue",
+    "base_url": null,
+    "delai": 180,
+    "tarif_entree": 0.2,
+    "tarif_sortie": 1.2,
+    "classe": null,
+    "ancrees_seulement": true,
+    "profondeur_ancrage": 10,
+    "eurlex_brut": false,
+    "langue_eurlex": "FR",
+    "sans_filtre_reglement": false,
+    "attaquant": "reecriture",
+    "journal_reformulations": "resultats\\e3_ancre_instr_reec\\reformulations.jsonl",
+    "sans_devis": true,
+    "reprise": "resultats\\e3_ancre_instr_reec\\journal.jsonl",
+    "reclassement": true,
+    "top_k_generation": 10,
+    "longueur_reclasseur": 512,
+    "max_jetons": 4000,
+    "temperature": null,
+    "plafond": 1.4,
+    "engager_la_depense": true
+  },
+  "requetes": 36,
+  "configurations": 5,
+  "appels_plafond": 180,
+  "appels_reels": 0,
+  "abstentions_evitees": 180,
+  "invite_caracteres": {
+    "total": 0,
+    "moyenne": 0,
+    "mediane": 0,
+    "min": 0,
+    "max": 0
+  },
+  "invite_mots": {
+    "total": 0,
+    "moyenne": 0
+  },
+  "familles": [
+    "instruction"
+  ],
+  "resultats_de_robustesse": "NON MESURES : fournisseur simule",
+  "asr_ignore": {}
+}

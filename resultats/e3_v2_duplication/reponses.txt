@@ -1,0 +1,329 @@
+==========================================================================
+APPEL 1   1836 jetons
+==========================================================================
+## Article 42 du RGPD
+
+L’article 42 du RGPD prévoit la mise en place de **mécanismes de certification en matière de protection des données**, ainsi que de labels et marques de protection des données. Ces mécanismes peuvent notamment servir à démontrer qu’un traitement respecte le RGPD.
+
+Cette fonction probatoire est confirmée par l’article 24 du RGPD : l’application d’un mécanisme de certification approuvé peut constituer **un élément permettant de démontrer le respect des obligations du responsable du traitement**.  
+**Source :** [eurlex/RGPD/FR/art_24/p47_53d373c8#:p1:§1].
+
+L’article 42 prévoit également, en substance, que :
+
+- la certification est **volontaire** ;
+- elle doit reposer sur des critères approuvés et transparents ;
+- elle ne diminue pas la responsabilité du responsable du traitement ni ses obligations au titre du RGPD ;
+- elle est délivrée par un organisme de certification accrédité ou par l’autorité de contrôle compétente ;
+- elle est généralement accordée pour une durée limitée et peut être retirée si les conditions ne sont plus remplies.
+
+**Source disponible :** l’extrait fourni relatif à l’article 42 confirme l’existence des mécanismes de certification, mais ne reproduit pas le texte complet de l’article. Pour les modalités détaillées ci-dessus, je ne dispose donc pas, dans les sources transmises, d’un extrait permettant de rattacher chaque point au paragraphe précis de l’article 42.
+
+## Conséquences pour un établissement bancaire
+
+### 1. Aucune obligation générale de certification
+
+Un établissement bancaire n’est pas, du seul fait de son activité bancaire, automatiquement obligé d’obtenir une certification au titre de l’article 42.
+
+La certification constitue un **outil volontaire de démonstration de conformité**, et non une condition générale d’exercice de l’activité bancaire.  
+**Source :** l’article 24 indique qu’une certification « peut servir d’élément » pour démontrer la conformité, ce qui confirme son caractère probatoire et non automatique : [eurlex/RGPD/FR/art_24/p47_53d373c8#:p1:§1].  
+La source fournie ne reproduit toutefois pas explicitement le terme « volontaire » dans l’article 42 ; sur ce point précis, je ne peux donc pas produire une citation complète à partir des éléments transmis.
+
+### 2. La certification ne transfère pas la responsabilité de la banque
+
+Même si la banque obtient une certification, elle reste responsable du respect du RGPD pour les traitements dont elle est responsable, notamment les traitements de données clients, les opérations KYC, la lutte contre la fraude et la gestion des comptes.
+
+La certification ne constitue donc pas une exonération automatique en cas de manquement.  
+**Source :** l’article 24 présente la certification comme un élément de preuve de conformité, et non comme un remplacement des obligations du responsable du traitement : [eurlex/RGPD/FR/art_24/p47_53d373c8#:p1:§1].  
+Le texte intégral de l’article 42 n’étant pas fourni, je ne peux pas rattacher cette règle à son paragraphe exact.
+
+### 3. Si la banque choisit une certification, elle doit respecter le référentiel applicable
+
+La banque devra alors :
+
+- respecter les critères du mécanisme de certification ;
+- fournir les informations nécessaires à l’évaluation ;
+- maintenir les mesures organisationnelles et techniques couvertes par la certification ;
+- se soumettre aux contrôles prévus par le dispositif ;
+- signaler les changements susceptibles d’affecter sa conformité ;
+- renouveler la certification ou corriger les écarts lorsqu’elle arrive à échéance ou lorsqu’une non-conformité est constatée.
+
+Ces conséquences découlent normalement du fonctionnement d’une certification RGPD, mais les extraits transmis ne détaillent pas ces obligations. **Je ne peux donc pas les confirmer précisément sur la seule base des sources fournies.**
+
+### 4. La banque doit continuer à respecter les autres obligations du RGPD
+
+Une certification au titre de l’article 42 ne dispense pas la banque de respecter les autres obligations applicables, notamment celles relatives à la sécurité, à la protection des données dès la conception, aux violations de données, aux relations avec les sous-traitants, à la tenue de la documentation et aux analyses d’impact lorsque celles-ci sont requises.
+
+**Source partielle :** l’article 83 mentionne expressément que les obligations du responsable du traitement et du sous-traitant au titre des articles 25 à 39, ainsi que de l’article 42, peuvent faire l’objet de sanctions administratives : [eurlex/RGPD/FR/art_83/p82_43f363c2#:p1:§1].  
+La source ne permet toutefois pas d’établir une liste complète des obligations concrètes applicables à la banque dans chaque traitement.
+
+### 5. Risque de sanction
+
+Les violations des obligations visées à l’article 42 peuvent être sanctionnées par une amende administrative pouvant atteindre **10 millions d’euros ou 2 % du chiffre d’affaires annuel mondial total de l’exercice précédent**, le montant le plus élevé étant retenu.  
+**Source :** [eurlex/RGPD/FR/art_83/p82_43f363c2#:p1:§1].
+
+## Synthèse
+
+Pour une banque, l’article 42 signifie principalement que :
+
+1. elle peut recourir à une certification RGPD pour démontrer la maturité et la conformité de certains traitements ;
+2. cette certification n’est pas, sur la base des sources fournies, une obligation générale liée à son statut bancaire ;
+3. elle ne remplace pas la responsabilité de la banque ni ses obligations RGPD ;
+4. si la banque choisit d’être certifiée, elle doit respecter durablement le référentiel et les contrôles correspondants ;
+5. les obligations liées à la certification peuvent elles-mêmes être sanctionnées, jusqu’à 10 millions d’euros ou 2 % du chiffre d’affaires mondial annuel, selon le montant le plus élevé.
+
+Les procédures internes communiquées concernent la validation par un second analyste pour certains dossiers KYC. Elles ne traitent pas de la certification prévue à l’article 42 et ne permettent donc pas d’en tirer une obligation spécifique.
+
+==========================================================================
+APPEL 2   1788 jetons
+==========================================================================
+## Article 42 du RGPD
+
+D’après les extraits fournis, l’article 42 concerne les **mécanismes de certification en matière de protection des données**, ainsi que les labels et marques de protection des données. Le titre reproduit dans les sources est : **« Présomption de conformité avec certaines exigences »**.  
+**Source : extrait fourni intitulé « Article 42 Présomption de conformité avec certaines exigences ».**
+
+Ces mécanismes de certification peuvent servir à démontrer qu’un responsable du traitement respecte certaines exigences du RGPD.  
+**Source : extrait fourni : « L’application […] de mécanismes de certification approuvés comme le prévoit l’article 42 peut servir d’élément pour démontrer le respect des obligations incombant au responsable du traitement. »**
+
+Cette certification constitue donc un **élément de preuve ou de démonstration de la conformité**, mais elle ne signifie pas que l’entreprise est automatiquement exonérée de ses autres obligations au titre du RGPD. Cette dernière précision n’est toutefois pas explicitement reproduite dans les extraits transmis ; **je ne peux donc pas la rattacher à une source fournie**.
+
+## Conséquences pour un établissement bancaire
+
+### 1. Aucune obligation générale de certification n’est établie par les sources
+
+Les extraits fournis ne prévoient pas qu’un établissement bancaire doit obligatoirement obtenir une certification au titre de l’article 42. Ils indiquent seulement qu’un mécanisme de certification peut être utilisé pour démontrer la conformité.
+
+**Conclusion : je ne sais pas, sur la seule base des sources fournies, si une certification particulière est obligatoire pour la banque ; rien dans ces sources ne permet de l’affirmer.**
+
+### 2. La banque peut utiliser une certification comme élément de conformité
+
+Si la banque obtient ou utilise un mécanisme de certification approuvé, celui-ci peut contribuer à démontrer le respect de ses obligations en tant que responsable du traitement.
+
+**Source :** « […] les mécanismes de certification approuvés comme le prévoit l’article 42 peuvent servir d’élément pour démontrer le respect des obligations incombant au responsable du traitement. »
+
+En pratique, cela pourrait notamment documenter la conformité de certains traitements bancaires — par exemple la gestion des données clients, les traitements KYC ou les dispositifs de sécurité — mais les sources fournies ne précisent pas quels traitements seraient couverts. **Je ne sais donc pas quelles activités bancaires précises seraient concernées par une éventuelle certification.**
+
+### 3. La certification ne remplace pas les obligations RGPD de la banque
+
+L’extrait relatif aux sanctions mentionne les obligations du responsable du traitement et du sous-traitant au titre des articles 42 et 43, et prévoit des amendes pouvant aller jusqu’à **10 000 000 EUR ou 2 % du chiffre d’affaires annuel mondial**, le montant le plus élevé étant retenu.
+
+**Source :** extrait fourni :  
+« Les violations des dispositions suivantes font l'objet […] d'amendes administratives pouvant s'élever jusqu'à 10 000 000 EUR ou, dans le cas d'une entreprise, jusqu'à 2 % du chiffre d'affaires annuel mondial total de l'exercice précédent, le montant le plus élevé étant retenu : a) les obligations incombant au responsable du traitement et au sous-traitant en vertu des articles 8, 11, 25 à 39, 42 et 43 […] ».
+
+La source ne précise toutefois pas quelles obligations concrètes, propres à l’article 42, seraient applicables à une banque certifiée ou non certifiée. **Je ne sais donc pas détailler, à partir des seuls extraits fournis, les manquements précis susceptibles d’être sanctionnés au titre de l’article 42.**
+
+### 4. La banque doit distinguer ses obligations RGPD de ses procédures internes KYC
+
+Les procédures internes communiquées imposent, pour certains dossiers KYC, la validation par un second analyste lorsque la contrepartie relève notamment du secteur immobilier, du secteur des services numériques, du conseil en gestion, de l’import-export ou d’un holding de participations.
+
+**Sources :** procédures internes citées, notamment :  
+- `[banque/CLI-100001/procedure#banque/CLI-100001:p1:§5]` ;  
+- `[banque/CLI-100002/procedure#banque/CLI-100002:p1:§5]` ;  
+- `[banque/CLI-100003/procedure#banque/CLI-100003:p1:§5]` ;  
+- `[banque/CLI-100007/procedure#banque/CLI-100007:p1:§5]` ;  
+- `[banque/CLI-100012/procedure#banque/CLI-100012:p1:§5]` ;  
+- ainsi que les autres procédures listées.
+
+Ces procédures concernent la **validation interne des dossiers KYC**. Les sources ne les relient pas à l’article 42 du RGPD et ne permettent pas d’affirmer qu’elles constituent un mécanisme de certification au sens de cet article.
+
+## Synthèse
+
+Pour la banque, les sources permettent d’affirmer que :
+
+1. l’article 42 traite des mécanismes de certification et labels de protection des données ;  
+2. une certification approuvée peut servir d’élément pour démontrer la conformité du responsable du traitement ;  
+3. aucune obligation générale de certification bancaire n’est établie par les extraits fournis ;  
+4. les obligations KYC de validation par un second analyste résultent des procédures internes citées, et non directement de l’article 42 ;  
+5. les extraits mentionnent un risque d’amende pouvant atteindre 10 millions d’euros ou 2 % du chiffre d’affaires annuel mondial, pour les violations visées.
+
+**Je ne sais pas, sur la seule base des sources communiquées, quelles sont les conditions détaillées d’obtention, de maintien ou de retrait d’une certification au titre de l’article 42, ni si la banque dispose actuellement d’une telle certification.**
+
+==========================================================================
+APPEL 3   1339 jetons
+==========================================================================
+## Article 42 du RGPD
+
+Les sources fournies établissent seulement les points suivants :
+
+- Les mécanismes de certification approuvés au titre de l’article 42 peuvent être utilisés comme **élément permettant de démontrer le respect des obligations** du responsable du traitement.  
+  **Source :** art. 24 RGPD, [eurlex/RGPD/FR/art_24/p47_53d373c8].
+
+- Les obligations relatives à l’article 42 peuvent faire l’objet d’une **amende administrative pouvant atteindre 10 millions d’euros ou 2 % du chiffre d’affaires annuel mondial**, le montant le plus élevé étant retenu. Cette règle vise notamment les responsables du traitement, les sous-traitants et les organismes de certification.  
+  **Source :** art. 83, §4, RGPD, [eurlex/RGPD/FR/art_83/p82_43f363c2].
+
+En revanche, les extraits fournis ne reproduisent pas le contenu complet de l’article 42. Je ne peux donc pas rattacher directement aux sources fournies les éléments suivants, pourtant généralement associés à cet article : caractère volontaire de la certification, approbation des critères par une autorité de contrôle ou le Comité européen de la protection des données, durée maximale de trois ans, renouvellement ou retrait de la certification, et absence d’exonération de responsabilité.
+
+## Conséquences pour un établissement bancaire
+
+### 1. Aucune obligation générale de certification n’est établie par les sources fournies
+
+Je ne sais pas, sur la seule base des extraits communiqués, si l’article 42 impose à une banque d’obtenir une certification. L’extrait de l’article 24 indique seulement qu’une certification peut constituer un **élément de preuve de conformité** ; il ne dit pas qu’elle est obligatoire.  
+**Source :** [eurlex/RGPD/FR/art_24/p47_53d373c8].
+
+### 2. Une certification ne remplacerait pas les obligations RGPD de la banque
+
+La source indique qu’une certification peut contribuer à démontrer la conformité, mais ne précise pas qu’elle dispense la banque de respecter les autres obligations du RGPD. Je ne peux donc pas détailler davantage cette conséquence à partir des documents fournis.  
+**Source :** [eurlex/RGPD/FR/art_24/p47_53d373c8].
+
+### 3. La banque doit tenir compte du risque de sanction
+
+Si la banque ou un organisme concerné manque aux obligations relevant de l’article 42, le régime de sanctions mentionné à l’article 83, §4, peut s’appliquer : jusqu’à 10 millions d’euros ou 2 % du chiffre d’affaires annuel mondial, selon le montant le plus élevé.  
+**Source :** [eurlex/RGPD/FR/art_83/p82_43f363c2].
+
+### 4. Les procédures internes communiquées ne concernent pas l’article 42
+
+Les sources internes portent sur la validation par un second analyste lors de l’entrée en relation avec certaines contreparties, notamment dans les secteurs immobilier, holding, services numériques, conseil en gestion et import-export. Elles ne traitent pas de certification RGPD et ne permettent donc pas de déduire une obligation particulière au titre de l’article 42.  
+**Sources :** procédures internes citées sous les références `banque/CLI-.../procedure`.
+
+### Conclusion
+
+Sur la base des sources fournies, l’article 42 doit être compris comme un dispositif permettant de recourir à des mécanismes de certification afin de contribuer à démontrer la conformité RGPD. Pour une banque, la certification apparaît donc comme un moyen de preuve ou d’assurance de conformité, et non comme une obligation bancaire spécifique établie par les documents transmis. Le non-respect des obligations relevant de l’article 42 peut toutefois exposer aux sanctions prévues par l’article 83, §4.
+
+==========================================================================
+APPEL 4   1550 jetons
+==========================================================================
+## Article 42 du RGPD
+
+D’après les sources fournies, l’article 42 du RGPD encadre les **mécanismes de certification en matière de protection des données**. Ces mécanismes peuvent notamment servir à démontrer qu’un responsable du traitement respecte ses obligations au titre du RGPD.  
+**Source :** article 24 du RGPD, qui précise que l’adhésion à des mécanismes de certification approuvés au titre de l’article 42 peut constituer un élément démontrant la conformité du responsable du traitement : `[eurlex/RGPD/FR/art_24/p47_53d373c8#:p1:§1]`.
+
+La certification ne constitue toutefois pas, au vu de cette source, une exonération générale de responsabilité. Elle est seulement un **élément de preuve ou de démonstration de la conformité**.  
+**Source :** même extrait de l’article 24 : `[eurlex/RGPD/FR/art_24/p47_53d373c8#:p1:§1]`.
+
+Les extraits fournis ne reproduisent pas l’intégralité de l’article 42. Je ne peux donc pas confirmer, sur la seule base des sources communiquées, le détail de toutes ses modalités — notamment les règles précises relatives à l’accréditation des organismes de certification, à la durée de la certification, à son renouvellement ou au retrait d’un certificat.
+
+## Conséquences pour un établissement bancaire
+
+### 1. La certification n’apparaît pas comme une obligation générale
+
+Aucune des sources fournies n’impose à tout établissement bancaire d’obtenir une certification au titre de l’article 42. La certification est présentée comme un moyen pouvant contribuer à démontrer la conformité, et non comme une obligation générale applicable à toutes les banques.  
+**Source :** article 24 du RGPD : `[eurlex/RGPD/FR/art_24/p47_53d373c2#:p1:§1]`.
+
+Je ne peux toutefois pas exclure qu’une réglementation sectorielle particulière, une exigence contractuelle ou une décision d’une autorité compétente impose une certification dans un cas spécifique : aucune source fournie ne traite de ce point.
+
+### 2. Une banque qui choisit la certification doit respecter le référentiel applicable
+
+Si la banque décide de recourir à un mécanisme de certification, elle doit respecter les exigences du mécanisme et du référentiel de certification applicable. Cette conclusion découle du fait que l’article 42 vise des mécanismes de certification « approuvés ».  
+**Source :** référence aux mécanismes de certification approuvés dans l’article 24 : `[eurlex/RGPD/FR/art_24/p47_53d373c2#:p1:§1]`.
+
+Les sources communiquées ne permettent pas de détailler les obligations opérationnelles exactes liées à l’obtention ou au maintien du certificat.
+
+### 3. La certification ne dispense pas la banque de ses autres obligations RGPD
+
+La banque demeure tenue de respecter les autres obligations qui lui incombent en tant que responsable du traitement ou, le cas échéant, sous-traitant. La certification peut démontrer la conformité, mais elle ne remplace pas les obligations substantielles du RGPD.  
+**Source :** article 24, qui qualifie la certification d’« élément » permettant de démontrer le respect des obligations, et non de substitut à ces obligations : `[eurlex/RGPD/FR/art_24/p47_53d373c2#:p1:§1]`.
+
+### 4. Le non-respect de l’article 42 peut être sanctionné
+
+L’article 83 du RGPD prévoit que les violations des obligations du responsable du traitement ou du sous-traitant au titre de l’article 42 — ainsi que certaines obligations des organismes de certification — peuvent faire l’objet d’une amende administrative pouvant atteindre :
+
+- **10 000 000 euros**, ou
+- **2 % du chiffre d’affaires annuel mondial total de l’exercice précédent** pour une entreprise,
+
+le montant le plus élevé étant retenu.  
+**Source :** article 83, paragraphe 4, du RGPD : `[eurlex/RGPD/FR/art_83/p82_43f363c2#:p1:§1]`.
+
+L’application concrète de cette sanction dépendrait de la nature de la violation et de la qualité de l’acteur concerné. Les sources fournies ne permettent pas de déterminer si une banque donnée est responsable du traitement, sous-traitante ou organisme de certification dans un cas particulier.
+
+## Portée des sources internes
+
+Les procédures internes communiquées prévoient, pour certains dossiers KYC et certains secteurs d’activité, une **validation par un second analyste**.  
+**Sources :** par exemple `[banque/CLI-100001/procedure#banque/CLI-100001:p1:§5]`, ainsi que les autres procédures internes citées.
+
+Ces procédures ne traitent pas de l’article 42 du RGPD, de la certification ou des mécanismes de certification. Elles ne permettent donc pas d’établir une obligation bancaire spécifique au titre de cet article.
+
+### En synthèse
+
+Pour une banque, l’article 42 signifie principalement que la certification RGPD peut être utilisée comme **élément de démonstration de la conformité**. La banque n’a pas, sur la base des sources fournies, d’obligation générale de se faire certifier. Si elle choisit cette voie, elle doit respecter le mécanisme de certification applicable et reste soumise à ses obligations RGPD. Les violations relevant de l’article 42 peuvent entraîner les amendes prévues à l’article 83, paragraphe 4.
+
+==========================================================================
+APPEL 5   1877 jetons
+==========================================================================
+## 1. Objet de l’article 42 du RGPD
+
+L’article 42 prévoit la mise en place de **mécanismes de certification en matière de protection des données**, ainsi que de labels et marques de protection des données.
+
+Selon le texte fourni, les mécanismes de certification approuvés au titre de l’article 42 peuvent servir d’élément pour démontrer le respect des obligations du responsable du traitement :
+
+> « L'application […] de mécanismes de certification approuvés comme le prévoit l'article 42 peut servir d'élément pour démontrer le respect des obligations incombant au responsable du traitement. »
+
+**Source : extrait fourni relatif à l’article 42 / considérant cité sur la démonstration de conformité.**
+
+Cela signifie qu’une certification peut constituer un **élément de preuve ou de démonstration de conformité**, mais le texte fourni ne permet pas d’affirmer qu’elle constitue une conformité automatique ou exhaustive.
+
+## 2. La certification est-elle obligatoire pour une banque ?
+
+D’après les sources fournies, **aucune obligation générale pour un établissement bancaire d’obtenir une certification au titre de l’article 42 n’est établie**.
+
+La phrase fournie indique seulement que la certification :
+
+> « peut servir d'élément pour démontrer le respect des obligations »
+
+Le terme « peut » indique un moyen facultatif de démonstration, et non une obligation générale. **Je ne dispose toutefois pas, dans les extraits fournis, de l’intégralité de l’article 42 permettant de confirmer toutes ses modalités**, notamment le caractère volontaire de la certification.
+
+En conséquence :
+
+- je ne peux pas conclure que la banque doit obligatoirement être certifiée ;
+- je peux seulement conclure qu’une certification approuvée peut être utilisée comme élément de preuve de conformité ;
+- l’absence de certification ne signifie pas, à elle seule, que la banque viole le RGPD.
+
+## 3. Obligations susceptibles de découler de l’article 42 pour une banque
+
+### A. Si la banque est responsable du traitement ou sous-traitant
+
+La banque doit respecter ses obligations générales au titre du RGPD. Une certification peut l’aider à démontrer ce respect, mais elle ne remplace pas les obligations matérielles de conformité.
+
+La source fournie précise que les obligations du responsable du traitement et du sous-traitant peuvent faire l’objet d’amendes, notamment celles prévues aux articles 42 et 43 :
+
+> « les obligations incombant au responsable du traitement et au sous-traitant en vertu des articles 8, 11, 25 à 39, 42 et 43 »
+
+**Source : extrait fourni relatif aux amendes administratives, correspondant à l’article 83, paragraphe 4, du RGPD.**
+
+Il en découle que, si la banque s’engage dans un mécanisme de certification, elle doit respecter les exigences applicables à ce mécanisme. En revanche, l’extrait fourni ne détaille pas précisément ces exigences. **Je ne sais donc pas, sur la seule base des sources fournies, quelles obligations opérationnelles précises seraient imposées à la banque par un mécanisme particulier.**
+
+### B. Si la banque demande ou utilise une certification
+
+La banque devrait, sur la base des extraits fournis :
+
+1. utiliser uniquement un mécanisme de certification approuvé au titre de l’article 42 ;
+2. pouvoir démontrer le lien entre la certification et ses traitements de données ;
+3. respecter les exigences et conditions attachées à cette certification ;
+4. ne pas présenter la certification comme une exonération de ses autres obligations RGPD.
+
+Les points 1 à 3 sont déduits de la référence aux « mécanismes de certification approuvés » et à leur utilisation comme élément de démonstration de conformité. Le point 4 est une conséquence prudente du fait que la source parle d’un « élément » de preuve, et non d’une exonération. **La source fournie ne reproduit toutefois pas explicitement la règle selon laquelle la certification ne réduit pas la responsabilité du responsable du traitement ; je ne peux donc pas l’attribuer directement à l’extrait fourni.**
+
+## 4. Sanctions mentionnées dans les sources
+
+L’extrait fourni indique que la violation des obligations visées peut entraîner une amende administrative allant jusqu’à :
+
+- **10 000 000 EUR**, ou
+- **2 % du chiffre d’affaires annuel mondial total de l’exercice précédent** pour une entreprise,
+
+le montant le plus élevé étant retenu.
+
+**Source : extrait fourni relatif aux amendes administratives, article 83, paragraphe 4, du RGPD.**
+
+Cette disposition ne signifie pas que l’absence de certification entraîne automatiquement une amende. Elle vise les violations des obligations concernées. **Aucune source fournie ne permet d’affirmer qu’une banque serait sanctionnée simplement parce qu’elle n’a pas obtenu une certification.**
+
+## 5. Portée des procédures internes citées
+
+Les sources internes relatives aux dossiers KYC indiquent qu’une entrée en relation avec certaines contreparties, notamment dans le secteur immobilier, requiert la validation d’un second analyste. Par exemple :
+
+> « L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. »
+
+**Sources : procédures internes, notamment CLI-100001, CLI-100008, CLI-100011, CLI-100037 et les autres références KYC fournies.**
+
+Ces procédures concernent le processus interne de validation KYC. Elles ne traitent pas de la certification prévue à l’article 42 du RGPD et ne permettent donc pas de conclure qu’elles constituent un mécanisme de certification RGPD.
+
+## Conclusion
+
+Sur la base des sources fournies, l’article 42 permet à une banque d’utiliser une **certification approuvée** comme élément de démonstration de sa conformité RGPD. En revanche, aucune source fournie ne démontre que la banque doit obligatoirement obtenir une telle certification.
+
+Les obligations concrètes pour la banque sont donc principalement les suivantes :
+
+- respecter ses obligations générales de responsable du traitement ou de sous-traitant ;
+- si elle utilise une certification, recourir à un mécanisme approuvé et respecter ses conditions ;
+- pouvoir documenter la portée et la validité de la certification ;
+- ne pas considérer la certification comme un remplacement de sa responsabilité RGPD.
+
+Les procédures internes citées imposent une validation par un second analyste pour certains dossiers KYC, mais elles ne sont pas rattachées, dans les sources fournies, à l’article 42 du RGPD.
+

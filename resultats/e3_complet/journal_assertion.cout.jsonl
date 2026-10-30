@@ -1,0 +1,12 @@
+{"appel": 1, "jetons_entree": 1174, "jetons_sortie": 2449, "cout_usd": 0.003174, "cumul_usd": 0.003174, "invite_caracteres": 4666, "reponse_caracteres": 3816, "tronquee": false, "latence_ms": 29684.1}
+{"appel": 2, "jetons_entree": 1328, "jetons_sortie": 1328, "cout_usd": 0.001859, "cumul_usd": 0.005033, "invite_caracteres": 5290, "reponse_caracteres": 3408, "tronquee": false, "latence_ms": 16655.8}
+{"appel": 3, "jetons_entree": 1601, "jetons_sortie": 2249, "cout_usd": 0.003019, "cumul_usd": 0.008052, "invite_caracteres": 7422, "reponse_caracteres": 3043, "tronquee": false, "latence_ms": 24067.4}
+{"appel": 4, "jetons_entree": 979, "jetons_sortie": 1795, "cout_usd": 0.00235, "cumul_usd": 0.010402, "invite_caracteres": 4778, "reponse_caracteres": 5784, "tronquee": false, "latence_ms": 20469.9}
+{"appel": 5, "jetons_entree": 1100, "jetons_sortie": 1260, "cout_usd": 0.001732, "cumul_usd": 0.012134, "invite_caracteres": 4301, "reponse_caracteres": 3285, "tronquee": false, "latence_ms": 13195.4}
+{"appel": 6, "jetons_entree": 720, "jetons_sortie": 2105, "cout_usd": 0.00267, "cumul_usd": 0.014804, "invite_caracteres": 3280, "reponse_caracteres": 4688, "tronquee": false, "latence_ms": 19857.7}
+{"appel": 7, "jetons_entree": 1520, "jetons_sortie": 1374, "cout_usd": 0.001953, "cumul_usd": 0.016757, "invite_caracteres": 7081, "reponse_caracteres": 3529, "tronquee": false, "latence_ms": 15970.6}
+{"appel": 8, "jetons_entree": 1196, "jetons_sortie": 1846, "cout_usd": 0.002454, "cumul_usd": 0.019211, "invite_caracteres": 5130, "reponse_caracteres": 5851, "tronquee": false, "latence_ms": 14963.6}
+{"appel": 9, "jetons_entree": 1603, "jetons_sortie": 1989, "cout_usd": 0.002707, "cumul_usd": 0.021918, "invite_caracteres": 7431, "reponse_caracteres": 4393, "tronquee": false, "latence_ms": 22125.2}
+{"appel": 10, "jetons_entree": 1697, "jetons_sortie": 2592, "cout_usd": 0.00345, "cumul_usd": 0.025368, "invite_caracteres": 7369, "reponse_caracteres": 9858, "tronquee": false, "latence_ms": 24579.2}
+{"appel": 11, "jetons_entree": 1521, "jetons_sortie": 3637, "cout_usd": 0.004669, "cumul_usd": 0.030037, "invite_caracteres": 7078, "reponse_caracteres": 4432, "tronquee": false, "latence_ms": 37336.8}
+{"appel": 12, "jetons_entree": 945, "jetons_sortie": 2423, "cout_usd": 0.003097, "cumul_usd": 0.033134, "invite_caracteres": 4251, "reponse_caracteres": 5939, "tronquee": false, "latence_ms": 22352.4}

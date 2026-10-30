@@ -1,0 +1,60 @@
+{
+  "parametres": {
+    "questions": 40,
+    "premieres": null,
+    "taux_empoisonnement": 0.1,
+    "familles": "assertion",
+    "graine": 20260902,
+    "sortie": "resultats/_essai2",
+    "modele": null,
+    "palier": "api-hors-ue",
+    "base_url": null,
+    "delai": 180,
+    "tarif_entree": null,
+    "tarif_sortie": null,
+    "classe": null,
+    "ancrees_seulement": true,
+    "profondeur_ancrage": 10,
+    "eurlex_brut": true,
+    "langue_eurlex": "FR",
+    "sans_filtre_reglement": false,
+    "attaquant": "surface",
+    "journal_reformulations": null,
+    "sans_devis": false,
+    "reprise": null,
+    "reclassement": false,
+    "top_k_generation": 10,
+    "longueur_reclasseur": 512,
+    "max_jetons": null,
+    "temperature": null,
+    "plafond": 1.0,
+    "engager_la_depense": false
+  },
+  "requetes": 8,
+  "configurations": 5,
+  "appels_plafond": 40,
+  "appels_reels": 40,
+  "abstentions_evitees": 0,
+  "invite_caracteres": {
+    "total": 688375,
+    "moyenne": 17209.4,
+    "mediane": 17143.0,
+    "min": 14488,
+    "max": 19630
+  },
+  "invite_mots": {
+    "total": 86104,
+    "moyenne": 2152.6
+  },
+  "familles": [
+    "assertion"
+  ],
+  "resultats_de_robustesse": "NON MESURES : fournisseur simule",
+  "asr_ignore": {
+    "complete": 0.0,
+    "sans_isolation": 0.0,
+    "sans_corroboration": 0.0,
+    "sans_verrou": 0.0,
+    "aucune": 0.0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "corpus": "finqa",
+  "questions": 200,
+  "k": 10,
+  "profondeur": 100,
+  "lexical": 0.475,
+  "dense": 0.345,
+  "union": 0.57,
+  "marge": 0.095,
+  "sauvees_par_le_dense": 19,
+  "balayage": [
+    {
+      "poids_dense": 0.0,
+      "rappel": 0.475
+    },
+    {
+      "poids_dense": 0.1,
+      "rappel": 0.48
+    },
+    {
+      "poids_dense": 0.25,
+      "rappel": 0.495
+    },
+    {
+      "poids_dense": 0.5,
+      "rappel": 0.505
+    },
+    {
+      "poids_dense": 0.75,
+      "rappel": 0.505
+    },
+    {
+      "poids_dense": 1.0,
+      "rappel": 0.485
+    },
+    {
+      "poids_dense": 1.5,
+      "rappel": 0.475
+    },
+    {
+      "poids_dense": 2.0,
+      "rappel": 0.44
+    },
+    {
+      "poids_dense": 4.0,
+      "rappel": 0.39
+    }
+  ]
+}

@@ -1,0 +1,238 @@
+{
+  "identifiant": "e7b-banque-20260902-001726-2e6e9d60",
+  "nom": "e7b-banque",
+  "commit": "2e6e9d60f9b0-modifie",
+  "manifeste_hash": "e053a40c13daadd986e820d733070c3ac462d1953d78152e0e241fd75b4556bc",
+  "manifeste": {
+    "data/banque/banque_reference.json": "d9837de47745c184277d90140ad580c8f35162ed3d8d23cd2d3bc56dc28de0e0",
+    "data/banque/banque_schema.json": "eaa76c682b4bb6c851dc5d7c4f5733953ec6415374485b4d990dbc7274ac8dfe"
+  },
+  "materiel": {
+    "nom": "instance GPU louee (Scaleway L4-1-24G, PAR-2)",
+    "role": "mesure-souveraine",
+    "accelerateur": "NVIDIA L4 24 Go",
+    "juridiction": "France (PAR-2)",
+    "souverain": true,
+    "note": "calcul des embeddings ; substrat de calcul, non service distant",
+    "systeme": "Windows",
+    "version": "10",
+    "processeur": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.11.9"
+  },
+  "versions": {
+    "torch": "2.13.0+cpu",
+    "sentence_transformers": "3.4.1",
+    "qdrant_client": "inconnue",
+    "spacy": "3.8.14",
+    "rank_bm25": "inconnue",
+    "numpy": "2.4.6"
+  },
+  "configuration": {
+    "confidentialite": {
+      "k": 50,
+      "budget_bits": 6.0,
+      "kappa": "a-remplacer-au-deploiement",
+      "moteur_ner": "souverain",
+      "langue_ner": "fr",
+      "tolerance_gabarit": 4,
+      "chemin_registre": "data/registre_exposition.json"
+    },
+    "routage": {
+      "seuil_pertinence": 0.55,
+      "seuil_completude": 0.7,
+      "correction_autorisee": true,
+      "escalade_autorisee": true
+    },
+    "recherche": {
+      "modele_embeddings": "BAAI/bge-m3",
+      "dimension": 1024,
+      "top_k_dense": 50,
+      "top_k_lexical": 50,
+      "top_k_reclassement": 20,
+      "n_final": 10,
+      "modele_reclasseur": "BAAI/bge-reranker-v2-m3",
+      "k_rrf": 60,
+      "collection": "rag_souverain",
+      "hote_qdrant": "http://localhost:6333"
+    },
+    "isolation": {
+      "seuil_corroboration": 2,
+      "seuil_collusion": 2,
+      "penalite_collusion": 0.1
+    },
+    "generation": {
+      "palier": "local",
+      "modele": "mistral-small",
+      "max_jetons": 1024,
+      "temperature": 0.0
+    },
+    "graine": 42,
+    "materiel": {
+      "nom": "instance GPU louee (Scaleway L4-1-24G, PAR-2)",
+      "role": "mesure-souveraine",
+      "accelerateur": "NVIDIA L4 24 Go",
+      "juridiction": "France (PAR-2)",
+      "souverain": true,
+      "note": "calcul des embeddings ; substrat de calcul, non service distant"
+    }
+  },
+  "mesures": {
+    "spacy.rappel": {
+      "valeur": 0.9997,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "spacy.precision": {
+      "valeur": 0.8968,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "camembert.rappel": {
+      "valeur": 0.9999,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "camembert.precision": {
+      "valeur": 0.987,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "presidio.rappel": {
+      "valeur": 0.9988,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "presidio.precision": {
+      "valeur": 0.8925,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "spacy.rappel.carte": {
+      "valeur": 1.0,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "camembert.rappel.carte": {
+      "valeur": 1.0,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "presidio.rappel.carte": {
+      "valeur": 1.0,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "spacy.rappel.iban": {
+      "valeur": 0.8278,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "camembert.rappel.iban": {
+      "valeur": 0.89,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "presidio.rappel.iban": {
+      "valeur": 0.8278,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "spacy.rappel.identifiant": {
+      "valeur": 0.9914,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "camembert.rappel.identifiant": {
+      "valeur": 0.9986,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "presidio.rappel.identifiant": {
+      "valeur": 0.9914,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "spacy.rappel.lieu": {
+      "valeur": 1.0,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "camembert.rappel.lieu": {
+      "valeur": 1.0,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "presidio.rappel.lieu": {
+      "valeur": 1.0,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "spacy.rappel.organisation": {
+      "valeur": 0.8733,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "camembert.rappel.organisation": {
+      "valeur": 0.9967,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "presidio.rappel.organisation": {
+      "valeur": 0.8733,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "spacy.rappel.personne": {
+      "valeur": 0.9992,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "camembert.rappel.personne": {
+      "valeur": 0.9271,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    "presidio.rappel.personne": {
+      "valeur": 0.9967,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    }
+  },
+  "evenements": [
+    {
+      "horodatage": "00:17:26",
+      "libelle": "debut",
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    {
+      "horodatage": "00:53:22",
+      "libelle": "fin",
+      "duree_s": 2156.37
+    }
+  ],
+  "avertissements": []
+}

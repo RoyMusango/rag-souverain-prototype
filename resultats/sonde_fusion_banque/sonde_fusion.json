@@ -1,0 +1,49 @@
+{
+  "corpus": "banque",
+  "questions": 200,
+  "k": 10,
+  "profondeur": 100,
+  "lexical": 1.0,
+  "dense": 0.97,
+  "union": 1.0,
+  "marge": 0.0,
+  "sauvees_par_le_dense": 0,
+  "balayage": [
+    {
+      "poids_dense": 0.0,
+      "rappel": 1.0
+    },
+    {
+      "poids_dense": 0.1,
+      "rappel": 1.0
+    },
+    {
+      "poids_dense": 0.25,
+      "rappel": 1.0
+    },
+    {
+      "poids_dense": 0.5,
+      "rappel": 1.0
+    },
+    {
+      "poids_dense": 0.75,
+      "rappel": 1.0
+    },
+    {
+      "poids_dense": 1.0,
+      "rappel": 1.0
+    },
+    {
+      "poids_dense": 1.5,
+      "rappel": 1.0
+    },
+    {
+      "poids_dense": 2.0,
+      "rappel": 1.0
+    },
+    {
+      "poids_dense": 4.0,
+      "rappel": 0.995
+    }
+  ]
+}

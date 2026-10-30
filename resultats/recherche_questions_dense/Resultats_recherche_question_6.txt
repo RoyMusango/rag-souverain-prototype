@@ -1,0 +1,50 @@
+==============================================================================
+QUESTION 6
+==============================================================================
+
+Enonce :
+  Dans quel cas l'obligation de fournir des informations sur les sanctions et mesures imposées ne s'applique pas ?
+
+Ancrage attendu :
+  eurlex/MiFID2/FR/art_71/p113_feb28565
+  extrait : Les États membres fournissent chaque année à l’AEMF des informations agrégées sur l’ensemble des sanctions et mesures im...
+
+Configuration de recherche : dense
+
+------------------------------------------------------------------------------
+RAPPEL
+------------------------------------------------------------------------------
+  rappel@5   : OUI    (rang 1)
+  rappel@10  : OUI    (rang 1)
+  rappel@25  : OUI    (rang 1)
+
+------------------------------------------------------------------------------
+RESULTATS RENDUS PAR LE SYSTEME
+------------------------------------------------------------------------------
+rang  score     ancrage                                        debut du texte
+------------------------------------------------------------------------------
+1     0.0164    eurlex/MiFID2/FR/art_71/p113_feb28565          Les États membres fournissent   <== ATTENDU
+2     0.0161    eurlex/MiFID2/EN/art_71/p112_cf853a2c          Member States shall provide th
+3     0.0159    eurlex/MiFID2/FR/art_71/p112_13979f1c          Les États membres veillent à c
+4     0.0156    eurlex/MiFID2/FR/considerants/p23_f117583e     Les autorités compétentes ne d
+5     0.0154    eurlex/MiFID2/EN/art_71/p113_48bab1ca          Member States shall provide ES
+6     0.0152    eurlex/AI_Act/FR/art_78/p106_d1e7e569          Les paragraphes 1, 2 et 3 sont
+7     0.0149    eurlex/MiFID2/EN/art_70/p108_b8b214dc          Member States may decide not t
+8     0.0147    eurlex/MiFID2/EN/art_2/p23_fde7ff30            Competent authorities should h
+9     0.0145    eurlex/MiFID2/EN/art_71/p113_beed94b5          Competent authorities shall in
+10    0.0143    eurlex/MiFID2/FR/considerants/p23_e24cb676     (149) La présente directive ne
+11    0.0141    eurlex/RGPD/FR/art_27/p48_fff53ed3             L'obligation prévue au paragra
+12    0.0139    eurlex/MiFID2/FR/art_71/p113_f21660ee          a) diffèrent la publication de
+13    0.0137    eurlex/MiFID2/FR/art_71/p113_9ca5dbdd          Les autorités compétentes veil
+14    0.0135    eurlex/AI_Act/EN/art_78/p106_21fade3e          Paragraphs 1, 2 and 3 shall no
+15    0.0133    eurlex/MiFID2/FR/art_71/p113_858812fc          Lorsque les États membres ont 
+16    0.0132    eurlex/RGPD/EN/art_27/p48_52295129             The obligation laid down in pa
+17    0.0130    eurlex/MiFID2/EN/art_2/p23_f630859b            (150) Even though nothing prev
+18    0.0128    eurlex/RGPD/FR/art_30/p51_a0107abc             Les obligations visées aux par
+19    0.0127    eurlex/MiFID2/FR/art_77/p117_18206b9c          La divulgation de bonne foi au
+20    0.0125    eurlex/MiFID2/EN/art_71/p113_808782f0          (a) defer the publication of t
+21    0.0123    eurlex/MiFID2/FR/art_70/p108_0699ea88          Les États membres peuvent déci
+22    0.0122    eurlex/RGPD/FR/art_41/p58_3141dd9f             Le présent article ne s'appliq
+23    0.0120    eurlex/RGPD/EN/art_41/p58_74b0b510             This Article shall not apply t
+24    0.0119    eurlex/AI_Act/FR/art_78/p106_5c9806eb          Sans préjudice des paragraphes
+25    0.0118    eurlex/MiFID2/EN/art_77/p117_071c70e8          The disclosure in good faith t

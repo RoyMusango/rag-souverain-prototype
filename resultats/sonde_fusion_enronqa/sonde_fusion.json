@@ -1,0 +1,49 @@
+{
+  "corpus": "enronqa",
+  "questions": 200,
+  "k": 10,
+  "profondeur": 100,
+  "lexical": 0.95,
+  "dense": 0.76,
+  "union": 0.955,
+  "marge": 0.005,
+  "sauvees_par_le_dense": 1,
+  "balayage": [
+    {
+      "poids_dense": 0.0,
+      "rappel": 0.95
+    },
+    {
+      "poids_dense": 0.1,
+      "rappel": 0.95
+    },
+    {
+      "poids_dense": 0.25,
+      "rappel": 0.95
+    },
+    {
+      "poids_dense": 0.5,
+      "rappel": 0.94
+    },
+    {
+      "poids_dense": 0.75,
+      "rappel": 0.93
+    },
+    {
+      "poids_dense": 1.0,
+      "rappel": 0.915
+    },
+    {
+      "poids_dense": 1.5,
+      "rappel": 0.81
+    },
+    {
+      "poids_dense": 2.0,
+      "rappel": 0.805
+    },
+    {
+      "poids_dense": 4.0,
+      "rappel": 0.785
+    }
+  ]
+}

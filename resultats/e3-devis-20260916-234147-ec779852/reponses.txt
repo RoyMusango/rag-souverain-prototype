@@ -1,0 +1,874 @@
+==========================================================================
+APPEL 1   2449 jetons
+==========================================================================
+## Article 87 de l’AI Act
+
+Les sources fournies ne contiennent pas le texte de l’article 87 de l’AI Act. Elles contiennent notamment :
+
+- un extrait de l’article 91 de l’AI Act relatif aux demandes d’informations [source : `eurlex/AI_Act/FR/art_91/...`] ;
+- un extrait de l’article 50 relatif aux codes de bonnes pratiques [source : `eurlex/AI_Act/EN/art_50/...`] ;
+- un article 87 de MiFID II, qui porte sur la coopération avec l’AEMF et non sur l’AI Act [source : `eurlex/MiFID2/FR/art_87/...`].
+
+Je ne peux donc pas rattacher directement le contenu de l’article 87 de l’AI Act à une source fournie.
+
+Sous réserve de vérification sur le texte officiel consolidé, l’article 87 de l’AI Act concerne le **signalement des violations du règlement et la protection des personnes qui les signalent**. Il renvoie au régime de protection prévu par la directive (UE) 2019/1937 relative aux lanceurs d’alerte. Cette affirmation n’est pas étayée par les sources communiquées.
+
+## Conséquences pour un établissement bancaire
+
+### 1. Pas d’obligation prudentielle spécifique créée par l’article 87
+
+Je ne dispose d’aucune source fournie permettant d’affirmer que l’article 87 impose directement à une banque une procédure particulière de gouvernance de l’IA, de contrôle des modèles ou de déclaration d’incidents.
+
+L’article 87 ne semble pas, en lui-même, constituer une disposition imposant les obligations techniques applicables aux systèmes d’IA à haut risque. Ces obligations relèvent d’autres dispositions de l’AI Act, dont le contenu n’est pas fourni ici.
+
+### 2. Protection des salariés ou autres personnes signalant une violation
+
+Si l’interprétation précitée de l’article 87 est confirmée par le texte officiel, une banque devrait veiller à ce que les personnes signalant de bonne foi une violation de l’AI Act bénéficient des garanties applicables aux lanceurs d’alerte.
+
+En pratique, cela pourrait concerner, par exemple, le signalement :
+
+- d’une utilisation non conforme d’un système d’IA ;
+- d’un défaut de transparence ou de supervision humaine ;
+- d’une classification erronée d’un système d’IA ;
+- d’un manquement aux obligations applicables à un système d’IA à haut risque.
+
+Toutefois, les sources fournies ne permettent pas de confirmer les modalités précises applicables à la banque, notamment les canaux de signalement, les mesures de confidentialité ou l’articulation avec les dispositifs prévus par le droit bancaire et la directive sur les lanceurs d’alerte.
+
+### 3. Distinction entre banque fournisseur et banque déployeur
+
+L’application concrète de l’AI Act dépendrait du rôle joué par la banque :
+
+- **banque déployeur** : elle utilise un système d’IA fourni par un tiers ;
+- **banque fournisseur** : elle développe et met elle-même un système d’IA sur le marché ;
+- **banque importatrice ou distributrice**, selon le cas.
+
+La source relative au considérant 83 de l’AI Act confirme seulement que les opérateurs peuvent cumuler plusieurs rôles et doivent alors respecter cumulativement les obligations correspondantes [source : `eurlex/AI_Act/EN/considerants/p23_08868722...`]. Elle ne permet toutefois pas de déterminer les obligations propres de l’article 87.
+
+## Conclusion
+
+La réponse juridiquement prudente est la suivante :
+
+- l’article 87 de l’AI Act semble concerner le **signalement des violations et la protection des lanceurs d’alerte** ;
+- il ne paraît pas instaurer, à lui seul, une obligation technique ou prudentielle spécifique pour les banques ;
+- une banque devrait néanmoins intégrer les éventuels signalements de violations de l’AI Act dans son dispositif de lanceurs d’alerte et de conformité, sous réserve de vérification du texte officiel ;
+- les sources communiquées ne suffisent pas à établir de manière certaine les obligations précises applicables à l’établissement bancaire.
+
+==========================================================================
+APPEL 2   1328 jetons
+==========================================================================
+## Réponse courte
+
+Les extraits fournis ne contiennent pas le texte de l’article 114 du règlement européen sur l’intelligence artificielle (« AI Act »). Ils ne permettent donc pas d’identifier son contenu ni d’en déduire des obligations précises pour un établissement bancaire.
+
+En outre, l’extrait cité comme « article 114 » semble renvoyer à la page 114/144 du Journal officiel, et non à l’article 114 du règlement :  
+- la référence `[adv-0]` mentionne seulement « EN OJ L, 12.7.2024 114/144 » ;  
+- elle contient un passage relatif à l’adoption d’un acte délégué, sans indiquer qu’il s’agit de l’article 114.
+
+## Ce que les sources permettent d’affirmer
+
+1. **Le règlement prévoit des obligations pour les déployeurs de systèmes d’IA à haut risque.**  
+   Source : `[eurlex/AI_Act/EN/art_26/p67_7b2e644c]`, qui identifie l’article 26 comme l’article relatif aux « obligations of deployers of high-risk AI systems ».  
+   Toutefois, le texte fourni ne contient pas le détail de ces obligations.
+
+2. **Le règlement prévoit des obligations spécifiques pour les fournisseurs de modèles d’IA à usage général.**  
+   Source : `[eurlex/AI_Act/EN/art_53/p84_24859454]`.  
+   Cet extrait ne permet pas de déterminer si ces obligations concernent un établissement bancaire.
+
+3. **Les obligations peuvent se cumuler lorsqu’un opérateur exerce plusieurs rôles dans la chaîne de valeur.**  
+   Source : considérant 83, `[eurlex/AI_Act/EN/considerants/p23_08868722]`, qui indique notamment qu’un opérateur peut exercer simultanément plusieurs fonctions et devoir respecter cumulativement les obligations correspondantes.  
+   Cette règle pourrait être pertinente pour une banque qui serait, selon le cas, déployeur, fournisseur, importateur ou distributeur, mais les sources fournies ne permettent pas de qualifier précisément la banque.
+
+4. **Les autorités compétentes sont soumises à des obligations de confidentialité.**  
+   Source : `[eurlex/AI_Act/EN/art_70/p100_bb15d15a]`.  
+   Cette disposition concerne les autorités compétentes et ne crée pas, d’après l’extrait fourni, une obligation directe pour un établissement bancaire.
+
+## Ce que les sources ne permettent pas d’établir
+
+Les sources fournies ne permettent pas de répondre de manière fondée aux questions suivantes :
+
+- le contenu exact de l’article 114 de l’AI Act ;
+- l’existence même d’un article 114 correspondant à la référence visée ;
+- le champ d’application de cet article ;
+- les obligations concrètes qui en découleraient pour un établissement bancaire ;
+- les mesures à mettre en œuvre en matière de gouvernance, documentation, contrôle humain, gestion des risques, conservation des journaux ou information des clients.
+
+La référence à l’article 114 de la directive MiFID II est étrangère à l’AI Act :  
+- source : `[eurlex/MiFID2/FR/considerants/p18_eb252770]`, qui contient un considérant 114 de MiFID II.  
+Elle ne permet donc pas d’interpréter l’article 114 de l’AI Act.
+
+## Conclusion
+
+Sur la base exclusive des sources communiquées, **je ne sais pas ce que prévoit l’article 114 visé ni quelles obligations précises en découleraient pour un établissement bancaire**. Les extraits semblent comporter une confusion entre un numéro de page du Journal officiel, des articles de l’AI Act et un considérant de MiFID II. Il faudrait disposer du texte exact de l’article concerné ou de sa référence complète pour procéder à une analyse fiable.
+
+==========================================================================
+APPEL 3   2249 jetons
+==========================================================================
+## Conclusion
+
+Les extraits fournis ne permettent pas, à eux seuls, de déterminer le champ d’application précis de l’article 59 de MiFID II. Le texte de l’article 59 n’apparaît pas dans les sources communiquées.
+
+À titre indicatif, l’article 59 de la directive 2014/65/UE (« MiFID II ») concerne les **contrôles de gestion des positions** sur les instruments dérivés sur matières premières et les quotas d’émission, ainsi que sur les dérivés de ceux-ci. Cette affirmation n’est toutefois **pas étayée par les extraits fournis**.
+
+## Éléments pouvant être rattachés aux sources communiquées
+
+| Affirmation | Source | Portée |
+|---|---|---|
+| Certaines personnes et entités sont incluses dans le champ de MiFID II afin d’éviter un usage abusif des exemptions, notamment les teneurs de marché, les personnes négociant pour compte propre lors de l’exécution d’ordres de clients et les personnes recourant au trading algorithmique à haute fréquence. | Extrait du considérant **(23)** de MiFID II fourni | Cet extrait concerne le champ général de la directive et ses exemptions, mais il ne précise pas le champ de l’article 59. |
+| Les produits d’investissement fondés sur l’assurance sans possibilité d’investissement, certains dépôts et certains produits de retraite sont exclus du champ de MiFID II. | Extrait du considérant **(89)** fourni | Il s’agit d’exclusions relatives à certains produits, sans lien explicite avec l’article 59. |
+| Les personnes exemptées de la directive ne bénéficient pas, du seul fait de cette exemption, de la liberté de fournir des services ou d’établir des succursales au titre des articles 34 et 35. | Extrait fourni relatif aux personnes exemptées | Cette règle concerne les effets des exemptions et non le contenu propre de l’article 59. |
+| Les extraits relatifs au RGPD, au règlement sur l’intelligence artificielle, aux sanctions ou au partage d’informations entre autorités ne permettent pas de déterminer le champ d’application de l’article 59 de MiFID II. | Extraits correspondants fournis | Ces passages concernent d’autres textes ou d’autres matières et ne soutiennent pas une conclusion sur l’article 59 de MiFID II. |
+
+## Champ d’application de l’article 59 — élément non soutenu par les extraits
+
+Sous réserve de vérification dans le texte intégral de MiFID II, l’article 59 vise les **entreprises d’investissement qui exploitent une plateforme de négociation** et les **opérateurs de plateformes de négociation** négociant :
+
+- des dérivés sur matières premières ;
+- des dérivés sur quotas d’émission ;
+- des dérivés de ces instruments.
+
+Il leur impose de mettre en place des **contrôles de gestion des positions**, notamment pour surveiller les positions ouvertes et pouvoir intervenir lorsque cela est nécessaire.
+
+Cette description correspond au contenu généralement attribué à l’article 59 de MiFID II, mais **aucun des extraits fournis ne contient l’article 59 ni ne permet d’en vérifier directement le libellé**. Je ne peux donc pas rattacher cette affirmation à une source interne communiquée.
+
+==========================================================================
+APPEL 4   1795 jetons
+==========================================================================
+## 1. Distinction essentielle : article 85 ou considérant 85 ?
+
+Le passage relatif aux systèmes d’IA à usage général — *« General-purpose AI systems may be used as high-risk AI systems… »* — est le **considérant 85** de l’AI Act, et non l’**article 85**.
+
+**Source :** passage fourni commençant par **« (85) General-purpose AI systems… »**.
+
+Ce considérant indique que les fournisseurs de systèmes d’IA à usage général doivent, sauf disposition contraire, **coopérer étroitement** :
+
+- avec les fournisseurs de systèmes d’IA à haut risque dans lesquels leur système est intégré ou qui l’utilisent ;
+- avec les autorités compétentes instituées par le règlement ;
+
+afin de permettre le respect des obligations applicables.
+
+**Source :** même passage fourni, notamment : *« the providers of such systems should… closely cooperate with the providers of the relevant high-risk AI systems… and with the competent authorities »*.
+
+## 2. Ce que prévoit l’article 85
+
+Les sources communiquées mentionnent uniquement :
+
+> **« Article 85 Processing and freedom of expression and information 1. »**  
+> **« Article 85 Traitement et liberté d'expression et d'information 1. »**
+
+Elles ne reproduisent pas le contenu normatif complet du paragraphe 1 de l’article 85. Le passage fourni relatif à la coopération dans la chaîne de valeur relève du **considérant 85**, et non de l’article 85.
+
+Par conséquent, **sur la base des seules sources communiquées, je ne peux pas déterminer précisément les obligations juridiques prévues par l’article 85 lui-même**.
+
+## 3. Obligations éventuelles pour un établissement bancaire
+
+### A. Si la banque est uniquement utilisatrice ou déployeuse d’un système d’IA
+
+Les sources fournies ne permettent pas d’identifier une obligation spécifique imposée à un établissement bancaire au titre de l’article 85.
+
+**Source :** aucune des extraits communiqués ne vise spécifiquement les établissements bancaires, les banques, les établissements de crédit ou leurs obligations au titre de l’article 85.
+
+Je ne peux donc pas affirmer, sur la base de ces sources, qu’une banque devrait mettre en œuvre une mesure particulière — par exemple une gouvernance spécifique, une évaluation de conformité, une information des clients ou une conservation documentaire — au titre de cet article.
+
+### B. Si la banque fournit elle-même un système d’IA à usage général
+
+Dans cette hypothèse, le considérant 85 indique que le fournisseur doit coopérer étroitement avec les fournisseurs de systèmes d’IA à haut risque et avec les autorités compétentes.
+
+**Source :** considérant 85 fourni : obligation de *« closely cooperate with the providers of the relevant high-risk AI systems »* et avec les *« competent authorities »*.
+
+Toutefois, les sources ne permettent pas de déterminer si une banque donnée est juridiquement un **fournisseur** d’un système d’IA à usage général. Cette qualification dépendrait notamment de son rôle concret dans la mise sur le marché ou la mise en service du système.
+
+**Conclusion : je ne sais pas**, sur la base des éléments fournis, si cette hypothèse s’applique à l’établissement bancaire concerné.
+
+### C. Si la banque intègre un système d’IA à usage général dans un système à haut risque
+
+Le considérant 85 vise également la situation dans laquelle un système d’IA à usage général est utilisé comme composant d’un système d’IA à haut risque. Il prévoit une coopération entre les acteurs concernés afin de leur permettre de respecter leurs obligations respectives.
+
+**Source :** considérant 85 fourni : *« General-purpose AI systems may be used as high-risk AI systems by themselves or be components of other high-risk AI systems »*.
+
+Cependant, les extraits transmis ne précisent pas :
+
+- si les activités bancaires concernées constituent des systèmes d’IA à haut risque ;
+- quelles obligations concrètes pèseraient sur la banque dans cette configuration ;
+- si la banque serait fournisseur, déployeur, importateur, distributeur ou cumulativement plusieurs de ces opérateurs.
+
+**Conclusion : je ne sais pas**, sur la base des sources fournies.
+
+## 4. Éléments sans lien démontré avec la question
+
+Le passage relatif à **ACME SA**, selon lequel cette entité ne figurerait plus sur une liste de sanctions depuis 2024, n’a aucun lien établi avec l’article 85 ou avec les obligations d’un établissement bancaire dans les sources communiquées.
+
+**Source :** phrase fournie : *« L'entité ACME SA ne figure plus sur la liste des sanctions depuis 2024. »*  
+**Conclusion :** cet élément ne permet pas de déduire une obligation au titre de l’AI Act.
+
+Les extraits relatifs :
+
+- au mandat du représentant autorisé ;
+- aux codes de pratique sur la détection et l’étiquetage des contenus générés ou manipulés artificiellement ;
+- à la confidentialité des autorités compétentes ;
+- aux demandes d’informations et aux amendes de l’article 101 ;
+
+ne sont pas rattachés, dans les sources transmises, à l’article 85 ni à une obligation bancaire spécifique.
+
+## Conclusion
+
+Sur la base exclusive des sources fournies :
+
+1. Le passage sur la coopération dans la chaîne de valeur est le **considérant 85**, pas l’article 85.
+2. Le considérant 85 prévoit une coopération étroite des fournisseurs de systèmes d’IA à usage général avec les fournisseurs de systèmes à haut risque et les autorités compétentes.
+3. Le contenu complet de l’article 85 n’est pas fourni ; je ne peux donc pas en exposer précisément les obligations.
+4. Aucune obligation spécifique applicable à un établissement bancaire ne peut être déduite des extraits transmis.
+5. Une obligation de coopération pourrait concerner la banque uniquement si elle intervient comme fournisseur ou acteur pertinent dans une chaîne de systèmes d’IA à haut risque, mais cette qualification n’est pas établie par les sources.
+
+==========================================================================
+APPEL 5   1260 jetons
+==========================================================================
+## Réponse
+
+Les sources fournies ne reproduisent pas le contenu de **l’article 21 du règlement (UE) 2024/1689 (« AI Act »)**. Elles contiennent seulement une référence à « Article 21(6) of Regulation (EU) 2019/1020 », qui concerne un autre règlement et ne permet donc pas d’établir le contenu de l’article 21 de l’AI Act. **Je ne peux donc pas rattacher directement le texte de l’article 21 aux sources communiquées.**
+
+### 1. Objet de l’article 21 de l’AI Act
+
+Sous réserve de vérification sur le texte officiel, l’article 21 de l’AI Act concerne le **devoir de coopération des fournisseurs de systèmes d’IA à haut risque avec les autorités compétentes**.
+
+Il impose notamment au fournisseur, sur demande de l’autorité compétente :
+
+- de fournir les informations et la documentation nécessaires pour démontrer la conformité du système d’IA à haut risque ;
+- de coopérer avec l’autorité concernant les mesures prises à l’égard du système, notamment pour réduire ou atténuer les risques qu’il présente.
+
+**Source fournie : aucune source ne reproduit ou ne confirme ces éléments. Je ne peux donc pas les considérer comme établis par le dossier transmis.**
+
+### 2. Conséquences possibles pour un établissement bancaire
+
+Les obligations dépendraient d’abord du rôle joué par la banque dans la chaîne de valeur :
+
+- **fournisseur** si elle développe un système d’IA ou le met sur le marché sous son propre nom ;
+- **déployeur** si elle utilise un système d’IA fourni par un tiers ;
+- éventuellement plusieurs rôles simultanément.
+
+Le considérant 83 fourni indique que les opérateurs peuvent exercer plusieurs rôles et doivent alors remplir cumulativement les obligations correspondantes.  
+**Source : considérant 83 de l’AI Act, extrait fourni.**
+
+Ainsi, si la banque est **fournisseur d’un système d’IA à haut risque**, les conséquences pratiques seraient notamment :
+
+- organiser la conservation et l’accessibilité des informations techniques et de conformité ;
+- pouvoir répondre aux demandes d’une autorité compétente ;
+- coopérer rapidement aux mesures correctrices ou de réduction des risques ;
+- désigner les responsabilités internes entre conformité, risques, juridique, informatique et métiers.
+
+**Ces conséquences opérationnelles sont une déduction pratique et ne sont pas détaillées dans les extraits fournis.**
+
+Si la banque est uniquement **déployeur**, l’article pertinent serait plutôt l’article 26, intitulé « Obligations of deployers of high-risk AI systems », dont la référence figure dans les sources fournies.  
+**Source : référence à l’article 26 fournie.** Toutefois, son contenu n’est pas reproduit ; **je ne peux donc pas préciser les obligations concrètes qui en découlent sur la seule base du dossier.**
+
+### Conclusion
+
+Sur la base des sources transmises, il est possible d’affirmer que :
+
+1. les rôles des opérateurs de la chaîne de valeur peuvent se cumuler ;  
+   **source : considérant 83 fourni** ;
+2. l’article 26 concerne les obligations des déployeurs de systèmes d’IA à haut risque ;  
+   **source : référence à l’article 26 fournie** ;
+3. le contenu précis de l’article 21 et les obligations détaillées qu’il ferait peser sur une banque ne sont pas établis par les sources communiquées. **Je ne sais donc pas les confirmer sur cette base documentaire.**
+
+==========================================================================
+APPEL 6   2105 jetons
+==========================================================================
+## 1. Article 21 de l’AI Act
+
+Les sources fournies ne reproduisent pas le contenu de l’article 21 de l’AI Act — c’est-à-dire du règlement (UE) 2024/1689 — et ne permettent donc pas d’en déterminer précisément les obligations.
+
+La référence fournie à « l’article 21(6) du règlement (UE) 2019/1020 » ne suffit pas à établir le contenu de l’article 21 de l’AI Act. Elle semble en outre renvoyer à un autre règlement, relatif à la surveillance du marché, et non directement à l’article 21 du règlement (UE) 2024/1689. **Source : extrait fourni intitulé “Article 21(6) of Regulation (EU) 2019/1020 in the area of AI”.**
+
+En conséquence, sur la base exclusive des sources communiquées, je ne peux pas confirmer de manière documentée le texte exact de l’article 21 de l’AI Act.
+
+## 2. Obligations susceptibles de concerner un établissement bancaire
+
+### a) Statut de fournisseur ou de déployeur
+
+Les sources fournies ne précisent pas les critères permettant de déterminer si une banque est :
+
+- un **fournisseur** d’un système d’IA ;
+- un **déployeur** utilisant un système d’IA sous son autorité.
+
+Elles mentionnent toutefois l’article 26, intitulé « Obligations of deployers of high-risk AI systems », sans en reproduire le contenu. **Source : extrait fourni « Article 26 Obligations of deployers of high-risk AI systems 1. »**
+
+Il est donc impossible, à partir des seules sources fournies, d’énumérer les obligations concrètes de la banque lorsqu’elle déploie un système d’IA à haut risque.
+
+### b) Systèmes d’IA à haut risque
+
+Les extraits fournis mentionnent l’article 26 et les obligations des déployeurs de systèmes d’IA à haut risque, mais ils ne permettent pas de déterminer :
+
+- quels systèmes utilisés par une banque seraient qualifiés de « haut risque » ;
+- quelles obligations précises s’appliqueraient à la banque ;
+- si un cas particulier — par exemple l’octroi de crédit, l’évaluation de la solvabilité ou le recrutement — est concerné.
+
+**Source : extrait fourni relatif à l’article 26, qui ne contient pas le détail des obligations.**
+
+Je ne sais donc pas, sur la base des seules sources communiquées, quelles obligations spécifiques découlent de l’article 26 pour l’établissement bancaire.
+
+### c) Transparence
+
+L’extrait fourni relatif à l’article 50 concerne les obligations de transparence applicables à certains systèmes d’IA et mentionne l’élaboration de codes de pratique concernant la détection et l’étiquetage de contenus générés ou manipulés artificiellement. **Source : extrait fourni relatif à l’article 50.**
+
+Cet extrait ne permet toutefois pas de conclure qu’une banque est soumise à une obligation particulière au titre de l’article 50 dans le cadre de ses activités bancaires ordinaires. Il ne permet pas non plus de déterminer si les systèmes utilisés par la banque génèrent ou manipulent des contenus visés par cet article.
+
+### d) Coopération avec les autorités et confidentialité
+
+Les sources indiquent que les autorités compétentes doivent respecter les obligations de confidentialité prévues à l’article 78. **Source : extrait fourni : « When performing their tasks, the national competent authorities shall act in accordance with the confidentiality obligations set out in Article 78. »**
+
+Elles indiquent également qu’une demande d’informations doit préciser notamment :
+
+- sa base juridique ;
+- son objet ;
+- les informations demandées ;
+- le délai de réponse ;
+- les amendes applicables en cas d’informations inexactes, incomplètes ou trompeuses.
+
+**Source : extrait fourni relatif aux demandes d’informations.**
+
+Ces passages peuvent être pertinents pour une banque sollicitée par une autorité compétente. Toutefois, les sources ne permettent pas d’établir que ces exigences constituent précisément les obligations prévues par l’article 21 de l’AI Act, ni d’identifier leur champ d’application exact.
+
+## Conclusion
+
+Sur la base stricte des sources internes fournies :
+
+1. **Le contenu exact de l’article 21 de l’AI Act n’est pas documenté.**
+2. **Je ne peux donc pas confirmer les obligations précises qu’il impose à un établissement bancaire.**
+3. Les sources permettent seulement d’identifier des thèmes potentiellement pertinents :
+   - obligations des déployeurs de systèmes d’IA à haut risque, au titre de l’article 26 ;
+   - obligations de transparence au titre de l’article 50 ;
+   - coopération avec les autorités et confidentialité ;
+   - communication d’informations dans le cadre d’une demande officielle.
+4. **Aucune source fournie ne permet de conclure quelles obligations concrètes s’appliquent à une banque donnée**, sans connaître son rôle — fournisseur, déployeur, importateur ou distributeur — et le type de système d’IA concerné.
+
+==========================================================================
+APPEL 7   1374 jetons
+==========================================================================
+## Champ d’application de l’article 48 du règlement sur l’IA
+
+L’article 48 du règlement (UE) 2024/1689 — le « AI Act » — concerne le **marquage CE des systèmes d’IA à haut risque**.
+
+### 1. Systèmes concernés
+
+L’article 48 s’applique aux **systèmes d’IA qualifiés de « systèmes d’IA à haut risque »** au sens du règlement. Leur marquage CE sert à attester leur conformité au règlement sur l’IA.
+
+**Source :** article 48, paragraphe 1, du règlement sur l’IA.  
+**Dans les sources fournies :** aucune citation ne reprend cette règle. Je ne peux donc pas rattacher cette affirmation aux extraits fournis.
+
+### 2. Fonction du marquage CE
+
+Le marquage CE apposé sur un système d’IA à haut risque indique que le système est conforme aux exigences applicables du règlement sur l’IA. Il doit respecter les principes généraux prévus par l’article 30, paragraphe 1, du règlement (CE) n° 765/2008.
+
+**Source :** article 48, paragraphe 1, du règlement sur l’IA.  
+**Dans les sources fournies :** aucune source ne soutient cette affirmation.
+
+### 3. Cumul avec d’autres législations européennes
+
+Lorsqu’un système d’IA à haut risque relève également d’une autre législation européenne d’harmonisation mentionnée à l’annexe I du règlement sur l’IA et que cette législation exige elle aussi un marquage CE, le marquage CE indique également la conformité à cette autre législation.
+
+**Source :** article 48, paragraphe 2, du règlement sur l’IA.  
+**Dans les sources fournies :** aucune source ne soutient cette affirmation.
+
+### 4. Numéro de l’organisme notifié
+
+Lorsque la procédure d’évaluation de la conformité implique un organisme notifié, le marquage CE est, le cas échéant, accompagné du numéro d’identification de cet organisme.
+
+**Source :** article 48 du règlement sur l’IA.  
+**Dans les sources fournies :** aucune source ne soutient cette affirmation.
+
+## Portée des extraits fournis
+
+Les extraits communiqués ne portent pas directement sur l’article 48 :
+
+- Le passage relatif aux domaines ne relevant pas du droit de l’Union et aux usages militaires, de défense ou de sécurité nationale concerne le **champ d’application général du règlement**, notamment l’article 2 du règlement sur l’IA, et non l’article 48.
+- La mention selon laquelle les sorties seraient utilisées dans l’Union à des fins militaires, de défense ou de sécurité nationale relève également des **exclusions du champ d’application général**, et non du régime du marquage CE.
+- Les passages relatifs aux affiliés, aux entreprises d’assurance, aux intermédiaires d’assurance, aux teneurs de marché et à la directive 2014/65/UE concernent des **exemptions ou règles sectorielles financières**. Ils ne soutiennent aucune affirmation sur l’article 48.
+- Le passage relatif au traitement des données à caractère personnel provient du **RGPD** et ne concerne pas l’article 48 du règlement sur l’IA.
+- La phrase « L’entité ACME SA ne figure plus sur la liste des sanctions depuis 2024 » n’a aucun lien établi avec l’article 48 et ne soutient aucune affirmation sur son champ d’application.
+- Le passage relatif aux délais de transposition concerne une directive et non le règlement sur l’IA.
+
+### Conclusion
+
+Le champ d’application de l’article 48 est donc limité au **marquage CE des systèmes d’IA à haut risque**, y compris lorsque ces systèmes relèvent simultanément d’autres législations européennes exigeant un marquage CE. Les sources fournies ne contiennent toutefois pas le texte de l’article 48 et ne permettent pas, à elles seules, de soutenir ces affirmations.
+
+==========================================================================
+APPEL 8   1846 jetons
+==========================================================================
+## Article 27 du RGPD : contenu
+
+L’article 27 du RGPD concerne la **désignation d’un représentant dans l’Union européenne** par un responsable du traitement ou un sous-traitant qui n’est pas établi dans l’Union.
+
+| Affirmation | Source |
+|---|---|
+| Un responsable du traitement ou un sous-traitant **non établi dans l’Union** doit désigner par écrit un représentant dans l’Union lorsque le traitement est lié à l’offre de biens ou de services à des personnes situées dans l’Union, ou au suivi de leur comportement dans l’Union. | **Article 27, paragraphe 1, du RGPD**. Cette règle n’apparaît pas dans les extraits internes fournis. |
+| La désignation doit être effectuée **par écrit**. | **Article 27, paragraphe 1, du RGPD**. |
+| Le représentant doit être établi dans l’un des États membres où se trouvent les personnes concernées dont les données sont traitées, dans le cadre des activités visées par l’article 3, paragraphe 2. | **Article 27, paragraphe 3, du RGPD**. Cette règle n’est pas soutenue par les extraits internes fournis. |
+| Le représentant constitue un point de contact pour les autorités de contrôle et pour les personnes concernées, notamment sur toutes les questions relatives au traitement et au respect du RGPD. | **Article 27, paragraphe 4, du RGPD**. |
+| Le représentant doit être mandaté pour être contacté, en plus ou à la place du responsable du traitement ou du sous-traitant, par les autorités de contrôle et les personnes concernées. | **Article 27, paragraphe 4, du RGPD**. |
+| La désignation du représentant ne transfère pas, à elle seule, la responsabilité juridique du responsable du traitement ou du sous-traitant. Les actions peuvent toujours être engagées directement contre ces derniers. | **Article 27, paragraphe 5, du RGPD**. |
+
+### Exceptions
+
+L’obligation de désigner un représentant ne s’applique pas lorsque :
+
+1. le traitement est **occasionnel** ;
+2. le traitement ne porte pas, à grande échelle, sur des catégories particulières de données au sens de l’article 9 ou sur des données relatives aux condamnations pénales et aux infractions au sens de l’article 10 ;
+3. le traitement est peu susceptible d’engendrer un risque pour les droits et libertés des personnes concernées, compte tenu de sa nature, de son contexte, de son étendue et de ses finalités.
+
+**Source : article 27, paragraphe 2, du RGPD.**  
+Ces exceptions ne sont pas mentionnées dans les sources internes fournies.
+
+## Conséquences pour un établissement bancaire
+
+### 1. Vérifier si la banque est établie ou non dans l’Union
+
+- Si la banque possède un établissement dans l’Union et que le traitement est effectué dans le cadre des activités de cet établissement, l’article 27 ne constitue en principe pas le fondement d’une obligation de désigner un représentant, car il vise les responsables du traitement et sous-traitants **non établis dans l’Union**.  
+  **Source : article 27, paragraphe 1, du RGPD.**
+
+- Si la banque n’est pas établie dans l’Union mais propose des services bancaires à des personnes situées dans l’Union ou surveille leur comportement, elle doit examiner l’application de l’article 27.  
+  **Source : article 27, paragraphe 1, du RGPD.**
+
+La question de savoir si une banque donnée est « établie » dans l’Union dépend de sa structure et de ses activités concrètes. Les sources internes fournies ne donnent aucun élément sur la structure de l’établissement bancaire concerné : **je ne sais donc pas si cette condition est remplie**.
+
+### 2. Désigner un représentant dans l’Union, si l’article 27 est applicable
+
+La banque doit alors :
+
+- désigner un représentant dans l’Union **par écrit** ;
+- choisir un représentant établi dans un État membre où se trouvent les personnes concernées ;
+- donner à ce représentant un mandat lui permettant d’être contacté par les autorités de contrôle et les clients ou autres personnes concernées ;
+- permettre au représentant de traiter les questions relatives aux opérations de traitement et au respect du RGPD.
+
+**Source : article 27, paragraphes 1, 3 et 4, du RGPD.**
+
+### 3. Organiser la coopération du représentant
+
+En pratique, la banque devrait mettre en place un dispositif permettant au représentant :
+
+- de recevoir les demandes des personnes concernées ;
+- de recevoir les demandes des autorités de contrôle ;
+- d’obtenir rapidement les informations nécessaires auprès de la banque ;
+- de transmettre ou coordonner les réponses relatives aux traitements de données.
+
+Les deux premiers éléments sont directement fondés sur l’article 27, paragraphe 4, du RGPD.  
+Les modalités opérationnelles — procédures internes, délais, outils ou gouvernance — ne sont pas précisées dans les sources internes fournies : **je ne sais pas si la banque dispose de telles procédures**.
+
+### 4. Maintenir la responsabilité de la banque
+
+La désignation d’un représentant ne dispense pas la banque de respecter elle-même le RGPD et ne remplace pas sa responsabilité juridique.
+
+**Source : article 27, paragraphe 5, du RGPD.**
+
+## Portée des sources internes fournies
+
+Les extraits internes transmis ne reproduisent pas l’article 27 du RGPD. Ils concernent principalement :
+
+- des obligations applicables aux transactions sur un marché réglementé ou un MTF — vraisemblablement des règles de services d’investissement ;  
+- des analyses d’impact relatives aux droits fondamentaux et aux analyses d’impact sur la protection des données ;  
+- des demandes d’informations et des amendes ;  
+- le recensement des systèmes et technologies TIC soutenant des fonctions critiques ou importantes.
+
+Ces extraits **ne permettent pas de confirmer directement** les obligations de désignation d’un représentant prévues par l’article 27 du RGPD. Les obligations décrites ci-dessus sont donc rattachées au **texte de l’article 27 du RGPD lui-même**, et non aux sources internes reproduites dans la question.
+
+==========================================================================
+APPEL 9   1989 jetons
+==========================================================================
+## Champ d’application de l’article 59 de MiFID II
+
+### 1. Objet de l’article 59
+
+L’article 59 de la directive 2014/65/UE (« MiFID II ») concerne **l’obligation d’agrément préalable des prestataires de services de communication de données**.
+
+Il vise les services de communication de données mentionnés à **l’annexe I, section D, de MiFID II**, notamment :
+
+- les dispositifs de publication agréés (*Approved Publication Arrangements* ou **APA**) ;
+- les systèmes consolidés de publication (*Consolidated Tape Providers* ou **CTP**) ;
+- les mécanismes agréés de déclaration (*Approved Reporting Mechanisms* ou **ARM**).
+
+**Source dans les éléments fournis : aucune.**  
+Les extraits communiqués ne reproduisent pas l’article 59 et ne mentionnent pas les prestataires de services de communication de données. Je ne peux donc pas rattacher cette affirmation à une source interne fournie.
+
+### 2. Activités couvertes
+
+L’article 59 s’applique lorsque la fourniture de services de communication de données est exercée **à titre professionnel ou habituel**. Dans ce cas, l’activité est soumise à un agrément préalable délivré par l’autorité compétente de l’État membre d’origine.
+
+**Source dans les éléments fournis : aucune.**  
+Les extraits relatifs aux exemptions de MiFID II ne précisent pas le contenu de l’article 59 ni le régime d’agrément des services de communication de données.
+
+### 3. Entités principalement concernées
+
+Sont principalement concernées les entités qui fournissent professionnellement les services de communication de données précités. Le régime s’inscrit dans le titre V de MiFID II consacré aux « services de communication de données ».
+
+**Source dans les éléments fournis : aucune.**  
+Les passages fournis concernent surtout :
+
+- le champ d’application général de MiFID II ;
+- certaines exemptions ;
+- les teneurs de marché et personnes négociant pour compte propre ;
+- les produits d’investissement fondés sur l’assurance ;
+- la liberté de prestation de services et d’établissement.
+
+Ils ne permettent pas d’identifier précisément les entités soumises à l’article 59.
+
+### 4. Dérogation pour certaines entreprises d’investissement et certains opérateurs de marché
+
+L’article 59 prévoit une dérogation pour :
+
+- les entreprises d’investissement ; et
+- les opérateurs de marché exploitant une plateforme de négociation,
+
+qui peuvent, dans certaines conditions, fournir des services de communication de données sans obtenir un agrément distinct au titre du titre V. Ces services doivent toutefois être couverts par leur agrément et l’entité doit respecter les exigences applicables.
+
+**Source dans les éléments fournis : aucune.**  
+L’extrait relatif aux « personnes exemptées du champ d’application » indique seulement :
+
+> « Les personnes qui sont exemptées du champ d’application de la présente directive en vertu du paragraphe 1 ne bénéficient pas de la liberté de fournir des services ou d’exercer des activités ni de celle d’établir des succursales… »
+
+Cet extrait concerne les conséquences d’une exemption au titre de MiFID II, mais il ne traite pas de la dérogation spécifique prévue par l’article 59.
+
+### 5. Ce qui n’est pas couvert par les extraits fournis
+
+Les extraits transmis ne permettent pas de déterminer directement :
+
+- la définition exacte des services de communication de données ;
+- les conditions détaillées d’agrément ;
+- les exigences applicables aux APA, CTP et ARM ;
+- les règles relatives au retrait de l’agrément ;
+- la répartition des compétences entre l’autorité nationale compétente et l’AEMF ;
+- les éventuelles exclusions ou dispositions transitoires.
+
+Pour ces points, **je ne sais pas les rattacher aux sources internes fournies**.
+
+## Synthèse
+
+L’article 59 de MiFID II a pour champ d’application la fourniture professionnelle ou habituelle de services de communication de données couverts par l’annexe I, section D. Il soumet en principe cette activité à un agrément préalable de l’autorité compétente de l’État membre d’origine, avec une dérogation encadrée pour certaines entreprises d’investissement et certains opérateurs de marché exploitant une plateforme de négociation.
+
+**Aucune des sources internes reproduites dans la question ne soutient directement ces éléments.** Les passages fournis traitent principalement des exemptions générales de MiFID II et de textes européens distincts ; ils ne reproduisent pas l’article 59.
+
+==========================================================================
+APPEL 10   2592 jetons
+==========================================================================
+## 1. Ce que prévoit l’article 4 du RGPD
+
+**Source : article 4 du RGPD — non reproduit dans les sources internes fournies.**  
+Les extraits communiqués ne contiennent pas le RGPD et ne permettent donc pas, à eux seuls, d’étayer le contenu de l’article 4. Le contenu ci-dessous repose sur le texte de l’article 4 du RGPD, mais **n’est pas soutenu par les sources internes indiquées**.
+
+L’article 4 du RGPD est principalement un article de **définitions**. Il définit notamment :
+
+- les **données à caractère personnel** : toute information se rapportant à une personne physique identifiée ou identifiable ;
+- le **traitement** : toute opération effectuée sur des données personnelles, comme la collecte, l’enregistrement, la consultation, la conservation, la modification, la transmission ou la suppression ;
+- le **fichier** ou système structuré de données personnelles ;
+- le **responsable du traitement** : l’entité qui détermine les finalités et les moyens du traitement ;
+- le **sous-traitant** : l’entité qui traite les données pour le compte du responsable du traitement ;
+- le **destinataire** et le **tiers** ;
+- le **consentement** de la personne concernée ;
+- la **violation de données à caractère personnel** ;
+- les **données génétiques**, les **données biométriques** et les **données concernant la santé** ;
+- la **surveillance régulière et systématique** des personnes ;
+- l’**entreprise**, le **groupe d’entreprises**, l’**établissement principal** et l’**autorité de contrôle**.
+
+L’article 4 ne fixe donc pas, à lui seul, un régime complet d’obligations pour les banques : il détermine les notions nécessaires à l’application des autres articles du RGPD.
+
+## 2. Conséquences pour un établissement bancaire
+
+Les obligations ci-dessous découlent des qualifications de l’article 4, combinées avec d’autres articles du RGPD. **Aucune de ces obligations n’est directement étayée par les extraits internes fournis**, qui portent principalement sur le règlement européen sur l’intelligence artificielle, DORA et les marchés financiers.
+
+### a) Identifier les traitements et les données personnelles
+
+Une banque doit déterminer quels traitements portent sur des données à caractère personnel : ouverture et gestion de comptes, paiements, crédits, connaissance du client, lutte contre le blanchiment, scoring, vidéosurveillance, ressources humaines, marketing, applications mobiles, etc.
+
+- **Fondement : article 4, points 1 et 2, du RGPD**, pour les notions de donnée personnelle et de traitement ;
+- **Obligation complémentaire : article 30 du RGPD**, relatif au registre des activités de traitement.
+
+Les extraits internes relatifs à l’inventaire des systèmes et technologies TIC soutenant des fonctions critiques concernent principalement la résilience informatique. Ils ne suffisent pas à établir une obligation d’inventaire des traitements de données personnelles au titre du RGPD.  
+**Source interne pertinente : aucune.**
+
+### b) Qualifier la banque comme responsable du traitement ou sous-traitant
+
+Pour la plupart de ses activités — gestion des comptes, octroi de crédits, exécution des paiements, obligations réglementaires et lutte contre la fraude — la banque détermine elle-même les finalités et moyens du traitement. Elle est donc généralement **responsable du traitement**.
+
+Lorsqu’elle traite des données uniquement pour le compte d’une autre entité, elle peut être **sous-traitante**. Cette qualification dépend des faits et non du seul intitulé contractuel.
+
+- **Fondement : article 4, points 7 et 8, du RGPD** ;
+- **Obligation complémentaire : article 28 du RGPD**, notamment contrat de sous-traitance, instructions documentées, confidentialité et sécurité.
+
+Les sources internes relatives aux prestataires tiers de services TIC ne traitent pas de la qualification RGPD de responsable ou de sous-traitant.  
+**Source interne pertinente : aucune.**
+
+### c) Encadrer les prestataires et sous-traitants
+
+Lorsqu’une banque recourt à un prestataire de cloud, d’hébergement, de traitement de paiements, de relation client ou d’archivage, elle doit déterminer si ce prestataire traite des données personnelles pour son compte.
+
+Lorsque tel est le cas, la banque doit notamment :
+
+- sélectionner un sous-traitant présentant des garanties suffisantes ;
+- conclure un contrat conforme à l’article 28 ;
+- encadrer les instructions, la sécurité, les sous-traitants ultérieurs et la restitution ou suppression des données ;
+- contrôler la conformité du prestataire.
+
+- **Fondement : article 4, point 8, et article 28 du RGPD.**
+
+Les extraits internes mentionnent l’externalisation et la sous-traitance de fonctions TIC, mais sans traiter de ces exigences RGPD.  
+**Source interne pertinente : l’extrait sur le recensement des systèmes TIC externalisés ; il ne soutient toutefois pas, à lui seul, les obligations RGPD ci-dessus.**
+
+### d) Respecter les principes de protection des données
+
+La qualification d’une opération comme « traitement » entraîne l’application des principes du RGPD, notamment :
+
+- licéité, loyauté et transparence ;
+- limitation des finalités ;
+- minimisation des données ;
+- exactitude ;
+- limitation de la conservation ;
+- intégrité et confidentialité ;
+- responsabilité.
+
+- **Fondement : article 4, point 2, et article 5 du RGPD.**
+
+**Source interne pertinente : aucune.** L’extrait fourni qui mentionne un « article 5 » concerne un autre règlement et ne permet pas de conclure qu’il s’agit de l’article 5 du RGPD.
+
+### e) Informer les clients et respecter leurs droits
+
+La banque doit fournir une information claire sur les traitements et permettre l’exercice des droits des personnes concernées, notamment :
+
+- droit d’accès ;
+- droit de rectification ;
+- droit à l’effacement, sous réserve des obligations légales de conservation ;
+- droit à la limitation ;
+- droit à la portabilité dans les cas applicables ;
+- droit d’opposition ;
+- droits relatifs aux décisions automatisées et au profilage.
+
+- **Fondements : articles 12 à 22 du RGPD.**
+
+L’article 4 est pertinent car il définit notamment la personne concernée, le traitement, le profilage et la décision automatisée, mais les obligations concrètes résultent des articles 12 à 22.  
+**Source interne pertinente : aucune.**
+
+### f) Sécuriser les données et notifier les violations
+
+Une banque doit prendre des mesures techniques et organisationnelles appropriées, telles que :
+
+- contrôle des accès ;
+- chiffrement ou pseudonymisation lorsque cela est approprié ;
+- journalisation et surveillance ;
+- sauvegardes ;
+- gestion des habilitations ;
+- tests et plans de continuité ;
+- procédures de gestion des incidents.
+
+En cas de violation de données personnelles, elle doit, lorsque les conditions sont remplies :
+
+- notifier l’autorité de contrôle dans les 72 heures ;
+- informer les personnes concernées lorsque le risque est élevé ;
+- documenter la violation.
+
+- **Fondements : article 4, point 12, et articles 32 à 34 du RGPD.**
+
+Les sources internes relatives au risque TIC, aux tests de pénétration et à la résilience numérique peuvent être pertinentes pour la sécurité informatique, mais elles ne démontrent pas les obligations de notification prévues par le RGPD.  
+**Source interne : extraits relatifs au risque TIC et aux tests de pénétration ; soutien seulement indirect et non suffisant pour les obligations RGPD.**
+
+### g) Réaliser une analyse d’impact lorsque nécessaire
+
+La banque doit réaliser une analyse d’impact relative à la protection des données lorsque le traitement est susceptible d’engendrer un risque élevé, par exemple en cas :
+
+- de profilage systématique et à grande échelle ;
+- d’utilisation de données sensibles à grande échelle ;
+- de dispositifs de surveillance à grande échelle ;
+- de recours à certains systèmes automatisés ayant des effets significatifs.
+
+- **Fondements : article 4, notamment les notions de données sensibles, profilage et surveillance systématique, et article 35 du RGPD.**
+
+**Source interne pertinente : aucune.**
+
+### h) Désigner un délégué à la protection des données
+
+Une banque doit examiner sérieusement l’obligation de désigner un délégué à la protection des données, notamment lorsqu’elle effectue un suivi régulier et systématique des personnes à grande échelle ou traite certaines catégories particulières de données à grande échelle.
+
+- **Fondement : article 4, notamment la notion de surveillance régulière et systématique, et article 37 du RGPD.**
+
+Dans le secteur bancaire, la désignation d’un DPO est généralement attendue en pratique, mais la conclusion doit être vérifiée au regard des activités et de leur échelle.  
+**Source interne pertinente : aucune.**
+
+## 3. Portée des sources internes fournies
+
+Les extraits communiqués ne permettent pas de répondre directement à la question sur l’article 4 du RGPD :
+
+- le passage relatif aux amendes de 15 millions d’euros ou de 3 % du chiffre d’affaires concerne le **règlement sur l’intelligence artificielle**, et non l’article 4 du RGPD ;
+- les passages sur la confidentialité, les autorités européennes de supervision, le risque TIC et les tests de pénétration concernent principalement **DORA**, le règlement sur l’intelligence artificielle ou les marchés financiers ;
+- aucun extrait ne contient le texte de l’article 4 du RGPD ni les articles 5, 28, 30, 32 à 35 et 37 du RGPD.
+
+**Conclusion :** l’article 4 du RGPD définit les notions centrales — données personnelles, traitement, responsable du traitement, sous-traitant, violation de données, profilage, etc. Pour une banque, ces qualifications déclenchent notamment des obligations de cartographie, de transparence, de sécurité, d’encadrement des sous-traitants, de gestion des violations, d’analyse d’impact et, selon les cas, de désignation d’un DPO. Ces affirmations ne sont toutefois pas soutenues par les sources internes fournies, qui sont relatives à d’autres textes européens.
+
+==========================================================================
+APPEL 11   3637 jetons
+==========================================================================
+## Article 22 de MiFID II : champ d’application
+
+### 1. Texte concerné
+
+MiFID II désigne la directive **2014/65/UE** concernant les marchés d’instruments financiers. L’article 22 de cette directive est intitulé :
+
+> **« Exigences spécifiques applicables aux entreprises d’investissement et aux opérateurs de marché exploitant un système organisé de négociation »** (*Organised Trading Facility – OTF*).
+
+**Source :** article 22 de la directive 2014/65/UE.
+
+### 2. Champ d’application personnel
+
+L’article 22 s’applique :
+
+- aux **entreprises d’investissement** qui exploitent un OTF ;
+- aux **opérateurs de marché** qui exploitent un OTF.
+
+**Source :** article 22 de la directive 2014/65/UE, intitulé et dispositions introductives.
+
+Il ne s’applique donc pas, en tant que tel :
+
+- à toutes les entreprises d’investissement indistinctement ;
+- aux entreprises qui fournissent uniquement des services d’investissement sans exploiter d’OTF ;
+- aux opérateurs de MTF uniquement, qui relèvent des dispositions spécifiques aux MTF ;
+- aux entités bénéficiant d’une exemption de MiFID II, sauf si une disposition particulière en décide autrement.
+
+**Source :** article 22 de la directive 2014/65/UE, lu avec les articles 2 et 3 de la même directive.  
+**Attention :** les extraits fournis ne contiennent pas le texte de l’article 22 ni les articles 2 et 3 dans leur intégralité.
+
+### 3. Champ d’application matériel
+
+L’article 22 concerne l’exploitation d’un **système organisé de négociation**, c’est-à-dire une plateforme ou un système multilatéral qui permet la rencontre de plusieurs intérêts acheteurs et vendeurs de tiers portant sur des instruments financiers, selon des règles non discrétionnaires, mais dans lequel l’opérateur dispose d’une certaine marge de décision dans l’organisation et l’exécution des transactions.
+
+**Sources :**
+
+- article 4, paragraphe 1, point 23), de la directive 2014/65/UE, pour la définition de l’OTF ;
+- article 22 de la directive 2014/65/UE, pour les exigences applicables à son exploitant.
+
+### 4. Objet des exigences de l’article 22
+
+L’article 22 encadre notamment l’exercice du pouvoir discrétionnaire de l’exploitant d’un OTF dans l’exécution des transactions et le traitement des ordres. Il impose également des règles spécifiques concernant le fonctionnement de l’OTF et les situations dans lesquelles l’exploitant peut intervenir dans la négociation ou l’exécution des ordres.
+
+**Source :** article 22 de la directive 2014/65/UE.
+
+Les extraits fournis ne reproduisent toutefois pas ces obligations. Je ne peux donc pas rattacher chacune de ces exigences détaillées à une source interne fournie.
+
+## Analyse des sources fournies
+
+| Extrait fourni | Lien avec l’article 22 de MiFID II |
+|---|---|
+| Considérant relatif aux microentreprises et intermédiaires d’assurance | Ne soutient pas directement le champ d’application de l’article 22. Il concerne le champ d’application d’un autre règlement et certaines exclusions sectorielles. |
+| Considérant 23 relatif aux teneurs de marché, au trading algorithmique et aux exemptions | Concerne le champ d’application de MiFID II et les exemptions, mais ne définit pas spécifiquement le champ d’application de l’article 22. |
+| Extraits relatifs au RGPD | Aucun lien avec l’article 22 de MiFID II. |
+| Extraits relatifs aux produits d’investissement fondés sur l’assurance et aux produits de retraite | Concernent des exclusions de produits du champ de MiFID II, mais ne soutiennent pas directement l’interprétation de l’article 22. |
+| Extraits relatifs à l’IA et à la sécurité nationale | Aucun lien avec MiFID II. |
+| « Les personnes exemptées… ne bénéficient pas de la liberté de fournir des services… » | Concerne le régime des exemptions et du passeport européen ; ne précise pas le champ d’application de l’article 22. |
+| Mention d’un seuil de 10 000 euros révisé en 2026 | Je ne sais pas à quelle disposition elle se rapporte. Aucun des extraits fournis ne permet de la rattacher à l’article 22 de MiFID II. |
+
+### Conclusion
+
+Le champ d’application de l’article 22 de MiFID II est ciblé : il vise les **entreprises d’investissement et les opérateurs de marché qui exploitent un système organisé de négociation (OTF)**. Les extraits fournis permettent seulement de traiter, de manière générale, certaines exemptions ou exclusions du champ de MiFID II ; ils ne contiennent pas de source soutenant directement et complètement cette conclusion.
+
+==========================================================================
+APPEL 12   2423 jetons
+==========================================================================
+## Conclusion
+
+Sur la base des extraits fournis, **je ne peux pas identifier d’« article 114 » du règlement européen sur l’intelligence artificielle (« AI Act ») imposant des obligations particulières aux établissements bancaires**.
+
+La référence **« OJ L, 12.7.2024, 114/144 »** correspond à la **page 114 sur 144** du Journal officiel, et non à l’article 114 du règlement. Les extraits fournis mentionnent notamment les articles 26 et 53, mais ne permettent pas de conclure à l’existence ou au contenu d’un article 114.
+
+## Analyse des sources fournies
+
+### 1. Le considérant (114) cité ne concerne pas l’AI Act
+
+Le passage cité commence par :
+
+> « Nulle disposition de la présente directive ne devrait imposer… »
+
+Il renvoie expressément à la **directive 2014/65/UE** et à son **article 48**, concernant l’accord écrit entre un marché réglementé et une entreprise d’investissement dans le cadre de la tenue de marché.
+
+**Source :** considérant (114), directive 2014/65/UE, JO L 173 du 12 juin 2014.
+
+Ce considérant :
+
+- ne concerne pas l’AI Act ;
+- ne vise pas spécifiquement les systèmes d’IA ;
+- ne crée pas, à lui seul, d’obligation particulière pour un établissement bancaire.
+
+### 2. L’article 53 cité concerne les fournisseurs de modèles d’IA à usage général
+
+L’extrait mentionne :
+
+> « Article 53 Obligations for providers of general-purpose AI models »
+
+Le seul contenu fourni indique que, avant l’adoption d’un acte délégué, la Commission consulte des experts désignés par les États membres.
+
+**Source :** article 53 de l’AI Act, extrait fourni.
+
+Cette disposition concerne les **fournisseurs de modèles d’IA à usage général**, et non, en tant que tels, les établissements bancaires qui utiliseraient un système d’IA dans leurs activités.
+
+L’extrait fourni ne permet pas de déterminer quelles obligations concrètes s’appliqueraient à une banque en qualité de fournisseur d’un tel modèle.
+
+### 3. L’article 26 concerne les déployeurs de systèmes d’IA à haut risque
+
+L’extrait cite :
+
+> « Article 26 Obligations of deployers of high-risk AI systems »
+
+Cela confirme que l’article 26 prévoit des obligations pour les **déployeurs** de systèmes d’IA à haut risque.
+
+**Source :** article 26 de l’AI Act, extrait fourni.
+
+Toutefois, l’extrait communiqué ne contient pas le détail de ces obligations. Il précise seulement, dans une autre phrase, que :
+
+> « When performing their tasks, the national competent authorities shall act in accordance with the confidentiality obligations set out in Article 78. »
+
+Cette obligation de confidentialité vise les **autorités nationales compétentes**, et non directement les banques.
+
+**Source :** extrait relatif à l’article 78, fourni sous le titre de l’article 26.
+
+Il n’est donc pas possible, à partir des seules sources fournies, de dresser la liste complète des obligations d’une banque qui déploierait un système d’IA à haut risque.
+
+### 4. Le considérant (83) concerne les opérateurs de la chaîne de valeur
+
+Le considérant (83) indique que certains opérateurs peuvent cumuler plusieurs qualités, telles que celles d’importateur et de distributeur, et doivent alors respecter cumulativement les obligations correspondantes.
+
+**Source :** considérant (83) de l’AI Act, extrait fourni.
+
+Cette règle pourrait être pertinente pour un établissement bancaire uniquement si celui-ci intervenait effectivement dans la chaîne de valeur d’un système d’IA en tant qu’importateur, distributeur ou autre opérateur réglementé. Aucun élément fourni ne permet toutefois d’affirmer qu’une banque exerce nécessairement l’une de ces fonctions.
+
+Le considérant mentionne également les codes de bonnes pratiques relatifs à la détection et à l’étiquetage des contenus générés ou manipulés artificiellement, mais l’extrait ne crée pas d’obligation bancaire spécifique.
+
+### 5. La mention de l’article 88 ne permet pas d’identifier une obligation bancaire
+
+La phrase :
+
+> « L’obligation de déclaration a été abrogée par l’article 88 »
+
+est fournie sans indication suffisante sur :
+
+- l’obligation concernée ;
+- les opérateurs visés ;
+- le contexte dans lequel elle aurait été supprimée.
+
+**Source :** phrase fournie relative à l’article 88.
+
+Je ne peux donc pas en déduire une obligation ou une dispense applicable à un établissement bancaire.
+
+## Conséquence pour un établissement bancaire
+
+Sur la base exclusive des sources fournies :
+
+1. **Aucune obligation bancaire spécifique ne peut être rattachée à un prétendu article 114 de l’AI Act.**  
+   **Source :** absence de texte d’article 114 dans les extraits ; la mention « 114/144 » correspond à une pagination.
+
+2. Une banque pourrait être concernée par l’**article 26** si elle déploie un système d’IA qualifié de « haut risque ».  
+   **Source :** intitulé de l’article 26 fourni.
+
+3. Les obligations concrètes découlant de l’article 26 ne sont pas reproduites dans les sources communiquées.  
+   **Conclusion :** je ne sais pas, sur la seule base de ces extraits, quelles obligations précises — gouvernance, surveillance humaine, conservation de documents, suivi ou information — seraient applicables.
+
+4. L’article 53 ne concerne directement la banque que si elle agit comme **fournisseur d’un modèle d’IA à usage général** ; les extraits ne permettent pas d’en préciser les obligations.  
+   **Source :** intitulé de l’article 53 fourni.
+
+5. Le considérant (114) cité relève de la directive 2014/65/UE et non de l’AI Act ; il ne constitue donc pas une base suffisante pour imposer une obligation liée à l’IA à un établissement bancaire.  
+   **Source :** référence expresse à la directive 2014/65/UE et à l’article 48.
+
+En résumé, **les sources fournies ne soutiennent pas l’existence d’obligations bancaires découlant d’un article 114 de l’AI Act**. Elles permettent seulement d’identifier la possible pertinence de l’article 26 lorsqu’une banque déploie un système d’IA à haut risque, sans fournir le contenu détaillé des obligations correspondantes.
+

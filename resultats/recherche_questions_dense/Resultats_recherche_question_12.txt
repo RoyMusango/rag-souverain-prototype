@@ -1,0 +1,50 @@
+==============================================================================
+QUESTION 12
+==============================================================================
+
+Enonce :
+  Que précise exactement un agrément ?
+
+Ancrage attendu :
+  eurlex/MiFID2/FR/art_60/p98_eecdff2b
+  extrait : L’État membre d’origine veille à ce que l’agrément précise le service de communication de données que le prestataire de ...
+
+Configuration de recherche : dense
+
+------------------------------------------------------------------------------
+RAPPEL
+------------------------------------------------------------------------------
+  rappel@5   : OUI    (rang 4)
+  rappel@10  : OUI    (rang 4)
+  rappel@25  : OUI    (rang 4)
+
+------------------------------------------------------------------------------
+RESULTATS RENDUS PAR LE SYSTEME
+------------------------------------------------------------------------------
+rang  score     ancrage                                        debut du texte
+------------------------------------------------------------------------------
+1     0.0164    eurlex/MiFID2/FR/art_6/p40_b47ae907            L’État membre d’origine veille
+2     0.0161    eurlex/MiFID2/FR/art_6/p41_ca643f10            L’agrément est valable sur tou
+3     0.0159    eurlex/MiFID2/FR/art_60/p98_93d54873           L’agrément est valable sur tou
+4     0.0156    eurlex/MiFID2/FR/art_60/p98_eecdff2b           L’État membre d’origine veille  <== ATTENDU
+5     0.0154    eurlex/MiFID2/FR/art_41/p78_8224e768           L’autorité compétente de l’Éta
+6     0.0152    eurlex/MiFID2/FR/art_59/p97_2af5fe4d           Les États membres exigent que 
+7     0.0149    eurlex/RGPD/FR/art_43/p60_749d71af             Les organismes de certificatio
+8     0.0147    eurlex/MiFID2/FR/art_7/p41_22a0755d            L’autorité compétente ne déliv
+9     0.0145    eurlex/MiFID2/FR/art_61/p98_22a0755d           L’autorité compétente ne déliv
+10    0.0143    eurlex/MiFID2/FR/art_5/p40_a2a544c2            Chaque État membre exige que l
+11    0.0141    eurlex/MiFID2/FR/art_84/p122_262bdd21          L’autorité compétente d’un Éta
+12    0.0139    eurlex/MiFID2/FR/art_44/p79_bd65c5f6           L’agrément en tant que marché 
+13    0.0137    eurlex/MiFID2/FR/art_10/p43_5055dabf           Lorsqu’il existe des liens étr
+14    0.0135    eurlex/MiFID2/FR/art_9/p42_73914aec            Les autorités compétentes acco
+15    0.0133    eurlex/MiFID2/FR/art_84/p122_5edb2201          L’autorité compétente d’un Éta
+16    0.0132    eurlex/MiFID2/FR/art_44/p79_5f598395           Les États membres réservent l’
+17    0.0130    eurlex/MiFID2/FR/art_7/p41_cd430f63            Tout demandeur est informé, da
+18    0.0128    eurlex/MiFID2/FR/art_61/p98_cd430f63           Tout demandeur est informé, da
+19    0.0127    eurlex/RGPD/FR/art_43/p60_5d58ce69             L'agrément des organismes de c
+20    0.0125    eurlex/MiFID2/FR/art_5/p40_da205d0b            Les États membres enregistrent
+21    0.0123    eurlex/MiFID2/FR/art_8/p41_47c5219c            Article 8 Retrait d’agrément L
+22    0.0122    eurlex/MiFID2/FR/art_62/p99_2f116626           Article 62 Retrait d’agrément 
+23    0.0120    eurlex/MiFID2/FR/considerants/p18_df9935a4     (112) L’agrément relatif à l’e
+24    0.0119    eurlex/MiFID2/FR/art_44/p80_750bf20a           L’autorité compétente peut ret
+25    0.0118    eurlex/MiFID2/FR/art_14/p47_c310d347           Article 14 Adhésion à un systè

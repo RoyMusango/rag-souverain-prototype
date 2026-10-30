@@ -1,0 +1,50 @@
+==============================================================================
+QUESTION 10
+==============================================================================
+
+Enonce :
+  À quelles exigences sont soumises les entreprises d'investissement qui exécutent des ordres de clients ?
+
+Ancrage attendu :
+  eurlex/MiFID2/FR/art_27/p65_dc0af581
+  extrait : Les États membres exigent des entreprises d’investissement qui exécutent des ordres de clients qu’elles établissent et p...
+
+Configuration de recherche : lexical
+
+------------------------------------------------------------------------------
+RAPPEL
+------------------------------------------------------------------------------
+  rappel@5   : OUI    (rang 1)
+  rappel@10  : OUI    (rang 1)
+  rappel@25  : OUI    (rang 1)
+
+------------------------------------------------------------------------------
+RESULTATS RENDUS PAR LE SYSTEME
+------------------------------------------------------------------------------
+rang  score     ancrage                                        debut du texte
+------------------------------------------------------------------------------
+1     0.0164    eurlex/MiFID2/FR/art_27/p65_dc0af581           Les États membres exigent des   <== ATTENDU
+2     0.0161    eurlex/MiFID2/FR/art_27/p65_1418f25e           Les États membres exigent des 
+3     0.0159    eurlex/MiFID2/FR/considerants/p4_4570696b      (24) La négociation pour compt
+4     0.0156    eurlex/MiFID2/FR/art_27/p64_49887349           Les États membres exigent que 
+5     0.0154    eurlex/MiFID2/FR/art_28/p66_ee0946a6           Les États membres exigent des 
+6     0.0152    eurlex/MiFID2/FR/art_27/p65_ff68fe5d           Les États membres exigent que,
+7     0.0149    eurlex/MiFID2/FR/art_27/p65_e319282c           La Commission est habilitée à 
+8     0.0147    eurlex/MiFID2/FR/considerants/p3_bd9663b1      (16) Les personnes ayant accès
+9     0.0145    eurlex/MiFID2/FR/considerants/p12_b890a8a9     pour les ordres annulés en fon
+10    0.0143    eurlex/MiFID2/FR/considerants/p9_97df11b4      (56) L’élargissement de la pal
+11    0.0141    eurlex/MiFID2/FR/art_27/p64_cc99db0a           Les États membres exigent des 
+12    0.0139    eurlex/MiFID2/FR/considerants/p16_2498df07     (90) Par dérogation au princip
+13    0.0137    eurlex/MiFID2/FR/art_19/p54_ca0a9650           Les États membres n’autorisent
+14    0.0135    eurlex/MiFID2/FR/art_3/p31_56878265            b) ne soient pas autorisées à 
+15    0.0133    eurlex/MiFID2/FR/art_28/p66_a0f0bb5b           La Commission est habilitée à 
+16    0.0132    eurlex/MiFID2/FR/considerants/p16_212fba26     (95) Il convient de considérer
+17    0.0130    eurlex/MiFID2/FR/art_27/p65_3d3b4a54           Les États membres exigent que 
+18    0.0128    eurlex/MiFID2/FR/art_16/p50_27592336           Les États membres peuvent, dan
+19    0.0127    eurlex/MiFID2/FR/considerants/p10_c4d07f54     Afin de garantir la sécurité j
+20    0.0125    eurlex/MiFID2/FR/art_20/p55_e570e2bc           L’autorité compétente peut exi
+21    0.0123    eurlex/MiFID2/FR/art_27/p64_3af697cb           La politique d’exécution des o
+22    0.0122    eurlex/MiFID2/FR/art_2/p28_aa08724d            La présente directive ne s’app
+23    0.0120    eurlex/MiFID2/FR/considerants/p13_d6e48c3b     Pour veiller à ce que les inst
+24    0.0119    eurlex/MiFID2/FR/art_53/p90_837a4026           Les États membres veillent à c
+25    0.0118    eurlex/MiFID2/FR/art_16/p49_6484201f           Une entreprise d’investissemen

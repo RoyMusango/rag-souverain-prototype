@@ -1,0 +1,50 @@
+==============================================================================
+QUESTION 8
+==============================================================================
+
+Enonce :
+  Quelle est la période maximale de conservation des données à caractère personnel du paragraphe 1?
+
+Ancrage attendu :
+  eurlex/DORA/FR/art_56/p73_c657fbe4
+  extrait : Sauf disposition contraire dans d’autres actes sectoriels, les données à caractère personnel visées au paragraphe 1 sont...
+
+Configuration de recherche : dense
+
+------------------------------------------------------------------------------
+RAPPEL
+------------------------------------------------------------------------------
+  rappel@5   : OUI    (rang 1)
+  rappel@10  : OUI    (rang 1)
+  rappel@25  : OUI    (rang 1)
+
+------------------------------------------------------------------------------
+RESULTATS RENDUS PAR LE SYSTEME
+------------------------------------------------------------------------------
+rang  score     ancrage                                        debut du texte
+------------------------------------------------------------------------------
+1     0.0164    eurlex/DORA/FR/art_56/p73_c657fbe4             Sauf disposition contraire dan  <== ATTENDU
+2     0.0161    eurlex/DORA/EN/art_56/p73_6e8bd0be             Except where otherwise provide
+3     0.0159    eurlex/RGPD/FR/art_5/p36_393cc8df              e) conservées sous une forme p
+4     0.0156    eurlex/RGPD/FR/art_18/p44_236c1adc             Lorsque le traitement a été li
+5     0.0154    eurlex/RGPD/FR/art_23/p47_90e06a53             En particulier, toute mesure l
+6     0.0152    eurlex/RGPD/EN/art_5/p36_6b5a7e86              (e) kept in a form which permi
+7     0.0149    eurlex/RGPD/FR/art_14/p42_6d342a50             En plus des informations visée
+8     0.0147    eurlex/RGPD/FR/art_9/p38_6ecaf56c              Le paragraphe 1 ne s'applique 
+9     0.0145    eurlex/RGPD/FR/art_13/p41_3f5ca67e             En plus des informations visée
+10    0.0143    eurlex/RGPD/FR/art_14/p42_ae070a82             Le responsable du traitement f
+11    0.0141    eurlex/RGPD/FR/art_14/p42_2f2c650c             Les paragraphes 1 à 4 ne s'app
+12    0.0139    eurlex/RGPD/EN/art_23/p47_fb0fc31b             In particular, any legislative
+13    0.0137    eurlex/RGPD/EN/art_18/p44_5627d28d             Where processing has been rest
+14    0.0135    eurlex/RGPD/FR/art_15/p43_96d079a8             La personne concernée a le dro
+15    0.0133    eurlex/MiFID2/EN/art_16/p49_293abd0f           The records kept in accordance
+16    0.0132    eurlex/RGPD/FR/art_30/p51_4c75edaf             d) les catégories de destinata
+17    0.0130    eurlex/RGPD/FR/art_33/p52_c1caf47e             La notification visée au parag
+18    0.0128    eurlex/AI_Act/EN/art_19/p64_85d6cc92           Providers of high-risk AI syst
+19    0.0127    eurlex/RGPD/FR/art_5/p35_ebe63068              Les données à caractère person
+20    0.0125    eurlex/RGPD/EN/art_9/p38_a14f35b9              Paragraph 1 shall not apply if
+21    0.0123    eurlex/DORA/FR/art_1/p23_0a3277e7              Le présent règlement est sans 
+22    0.0122    eurlex/RGPD/FR/considerants/p13_eaaa3de3       (67) Les méthodes visant à lim
+23    0.0120    eurlex/RGPD/FR/art_9/p39_c092fdb4              Les données à caractère person
+24    0.0119    eurlex/MiFID2/FR/considerants/p17_3919e1f4     ( 3 ) Règlement (CE) n o 45/20
+25    0.0118    eurlex/RGPD/FR/considerants/p1_7ca110e5        I (Actes législatifs) RÈGLEMEN

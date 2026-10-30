@@ -1,0 +1,50 @@
+==============================================================================
+QUESTION 9
+==============================================================================
+
+Enonce :
+  Quelles sont les parties prenantes du forum consultatif ?
+
+Ancrage attendu :
+  eurlex/AI_Act/FR/art_67/p97_43a86f20
+  extrait : La composition du forum consultatif est équilibrée en ce qui concerne la représentation des parties prenantes, y compris...
+
+Configuration de recherche : lexical
+
+------------------------------------------------------------------------------
+RAPPEL
+------------------------------------------------------------------------------
+  rappel@5   : OUI    (rang 1)
+  rappel@10  : OUI    (rang 1)
+  rappel@25  : OUI    (rang 1)
+
+------------------------------------------------------------------------------
+RESULTATS RENDUS PAR LE SYSTEME
+------------------------------------------------------------------------------
+rang  score     ancrage                                        debut du texte
+------------------------------------------------------------------------------
+1     0.0164    eurlex/AI_Act/FR/art_67/p97_43a86f20           La composition du forum consul  <== ATTENDU
+2     0.0161    eurlex/AI_Act/FR/art_67/p98_fb9c5a8b           Le forum consultatif tient des
+3     0.0159    eurlex/AI_Act/FR/art_67/p97_ee5b46d5           La Commission nomme les membre
+4     0.0156    eurlex/AI_Act/FR/art_67/p98_28f313a5           Le forum consultatif prépare u
+5     0.0154    eurlex/AI_Act/FR/art_67/p98_39d12d9f           La durée du mandat des membres
+6     0.0152    eurlex/AI_Act/FR/art_67/p98_d08f5ca6           Le forum consultatif peut prép
+7     0.0149    eurlex/AI_Act/FR/art_67/p98_39ef5507           Le forum consultatif peut crée
+8     0.0147    eurlex/AI_Act/FR/art_67/p97_f7980368           Un forum consultatif est créé 
+9     0.0145    eurlex/AI_Act/FR/art_67/p98_0395e2f8           L’Agence des droits fondamenta
+10    0.0143    eurlex/AI_Act/FR/art_67/p98_11bf2e70           Le forum consultatif établit s
+11    0.0141    eurlex/AI_Act/FR/considerants/p38_ddf085be     (149) Afin de faciliter une mi
+12    0.0139    eurlex/AI_Act/FR/considerants/p42_520f908e     mesures relatives à la maîtris
+13    0.0137    eurlex/AI_Act/FR/art_40/p76_0f9ff277           Conformément à l’article 10 du
+14    0.0135    eurlex/AI_Act/FR/considerants/p31_2b18e83f     (121) La normalisation devrait
+15    0.0133    eurlex/AI_Act/FR/art_15/p61_cc93059f           Pour examiner les aspects tech
+16    0.0132    eurlex/AI_Act/FR/art_65/p96_08c8d87b           Le sous-groupe permanent pour 
+17    0.0130    eurlex/AI_Act/FR/considerants/p37_294e7b11     (147) Il convient que la Commi
+18    0.0128    eurlex/DORA/FR/art_12/p36_6b09af92             Lorsqu’elles opèrent un rétabl
+19    0.0127    eurlex/AI_Act/FR/art_56/p87_69eb4d7b           Le Bureau de l’IA peut inviter
+20    0.0125    eurlex/DORA/FR/art_14/p37_1b6856ba             Aux fins du cadre de gestion d
+21    0.0123    eurlex/AI_Act/FR/art_57/p89_fc591f6d           La Commission développe une in
+22    0.0122    eurlex/AI_Act/FR/considerants/p21_e43259c2     (74) Les systèmes d’IA à haut 
+23    0.0120    eurlex/AI_Act/FR/art_40/p76_255daec1           Les participants au processus 
+24    0.0119    eurlex/AI_Act/FR/art_65/p95_9ebec472           Les États membres veillent à c
+25    0.0118    eurlex/AI_Act/FR/art_91/p112_421b2df1          La demande d’informations ment

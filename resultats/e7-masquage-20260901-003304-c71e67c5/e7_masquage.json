@@ -1,0 +1,77 @@
+{
+  "resultats": {
+    "spacy": {
+      "moteur": "spacy",
+      "detecteur": {
+        "moteur": "spacy",
+        "langue": "en",
+        "modele": "en_core_web_lg",
+        "categories": [
+          "CARTE",
+          "COURRIEL",
+          "DATE",
+          "IBAN",
+          "IDENTIFIANT",
+          "LIEU",
+          "MONTANT",
+          "ORGANISATION",
+          "PERSONNE",
+          "TELEPHONE"
+        ],
+        "duree_chargement_s": 5.89,
+        "souverain": true
+      },
+      "documents": 300,
+      "vrais_positifs": 2427,
+      "faux_negatifs": 285,
+      "faux_positifs": 340,
+      "reference": 2712,
+      "detectees": 2058,
+      "rappel": 0.8949,
+      "precision": 0.8771,
+      "f1": 0.8859,
+      "duree_s": 10.31,
+      "debit_car_s": 7175
+    },
+    "presidio": {
+      "moteur": "presidio",
+      "detecteur": {
+        "moteur": "presidio",
+        "langue": "en",
+        "modele": "en_core_web_lg",
+        "categories": [
+          "CARTE",
+          "COURRIEL",
+          "DATE",
+          "IBAN",
+          "IDENTIFIANT",
+          "LIEU",
+          "MONTANT",
+          "ORGANISATION",
+          "PERSONNE",
+          "TELEPHONE"
+        ],
+        "duree_chargement_s": 10.29,
+        "souverain": false
+      },
+      "documents": 300,
+      "vrais_positifs": 2155,
+      "faux_negatifs": 557,
+      "faux_positifs": 332,
+      "reference": 2712,
+      "detectees": 1859,
+      "rappel": 0.7946,
+      "precision": 0.8665,
+      "f1": 0.829,
+      "duree_s": 20.3,
+      "debit_car_s": 3643
+    }
+  },
+  "ecart_sur_presidio": {
+    "spacy": {
+      "rappel_absolu": 0.1003,
+      "rappel_relatif": 0.1262
+    }
+  },
+  "lecture": "Le rappel est la grandeur critique : une entite non detectee franchit la Frontiere A en clair. La precision mesure le sur-masquage, qui degrade la recherche sans rien proteger — son cout se lit dans E5. Un ecart de rappel defavorable au choix souverain doit etre rapporte tel quel : c'est le prix de la souverainete du composant, non un argument contre elle, puisque le verrou de sortie deterministe borne la fuite par le bas independamment du detecteur."
+}

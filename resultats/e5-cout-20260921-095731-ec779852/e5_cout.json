@@ -1,0 +1,141 @@
+{
+  "parametres": {
+    "corpus": "banque",
+    "paires": null,
+    "entites": "data/banque/banque_entites.json",
+    "index_lexical": null,
+    "index_fichier": null,
+    "hote": null,
+    "questions": 200,
+    "k": 10,
+    "graine": 42,
+    "peripherique": null,
+    "moteur_masquage": "spacy",
+    "langue": null,
+    "sans_generalisation": false,
+    "sortie": "resultats/e5_profondeur_v2_k10"
+  },
+  "corpus": "banque",
+  "k": 10,
+  "resultats": {
+    "brut": {
+      "regime": "brut",
+      "questions": 200,
+      "recall@10": {
+        "mediane": 1.0,
+        "moyenne": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "n": 200
+      },
+      "ndcg@10": {
+        "mediane": 1.0,
+        "moyenne": 0.9317,
+        "min": 0.3333,
+        "max": 1.0,
+        "n": 200
+      },
+      "longueur_requete_mots": {
+        "mediane": 19.0,
+        "moyenne": 18.045,
+        "min": 14,
+        "max": 20,
+        "n": 200
+      },
+      "latence_mediane_ms": 244.41
+    },
+    "masque": {
+      "regime": "masque",
+      "questions": 200,
+      "recall@10": {
+        "mediane": 0.0,
+        "moyenne": 0.065,
+        "min": 0.0,
+        "max": 1.0,
+        "n": 200
+      },
+      "ndcg@10": {
+        "mediane": 0.0,
+        "moyenne": 0.0324,
+        "min": 0.0,
+        "max": 1.0,
+        "n": 200
+      },
+      "longueur_requete_mots": {
+        "mediane": 18.0,
+        "moyenne": 17.045,
+        "min": 13,
+        "max": 19,
+        "n": 200
+      },
+      "latence_mediane_ms": 222.27
+    },
+    "generalise-1": {
+      "regime": "generalise-1",
+      "questions": 200,
+      "recall@10": {
+        "mediane": 0.0,
+        "moyenne": 0.105,
+        "min": 0.0,
+        "max": 1.0,
+        "n": 200
+      },
+      "ndcg@10": {
+        "mediane": 0.0,
+        "moyenne": 0.0498,
+        "min": 0.0,
+        "max": 1.0,
+        "n": 200
+      },
+      "longueur_requete_mots": {
+        "mediane": 20.0,
+        "moyenne": 19.19,
+        "min": 14,
+        "max": 23,
+        "n": 200
+      },
+      "latence_mediane_ms": 207.18
+    },
+    "generalise-2": {
+      "regime": "generalise-2",
+      "questions": 200,
+      "recall@10": {
+        "mediane": 0.0,
+        "moyenne": 0.035,
+        "min": 0.0,
+        "max": 1.0,
+        "n": 200
+      },
+      "ndcg@10": {
+        "mediane": 0.0,
+        "moyenne": 0.0175,
+        "min": 0.0,
+        "max": 1.0,
+        "n": 200
+      },
+      "longueur_requete_mots": {
+        "mediane": 18.0,
+        "moyenne": 17.22,
+        "min": 15,
+        "max": 19,
+        "n": 200
+      },
+      "latence_mediane_ms": 209.91
+    }
+  },
+  "cout_par_regime": {
+    "masque": {
+      "recall_absolu": -0.935,
+      "recall_relatif": -0.935
+    },
+    "generalise-1": {
+      "recall_absolu": -0.895,
+      "recall_relatif": -0.895
+    },
+    "generalise-2": {
+      "recall_absolu": -0.965,
+      "recall_relatif": -0.965
+    }
+  },
+  "lecture": "Les deux niveaux de generalisation donnent une courbe de cout plutot qu'un point unique : le chapitre peut dire a quel prix chaque cran de protection est achete. Le generaliseur REMPLACE les termes precis par leur forme large ; ajouter des termes a cote laisserait les precis dans la requete emise et ne protegerait rien."
+}

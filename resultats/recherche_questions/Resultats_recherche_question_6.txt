@@ -1,0 +1,50 @@
+==============================================================================
+QUESTION 6
+==============================================================================
+
+Enonce :
+  Dans quel cas l'obligation de fournir des informations sur les sanctions et mesures imposées ne s'applique pas ?
+
+Ancrage attendu :
+  eurlex/MiFID2/FR/art_71/p113_feb28565
+  extrait : Les États membres fournissent chaque année à l’AEMF des informations agrégées sur l’ensemble des sanctions et mesures im...
+
+Configuration de recherche : lexical
+
+------------------------------------------------------------------------------
+RAPPEL
+------------------------------------------------------------------------------
+  rappel@5   : OUI    (rang 1)
+  rappel@10  : OUI    (rang 1)
+  rappel@25  : OUI    (rang 1)
+
+------------------------------------------------------------------------------
+RESULTATS RENDUS PAR LE SYSTEME
+------------------------------------------------------------------------------
+rang  score     ancrage                                        debut du texte
+------------------------------------------------------------------------------
+1     0.0164    eurlex/MiFID2/FR/art_71/p113_feb28565          Les États membres fournissent   <== ATTENDU
+2     0.0161    eurlex/AI_Act/FR/art_27/p70_d2ad6a52           L’obligation établie au paragr
+3     0.0159    eurlex/AI_Act/FR/art_2/p45_43727084            Le présent règlement ne s’appl
+4     0.0156    eurlex/DORA/FR/art_54/p72_25952766             La publication prévue au parag
+5     0.0154    eurlex/AI_Act/FR/art_2/p45_ded6980d            Le présent règlement ne s’appl
+6     0.0152    eurlex/RGPD/FR/considerants/p28_4f9298ed       règlement devrait définir les 
+7     0.0149    eurlex/DORA/FR/art_52/p71_028e35cb             Les États membres qui choisiss
+8     0.0147    eurlex/MiFID2/FR/art_71/p112_13979f1c          Les États membres veillent à c
+9     0.0145    eurlex/DORA/FR/art_50/p70_242e1ab8             Sans préjudice du droit des Ét
+10    0.0143    eurlex/MiFID2/FR/art_70/p107_6932e381          Sans préjudice des pouvoirs de
+11    0.0141    eurlex/AI_Act/FR/art_98/p115_d208c7fd          Lorsqu’il est fait référence a
+12    0.0139    eurlex/MiFID2/FR/art_88/p125_847b9e07          Lorsqu’elles proviennent d’un 
+13    0.0137    eurlex/RGPD/FR/art_14/p42_2f2c650c             Les paragraphes 1 à 4 ne s'app
+14    0.0135    eurlex/RGPD/FR/considerants/p27_d85b45c1       (148) Afin de renforcer l'appl
+15    0.0133    eurlex/RGPD/FR/art_84/p83_e4d70380             Les États membres déterminent 
+16    0.0132    eurlex/AI_Act/FR/art_54/p86_845b9312           L’obligation énoncée au présen
+17    0.0130    eurlex/MiFID2/FR/art_22/p56_8eddc818           Article 22 Obligation générale
+18    0.0128    eurlex/MiFID2/FR/art_79/p117_bbbcdfd2          Lorsque les États membres ont 
+19    0.0127    eurlex/MiFID2/FR/art_11/p45_c7854334           Les États membres exigent des 
+20    0.0125    eurlex/MiFID2/FR/art_85/p123_9e726f89          Dans l’exercice des responsabi
+21    0.0123    eurlex/AI_Act/FR/art_25/p67_d27b1479           Lorsque les circonstances visé
+22    0.0122    eurlex/AI_Act/FR/art_86/p110_af86e843          Le paragraphe 1 ne s’applique 
+23    0.0120    eurlex/MiFID2/FR/art_71/p113_9ca5dbdd          Les autorités compétentes veil
+24    0.0119    eurlex/DORA/FR/art_49/p70_31f92864             Les autorités compétentes, les
+25    0.0118    eurlex/RGPD/FR/art_12/p40_e23d1cbc             Aucun paiement n'est exigé pou

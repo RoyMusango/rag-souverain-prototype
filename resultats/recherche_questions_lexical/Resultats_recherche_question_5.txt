@@ -1,0 +1,50 @@
+==============================================================================
+QUESTION 5
+==============================================================================
+
+Enonce :
+  Que doit au moins indiquer l'alerte qualifiée ?
+
+Ancrage attendu :
+  eurlex/AI_Act/FR/art_90/p111_2277557c
+  extrait : L’alerte qualifiée est dûment motivée et indique au moins: a) le point de contact du fournisseur du modèle d’IA à usage ...
+
+Configuration de recherche : lexical
+
+------------------------------------------------------------------------------
+RAPPEL
+------------------------------------------------------------------------------
+  rappel@5   : OUI    (rang 1)
+  rappel@10  : OUI    (rang 1)
+  rappel@25  : OUI    (rang 1)
+
+------------------------------------------------------------------------------
+RESULTATS RENDUS PAR LE SYSTEME
+------------------------------------------------------------------------------
+rang  score     ancrage                                        debut du texte
+------------------------------------------------------------------------------
+1     0.0164    eurlex/AI_Act/FR/art_90/p111_2277557c          L’alerte qualifiée est dûment   <== ATTENDU
+2     0.0161    eurlex/AI_Act/FR/art_52/p84_2fe9c62d           La Commission peut désigner un
+3     0.0159    eurlex/AI_Act/FR/art_90/p111_49c6ddd5          Le groupe scientifique peut ad
+4     0.0156    eurlex/AI_Act/FR/art_90/p111_49581b0c          À la suite d’une telle alerte 
+5     0.0154    eurlex/AI_Act/FR/art_92/p112_c68ad85a          Le Bureau de l’IA, après consu
+6     0.0152    eurlex/AI_Act/FR/art_51/p83_4514c7af           Un modèle d’IA à usage général
+7     0.0149    eurlex/DORA/FR/art_10/p33_26dc8e34             Les mécanismes de détection vi
+8     0.0147    eurlex/MiFID2/FR/art_11/p44_3bc8971a           Les États membres exigent de t
+9     0.0145    eurlex/RGPD/FR/considerants/p10_59f6d612       (53) Les catégories particuliè
+10    0.0143    eurlex/MiFID2/FR/art_45/p80_71b84aaa           Des fonctions de direction exé
+11    0.0141    eurlex/MiFID2/FR/art_24/p57_fba55318           Des informations appropriées s
+12    0.0139    eurlex/MiFID2/FR/art_88/p124_ea2cb464          Les États membres et l’AEMF, c
+13    0.0137    eurlex/MiFID2/FR/art_10/p43_7d44dcb0           Les autorités compétentes refu
+14    0.0135    eurlex/RGPD/FR/art_33/p52_c1caf47e             La notification visée au parag
+15    0.0133    eurlex/AI_Act/FR/considerants/p43_43becf35     (172) Les personnes agissant e
+16    0.0132    eurlex/MiFID2/FR/art_10/p43_aee22a6e           Les autorités compétentes n’ac
+17    0.0130    eurlex/MiFID2/FR/art_97/p136_9035736a          Les entités précitées sont con
+18    0.0128    eurlex/AI_Act/FR/considerants/p25_2879229b     (94) Tout traitement de donnée
+19    0.0127    eurlex/DORA/FR/art_37/p62_1c5f59cc             e) informe le représentant du 
+20    0.0125    eurlex/MiFID2/FR/art_4/p33_cb39a266            b) l’entreprise doit être soum
+21    0.0123    eurlex/AI_Act/FR/art_92/p112_25f11049          La demande d’accès indique la 
+22    0.0122    eurlex/MiFID2/FR/art_97/p137_1e7891fc          Avant de décider d’accepter ce
+23    0.0120    eurlex/MiFID2/FR/art_2/p30_9e3ba427            L’AEMF élabore des projets de 
+24    0.0119    eurlex/MiFID2/FR/considerants/p26_a8412e86     (170) La présente directive ne
+25    0.0118    eurlex/MiFID2/FR/art_11/p45_c7854334           Les États membres exigent des 

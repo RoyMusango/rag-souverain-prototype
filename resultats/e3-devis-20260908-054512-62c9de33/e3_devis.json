@@ -1,0 +1,36 @@
+{
+  "parametres": {
+    "questions": 40,
+    "taux_empoisonnement": 0.1,
+    "familles": "assertion",
+    "graine": 20260902,
+    "sortie": "resultats/e3_devis_assertion"
+  },
+  "requetes": 40,
+  "configurations": 5,
+  "appels_plafond": 200,
+  "appels_reels": 200,
+  "abstentions_evitees": 0,
+  "invite_caracteres": {
+    "total": 3620604,
+    "moyenne": 18103.0,
+    "mediane": 16174.0,
+    "min": 12865,
+    "max": 31467
+  },
+  "invite_mots": {
+    "total": 456690,
+    "moyenne": 2283.4
+  },
+  "familles": [
+    "assertion"
+  ],
+  "resultats_de_robustesse": "NON MESURES : fournisseur simule",
+  "asr_ignore": {
+    "complete": 0.0,
+    "sans_isolation": 0.0,
+    "sans_corroboration": 0.0,
+    "sans_verrou": 0.0,
+    "aucune": 0.0
+  }
+}

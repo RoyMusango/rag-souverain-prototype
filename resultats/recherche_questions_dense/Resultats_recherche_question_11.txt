@@ -1,0 +1,50 @@
+==============================================================================
+QUESTION 11
+==============================================================================
+
+Enonce :
+  À quelles exigences est soumis un marché réglementé qui suspend la négociation dans tout État membre ?
+
+Ancrage attendu :
+  eurlex/MiFID2/FR/art_48/p84_17b080b3
+  extrait : Les États membres veillent à ce qu’un marché réglementé notifie à l’autorité compétente les paramètres de suspension de ...
+
+Configuration de recherche : dense
+
+------------------------------------------------------------------------------
+RAPPEL
+------------------------------------------------------------------------------
+  rappel@5   : OUI    (rang 2)
+  rappel@10  : OUI    (rang 2)
+  rappel@25  : OUI    (rang 2)
+
+------------------------------------------------------------------------------
+RESULTATS RENDUS PAR LE SYSTEME
+------------------------------------------------------------------------------
+rang  score     ancrage                                        debut du texte
+------------------------------------------------------------------------------
+1     0.0164    eurlex/MiFID2/FR/art_48/p84_d93bf98d           Les États membres exigent d’un
+2     0.0161    eurlex/MiFID2/FR/art_48/p84_17b080b3           Les États membres veillent à c  <== ATTENDU
+3     0.0159    eurlex/MiFID2/FR/art_48/p83_6889caa1           Les États membres exigent d’un
+4     0.0156    eurlex/MiFID2/EN/art_48/p84_3f33659d           Member States shall require a 
+5     0.0154    eurlex/MiFID2/FR/art_37/p76_04e7077a           Les États membres exigent que 
+6     0.0152    eurlex/MiFID2/FR/art_48/p85_f0eaaf14           Les États membres exigent d’un
+7     0.0149    eurlex/MiFID2/EN/art_37/p76_0d73d99e           Member States shall require th
+8     0.0147    eurlex/MiFID2/EN/art_48/p84_e567209c           Member States shall ensure tha
+9     0.0145    eurlex/MiFID2/FR/art_48/p84_4d243d61           Les États membres exigent d’un
+10    0.0143    eurlex/MiFID2/EN/art_48/p85_9293bc1f           Member States shall require th
+11    0.0141    eurlex/MiFID2/FR/art_48/p84_551420aa           Les États membres exigent d’un
+12    0.0139    eurlex/MiFID2/FR/art_54/p91_6f32b943           Les États membres exigent que 
+13    0.0137    eurlex/MiFID2/EN/art_48/p83_1f9d7a12           Member States shall require a 
+14    0.0135    eurlex/MiFID2/FR/art_48/p85_630a1d2a           Les États membres exigent égal
+15    0.0133    eurlex/MiFID2/FR/art_53/p90_e7d9689a           Chaque État membre autorise, s
+16    0.0132    eurlex/MiFID2/FR/art_47/p83_531bb17f           Les États membres exigent des 
+17    0.0130    eurlex/MiFID2/FR/art_51/p87_ea67d51d           Les États membres exigent que 
+18    0.0128    eurlex/MiFID2/EN/art_48/p84_718513b6           Member States shall require a 
+19    0.0127    eurlex/MiFID2/FR/art_54/p91_20d03a02           Les États membres exigent des 
+20    0.0125    eurlex/MiFID2/FR/art_53/p89_0fcd48bd           Les États membres exigent qu’u
+21    0.0123    eurlex/MiFID2/EN/art_47/p83_3a551fae           Member States shall require th
+22    0.0122    eurlex/MiFID2/FR/art_48/p85_47a3ee63           Les États membres autorisent u
+23    0.0120    eurlex/MiFID2/EN/art_48/p84_7fc59af5           Member States shall require a 
+24    0.0119    eurlex/MiFID2/EN/art_48/p85_7293aadd           Member States shall also requi
+25    0.0118    eurlex/MiFID2/FR/art_48/p84_dda8c281           Les États membres exigent d’un

@@ -1,0 +1,48 @@
+{
+  "parametres": {
+    "questions": 1,
+    "taux_empoisonnement": 0.1,
+    "familles": "duplication",
+    "graine": 20260902,
+    "sortie": "resultats/e3_verif_interne",
+    "modele": null,
+    "tarif_entree": null,
+    "tarif_sortie": null,
+    "classe": "interne",
+    "reprise": null,
+    "reclassement": true,
+    "top_k_generation": 10,
+    "longueur_reclasseur": 512,
+    "max_jetons": null,
+    "temperature": null,
+    "plafond": 1.0,
+    "engager_la_depense": false
+  },
+  "requetes": 1,
+  "configurations": 5,
+  "appels_plafond": 5,
+  "appels_reels": 5,
+  "abstentions_evitees": 0,
+  "invite_caracteres": {
+    "total": 18190,
+    "moyenne": 3638,
+    "mediane": 3638,
+    "min": 3638,
+    "max": 3638
+  },
+  "invite_mots": {
+    "total": 2230,
+    "moyenne": 446
+  },
+  "familles": [
+    "duplication"
+  ],
+  "resultats_de_robustesse": "NON MESURES : fournisseur simule",
+  "asr_ignore": {
+    "complete": 0.0,
+    "sans_isolation": 0.0,
+    "sans_corroboration": 0.0,
+    "sans_verrou": 0.0,
+    "aucune": 0.0
+  }
+}

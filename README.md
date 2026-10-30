@@ -33,6 +33,8 @@ sont calculés en local, et seule une requête texte nettoyée peut sortir.
 | `src/pipeline.py` | la chaîne complète, de la question à la réponse |
 | `scripts/` | lanceurs des expériences (`run_e*.py`), construction des index, figures, outils divers |
 | `docs/` | journal des données et des résultats, licences des corpus |
+| `resultats/` | sorties brutes de chaque exécution (JSON, journaux), citées dans le journal des données |
+| `figures/` | graphiques des résultats, en PDF et PNG |
 
 Chaque module commence par une docstring qui explique ce qu'il fait, les
 choix faits et ses limites.

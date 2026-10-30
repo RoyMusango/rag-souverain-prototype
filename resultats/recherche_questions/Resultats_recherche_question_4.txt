@@ -1,0 +1,52 @@
+==============================================================================
+QUESTION 4
+==============================================================================
+
+Enonce :
+  Quelles conditions remplit un représentant d'un État membre du comité IA ?
+
+Ancrage attendu :
+  eurlex/AI_Act/FR/considerants/p38_ddf085be
+  extrait : (149) Afin de faciliter une mise en œuvre aisée, efficace et harmonisée du présent règlement, il convient de créer un Co...
+
+Configuration de recherche : lexical
+
+------------------------------------------------------------------------------
+RAPPEL
+------------------------------------------------------------------------------
+  rappel@5   : non 
+  rappel@10  : non 
+  rappel@25  : non 
+
+  Le passage attendu n'apparait dans aucun des 25 premiers resultats.
+
+------------------------------------------------------------------------------
+RESULTATS RENDUS PAR LE SYSTEME
+------------------------------------------------------------------------------
+rang  score     ancrage                                        debut du texte
+------------------------------------------------------------------------------
+1     0.0164    eurlex/AI_Act/FR/art_65/p95_6dd99839           Le Comité IA est composé d’un 
+2     0.0161    eurlex/RGPD/FR/art_68/p76_08ecca75             Lorsque, dans un État membre, 
+3     0.0159    eurlex/AI_Act/FR/art_65/p95_58e5904d           Chaque représentant est désign
+4     0.0156    eurlex/RGPD/FR/art_53/p66_f38e36e2             Un membre ne peut être démis d
+5     0.0154    eurlex/DORA/FR/art_32/p56_612dacf3             Le forum de supervision se com
+6     0.0152    eurlex/AI_Act/FR/art_65/p96_101c4507           c) soient habilités à facilite
+7     0.0149    eurlex/AI_Act/FR/art_65/p95_9ebec472           Les États membres veillent à c
+8     0.0147    eurlex/RGPD/FR/art_37/p55_89c4fac4             Dans les cas autres que ceux v
+9     0.0145    eurlex/RGPD/FR/art_68/p76_e574900e             La Commission a le droit de pa
+10    0.0143    eurlex/RGPD/FR/art_68/p76_22c2e86c             Le comité se compose du chef d
+11    0.0141    eurlex/MiFID2/FR/art_43/p79_d6278af4           a) n’en fait pas usage dans un
+12    0.0139    eurlex/DORA/FR/art_32/p56_ad2c69cb             Chaque État membre désigne l’a
+13    0.0137    eurlex/MiFID2/FR/art_62/p99_2f116626           Article 62 Retrait d’agrément 
+14    0.0135    eurlex/RGPD/FR/art_62/p73_5437549c             L'État membre sur le territoir
+15    0.0133    eurlex/MiFID2/FR/art_44/p80_750bf20a           L’autorité compétente peut ret
+16    0.0132    eurlex/MiFID2/FR/art_53/p90_fb991396           Le marché réglementé communiqu
+17    0.0130    eurlex/MiFID2/FR/art_34/p72_6fd54807           Lorsque l’entreprise d’investi
+18    0.0128    eurlex/AI_Act/FR/art_51/p83_4514c7af           Un modèle d’IA à usage général
+19    0.0127    eurlex/AI_Act/FR/art_81/p108_c7ed13fb          Lorsque la Commission estime q
+20    0.0125    eurlex/AI_Act/FR/art_52/p83_fa6d738c           Lorsqu’un modèle d’IA à usage 
+21    0.0123    eurlex/RGPD/FR/considerants/p22_c235f779       (121) Les conditions générales
+22    0.0122    eurlex/AI_Act/FR/art_113/p136_8c4b403c         tout État membre dans lequel l
+23    0.0120    eurlex/AI_Act/FR/art_60/p92_2c88452e           Les fournisseurs ou fournisseu
+24    0.0119    eurlex/RGPD/FR/art_51/p65_ef059c61             Lorsqu'un État membre institue
+25    0.0118    eurlex/AI_Act/FR/art_113/p136_f18398a2         tout État membre dans lequel l

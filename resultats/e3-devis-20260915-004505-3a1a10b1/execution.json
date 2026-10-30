@@ -1,0 +1,101 @@
+{
+  "identifiant": "e3-devis-20260915-004505-3a1a10b1",
+  "nom": "e3-devis",
+  "commit": "3a1a10b14385-modifie",
+  "manifeste_hash": "62d56268b166c86ce69deabb1c0dfa2d4bd3b771306ce0633275c887336754ab",
+  "manifeste": {
+    "data/banque/banque_reference.json": "d9837de47745c184277d90140ad580c8f35162ed3d8d23cd2d3bc56dc28de0e0",
+    "data/banque/banque_schema.json": "eaa76c682b4bb6c851dc5d7c4f5733953ec6415374485b4d990dbc7274ac8dfe",
+    "data/external/eurlex/eurlex_schema.json": "c748fdcf2342f5f5c97ee375ed3fedd9f5e6ca86561b925693eb213b52c71fbe"
+  },
+  "materiel": {
+    "nom": "instance GPU louee (Scaleway L4-1-24G, PAR-2)",
+    "role": "mesure-souveraine",
+    "accelerateur": "NVIDIA L4 24 Go",
+    "juridiction": "France (PAR-2)",
+    "souverain": true,
+    "note": "calcul des embeddings ; substrat de calcul, non service distant",
+    "systeme": "Windows",
+    "version": "10",
+    "processeur": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.11.9"
+  },
+  "versions": {
+    "torch": "2.13.0+cpu",
+    "sentence_transformers": "3.4.1",
+    "qdrant_client": "inconnue",
+    "spacy": "3.8.14",
+    "rank_bm25": "inconnue",
+    "numpy": "2.4.6"
+  },
+  "configuration": {
+    "confidentialite": {
+      "k": 50,
+      "budget_bits": 6.0,
+      "kappa": "a-remplacer-au-deploiement",
+      "moteur_ner": "souverain",
+      "langue_ner": "fr",
+      "tolerance_gabarit": 4,
+      "chemin_registre": "data/registre_exposition.json"
+    },
+    "routage": {
+      "seuil_pertinence": 0.55,
+      "seuil_completude": 0.7,
+      "correction_autorisee": true,
+      "escalade_autorisee": true
+    },
+    "recherche": {
+      "modele_embeddings": "BAAI/bge-m3",
+      "dimension": 1024,
+      "top_k_dense": 50,
+      "top_k_lexical": 50,
+      "top_k_reclassement": 20,
+      "n_final": 10,
+      "modele_reclasseur": "BAAI/bge-reranker-v2-m3",
+      "k_rrf": 60,
+      "collection": "rag_souverain",
+      "hote_qdrant": "http://localhost:6333"
+    },
+    "isolation": {
+      "seuil_corroboration": 2,
+      "seuil_collusion": 2,
+      "penalite_collusion": 0.1
+    },
+    "generation": {
+      "palier": "local",
+      "modele": "mistral-small",
+      "max_jetons": 1024,
+      "temperature": 0.0
+    },
+    "graine": 42,
+    "materiel": {
+      "nom": "instance GPU louee (Scaleway L4-1-24G, PAR-2)",
+      "role": "mesure-souveraine",
+      "accelerateur": "NVIDIA L4 24 Go",
+      "juridiction": "France (PAR-2)",
+      "souverain": true,
+      "note": "calcul des embeddings ; substrat de calcul, non service distant"
+    }
+  },
+  "mesures": {
+    "appels": {
+      "valeur": 5,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    }
+  },
+  "evenements": [
+    {
+      "horodatage": "00:45:05",
+      "libelle": "debut",
+      "materiel": "instance GPU louee (Scaleway L4-1-24G, PAR-2)"
+    },
+    {
+      "horodatage": "00:45:05",
+      "libelle": "fin",
+      "duree_s": 0.24
+    }
+  ],
+  "avertissements": []
+}

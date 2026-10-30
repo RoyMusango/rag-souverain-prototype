@@ -1,0 +1,50 @@
+==============================================================================
+QUESTION 3
+==============================================================================
+
+Enonce :
+  Quelles actions sont autorisés à effectuer des agents liés à qui une entreprise d'investissement fait appel ?
+
+Ancrage attendu :
+  eurlex/MiFID2/FR/art_29/p66_7bf8c66d
+  extrait : Les États membres autorisent une entreprise d’investissement à faire appel à des agents liés aux fins de promouvoir ses ...
+
+Configuration de recherche : lexical
+
+------------------------------------------------------------------------------
+RAPPEL
+------------------------------------------------------------------------------
+  rappel@5   : OUI    (rang 3)
+  rappel@10  : OUI    (rang 3)
+  rappel@25  : OUI    (rang 3)
+
+------------------------------------------------------------------------------
+RESULTATS RENDUS PAR LE SYSTEME
+------------------------------------------------------------------------------
+rang  score     ancrage                                        debut du texte
+------------------------------------------------------------------------------
+1     0.0164    eurlex/MiFID2/FR/art_29/p67_8dc6b588           Les États membres exigent des 
+2     0.0161    eurlex/MiFID2/FR/art_29/p66_6a3a6985           Article 29 Obligations incomba
+3     0.0159    eurlex/MiFID2/FR/art_29/p66_7bf8c66d           Les États membres autorisent u  <== ATTENDU
+4     0.0156    eurlex/MiFID2/FR/art_29/p67_3d27de7d           Les États membres exigent que 
+5     0.0154    eurlex/MiFID2/FR/art_29/p67_041319a0           Les États membres s’assurent q
+6     0.0152    eurlex/MiFID2/FR/art_29/p66_56b2da6c           Les agents liés sont inscrits 
+7     0.0149    eurlex/MiFID2/FR/art_35/p74_57033b59           b) un programme d’activité pré
+8     0.0147    eurlex/MiFID2/FR/art_34/p72_52eeb5fa           Toute entreprise d’investissem
+9     0.0145    eurlex/MiFID2/FR/art_29/p67_845e31e8           Les États membres peuvent auto
+10    0.0143    eurlex/MiFID2/FR/art_29/p66_27550cac           Les États membres peuvent auto
+11    0.0141    eurlex/MiFID2/FR/art_34/p72_6fd54807           Lorsque l’entreprise d’investi
+12    0.0139    eurlex/MiFID2/FR/art_20/p55_e570e2bc           L’autorité compétente peut exi
+13    0.0137    eurlex/MiFID2/FR/art_35/p73_792f74da           Les États membres exigent que 
+14    0.0135    eurlex/MiFID2/FR/art_20/p55_faf1a7c3           Les États membres n’empêchent 
+15    0.0133    eurlex/MiFID2/FR/art_16/p48_6c7da5b5           Toute entreprise d’investissem
+16    0.0132    eurlex/MiFID2/FR/considerants/p17_0f34988c     (98) Lorsqu’elle établit la re
+17    0.0130    eurlex/MiFID2/FR/art_29/p66_14eb96e3           Les États membres exigent que,
+18    0.0128    eurlex/MiFID2/FR/art_34/p72_f0fb9dee           Tout établissement de crédit q
+19    0.0127    eurlex/MiFID2/FR/art_23/p56_a3e7c114           Les États membres exigent des 
+20    0.0125    eurlex/MiFID2/FR/art_16/p49_2cdb1bd3           Toute entreprise d’investissem
+21    0.0123    eurlex/MiFID2/FR/art_16/p49_6484201f           Une entreprise d’investissemen
+22    0.0122    eurlex/MiFID2/FR/considerants/p13_078ffd34     (75) Lors de la prestation du 
+23    0.0120    eurlex/MiFID2/FR/art_20/p55_404d7db6           Les États membres n’autorisent
+24    0.0119    eurlex/MiFID2/FR/art_77/p117_af1900fe          Les États membres prévoient au
+25    0.0118    eurlex/MiFID2/FR/art_32/p69_4f947c1d           Les États membres exigent qu’u

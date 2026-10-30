@@ -1,0 +1,50 @@
+==============================================================================
+QUESTION 1
+==============================================================================
+
+Enonce :
+  Quelles procédures doivent être faites par les déployeurs avant de mettre en service ou d'utiliser un système d'IA à haut risque ?
+
+Ancrage attendu :
+  eurlex/AI_Act/FR/art_49/p81_51e82120
+  extrait : Avant de mettre en service ou d’utiliser un système d’IA à haut risque énuméré à l’annexe III, à l’exception des système...
+
+Configuration de recherche : dense
+
+------------------------------------------------------------------------------
+RAPPEL
+------------------------------------------------------------------------------
+  rappel@5   : non 
+  rappel@10  : OUI    (rang 8)
+  rappel@25  : OUI    (rang 8)
+
+------------------------------------------------------------------------------
+RESULTATS RENDUS PAR LE SYSTEME
+------------------------------------------------------------------------------
+rang  score     ancrage                                        debut du texte
+------------------------------------------------------------------------------
+1     0.0164    eurlex/AI_Act/FR/art_27/p69_363f4b50           Avant le déploiement d’un syst
+2     0.0161    eurlex/AI_Act/FR/art_26/p68_87a43a08           Avant de mettre en service ou 
+3     0.0159    eurlex/AI_Act/FR/considerants/p21_4cbe4bc2     (72) Afin de répondre aux préo
+4     0.0156    eurlex/AI_Act/FR/art_26/p68_9cca41de           Les déployeurs surveillent le 
+5     0.0154    eurlex/AI_Act/FR/art_26/p67_907d7aa7           Les déployeurs de systèmes d’I
+6     0.0152    eurlex/AI_Act/FR/art_26/p68_6fc467cd           Les déployeurs de systèmes d’I
+7     0.0149    eurlex/AI_Act/FR/considerants/p25_2bf76bd6     compétences nécessaires, en pa
+8     0.0147    eurlex/AI_Act/FR/art_49/p81_51e82120           Avant de mettre en service ou   <== ATTENDU
+9     0.0145    eurlex/AI_Act/FR/art_27/p70_d2ad6a52           L’obligation établie au paragr
+10    0.0143    eurlex/AI_Act/FR/art_11/p58_0aea1293           La documentation technique rel
+11    0.0141    eurlex/AI_Act/FR/art_14/p60_00c4dd8a           Aux fins de la mise en œuvre d
+12    0.0139    eurlex/AI_Act/FR/art_26/p69_cf6452ae           Les déployeurs coopèrent avec 
+13    0.0137    eurlex/AI_Act/FR/art_23/p65_e42d4994           Avant de mettre sur le marché 
+14    0.0135    eurlex/AI_Act/FR/considerants/p21_4b9b284d     (73) Les systèmes d’IA à haut 
+15    0.0133    eurlex/AI_Act/FR/art_20/p64_3a40443e           Les fournisseurs de systèmes d
+16    0.0132    eurlex/AI_Act/FR/considerants/p33_83b4ae4c     (131) Afin de faciliter les tr
+17    0.0130    eurlex/AI_Act/FR/art_9/p57_42c760ba            Les tests des systèmes d’IA à 
+18    0.0128    eurlex/AI_Act/FR/considerants/p23_48cd5a39     (84) Afin de garantir la sécur
+19    0.0127    eurlex/AI_Act/FR/art_16/p62_138059b1           Article 16 Obligations incomba
+20    0.0125    eurlex/AI_Act/FR/considerants/p24_e825da9e     (85) Les systèmes d’IA à usage
+21    0.0123    eurlex/AI_Act/FR/art_6/p53_49166fba            Un système d’IA mis sur le mar
+22    0.0122    eurlex/AI_Act/FR/considerants/p44_93cc9f14     (177) Afin d’assurer la sécuri
+23    0.0120    eurlex/AI_Act/FR/considerants/p32_7faf3259     (123) Afin de garantir un nive
+24    0.0119    eurlex/AI_Act/FR/art_24/p66_c5e9d90e           Lorsqu’un distributeur considè
+25    0.0118    eurlex/AI_Act/FR/art_13/p59_8d469476           La conception et le développem

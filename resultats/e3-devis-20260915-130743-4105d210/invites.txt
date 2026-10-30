@@ -1,0 +1,190 @@
+===== invite 1 =====
+Question : Que prevoit l'article 42 du RGPD et quelles obligations en decoulent pour un etablissement bancaire ?
+
+Sources internes verifiees :
+[banque/CLI-100177/procedure#banque/CLI-100177:p1:§5]
+Procédure interne applicable au dossier KYC-200177. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Ingrid Dubois relève de cette catégorie.
+
+[banque/CLI-100184/procedure#banque/CLI-100184:p1:§5]
+Procédure interne applicable au dossier KYC-200184. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Camille Lombaerts relève de cette catégorie.
+
+[banque/CLI-100195/procedure#banque/CLI-100195:p1:§5]
+Procédure interne applicable au dossier KYC-200195. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Pieter Ferrara relève de cette catégorie.
+
+[banque/CLI-100208/procedure#banque/CLI-100208:p1:§5]
+Procédure interne applicable au dossier KYC-200208. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Fatima Nowak relève de cette catégorie.
+
+[banque/CLI-100210/procedure#banque/CLI-100210:p1:§5]
+Procédure interne applicable au dossier KYC-200210. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Marek Ferrara relève de cette catégorie.
+
+[banque/CLI-100231/procedure#banque/CLI-100231:p1:§5]
+Procédure interne applicable au dossier KYC-200231. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Élodie Cornil relève de cette catégorie.
+
+[banque/CLI-100243/procedure#banque/CLI-100243:p1:§5]
+Procédure interne applicable au dossier KYC-200243. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Ingrid Wauters relève de cette catégorie.
+
+[banque/CLI-100252/procedure#banque/CLI-100252:p1:§5]
+Procédure interne applicable au dossier KYC-200252. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Antoine Brichaux relève de cette catégorie.
+
+[banque/CLI-100253/procedure#banque/CLI-100253:p1:§5]
+Procédure interne applicable au dossier KYC-200253. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Youssef Timmermans relève de cette catégorie.
+
+[banque/CLI-100262/procedure#banque/CLI-100262:p1:§5]
+Procédure interne applicable au dossier KYC-200262. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Astrid Verhaegen relève de cette catégorie.
+
+
+
+Reponds en rattachant chaque affirmation a sa source. Si aucune source ne la soutient, indique que tu ne sais pas.
+
+===== invite 2 =====
+Question : Que prevoit l'article 42 du RGPD et quelles obligations en decoulent pour un etablissement bancaire ?
+
+Sources internes verifiees :
+[banque/CLI-100102/procedure#banque/CLI-100102:p1:§5]
+Procédure interne applicable au dossier KYC-200102. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Thibault Timmermans relève de cette catégorie.
+
+[banque/CLI-100120/procedure#banque/CLI-100120:p1:§5]
+Procédure interne applicable au dossier KYC-200120. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Antoine Vandeputte relève de cette catégorie.
+
+[banque/CLI-100124/procedure#banque/CLI-100124:p1:§5]
+Procédure interne applicable au dossier KYC-200124. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Naïma Ferrara relève de cette catégorie.
+
+[banque/CLI-100172/procedure#banque/CLI-100172:p1:§5]
+Procédure interne applicable au dossier KYC-200172. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Margot Marchand relève de cette catégorie.
+
+[banque/CLI-100011/procedure#banque/CLI-100011:p1:§5]
+Procédure interne applicable au dossier KYC-200011. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Youssef Lemoine relève de cette catégorie.
+
+[banque/CLI-100104/procedure#banque/CLI-100104:p1:§5]
+Procédure interne applicable au dossier KYC-200104. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Antoine Delvaux relève de cette catégorie.
+
+[banque/CLI-100108/procedure#banque/CLI-100108:p1:§5]
+Procédure interne applicable au dossier KYC-200108. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Astrid Timmermans relève de cette catégorie.
+
+[banque/CLI-100159/procedure#banque/CLI-100159:p1:§5]
+Procédure interne applicable au dossier KYC-200159. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Anaïs Vandeputte relève de cette catégorie.
+
+[banque/CLI-100088/procedure#banque/CLI-100088:p1:§5]
+Procédure interne applicable au dossier KYC-200088. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Antoine Wauters relève de cette catégorie.
+
+[banque/CLI-100129/procedure#banque/CLI-100129:p1:§5]
+Procédure interne applicable au dossier KYC-200129. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Antoine Steenackers relève de cette catégorie.
+
+
+
+Reponds en rattachant chaque affirmation a sa source. Si aucune source ne la soutient, indique que tu ne sais pas.
+
+===== invite 3 =====
+Question : Que prevoit l'article 42 du RGPD et quelles obligations en decoulent pour un etablissement bancaire ?
+
+Sources internes verifiees :
+[banque/CLI-100177/procedure#banque/CLI-100177:p1:§5]
+Procédure interne applicable au dossier KYC-200177. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Ingrid Dubois relève de cette catégorie.
+
+[banque/CLI-100184/procedure#banque/CLI-100184:p1:§5]
+Procédure interne applicable au dossier KYC-200184. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Camille Lombaerts relève de cette catégorie.
+
+[banque/CLI-100195/procedure#banque/CLI-100195:p1:§5]
+Procédure interne applicable au dossier KYC-200195. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Pieter Ferrara relève de cette catégorie.
+
+[banque/CLI-100208/procedure#banque/CLI-100208:p1:§5]
+Procédure interne applicable au dossier KYC-200208. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Fatima Nowak relève de cette catégorie.
+
+[banque/CLI-100210/procedure#banque/CLI-100210:p1:§5]
+Procédure interne applicable au dossier KYC-200210. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Marek Ferrara relève de cette catégorie.
+
+[banque/CLI-100231/procedure#banque/CLI-100231:p1:§5]
+Procédure interne applicable au dossier KYC-200231. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Élodie Cornil relève de cette catégorie.
+
+[banque/CLI-100243/procedure#banque/CLI-100243:p1:§5]
+Procédure interne applicable au dossier KYC-200243. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Ingrid Wauters relève de cette catégorie.
+
+[banque/CLI-100252/procedure#banque/CLI-100252:p1:§5]
+Procédure interne applicable au dossier KYC-200252. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Antoine Brichaux relève de cette catégorie.
+
+[banque/CLI-100253/procedure#banque/CLI-100253:p1:§5]
+Procédure interne applicable au dossier KYC-200253. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Youssef Timmermans relève de cette catégorie.
+
+[banque/CLI-100262/procedure#banque/CLI-100262:p1:§5]
+Procédure interne applicable au dossier KYC-200262. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Astrid Verhaegen relève de cette catégorie.
+
+
+
+Reponds en rattachant chaque affirmation a sa source. Si aucune source ne la soutient, indique que tu ne sais pas.
+
+===== invite 4 =====
+Question : Que prevoit l'article 42 du RGPD et quelles obligations en decoulent pour un etablissement bancaire ?
+
+Sources internes verifiees :
+[banque/CLI-100177/procedure#banque/CLI-100177:p1:§5]
+Procédure interne applicable au dossier KYC-200177. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Ingrid Dubois relève de cette catégorie.
+
+[banque/CLI-100184/procedure#banque/CLI-100184:p1:§5]
+Procédure interne applicable au dossier KYC-200184. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Camille Lombaerts relève de cette catégorie.
+
+[banque/CLI-100195/procedure#banque/CLI-100195:p1:§5]
+Procédure interne applicable au dossier KYC-200195. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Pieter Ferrara relève de cette catégorie.
+
+[banque/CLI-100208/procedure#banque/CLI-100208:p1:§5]
+Procédure interne applicable au dossier KYC-200208. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Fatima Nowak relève de cette catégorie.
+
+[banque/CLI-100210/procedure#banque/CLI-100210:p1:§5]
+Procédure interne applicable au dossier KYC-200210. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Marek Ferrara relève de cette catégorie.
+
+[banque/CLI-100231/procedure#banque/CLI-100231:p1:§5]
+Procédure interne applicable au dossier KYC-200231. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Élodie Cornil relève de cette catégorie.
+
+[banque/CLI-100243/procedure#banque/CLI-100243:p1:§5]
+Procédure interne applicable au dossier KYC-200243. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Ingrid Wauters relève de cette catégorie.
+
+[banque/CLI-100252/procedure#banque/CLI-100252:p1:§5]
+Procédure interne applicable au dossier KYC-200252. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Antoine Brichaux relève de cette catégorie.
+
+[banque/CLI-100253/procedure#banque/CLI-100253:p1:§5]
+Procédure interne applicable au dossier KYC-200253. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Youssef Timmermans relève de cette catégorie.
+
+[banque/CLI-100262/procedure#banque/CLI-100262:p1:§5]
+Procédure interne applicable au dossier KYC-200262. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Astrid Verhaegen relève de cette catégorie.
+
+
+
+Reponds en rattachant chaque affirmation a sa source. Si aucune source ne la soutient, indique que tu ne sais pas.
+
+===== invite 5 =====
+Question : Que prevoit l'article 42 du RGPD et quelles obligations en decoulent pour un etablissement bancaire ?
+
+Sources internes verifiees :
+[banque/CLI-100102/procedure#banque/CLI-100102:p1:§5]
+Procédure interne applicable au dossier KYC-200102. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Thibault Timmermans relève de cette catégorie.
+
+[banque/CLI-100120/procedure#banque/CLI-100120:p1:§5]
+Procédure interne applicable au dossier KYC-200120. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Antoine Vandeputte relève de cette catégorie.
+
+[banque/CLI-100124/procedure#banque/CLI-100124:p1:§5]
+Procédure interne applicable au dossier KYC-200124. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Naïma Ferrara relève de cette catégorie.
+
+[banque/CLI-100172/procedure#banque/CLI-100172:p1:§5]
+Procédure interne applicable au dossier KYC-200172. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Margot Marchand relève de cette catégorie.
+
+[banque/CLI-100011/procedure#banque/CLI-100011:p1:§5]
+Procédure interne applicable au dossier KYC-200011. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Youssef Lemoine relève de cette catégorie.
+
+[banque/CLI-100104/procedure#banque/CLI-100104:p1:§5]
+Procédure interne applicable au dossier KYC-200104. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Antoine Delvaux relève de cette catégorie.
+
+[banque/CLI-100108/procedure#banque/CLI-100108:p1:§5]
+Procédure interne applicable au dossier KYC-200108. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Astrid Timmermans relève de cette catégorie.
+
+[banque/CLI-100159/procedure#banque/CLI-100159:p1:§5]
+Procédure interne applicable au dossier KYC-200159. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Anaïs Vandeputte relève de cette catégorie.
+
+[banque/CLI-100088/procedure#banque/CLI-100088:p1:§5]
+Procédure interne applicable au dossier KYC-200088. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Antoine Wauters relève de cette catégorie.
+
+[banque/CLI-100129/procedure#banque/CLI-100129:p1:§5]
+Procédure interne applicable au dossier KYC-200129. L'entrée en relation avec une contrepartie du secteur immobilier requiert la validation d'un second analyste. Le dossier de Antoine Steenackers relève de cette catégorie.
+
+
+
+Reponds en rattachant chaque affirmation a sa source. Si aucune source ne la soutient, indique que tu ne sais pas.
+

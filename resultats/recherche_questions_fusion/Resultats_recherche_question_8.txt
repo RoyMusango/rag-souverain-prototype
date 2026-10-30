@@ -1,0 +1,50 @@
+==============================================================================
+QUESTION 8
+==============================================================================
+
+Enonce :
+  Quelle est la période maximale de conservation des données à caractère personnel du paragraphe 1?
+
+Ancrage attendu :
+  eurlex/DORA/FR/art_56/p73_c657fbe4
+  extrait : Sauf disposition contraire dans d’autres actes sectoriels, les données à caractère personnel visées au paragraphe 1 sont...
+
+Configuration de recherche : fusion
+
+------------------------------------------------------------------------------
+RAPPEL
+------------------------------------------------------------------------------
+  rappel@5   : OUI    (rang 1)
+  rappel@10  : OUI    (rang 1)
+  rappel@25  : OUI    (rang 1)
+
+------------------------------------------------------------------------------
+RESULTATS RENDUS PAR LE SYSTEME
+------------------------------------------------------------------------------
+rang  score     ancrage                                        debut du texte
+------------------------------------------------------------------------------
+1     0.0328    eurlex/DORA/FR/art_56/p73_c657fbe4             Sauf disposition contraire dan  <== ATTENDU
+2     0.0308    eurlex/RGPD/FR/art_18/p44_236c1adc             Lorsque le traitement a été li
+3     0.0304    eurlex/RGPD/FR/art_13/p41_3f5ca67e             En plus des informations visée
+4     0.0300    eurlex/RGPD/FR/art_5/p36_393cc8df              e) conservées sous une forme p
+5     0.0289    eurlex/RGPD/FR/art_15/p43_96d079a8             La personne concernée a le dro
+6     0.0277    eurlex/RGPD/FR/art_23/p47_90e06a53             En particulier, toute mesure l
+7     0.0267    eurlex/RGPD/FR/considerants/p1_7ca110e5        I (Actes législatifs) RÈGLEMEN
+8     0.0267    eurlex/RGPD/FR/art_33/p52_c1caf47e             La notification visée au parag
+9     0.0261    eurlex/RGPD/FR/art_14/p42_ae070a82             Le responsable du traitement f
+10    0.0161    eurlex/DORA/EN/art_56/p73_6e8bd0be             Except where otherwise provide
+11    0.0161    eurlex/AI_Act/FR/art_10/p58_2f8068a3           Dans la mesure où cela est str
+12    0.0156    eurlex/RGPD/FR/art_25/p48_74ca8349             Le responsable du traitement m
+13    0.0152    eurlex/RGPD/EN/art_5/p36_6b5a7e86              (e) kept in a form which permi
+14    0.0149    eurlex/RGPD/FR/art_14/p42_6d342a50             En plus des informations visée
+15    0.0147    eurlex/RGPD/FR/art_9/p38_6ecaf56c              Le paragraphe 1 ne s'applique 
+16    0.0147    eurlex/DORA/FR/art_35/p59_ce0ccf61             L’astreinte visée au paragraph
+17    0.0145    eurlex/RGPD/FR/considerants/p12_9c2f61de       (65) Les personnes concernées 
+18    0.0143    eurlex/RGPD/FR/art_17/p44_fbb504ea             Lorsqu'il a rendu publiques le
+19    0.0141    eurlex/RGPD/FR/art_14/p42_2f2c650c             Les paragraphes 1 à 4 ne s'app
+20    0.0139    eurlex/RGPD/EN/art_23/p47_fb0fc31b             In particular, any legislative
+21    0.0139    eurlex/RGPD/FR/considerants/p7_9f375542        (39) Tout traitement de donnée
+22    0.0137    eurlex/RGPD/EN/art_18/p44_5627d28d             Where processing has been rest
+23    0.0135    eurlex/AI_Act/FR/art_59/p92_fbce4457           Le paragraphe 1 est sans préju
+24    0.0133    eurlex/MiFID2/EN/art_16/p49_293abd0f           The records kept in accordance
+25    0.0133    eurlex/RGPD/FR/art_49/p64_819978a4             Un transfert effectué en vertu

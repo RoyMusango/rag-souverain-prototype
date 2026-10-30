@@ -1,0 +1,190 @@
+===== invite 1 =====
+Question : Quel motif de vigilance a ete retenu pour les mouvements au credit en provenance d'une contrepartie liee ?
+
+Sources internes verifiees :
+[banque/CLI-100005/aml#banque/CLI-100005:p1:§3]
+Note de vigilance — CLI-100005. Un mouvement de 84000 EUR au crédit de BE40896383465787 a été relevé, en provenance d'une contrepartie liée à Alzette Property. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200005 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100026/aml#banque/CLI-100026:p1:§3]
+Note de vigilance — CLI-100026. Un mouvement de 346000 EUR au crédit de QW8802787429671756 a été relevé, en provenance d'une contrepartie liée à Ardennes Holding. Motif retenu : opérations fractionnées sous le seuil de déclaration. Le dossier KYC-200026 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100016/aml#banque/CLI-100016:p1:§3]
+Note de vigilance — CLI-100016. Un mouvement de 727000 EUR au crédit de BE74714345581223 a été relevé, en provenance d'une contrepartie liée à Alzette Property. Motif retenu : activité déclarée sans substance vérifiable. Le dossier KYC-200016 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100039/aml#banque/CLI-100039:p1:§3]
+Note de vigilance — CLI-100039. Un mouvement de 905000 EUR au crédit de BE74273158514936 a été relevé, en provenance d'une contrepartie liée à Meuse Invest. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200039 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100048/aml#banque/CLI-100048:p1:§3]
+Note de vigilance — CLI-100048. Un mouvement de 410000 EUR au crédit de ZQ4092407581814124 a été relevé, en provenance d'une contrepartie liée à Hainaut Développement. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200048 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100010/aml#banque/CLI-100010:p1:§3]
+Note de vigilance — CLI-100010. Un mouvement de 24000 EUR au crédit de BE38182449353487 a été relevé, en provenance d'une contrepartie liée à Meuse Invest. Motif retenu : activité déclarée sans substance vérifiable. Le dossier KYC-200010 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100020/aml#banque/CLI-100020:p1:§3]
+Note de vigilance — CLI-100020. Un mouvement de 201000 EUR au crédit de BE34726284987769 a été relevé, en provenance d'une contrepartie liée à Borinage Logistics. Motif retenu : opérations fractionnées sous le seuil de déclaration. Le dossier KYC-200020 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100041/aml#banque/CLI-100041:p1:§3]
+Note de vigilance — CLI-100041. Un mouvement de 527000 EUR au crédit de BE80497840369003 a été relevé, en provenance d'une contrepartie liée à Meuse Invest. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200041 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100049/aml#banque/CLI-100049:p1:§3]
+Note de vigilance — CLI-100049. Un mouvement de 483000 EUR au crédit de QW6452204727790104 a été relevé, en provenance d'une contrepartie liée à Ardennes Holding. Motif retenu : activité déclarée sans substance vérifiable. Le dossier KYC-200049 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100013/aml#banque/CLI-100013:p1:§3]
+Note de vigilance — CLI-100013. Un mouvement de 323000 EUR au crédit de BE78608835615951 a été relevé, en provenance d'une contrepartie liée à Kirchberg Capital. Motif retenu : activité déclarée sans substance vérifiable. Le dossier KYC-200013 est maintenu sous surveillance renforcée.
+
+
+
+Reponds en rattachant chaque affirmation a sa source. Si aucune source ne la soutient, indique que tu ne sais pas.
+
+===== invite 2 =====
+Question : Quel motif de vigilance a ete retenu pour les mouvements au credit en provenance d'une contrepartie liee ?
+
+Sources internes verifiees :
+[banque/CLI-100005/aml#banque/CLI-100005:p1:§3]
+Note de vigilance — CLI-100005. Un mouvement de 84000 EUR au crédit de BE40896383465787 a été relevé, en provenance d'une contrepartie liée à Alzette Property. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200005 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100026/aml#banque/CLI-100026:p1:§3]
+Note de vigilance — CLI-100026. Un mouvement de 346000 EUR au crédit de QW8802787429671756 a été relevé, en provenance d'une contrepartie liée à Ardennes Holding. Motif retenu : opérations fractionnées sous le seuil de déclaration. Le dossier KYC-200026 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100016/aml#banque/CLI-100016:p1:§3]
+Note de vigilance — CLI-100016. Un mouvement de 727000 EUR au crédit de BE74714345581223 a été relevé, en provenance d'une contrepartie liée à Alzette Property. Motif retenu : activité déclarée sans substance vérifiable. Le dossier KYC-200016 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100039/aml#banque/CLI-100039:p1:§3]
+Note de vigilance — CLI-100039. Un mouvement de 905000 EUR au crédit de BE74273158514936 a été relevé, en provenance d'une contrepartie liée à Meuse Invest. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200039 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100048/aml#banque/CLI-100048:p1:§3]
+Note de vigilance — CLI-100048. Un mouvement de 410000 EUR au crédit de ZQ4092407581814124 a été relevé, en provenance d'une contrepartie liée à Hainaut Développement. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200048 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100010/aml#banque/CLI-100010:p1:§3]
+Note de vigilance — CLI-100010. Un mouvement de 24000 EUR au crédit de BE38182449353487 a été relevé, en provenance d'une contrepartie liée à Meuse Invest. Motif retenu : activité déclarée sans substance vérifiable. Le dossier KYC-200010 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100020/aml#banque/CLI-100020:p1:§3]
+Note de vigilance — CLI-100020. Un mouvement de 201000 EUR au crédit de BE34726284987769 a été relevé, en provenance d'une contrepartie liée à Borinage Logistics. Motif retenu : opérations fractionnées sous le seuil de déclaration. Le dossier KYC-200020 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100041/aml#banque/CLI-100041:p1:§3]
+Note de vigilance — CLI-100041. Un mouvement de 527000 EUR au crédit de BE80497840369003 a été relevé, en provenance d'une contrepartie liée à Meuse Invest. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200041 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100049/aml#banque/CLI-100049:p1:§3]
+Note de vigilance — CLI-100049. Un mouvement de 483000 EUR au crédit de QW6452204727790104 a été relevé, en provenance d'une contrepartie liée à Ardennes Holding. Motif retenu : activité déclarée sans substance vérifiable. Le dossier KYC-200049 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100013/aml#banque/CLI-100013:p1:§3]
+Note de vigilance — CLI-100013. Un mouvement de 323000 EUR au crédit de BE78608835615951 a été relevé, en provenance d'une contrepartie liée à Kirchberg Capital. Motif retenu : activité déclarée sans substance vérifiable. Le dossier KYC-200013 est maintenu sous surveillance renforcée.
+
+
+
+Reponds en rattachant chaque affirmation a sa source. Si aucune source ne la soutient, indique que tu ne sais pas.
+
+===== invite 3 =====
+Question : Quel motif de vigilance a ete retenu pour les mouvements au credit en provenance d'une contrepartie liee ?
+
+Sources internes verifiees :
+[banque/CLI-100005/aml#banque/CLI-100005:p1:§3]
+Note de vigilance — CLI-100005. Un mouvement de 84000 EUR au crédit de BE40896383465787 a été relevé, en provenance d'une contrepartie liée à Alzette Property. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200005 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100026/aml#banque/CLI-100026:p1:§3]
+Note de vigilance — CLI-100026. Un mouvement de 346000 EUR au crédit de QW8802787429671756 a été relevé, en provenance d'une contrepartie liée à Ardennes Holding. Motif retenu : opérations fractionnées sous le seuil de déclaration. Le dossier KYC-200026 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100016/aml#banque/CLI-100016:p1:§3]
+Note de vigilance — CLI-100016. Un mouvement de 727000 EUR au crédit de BE74714345581223 a été relevé, en provenance d'une contrepartie liée à Alzette Property. Motif retenu : activité déclarée sans substance vérifiable. Le dossier KYC-200016 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100039/aml#banque/CLI-100039:p1:§3]
+Note de vigilance — CLI-100039. Un mouvement de 905000 EUR au crédit de BE74273158514936 a été relevé, en provenance d'une contrepartie liée à Meuse Invest. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200039 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100048/aml#banque/CLI-100048:p1:§3]
+Note de vigilance — CLI-100048. Un mouvement de 410000 EUR au crédit de ZQ4092407581814124 a été relevé, en provenance d'une contrepartie liée à Hainaut Développement. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200048 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100010/aml#banque/CLI-100010:p1:§3]
+Note de vigilance — CLI-100010. Un mouvement de 24000 EUR au crédit de BE38182449353487 a été relevé, en provenance d'une contrepartie liée à Meuse Invest. Motif retenu : activité déclarée sans substance vérifiable. Le dossier KYC-200010 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100020/aml#banque/CLI-100020:p1:§3]
+Note de vigilance — CLI-100020. Un mouvement de 201000 EUR au crédit de BE34726284987769 a été relevé, en provenance d'une contrepartie liée à Borinage Logistics. Motif retenu : opérations fractionnées sous le seuil de déclaration. Le dossier KYC-200020 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100041/aml#banque/CLI-100041:p1:§3]
+Note de vigilance — CLI-100041. Un mouvement de 527000 EUR au crédit de BE80497840369003 a été relevé, en provenance d'une contrepartie liée à Meuse Invest. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200041 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100049/aml#banque/CLI-100049:p1:§3]
+Note de vigilance — CLI-100049. Un mouvement de 483000 EUR au crédit de QW6452204727790104 a été relevé, en provenance d'une contrepartie liée à Ardennes Holding. Motif retenu : activité déclarée sans substance vérifiable. Le dossier KYC-200049 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100013/aml#banque/CLI-100013:p1:§3]
+Note de vigilance — CLI-100013. Un mouvement de 323000 EUR au crédit de BE78608835615951 a été relevé, en provenance d'une contrepartie liée à Kirchberg Capital. Motif retenu : activité déclarée sans substance vérifiable. Le dossier KYC-200013 est maintenu sous surveillance renforcée.
+
+
+
+Reponds en rattachant chaque affirmation a sa source. Si aucune source ne la soutient, indique que tu ne sais pas.
+
+===== invite 4 =====
+Question : Quel motif de vigilance a ete retenu pour les mouvements au credit en provenance d'une contrepartie liee ?
+
+Sources internes verifiees :
+[banque/CLI-100005/aml#banque/CLI-100005:p1:§3]
+Note de vigilance — CLI-100005. Un mouvement de 84000 EUR au crédit de BE40896383465787 a été relevé, en provenance d'une contrepartie liée à Alzette Property. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200005 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100026/aml#banque/CLI-100026:p1:§3]
+Note de vigilance — CLI-100026. Un mouvement de 346000 EUR au crédit de QW8802787429671756 a été relevé, en provenance d'une contrepartie liée à Ardennes Holding. Motif retenu : opérations fractionnées sous le seuil de déclaration. Le dossier KYC-200026 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100016/aml#banque/CLI-100016:p1:§3]
+Note de vigilance — CLI-100016. Un mouvement de 727000 EUR au crédit de BE74714345581223 a été relevé, en provenance d'une contrepartie liée à Alzette Property. Motif retenu : activité déclarée sans substance vérifiable. Le dossier KYC-200016 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100039/aml#banque/CLI-100039:p1:§3]
+Note de vigilance — CLI-100039. Un mouvement de 905000 EUR au crédit de BE74273158514936 a été relevé, en provenance d'une contrepartie liée à Meuse Invest. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200039 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100048/aml#banque/CLI-100048:p1:§3]
+Note de vigilance — CLI-100048. Un mouvement de 410000 EUR au crédit de ZQ4092407581814124 a été relevé, en provenance d'une contrepartie liée à Hainaut Développement. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200048 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100010/aml#banque/CLI-100010:p1:§3]
+Note de vigilance — CLI-100010. Un mouvement de 24000 EUR au crédit de BE38182449353487 a été relevé, en provenance d'une contrepartie liée à Meuse Invest. Motif retenu : activité déclarée sans substance vérifiable. Le dossier KYC-200010 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100020/aml#banque/CLI-100020:p1:§3]
+Note de vigilance — CLI-100020. Un mouvement de 201000 EUR au crédit de BE34726284987769 a été relevé, en provenance d'une contrepartie liée à Borinage Logistics. Motif retenu : opérations fractionnées sous le seuil de déclaration. Le dossier KYC-200020 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100041/aml#banque/CLI-100041:p1:§3]
+Note de vigilance — CLI-100041. Un mouvement de 527000 EUR au crédit de BE80497840369003 a été relevé, en provenance d'une contrepartie liée à Meuse Invest. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200041 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100049/aml#banque/CLI-100049:p1:§3]
+Note de vigilance — CLI-100049. Un mouvement de 483000 EUR au crédit de QW6452204727790104 a été relevé, en provenance d'une contrepartie liée à Ardennes Holding. Motif retenu : activité déclarée sans substance vérifiable. Le dossier KYC-200049 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100013/aml#banque/CLI-100013:p1:§3]
+Note de vigilance — CLI-100013. Un mouvement de 323000 EUR au crédit de BE78608835615951 a été relevé, en provenance d'une contrepartie liée à Kirchberg Capital. Motif retenu : activité déclarée sans substance vérifiable. Le dossier KYC-200013 est maintenu sous surveillance renforcée.
+
+
+
+Reponds en rattachant chaque affirmation a sa source. Si aucune source ne la soutient, indique que tu ne sais pas.
+
+===== invite 5 =====
+Question : Quel motif de vigilance a ete retenu pour les mouvements au credit en provenance d'une contrepartie liee ?
+
+Sources internes verifiees :
+[banque/CLI-100005/aml#banque/CLI-100005:p1:§3]
+Note de vigilance — CLI-100005. Un mouvement de 84000 EUR au crédit de BE40896383465787 a été relevé, en provenance d'une contrepartie liée à Alzette Property. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200005 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100026/aml#banque/CLI-100026:p1:§3]
+Note de vigilance — CLI-100026. Un mouvement de 346000 EUR au crédit de QW8802787429671756 a été relevé, en provenance d'une contrepartie liée à Ardennes Holding. Motif retenu : opérations fractionnées sous le seuil de déclaration. Le dossier KYC-200026 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100016/aml#banque/CLI-100016:p1:§3]
+Note de vigilance — CLI-100016. Un mouvement de 727000 EUR au crédit de BE74714345581223 a été relevé, en provenance d'une contrepartie liée à Alzette Property. Motif retenu : activité déclarée sans substance vérifiable. Le dossier KYC-200016 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100039/aml#banque/CLI-100039:p1:§3]
+Note de vigilance — CLI-100039. Un mouvement de 905000 EUR au crédit de BE74273158514936 a été relevé, en provenance d'une contrepartie liée à Meuse Invest. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200039 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100048/aml#banque/CLI-100048:p1:§3]
+Note de vigilance — CLI-100048. Un mouvement de 410000 EUR au crédit de ZQ4092407581814124 a été relevé, en provenance d'une contrepartie liée à Hainaut Développement. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200048 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100010/aml#banque/CLI-100010:p1:§3]
+Note de vigilance — CLI-100010. Un mouvement de 24000 EUR au crédit de BE38182449353487 a été relevé, en provenance d'une contrepartie liée à Meuse Invest. Motif retenu : activité déclarée sans substance vérifiable. Le dossier KYC-200010 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100020/aml#banque/CLI-100020:p1:§3]
+Note de vigilance — CLI-100020. Un mouvement de 201000 EUR au crédit de BE34726284987769 a été relevé, en provenance d'une contrepartie liée à Borinage Logistics. Motif retenu : opérations fractionnées sous le seuil de déclaration. Le dossier KYC-200020 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100041/aml#banque/CLI-100041:p1:§3]
+Note de vigilance — CLI-100041. Un mouvement de 527000 EUR au crédit de BE80497840369003 a été relevé, en provenance d'une contrepartie liée à Meuse Invest. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200041 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100049/aml#banque/CLI-100049:p1:§3]
+Note de vigilance — CLI-100049. Un mouvement de 483000 EUR au crédit de QW6452204727790104 a été relevé, en provenance d'une contrepartie liée à Ardennes Holding. Motif retenu : activité déclarée sans substance vérifiable. Le dossier KYC-200049 est maintenu sous surveillance renforcée.
+
+[banque/CLI-100013/aml#banque/CLI-100013:p1:§3]
+Note de vigilance — CLI-100013. Un mouvement de 323000 EUR au crédit de BE78608835615951 a été relevé, en provenance d'une contrepartie liée à Kirchberg Capital. Motif retenu : activité déclarée sans substance vérifiable. Le dossier KYC-200013 est maintenu sous surveillance renforcée.
+
+
+
+Reponds en rattachant chaque affirmation a sa source. Si aucune source ne la soutient, indique que tu ne sais pas.
+

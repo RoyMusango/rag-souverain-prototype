@@ -1,0 +1,50 @@
+==============================================================================
+QUESTION 11
+==============================================================================
+
+Enonce :
+  À quelles exigences est soumis un marché réglementé qui suspend la négociation dans tout État membre ?
+
+Ancrage attendu :
+  eurlex/MiFID2/FR/art_48/p84_17b080b3
+  extrait : Les États membres veillent à ce qu’un marché réglementé notifie à l’autorité compétente les paramètres de suspension de ...
+
+Configuration de recherche : lexical
+
+------------------------------------------------------------------------------
+RAPPEL
+------------------------------------------------------------------------------
+  rappel@5   : OUI    (rang 1)
+  rappel@10  : OUI    (rang 1)
+  rappel@25  : OUI    (rang 1)
+
+------------------------------------------------------------------------------
+RESULTATS RENDUS PAR LE SYSTEME
+------------------------------------------------------------------------------
+rang  score     ancrage                                        debut du texte
+------------------------------------------------------------------------------
+1     0.0164    eurlex/MiFID2/FR/art_48/p84_17b080b3           Les États membres veillent à c  <== ATTENDU
+2     0.0161    eurlex/MiFID2/FR/art_36/p76_ac239d7e           b) en devenant membres à dista
+3     0.0159    eurlex/MiFID2/FR/art_53/p91_11e65dde           À la demande de l’autorité com
+4     0.0156    eurlex/MiFID2/FR/art_86/p123_ac669f6d          Lorsque l’autorité compétente 
+5     0.0154    eurlex/MiFID2/FR/art_53/p90_fb991396           Le marché réglementé communiqu
+6     0.0152    eurlex/MiFID2/FR/art_51/p87_4e29d9d2           Ces règles garantissent que to
+7     0.0149    eurlex/MiFID2/FR/art_20/p55_e570e2bc           L’autorité compétente peut exi
+8     0.0147    eurlex/MiFID2/FR/considerants/p19_27b0c541     (122) Les dispositions de la p
+9     0.0145    eurlex/MiFID2/FR/art_86/p124_651d80b4          Si, en dépit des mesures prise
+10    0.0143    eurlex/MiFID2/FR/art_17/p51_dbd3d822           L’autorité compétente de l’Éta
+11    0.0141    eurlex/MiFID2/FR/art_48/p83_6889caa1           Les États membres exigent d’un
+12    0.0139    eurlex/MiFID2/FR/art_44/p79_0d4431b6           Sans préjudice de toute dispos
+13    0.0137    eurlex/MiFID2/FR/art_51/p88_7763e2ec           Une valeur mobilière qui a été
+14    0.0135    eurlex/MiFID2/FR/art_48/p85_f0eaaf14           Les États membres exigent d’un
+15    0.0133    eurlex/MiFID2/FR/art_80/p119_9d09ef03          L’autorité compétente d’un Éta
+16    0.0132    eurlex/MiFID2/FR/art_48/p84_d93bf98d           Les États membres exigent d’un
+17    0.0130    eurlex/MiFID2/FR/art_52/p88_27378b9d           Sans préjudice du droit des au
+18    0.0128    eurlex/MiFID2/FR/art_48/p86_be834146           e) si un marché réglementé est
+19    0.0127    eurlex/MiFID2/FR/art_55/p91_29aa351a           Sans préjudice des titres III,
+20    0.0125    eurlex/AI_Act/FR/art_113/p136_8c4b403c         tout État membre dans lequel l
+21    0.0123    eurlex/MiFID2/FR/art_44/p79_bd65c5f6           L’agrément en tant que marché 
+22    0.0122    eurlex/MiFID2/FR/considerants/p24_01bef215     (155) Afin d’atteindre les obj
+23    0.0120    eurlex/AI_Act/FR/art_113/p136_f18398a2         tout État membre dans lequel l
+24    0.0119    eurlex/MiFID2/FR/art_17/p50_abc9d48b           Une entreprise d’investissemen
+25    0.0118    eurlex/MiFID2/FR/art_52/p88_181525b3           Article 52 Suspension et retra

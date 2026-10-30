@@ -1,0 +1,32 @@
+{
+  "parametres": {
+    "questions": 40,
+    "taux_empoisonnement": 0.3,
+    "graine": 20260902,
+    "sortie": "resultats/e3_devis_03"
+  },
+  "requetes": 40,
+  "configurations": 5,
+  "appels_plafond": 200,
+  "appels_reels": 200,
+  "abstentions_evitees": 0,
+  "invite_caracteres": {
+    "total": 3057770,
+    "moyenne": 15288.9,
+    "mediane": 14865.0,
+    "min": 12489,
+    "max": 23964
+  },
+  "invite_mots": {
+    "total": 374320,
+    "moyenne": 1871.6
+  },
+  "resultats_de_robustesse": "NON MESURES : fournisseur simule",
+  "asr_ignore": {
+    "complete": 0.0,
+    "sans_isolation": 0.0,
+    "sans_corroboration": 0.0,
+    "sans_verrou": 0.0,
+    "aucune": 0.0
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "identifiant": "e6-routage-20260925-094320-ec779852",
+  "nom": "e6-routage",
+  "commit": "ec7798525631-modifie",
+  "manifeste_hash": "d9875a8e75c75a5626c53a79536e1b6063291b268447dd8a6989d023237289e9",
+  "manifeste": {
+    "data/banque/banque_reference.json": "5d625b35931ffe055ebc84003586ea1bfd4bea775b81906b9614a4f11aed17cc",
+    "data/banque/banque_schema.json": "deca983eafecbdeb094f4b87f22179cbd857622a0cc713ea41cec0f34e85b351",
+    "data/external/eurlex/eurlex_schema.json": "c748fdcf2342f5f5c97ee375ed3fedd9f5e6ca86561b925693eb213b52c71fbe"
+  },
+  "materiel": {
+    "nom": "ultraportable de developpement",
+    "role": "developpement",
+    "accelerateur": "aucun",
+    "juridiction": "Belgique",
+    "souverain": true,
+    "note": "ingestion et E2 ; aucun accelerateur graphique",
+    "systeme": "Windows",
+    "version": "10",
+    "processeur": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.11.9"
+  },
+  "versions": {
+    "torch": "2.13.0+cpu",
+    "sentence_transformers": "3.4.1",
+    "qdrant_client": "inconnue",
+    "spacy": "3.8.14",
+    "rank_bm25": "inconnue",
+    "numpy": "2.4.6"
+  },
+  "configuration": {
+    "confidentialite": {
+      "k": 50,
+      "budget_bits": 6.0,
+      "kappa": "a-remplacer-au-deploiement",
+      "moteur_ner": "souverain",
+      "langue_ner": "fr",
+      "tolerance_gabarit": 4,
+      "chemin_registre": "data/registre_exposition.json"
+    },
+    "routage": {
+      "seuil_pertinence": 0.55,
+      "seuil_completude": 0.7,
+      "correction_autorisee": true,
+      "escalade_autorisee": true
+    },
+    "recherche": {
+      "modele_embeddings": "BAAI/bge-m3",
+      "dimension": 1024,
+      "top_k_dense": 50,
+      "top_k_lexical": 50,
+      "top_k_reclassement": 20,
+      "n_final": 10,
+      "modele_reclasseur": "BAAI/bge-reranker-v2-m3",
+      "k_rrf": 60,
+      "collection": "rag_souverain",
+      "hote_qdrant": "http://localhost:6333"
+    },
+    "isolation": {
+      "seuil_corroboration": 2,
+      "seuil_collusion": 2,
+      "penalite_collusion": 0.1
+    },
+    "generation": {
+      "palier": "local",
+      "modele": "mistral-small",
+      "max_jetons": 1024,
+      "temperature": 0.0
+    },
+    "graine": 42,
+    "materiel": {
+      "nom": "ultraportable de developpement",
+      "role": "developpement",
+      "accelerateur": "aucun",
+      "juridiction": "Belgique",
+      "souverain": true,
+      "note": "ingestion et E2 ; aucun accelerateur graphique"
+    }
+  },
+  "mesures": {
+    "taux_decision_correcte": {
+      "valeur": 0.9744,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "taux_franchissement_injustifie": {
+      "valeur": 0.0702,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "taux_franchissement_manque": {
+      "valeur": 0.0172,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "franchissement_injustifie_sur_decrit": {
+      "valeur": 0.2353,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "franchissement_manque_sur_implicite": {
+      "valeur": 0.0556,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "taux_abstention_correcte": {
+      "valeur": 1.0,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "taux_abstention_indue": {
+      "valeur": 0.0,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "part_passee_par_correction": {
+      "valeur": 0.7179,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    },
+    "sorties_infructueuses": {
+      "valeur": 1.0,
+      "grandeur": "qualite",
+      "opposable": true,
+      "materiel": "ultraportable de developpement"
+    }
+  },
+  "evenements": [
+    {
+      "horodatage": "09:43:20",
+      "libelle": "debut",
+      "materiel": "ultraportable de developpement"
+    },
+    {
+      "horodatage": "09:43:21",
+      "libelle": "fin",
+      "duree_s": 1.42
+    }
+  ],
+  "avertissements": []
+}

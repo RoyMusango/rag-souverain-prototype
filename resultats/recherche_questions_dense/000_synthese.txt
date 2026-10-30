@@ -1,0 +1,6 @@
+Recherche sur 12 questions a reponse connue
+Configuration : dense
+
+rappel@5   : 0.8333   (10 sur 12)
+rappel@10  : 0.9167   (11 sur 12)
+rappel@25  : 1.0000   (12 sur 12)

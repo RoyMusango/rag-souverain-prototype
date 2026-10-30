@@ -1,0 +1,81 @@
+{
+  "resultats": {
+    "spacy": {
+      "moteur": "spacy",
+      "detecteur": {
+        "moteur": "spacy",
+        "langue": "en",
+        "modele": "en_core_web_lg",
+        "categories": [
+          "CARTE",
+          "COURRIEL",
+          "DATE",
+          "IBAN",
+          "IDENTIFIANT",
+          "LIEU",
+          "MONTANT",
+          "ORGANISATION",
+          "PERSONNE",
+          "TELEPHONE"
+        ],
+        "duree_chargement_s": 6.8,
+        "souverain": true
+      },
+      "documents": 300,
+      "vrais_positifs": 2427,
+      "faux_negatifs": 285,
+      "faux_positifs": 340,
+      "reference": 2712,
+      "detectees": 2058,
+      "detections_appariees": 1718,
+      "rappel": 0.8949,
+      "precision": 0.8348,
+      "precision_par_reference": 0.8771,
+      "f1": 0.8638,
+      "duree_s": 12.02,
+      "debit_car_s": 6151
+    },
+    "presidio": {
+      "moteur": "presidio",
+      "detecteur": {
+        "moteur": "presidio",
+        "langue": "en",
+        "modele": "en_core_web_lg",
+        "categories": [
+          "CARTE",
+          "COURRIEL",
+          "DATE",
+          "IBAN",
+          "IDENTIFIANT",
+          "LIEU",
+          "MONTANT",
+          "ORGANISATION",
+          "PERSONNE",
+          "TELEPHONE"
+        ],
+        "duree_chargement_s": 11.44,
+        "souverain": false
+      },
+      "documents": 300,
+      "vrais_positifs": 2357,
+      "faux_negatifs": 355,
+      "faux_positifs": 337,
+      "reference": 2712,
+      "detectees": 2016,
+      "detections_appariees": 1679,
+      "rappel": 0.8691,
+      "precision": 0.8328,
+      "precision_par_reference": 0.8749,
+      "f1": 0.8506,
+      "duree_s": 20.52,
+      "debit_car_s": 3603
+    }
+  },
+  "ecart_sur_presidio": {
+    "spacy": {
+      "rappel_absolu": 0.0258,
+      "rappel_relatif": 0.0297
+    }
+  },
+  "lecture": "Le rappel est la grandeur critique : une entite non detectee franchit la Frontiere A en clair. La precision mesure le sur-masquage, qui degrade la recherche sans rien proteger — son cout se lit dans E5. Un ecart de rappel defavorable au choix souverain doit etre rapporte tel quel : c'est le prix de la souverainete du composant, non un argument contre elle, puisque le verrou de sortie deterministe borne la fuite par le bas independamment du detecteur."
+}

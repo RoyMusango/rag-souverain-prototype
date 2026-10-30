@@ -47,6 +47,5 @@ Thumbs.db
 
 .venv/
 data/
-resultats/
 __pycache__/
 *.pyc

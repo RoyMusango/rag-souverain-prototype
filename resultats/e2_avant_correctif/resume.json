@@ -1,0 +1,74 @@
+{
+  "parametres": {
+    "population": "data/synthea/entities.json",
+    "k": 50,
+    "budget": 6.0,
+    "entites": 20,
+    "sessions": 5,
+    "requetes": 2,
+    "trace": "progression",
+    "sortie": "resultats/e2"
+  },
+  "resume": {
+    "c1_session_session": {
+      "libelle": "Gabarit et budget par session",
+      "courbe_mediane": [
+        11538.0,
+        2540.0,
+        292.0,
+        289.0,
+        134.5,
+        130.5,
+        126.5,
+        126.5,
+        100.5,
+        100.5
+      ],
+      "S_T_median": 100.5,
+      "t_etoile_median": 6.5,
+      "aire_moyenne": 0.6096,
+      "emises_moyenne": 9.6,
+      "entites": 20
+    },
+    "c2_session_entite": {
+      "libelle": "Gabarit par session, budget par entite",
+      "courbe_mediane": [
+        11538.0,
+        2540.0,
+        292.0,
+        289.0,
+        162.5,
+        149.5,
+        149.5,
+        149.5,
+        149.5,
+        149.5
+      ],
+      "S_T_median": 149.5,
+      "t_etoile_median": 5,
+      "aire_moyenne": 0.6495,
+      "emises_moyenne": 3.55,
+      "entites": 20
+    },
+    "c3_entite_entite": {
+      "libelle": "Gabarit et budget par entite",
+      "courbe_mediane": [
+        11538.0,
+        2540.0,
+        506.5,
+        397.0,
+        135.0,
+        135.0,
+        135.0,
+        135.0,
+        135.0,
+        135.0
+      ],
+      "S_T_median": 135.0,
+      "t_etoile_median": null,
+      "aire_moyenne": 0.6324,
+      "emises_moyenne": 5.5,
+      "entites": 20
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "corpus": {
+    "notes": 300,
+    "dossiers": 300,
+    "attendus": 2400
+  },
+  "global": {
+    "presidio": {
+      "moteur": "presidio",
+      "detecteur": {
+        "moteur": "presidio",
+        "langue": "fr",
+        "modele": "fr_core_news_lg",
+        "categories": [
+          "CARTE",
+          "COURRIEL",
+          "DATE",
+          "IBAN",
+          "IDENTIFIANT",
+          "LIEU",
+          "MONTANT",
+          "ORGANISATION",
+          "PERSONNE",
+          "TELEPHONE"
+        ],
+        "duree_chargement_s": 22.42,
+        "souverain": false
+      },
+      "documents": 300,
+      "vrais_positifs": 1276,
+      "faux_negatifs": 104,
+      "faux_positifs": 141,
+      "reference": 1380,
+      "detectees": 1179,
+      "rappel": 0.9246,
+      "precision": 0.9005,
+      "f1": 0.9124,
+      "duree_s": 30.11,
+      "debit_car_s": 2577
+    }
+  },
+  "par_categorie": {
+    "CARTE": {
+      "attendus": 300,
+      "rappel": {
+        "presidio": 1.0
+      }
+    },
+    "IBAN": {
+      "attendus": 300,
+      "rappel": {
+        "presidio": 1.0
+      }
+    },
+    "IDENTIFIANT": {
+      "attendus": 600,
+      "rappel": {
+        "presidio": 1.0
+      }
+    },
+    "LIEU": {
+      "attendus": 300,
+      "rappel": {
+        "presidio": 1.0
+      }
+    },
+    "ORGANISATION": {
+      "attendus": 300,
+      "rappel": {
+        "presidio": 0.1667
+      }
+    },
+    "PERSONNE": {
+      "attendus": 600,
+      "rappel": {
+        "presidio": 0.9917
+      }
+    }
+  },
+  "lecture": "Le rappel global melange deux familles de detection : un modele statistique sur les entites linguistiques, des motifs deterministes sur les identifiants. Seule la ventilation par categorie les separe, et c'est elle qui etablit que les deux etages sont complementaires plutot que redondants. La precision n'est rapportee qu'au niveau global : restreindre la reference a une categorie fait compter comme faux positives les detections des autres categories."
+}

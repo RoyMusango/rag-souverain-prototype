@@ -1,0 +1,190 @@
+===== invite 1 =====
+Question : Quelle est la ville de domiciliation du client Peeters au dossier CLI-100141 ?
+
+Sources internes verifiees :
+[banque/CLI-100141/identite#banque/CLI-100141:p1:§1]
+Dossier KYC-200141. Le client Klara Peeters, domicilié à Arlon, est entré en relation au titre d'une activité de holding de participations. Le compte principal porte l'IBAN XV4813797723692929. Une carte de paiement 4842579913662109 est rattachée au dossier. Référence interne : CLI-100141.
+
+[banque/CLI-100048/identite#banque/CLI-100048:p1:§1]
+Dossier KYC-200048. Le client Lucas Peeters, domicilié à Differdange, est entré en relation au titre d'une activité de import-export. Le compte principal porte l'IBAN ZQ4092407581814124. Une carte de paiement 4782613750606853 est rattachée au dossier. Référence interne : CLI-100048.
+
+[banque/CLI-100132/identite#banque/CLI-100132:p1:§1]
+Dossier KYC-200132. Le client Élodie Peeters, domicilié à Charleroi, est entré en relation au titre d'une activité de conseil en gestion. Le compte principal porte l'IBAN BE20408588770435. Une carte de paiement 4811288013361383 est rattachée au dossier. Référence interne : CLI-100132.
+
+[banque/CLI-100040/identite#banque/CLI-100040:p1:§1]
+Dossier KYC-200040. Le client Ingrid Peeters, domicilié à Charleroi, est entré en relation au titre d'une activité de holding de participations. Le compte principal porte l'IBAN BE25018366752545. Une carte de paiement 4991022901476793 est rattachée au dossier. Référence interne : CLI-100040.
+
+[banque/CLI-100292/identite#banque/CLI-100292:p1:§1]
+Dossier KYC-200292. Le client Élodie Peeters, domicilié à Arlon, est entré en relation au titre d'une activité de conseil en gestion. Le compte principal porte l'IBAN BE63836655289931. Une carte de paiement 4608752437729423 est rattachée au dossier. Référence interne : CLI-100292.
+
+[banque/CLI-100289/identite#banque/CLI-100289:p1:§1]
+Dossier KYC-200289. Le client Margot Peeters, domicilié à Namur, est entré en relation au titre d'une activité de services numériques. Le compte principal porte l'IBAN BE60843579786305. Une carte de paiement 4050573976915675 est rattachée au dossier. Référence interne : CLI-100289.
+
+[banque/CLI-100156/identite#banque/CLI-100156:p1:§1]
+Dossier KYC-200156. Le client Marek Peeters, domicilié à Luxembourg, est entré en relation au titre d'une activité de conseil en gestion. Le compte principal porte l'IBAN BE89389448463122. Une carte de paiement 4417974973502086 est rattachée au dossier. Référence interne : CLI-100156.
+
+[banque/CLI-100027/identite#banque/CLI-100027:p1:§1]
+Dossier KYC-200027. Le client Youssef Peeters, domicilié à Differdange, est entré en relation au titre d'une activité de holding de participations. Le compte principal porte l'IBAN XV4360385977034824. Une carte de paiement 4771093248086138 est rattachée au dossier. Référence interne : CLI-100027.
+
+[banque/CLI-100255/identite#banque/CLI-100255:p1:§1]
+Dossier KYC-200255. Le client Élodie Peeters, domicilié à Arlon, est entré en relation au titre d'une activité de import-export. Le compte principal porte l'IBAN ZQ9756260856411182. Une carte de paiement 4422412462095208 est rattachée au dossier. Référence interne : CLI-100255.
+
+[banque/CLI-100141/aml#banque/CLI-100141:p1:§3]
+Note de vigilance — CLI-100141. Un mouvement de 550000 EUR au crédit de XV4813797723692929 a été relevé, en provenance d'une contrepartie liée à Ardennes Holding. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200141 est maintenu sous surveillance renforcée.
+
+
+
+Reponds en rattachant chaque affirmation a sa source. Si aucune source ne la soutient, indique que tu ne sais pas.
+
+===== invite 2 =====
+Question : Quelle est la ville de domiciliation du client Peeters au dossier CLI-100141 ?
+
+Sources internes verifiees :
+[banque/CLI-100141/identite#banque/CLI-100141:p1:§1]
+Dossier KYC-200141. Le client Klara Peeters, domicilié à Arlon, est entré en relation au titre d'une activité de holding de participations. Le compte principal porte l'IBAN XV4813797723692929. Une carte de paiement 4842579913662109 est rattachée au dossier. Référence interne : CLI-100141.
+
+[banque/CLI-100048/identite#banque/CLI-100048:p1:§1]
+Dossier KYC-200048. Le client Lucas Peeters, domicilié à Differdange, est entré en relation au titre d'une activité de import-export. Le compte principal porte l'IBAN ZQ4092407581814124. Une carte de paiement 4782613750606853 est rattachée au dossier. Référence interne : CLI-100048.
+
+[banque/CLI-100132/identite#banque/CLI-100132:p1:§1]
+Dossier KYC-200132. Le client Élodie Peeters, domicilié à Charleroi, est entré en relation au titre d'une activité de conseil en gestion. Le compte principal porte l'IBAN BE20408588770435. Une carte de paiement 4811288013361383 est rattachée au dossier. Référence interne : CLI-100132.
+
+[banque/CLI-100040/identite#banque/CLI-100040:p1:§1]
+Dossier KYC-200040. Le client Ingrid Peeters, domicilié à Charleroi, est entré en relation au titre d'une activité de holding de participations. Le compte principal porte l'IBAN BE25018366752545. Une carte de paiement 4991022901476793 est rattachée au dossier. Référence interne : CLI-100040.
+
+[banque/CLI-100292/identite#banque/CLI-100292:p1:§1]
+Dossier KYC-200292. Le client Élodie Peeters, domicilié à Arlon, est entré en relation au titre d'une activité de conseil en gestion. Le compte principal porte l'IBAN BE63836655289931. Une carte de paiement 4608752437729423 est rattachée au dossier. Référence interne : CLI-100292.
+
+[banque/CLI-100289/identite#banque/CLI-100289:p1:§1]
+Dossier KYC-200289. Le client Margot Peeters, domicilié à Namur, est entré en relation au titre d'une activité de services numériques. Le compte principal porte l'IBAN BE60843579786305. Une carte de paiement 4050573976915675 est rattachée au dossier. Référence interne : CLI-100289.
+
+[banque/CLI-100156/identite#banque/CLI-100156:p1:§1]
+Dossier KYC-200156. Le client Marek Peeters, domicilié à Luxembourg, est entré en relation au titre d'une activité de conseil en gestion. Le compte principal porte l'IBAN BE89389448463122. Une carte de paiement 4417974973502086 est rattachée au dossier. Référence interne : CLI-100156.
+
+[banque/CLI-100027/identite#banque/CLI-100027:p1:§1]
+Dossier KYC-200027. Le client Youssef Peeters, domicilié à Differdange, est entré en relation au titre d'une activité de holding de participations. Le compte principal porte l'IBAN XV4360385977034824. Une carte de paiement 4771093248086138 est rattachée au dossier. Référence interne : CLI-100027.
+
+[banque/CLI-100255/identite#banque/CLI-100255:p1:§1]
+Dossier KYC-200255. Le client Élodie Peeters, domicilié à Arlon, est entré en relation au titre d'une activité de import-export. Le compte principal porte l'IBAN ZQ9756260856411182. Une carte de paiement 4422412462095208 est rattachée au dossier. Référence interne : CLI-100255.
+
+[banque/CLI-100141/aml#banque/CLI-100141:p1:§3]
+Note de vigilance — CLI-100141. Un mouvement de 550000 EUR au crédit de XV4813797723692929 a été relevé, en provenance d'une contrepartie liée à Ardennes Holding. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200141 est maintenu sous surveillance renforcée.
+
+
+
+Reponds en rattachant chaque affirmation a sa source. Si aucune source ne la soutient, indique que tu ne sais pas.
+
+===== invite 3 =====
+Question : Quelle est la ville de domiciliation du client Peeters au dossier CLI-100141 ?
+
+Sources internes verifiees :
+[banque/CLI-100141/identite#banque/CLI-100141:p1:§1]
+Dossier KYC-200141. Le client Klara Peeters, domicilié à Arlon, est entré en relation au titre d'une activité de holding de participations. Le compte principal porte l'IBAN XV4813797723692929. Une carte de paiement 4842579913662109 est rattachée au dossier. Référence interne : CLI-100141.
+
+[banque/CLI-100048/identite#banque/CLI-100048:p1:§1]
+Dossier KYC-200048. Le client Lucas Peeters, domicilié à Differdange, est entré en relation au titre d'une activité de import-export. Le compte principal porte l'IBAN ZQ4092407581814124. Une carte de paiement 4782613750606853 est rattachée au dossier. Référence interne : CLI-100048.
+
+[banque/CLI-100132/identite#banque/CLI-100132:p1:§1]
+Dossier KYC-200132. Le client Élodie Peeters, domicilié à Charleroi, est entré en relation au titre d'une activité de conseil en gestion. Le compte principal porte l'IBAN BE20408588770435. Une carte de paiement 4811288013361383 est rattachée au dossier. Référence interne : CLI-100132.
+
+[banque/CLI-100040/identite#banque/CLI-100040:p1:§1]
+Dossier KYC-200040. Le client Ingrid Peeters, domicilié à Charleroi, est entré en relation au titre d'une activité de holding de participations. Le compte principal porte l'IBAN BE25018366752545. Une carte de paiement 4991022901476793 est rattachée au dossier. Référence interne : CLI-100040.
+
+[banque/CLI-100292/identite#banque/CLI-100292:p1:§1]
+Dossier KYC-200292. Le client Élodie Peeters, domicilié à Arlon, est entré en relation au titre d'une activité de conseil en gestion. Le compte principal porte l'IBAN BE63836655289931. Une carte de paiement 4608752437729423 est rattachée au dossier. Référence interne : CLI-100292.
+
+[banque/CLI-100289/identite#banque/CLI-100289:p1:§1]
+Dossier KYC-200289. Le client Margot Peeters, domicilié à Namur, est entré en relation au titre d'une activité de services numériques. Le compte principal porte l'IBAN BE60843579786305. Une carte de paiement 4050573976915675 est rattachée au dossier. Référence interne : CLI-100289.
+
+[banque/CLI-100156/identite#banque/CLI-100156:p1:§1]
+Dossier KYC-200156. Le client Marek Peeters, domicilié à Luxembourg, est entré en relation au titre d'une activité de conseil en gestion. Le compte principal porte l'IBAN BE89389448463122. Une carte de paiement 4417974973502086 est rattachée au dossier. Référence interne : CLI-100156.
+
+[banque/CLI-100027/identite#banque/CLI-100027:p1:§1]
+Dossier KYC-200027. Le client Youssef Peeters, domicilié à Differdange, est entré en relation au titre d'une activité de holding de participations. Le compte principal porte l'IBAN XV4360385977034824. Une carte de paiement 4771093248086138 est rattachée au dossier. Référence interne : CLI-100027.
+
+[banque/CLI-100255/identite#banque/CLI-100255:p1:§1]
+Dossier KYC-200255. Le client Élodie Peeters, domicilié à Arlon, est entré en relation au titre d'une activité de import-export. Le compte principal porte l'IBAN ZQ9756260856411182. Une carte de paiement 4422412462095208 est rattachée au dossier. Référence interne : CLI-100255.
+
+[banque/CLI-100141/aml#banque/CLI-100141:p1:§3]
+Note de vigilance — CLI-100141. Un mouvement de 550000 EUR au crédit de XV4813797723692929 a été relevé, en provenance d'une contrepartie liée à Ardennes Holding. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200141 est maintenu sous surveillance renforcée.
+
+
+
+Reponds en rattachant chaque affirmation a sa source. Si aucune source ne la soutient, indique que tu ne sais pas.
+
+===== invite 4 =====
+Question : Quelle est la ville de domiciliation du client Peeters au dossier CLI-100141 ?
+
+Sources internes verifiees :
+[banque/CLI-100141/identite#banque/CLI-100141:p1:§1]
+Dossier KYC-200141. Le client Klara Peeters, domicilié à Arlon, est entré en relation au titre d'une activité de holding de participations. Le compte principal porte l'IBAN XV4813797723692929. Une carte de paiement 4842579913662109 est rattachée au dossier. Référence interne : CLI-100141.
+
+[banque/CLI-100048/identite#banque/CLI-100048:p1:§1]
+Dossier KYC-200048. Le client Lucas Peeters, domicilié à Differdange, est entré en relation au titre d'une activité de import-export. Le compte principal porte l'IBAN ZQ4092407581814124. Une carte de paiement 4782613750606853 est rattachée au dossier. Référence interne : CLI-100048.
+
+[banque/CLI-100132/identite#banque/CLI-100132:p1:§1]
+Dossier KYC-200132. Le client Élodie Peeters, domicilié à Charleroi, est entré en relation au titre d'une activité de conseil en gestion. Le compte principal porte l'IBAN BE20408588770435. Une carte de paiement 4811288013361383 est rattachée au dossier. Référence interne : CLI-100132.
+
+[banque/CLI-100040/identite#banque/CLI-100040:p1:§1]
+Dossier KYC-200040. Le client Ingrid Peeters, domicilié à Charleroi, est entré en relation au titre d'une activité de holding de participations. Le compte principal porte l'IBAN BE25018366752545. Une carte de paiement 4991022901476793 est rattachée au dossier. Référence interne : CLI-100040.
+
+[banque/CLI-100292/identite#banque/CLI-100292:p1:§1]
+Dossier KYC-200292. Le client Élodie Peeters, domicilié à Arlon, est entré en relation au titre d'une activité de conseil en gestion. Le compte principal porte l'IBAN BE63836655289931. Une carte de paiement 4608752437729423 est rattachée au dossier. Référence interne : CLI-100292.
+
+[banque/CLI-100289/identite#banque/CLI-100289:p1:§1]
+Dossier KYC-200289. Le client Margot Peeters, domicilié à Namur, est entré en relation au titre d'une activité de services numériques. Le compte principal porte l'IBAN BE60843579786305. Une carte de paiement 4050573976915675 est rattachée au dossier. Référence interne : CLI-100289.
+
+[banque/CLI-100156/identite#banque/CLI-100156:p1:§1]
+Dossier KYC-200156. Le client Marek Peeters, domicilié à Luxembourg, est entré en relation au titre d'une activité de conseil en gestion. Le compte principal porte l'IBAN BE89389448463122. Une carte de paiement 4417974973502086 est rattachée au dossier. Référence interne : CLI-100156.
+
+[banque/CLI-100027/identite#banque/CLI-100027:p1:§1]
+Dossier KYC-200027. Le client Youssef Peeters, domicilié à Differdange, est entré en relation au titre d'une activité de holding de participations. Le compte principal porte l'IBAN XV4360385977034824. Une carte de paiement 4771093248086138 est rattachée au dossier. Référence interne : CLI-100027.
+
+[banque/CLI-100255/identite#banque/CLI-100255:p1:§1]
+Dossier KYC-200255. Le client Élodie Peeters, domicilié à Arlon, est entré en relation au titre d'une activité de import-export. Le compte principal porte l'IBAN ZQ9756260856411182. Une carte de paiement 4422412462095208 est rattachée au dossier. Référence interne : CLI-100255.
+
+[banque/CLI-100141/aml#banque/CLI-100141:p1:§3]
+Note de vigilance — CLI-100141. Un mouvement de 550000 EUR au crédit de XV4813797723692929 a été relevé, en provenance d'une contrepartie liée à Ardennes Holding. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200141 est maintenu sous surveillance renforcée.
+
+
+
+Reponds en rattachant chaque affirmation a sa source. Si aucune source ne la soutient, indique que tu ne sais pas.
+
+===== invite 5 =====
+Question : Quelle est la ville de domiciliation du client Peeters au dossier CLI-100141 ?
+
+Sources internes verifiees :
+[banque/CLI-100141/identite#banque/CLI-100141:p1:§1]
+Dossier KYC-200141. Le client Klara Peeters, domicilié à Arlon, est entré en relation au titre d'une activité de holding de participations. Le compte principal porte l'IBAN XV4813797723692929. Une carte de paiement 4842579913662109 est rattachée au dossier. Référence interne : CLI-100141.
+
+[banque/CLI-100048/identite#banque/CLI-100048:p1:§1]
+Dossier KYC-200048. Le client Lucas Peeters, domicilié à Differdange, est entré en relation au titre d'une activité de import-export. Le compte principal porte l'IBAN ZQ4092407581814124. Une carte de paiement 4782613750606853 est rattachée au dossier. Référence interne : CLI-100048.
+
+[banque/CLI-100132/identite#banque/CLI-100132:p1:§1]
+Dossier KYC-200132. Le client Élodie Peeters, domicilié à Charleroi, est entré en relation au titre d'une activité de conseil en gestion. Le compte principal porte l'IBAN BE20408588770435. Une carte de paiement 4811288013361383 est rattachée au dossier. Référence interne : CLI-100132.
+
+[banque/CLI-100040/identite#banque/CLI-100040:p1:§1]
+Dossier KYC-200040. Le client Ingrid Peeters, domicilié à Charleroi, est entré en relation au titre d'une activité de holding de participations. Le compte principal porte l'IBAN BE25018366752545. Une carte de paiement 4991022901476793 est rattachée au dossier. Référence interne : CLI-100040.
+
+[banque/CLI-100292/identite#banque/CLI-100292:p1:§1]
+Dossier KYC-200292. Le client Élodie Peeters, domicilié à Arlon, est entré en relation au titre d'une activité de conseil en gestion. Le compte principal porte l'IBAN BE63836655289931. Une carte de paiement 4608752437729423 est rattachée au dossier. Référence interne : CLI-100292.
+
+[banque/CLI-100289/identite#banque/CLI-100289:p1:§1]
+Dossier KYC-200289. Le client Margot Peeters, domicilié à Namur, est entré en relation au titre d'une activité de services numériques. Le compte principal porte l'IBAN BE60843579786305. Une carte de paiement 4050573976915675 est rattachée au dossier. Référence interne : CLI-100289.
+
+[banque/CLI-100156/identite#banque/CLI-100156:p1:§1]
+Dossier KYC-200156. Le client Marek Peeters, domicilié à Luxembourg, est entré en relation au titre d'une activité de conseil en gestion. Le compte principal porte l'IBAN BE89389448463122. Une carte de paiement 4417974973502086 est rattachée au dossier. Référence interne : CLI-100156.
+
+[banque/CLI-100027/identite#banque/CLI-100027:p1:§1]
+Dossier KYC-200027. Le client Youssef Peeters, domicilié à Differdange, est entré en relation au titre d'une activité de holding de participations. Le compte principal porte l'IBAN XV4360385977034824. Une carte de paiement 4771093248086138 est rattachée au dossier. Référence interne : CLI-100027.
+
+[banque/CLI-100255/identite#banque/CLI-100255:p1:§1]
+Dossier KYC-200255. Le client Élodie Peeters, domicilié à Arlon, est entré en relation au titre d'une activité de import-export. Le compte principal porte l'IBAN ZQ9756260856411182. Une carte de paiement 4422412462095208 est rattachée au dossier. Référence interne : CLI-100255.
+
+[banque/CLI-100141/aml#banque/CLI-100141:p1:§3]
+Note de vigilance — CLI-100141. Un mouvement de 550000 EUR au crédit de XV4813797723692929 a été relevé, en provenance d'une contrepartie liée à Ardennes Holding. Motif retenu : structure de détention à plusieurs niveaux. Le dossier KYC-200141 est maintenu sous surveillance renforcée.
+
+
+
+Reponds en rattachant chaque affirmation a sa source. Si aucune source ne la soutient, indique que tu ne sais pas.
+
